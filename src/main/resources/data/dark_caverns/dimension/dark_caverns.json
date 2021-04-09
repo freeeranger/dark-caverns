@@ -1,0 +1,66 @@
+{
+  "type": {
+    "name": "dark_caverns:dark_caverns_dimtype",
+    "ultrawarm": false,
+    "natural": false,
+    "piglin_safe": false,
+    "respawn_anchor_works": false,
+    "bed_works": true,
+    "has_raids": false,
+    "has_skylight": false,
+    "has_ceiling": true,
+    "coordinate_scale": 1,
+    "ambient_light": 0,
+    "fixed_time": 1200,
+    "logical_height": 256,
+    "effects": "minecraft:the_nether",
+    "infiniburn": "minecraft:infiniburn_overworld"
+  },
+  "generator": {
+    "type": "dark_caverns:chunk_generator",
+    "settings": "dark_caverns:dark_caverns",
+    "biome_source": {
+      "type": "dark_caverns:biome_provider",
+      "altitude_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "temperature_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "humidity_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "weirdness_noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1,
+          1
+        ]
+      },
+      "biomes": [
+        {
+          "biome": "dark_caverns:rocky_caverns",
+          "parameters": {
+            "altitude": 0,
+            "temperature": 0,
+            "humidity": 0,
+            "weirdness": 0,
+            "offset": 0
+          }
+        }
+      ]
+    }
+  }
+}

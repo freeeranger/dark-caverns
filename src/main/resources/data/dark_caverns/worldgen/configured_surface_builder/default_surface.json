@@ -1,0 +1,14 @@
+{
+  "type": "default",
+  "config": {
+    "top_material": {
+      "Name": "dark_caverns:carfstone"
+    },
+    "under_material": {
+      "Name": "dark_caverns:carfstone"
+    },
+    "underwater_material": {
+      "Name": "dark_caverns:carfstone"
+    }
+  }
+}

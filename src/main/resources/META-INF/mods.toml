@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+issueTrackerURL=""
+license="All rights reserved"
+[[mods]]
+modId="dark_caverns"
+version="${file.jarVersion}"
+displayName="Dark Caverns"
+logoFile="logo.png"
+logoBlur=false
+authors="freeranger"
+description='''A new dimension hidden below the surface'''
+[[dependencies.dark_caverns]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36.0.42,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.dark_caverns]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.3,1.16.5]"
+    ordering="NONE"
+    side="BOTH"
