@@ -17,8 +17,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import net.minecraft.world.biome.provider.NetherBiomeProvider.DefaultBuilder;
-
 public class CustomBiomeProvider extends NetherBiomeProvider {
 
     public static final MapCodec<NetherBiomeProvider> PACKET_CODEC = RecordCodecBuilder.mapCodec(

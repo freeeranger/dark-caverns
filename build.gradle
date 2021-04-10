@@ -29,7 +29,6 @@ mixin {
 
 minecraft {
     mappings channel: 'official', version: project.mc_version
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -68,7 +67,7 @@ minecraft {
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'dark_caverns', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'dark_caverns', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources')
 
             environment 'target', 'fmluserdevdata'
 
@@ -79,6 +78,7 @@ minecraft {
             }
         }
     }
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 }
 
 sourceSets.main.resources {
