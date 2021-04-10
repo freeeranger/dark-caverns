@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "dark_caverns:luminite_block"
+    }
+  ],
+  "result": {
+    "item": "dark_caverns:luminite_dust",
+    "count": 9
+  }
+}

@@ -28,9 +28,20 @@ public class CustomBlocks {
             )
     );
 
+    public static final RegistryObject<Block> LUMINITE_BLOCK = register("luminite_block", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(6f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(2)
+                            .requiresCorrectToolForDrops()
+                            .lightLevel((p_235464_0_) -> 22)
+            )
+    );
+
+
     public static final RegistryObject<Block> LUMINITE_ORE = register("carfstone_luminite_ore", () -> new Block(
                     AbstractBlock.Properties.of(Material.STONE)
-                            .strength(7f, 7f)
+                            .strength(6f, 7f)
                             .harvestTool(ToolType.PICKAXE)
                             .harvestLevel(3)
                             .requiresCorrectToolForDrops()
