@@ -39,7 +39,7 @@ public class CustomFeatures {
         ));
 
         registerConfiguredFeature("luminite_ore_feature", ConfiguredFeatures.LUMINITE_ORE_FEATURE.range(
-                256).squared().count(70)
+                256).squared().count(60)
         );
     }
 
