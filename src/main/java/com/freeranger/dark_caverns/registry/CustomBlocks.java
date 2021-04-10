@@ -34,7 +34,7 @@ public class CustomBlocks {
                             .harvestTool(ToolType.PICKAXE)
                             .harvestLevel(2)
                             .requiresCorrectToolForDrops()
-                            .lightLevel((p_235464_0_) -> 22)
+                            .lightLevel((p_235464_0_) -> 15)
             )
     );
 
