@@ -2,7 +2,9 @@ package com.freeranger.dark_caverns;
 
 import com.freeranger.dark_caverns.data.CustomBlockTags;
 import com.freeranger.dark_caverns.registry.*;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -19,6 +21,8 @@ public class DarkCaverns {
 
 		bus.addListener(this::setup);
 		bus.addListener(this::gatherData);
+
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> DarkCavernsClient.init());
 
 		DeferredRegister<?>[] registers = {
 				CustomBlocks.BLOCKS,
