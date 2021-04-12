@@ -6,6 +6,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -20,9 +21,10 @@ public class DarkCaverns {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		bus.addListener(this::setup);
+		bus.addListener(this::clientSetup);
 		bus.addListener(this::gatherData);
 
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> DarkCavernsClient.init());
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> DarkCavernsClient::init);
 
 		DeferredRegister<?>[] registers = {
 				CustomBlocks.BLOCKS,
@@ -45,6 +47,10 @@ public class DarkCaverns {
 			CustomDimensions.register();
 			CustomFeatures.register();
 		});
+	}
+
+	public void clientSetup(FMLClientSetupEvent event){
+		DarkCavernsClient.registerBlockRenderers();
 	}
 
 	public void gatherData(GatherDataEvent event){

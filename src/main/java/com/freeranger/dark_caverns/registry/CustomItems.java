@@ -5,6 +5,7 @@ import com.freeranger.dark_caverns.armor.LuminiteArmorMaterial;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.WallOrFloorItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,4 +26,14 @@ public class CustomItems {
                     new Item.Properties().tab(CustomItemGroups.GROUP)
             )
     );
+
+    public static final RegistryObject<Item> SHARD_TORCH = ITEMS.register(
+            "luminite_torch",
+            () -> new WallOrFloorItem(
+                    CustomBlocks.LUMINITE_TORCH.get(),
+                    CustomBlocks.LUMINITE_WALL_TORCH.get(),
+                    new Item.Properties().tab(CustomItemGroups.GROUP)
+            )
+    );
+
 }

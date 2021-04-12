@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "dark_caverns:block/luminite_wall_torch"
+    },
+    "facing=north": {
+      "model": "dark_caverns:block/luminite_wall_torch",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "dark_caverns:block/luminite_wall_torch",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "dark_caverns:block/luminite_wall_torch",
+      "y": 180
+    }
+  }
+}
