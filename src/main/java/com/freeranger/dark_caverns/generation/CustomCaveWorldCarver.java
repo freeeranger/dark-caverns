@@ -25,7 +25,7 @@ public class CustomCaveWorldCarver extends CaveWorldCarver {
         super(configCodec, 170);
         this.replaceableBlocks = ImmutableSet.of(
                 CustomBlocks.LUMINITE_ORE.get(),
-                CustomBlocks.LUMINITE_BLOCK.get()
+                CustomBlocks.CARFSTONE.get()
         );
         this.liquids = ImmutableSet.of(
                 Fluids.WATER
