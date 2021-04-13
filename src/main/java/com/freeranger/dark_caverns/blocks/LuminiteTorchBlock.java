@@ -1,5 +1,6 @@
 package com.freeranger.dark_caverns.blocks;
 
+import com.freeranger.dark_caverns.registry.CustomParticles;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.TorchBlock;
 import net.minecraft.particles.ParticleTypes;
@@ -22,6 +23,6 @@ public class LuminiteTorchBlock extends TorchBlock {
         double y = (double)pos.getY() + 0.7D;
         double z = (double)pos.getZ() + 0.5D;
         worldIn.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.0D, 0.0D);
-        //worldIn.addParticle(CustomParticles.LUMINITE_PARTICLE.get(), x, y, z, 0.0D, 0.0D, 0.0D);
+        worldIn.addParticle(CustomParticles.LUMINITE_FLAME.get(), x, y, z, 0.0D, 0.0D, 0.0D);
     }
 }

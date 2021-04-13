@@ -1,5 +1,6 @@
 package com.freeranger.dark_caverns.blocks;
 
+import com.freeranger.dark_caverns.registry.CustomParticles;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.WallTorchBlock;
 import net.minecraft.particles.ParticleTypes;
@@ -25,6 +26,6 @@ public class LuminiteWallTorchBlock extends WallTorchBlock {
         double z = (double)pos.getZ() + 0.5D;
         Direction oppositeDirection = direction.getOpposite();
         worldIn.addParticle(ParticleTypes.SMOKE, x + 0.27D * (double)oppositeDirection.getStepX(), y + 0.22D, z + 0.27D * (double)oppositeDirection.getStepZ(), 0.0D, 0.0D, 0.0D);
-        //worldIn.addParticle(CustomParticles.LUMINITE_PARTICLE.get(), x + 0.27D * (double)oppositeDirection.getStepX(), y + 0.22D, z + 0.27D * (double)oppositeDirection.getStepZ(), 0.0D, 0.0D, 0.0D);
+        worldIn.addParticle(CustomParticles.LUMINITE_FLAME.get(), x + 0.27D * (double)oppositeDirection.getStepX(), y + 0.22D, z + 0.27D * (double)oppositeDirection.getStepZ(), 0.0D, 0.0D, 0.0D);
     }
 }

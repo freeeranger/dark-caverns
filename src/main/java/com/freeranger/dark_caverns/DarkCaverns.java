@@ -29,6 +29,7 @@ public class DarkCaverns {
 		DeferredRegister<?>[] registers = {
 				CustomBlocks.BLOCKS,
 				CustomItems.ITEMS,
+				CustomParticles.PARTICLES,
 				CustomBiomes.BIOMES,
 				CustomCarvers.CARVERS,
 				CustomFeatures.FEATURES,
