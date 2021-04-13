@@ -23,8 +23,8 @@ public class DarkCavernsClient {
 
     public static void registerBlockRenderers() {
         RenderType cutout = RenderType.cutout();
-        //RenderType mipped = RenderType.cutoutMipped();
-        //RenderType translucent = RenderType.translucent();
+        //RenderType mipped = RenderType.cutoutMipped(); Will be used later
+        //RenderType translucent = RenderType.translucent(); Will be used later
 
         render(CustomBlocks.LUMINITE_TORCH, cutout);
         render(CustomBlocks.LUMINITE_WALL_TORCH, cutout);
