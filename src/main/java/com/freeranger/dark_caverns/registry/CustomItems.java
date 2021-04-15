@@ -2,6 +2,7 @@ package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.armor.LuminiteArmorMaterial;
+import com.freeranger.dark_caverns.items.ThrowableLuminiteTorchItem;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
@@ -18,6 +19,11 @@ public class CustomItems {
             () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP))
     );
 
+    public static final RegistryObject<Item> THROWABLE_LUMINITE_TORCH = ITEMS.register(
+            "throwable_luminite_torch",
+            () -> new ThrowableLuminiteTorchItem(new Item.Properties().tab(CustomItemGroups.GROUP))
+    );
+
     public static final RegistryObject<Item> LUMINITE_HELMET = ITEMS.register(
             "luminite_helmet",
             () -> new ArmorItem(
@@ -27,7 +33,7 @@ public class CustomItems {
             )
     );
 
-    public static final RegistryObject<Item> SHARD_TORCH = ITEMS.register(
+    public static final RegistryObject<Item> LUMINITE_TORCH = ITEMS.register(
             "luminite_torch",
             () -> new WallOrFloorItem(
                     CustomBlocks.LUMINITE_TORCH.get(),

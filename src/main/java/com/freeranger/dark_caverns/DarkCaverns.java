@@ -33,7 +33,8 @@ public class DarkCaverns {
 				CustomBiomes.BIOMES,
 				CustomCarvers.CARVERS,
 				CustomFeatures.FEATURES,
-				CustomSurfaceBuilders.SURFACE_BUILDERS
+				CustomSurfaceBuilders.SURFACE_BUILDERS,
+				CustomEntityTypes.ENTITIES
 		};
 
 		for (DeferredRegister<?> register : registers) {
@@ -52,6 +53,7 @@ public class DarkCaverns {
 
 	public void clientSetup(FMLClientSetupEvent event){
 		DarkCavernsClient.registerBlockRenderers();
+		DarkCavernsClient.registerEntityRenderers();
 	}
 
 	public void gatherData(GatherDataEvent event){
