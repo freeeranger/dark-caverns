@@ -25,7 +25,7 @@ public class CustomBlocks {
             AbstractBlock.Properties.of(Material.STONE)
                     .strength(5f, 7f)
                     .harvestTool(ToolType.PICKAXE)
-                    .harvestLevel(2)
+                    .harvestLevel(0)
                     .requiresCorrectToolForDrops()
             )
     );
@@ -55,7 +55,7 @@ public class CustomBlocks {
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(6.5f, 7f)
                             .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(2)
+                            .harvestLevel(0)
                             .requiresCorrectToolForDrops()
             )
     );
@@ -64,7 +64,7 @@ public class CustomBlocks {
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(7f, 7f)
                             .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(2)
+                            .harvestLevel(1)
                             .requiresCorrectToolForDrops()
             )
     );
@@ -73,7 +73,7 @@ public class CustomBlocks {
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(7f, 7f)
                             .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(3)
+                            .harvestLevel(2)
                             .requiresCorrectToolForDrops()
             )
     );
@@ -82,7 +82,7 @@ public class CustomBlocks {
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(8f, 7f)
                             .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(3)
+                            .harvestLevel(2)
                             .requiresCorrectToolForDrops()
             )
     );
@@ -91,7 +91,7 @@ public class CustomBlocks {
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(7f, 7f)
                             .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(3)
+                            .harvestLevel(2)
                             .requiresCorrectToolForDrops()
             )
     );
@@ -100,7 +100,7 @@ public class CustomBlocks {
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(7f, 7f)
                             .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(3)
+                            .harvestLevel(2)
                             .requiresCorrectToolForDrops()
             )
     );
