@@ -1,6 +1,7 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
+import com.freeranger.dark_caverns.blocks.LuminiteLanternBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
 import net.minecraft.block.AbstractBlock;
@@ -113,6 +114,10 @@ public class CustomBlocks {
             AbstractBlock.Properties.copy(Blocks.WALL_TORCH)
                     .lightLevel((state) -> 15))
     );
+
+    public static final RegistryObject<Block> LUMINITE_LANTERN = register("luminite_lantern", () -> new LuminiteLanternBlock(
+            AbstractBlock.Properties.copy(Blocks.LANTERN)
+    ));
 
     private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
         RegistryObject<T> register = BLOCKS.register(name, block);

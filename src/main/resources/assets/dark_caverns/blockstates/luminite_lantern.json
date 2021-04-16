@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "dark_caverns:block/luminite_lantern"
+    },
+    "hanging=true": {
+      "model": "dark_caverns:block/luminite_lantern_hanging"
+    }
+  }
+}
