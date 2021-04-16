@@ -45,9 +45,63 @@ public class CustomBlocks {
             AbstractBlock.Properties.of(Material.STONE)
                     .strength(6f, 7f)
                     .harvestTool(ToolType.PICKAXE)
-                    .harvestLevel(3)
+                    .harvestLevel(2)
                     .requiresCorrectToolForDrops()
                     .lightLevel((p_235464_0_) -> 9)
+            )
+    );
+
+    public static final RegistryObject<Block> CARFSTONE_COAL_ORE = register("carfstone_coal_ore", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(6.5f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(2)
+                            .requiresCorrectToolForDrops()
+            )
+    );
+
+    public static final RegistryObject<Block> CARFSTONE_IRON_ORE = register("carfstone_iron_ore", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(7f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(2)
+                            .requiresCorrectToolForDrops()
+            )
+    );
+
+    public static final RegistryObject<Block> CARFSTONE_GOLD_ORE = register("carfstone_gold_ore", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(7f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(3)
+                            .requiresCorrectToolForDrops()
+            )
+    );
+
+    public static final RegistryObject<Block> CARFSTONE_DIAMOND_ORE = register("carfstone_diamond_ore", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(8f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(3)
+                            .requiresCorrectToolForDrops()
+            )
+    );
+
+    public static final RegistryObject<Block> CARFSTONE_REDSTONE_ORE = register("carfstone_redstone_ore", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(7f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(3)
+                            .requiresCorrectToolForDrops()
+            )
+    );
+
+    public static final RegistryObject<Block> CARFSTONE_LAPIS_ORE = register("carfstone_lapis_ore", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(7f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(3)
+                            .requiresCorrectToolForDrops()
             )
     );
 

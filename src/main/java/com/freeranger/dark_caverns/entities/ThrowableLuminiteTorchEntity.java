@@ -27,6 +27,8 @@ import javax.annotation.Nonnull;
 
 public class ThrowableLuminiteTorchEntity extends ProjectileItemEntity {
 
+    Boolean hasHit = false;
+
     public ThrowableLuminiteTorchEntity(EntityType<? extends ThrowableLuminiteTorchEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -71,8 +73,6 @@ public class ThrowableLuminiteTorchEntity extends ProjectileItemEntity {
         }
 
     }
-
-    Boolean hasHit = false;
 
     protected void onHitEntity(EntityRayTraceResult result) {
         super.onHitEntity(result);

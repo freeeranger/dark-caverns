@@ -31,6 +31,30 @@ public class CustomFeatures {
         public static final ConfiguredFeature<?, ?> LUMINITE_ORE_FEATURE = Feature.ORE.configured(
                 new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.LUMINITE_ORE.get().defaultBlockState(), 12)
         );
+
+        public static final ConfiguredFeature<?, ?> COAL_ORE_FEATURE = Feature.ORE.configured(
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_COAL_ORE.get().defaultBlockState(), 20)
+        );
+
+        public static final ConfiguredFeature<?, ?> IRON_ORE_FEATURE = Feature.ORE.configured(
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_IRON_ORE.get().defaultBlockState(), 14)
+        );
+
+        public static final ConfiguredFeature<?, ?> GOLD_ORE_FEATURE = Feature.ORE.configured(
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_GOLD_ORE.get().defaultBlockState(), 12)
+        );
+
+        public static final ConfiguredFeature<?, ?> DIAMOND_ORE_FEATURE = Feature.ORE.configured(
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_DIAMOND_ORE.get().defaultBlockState(), 12)
+        );
+
+        public static final ConfiguredFeature<?, ?> REDSTONE_ORE_FEATURE = Feature.ORE.configured(
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_REDSTONE_ORE.get().defaultBlockState(), 8)
+        );
+
+        public static final ConfiguredFeature<?, ?> LAPIS_ORE_FEATURE = Feature.ORE.configured(
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_LAPIS_ORE.get().defaultBlockState(), 8)
+        );
     }
 
     public static void register(){
@@ -39,7 +63,31 @@ public class CustomFeatures {
         ));
 
         registerConfiguredFeature("luminite_ore_feature", ConfiguredFeatures.LUMINITE_ORE_FEATURE.range(
-                256).squared().count(60)
+                256).squared().count(42)
+        );
+
+        registerConfiguredFeature("coal_ore_feature", ConfiguredFeatures.COAL_ORE_FEATURE.range(
+                256).squared().count(20)
+        );
+
+        registerConfiguredFeature("iron_ore_feature", ConfiguredFeatures.IRON_ORE_FEATURE.range(
+                256).squared().count(20)
+        );
+
+        registerConfiguredFeature("gold_ore_feature", ConfiguredFeatures.GOLD_ORE_FEATURE.range(
+                256).squared().count(15)
+        );
+
+        registerConfiguredFeature("diamond_ore_feature", ConfiguredFeatures.DIAMOND_ORE_FEATURE.range(
+                256).squared().count(5)
+        );
+
+        registerConfiguredFeature("redstone_ore_feature", ConfiguredFeatures.REDSTONE_ORE_FEATURE.range(
+                256).squared().count(10)
+        );
+
+        registerConfiguredFeature("lapis_ore_feature", ConfiguredFeatures.LAPIS_ORE_FEATURE.range(
+                256).squared().count(10)
         );
     }
 

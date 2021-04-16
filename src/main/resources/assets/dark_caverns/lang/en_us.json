@@ -1,6 +1,12 @@
 {
   "block.dark_caverns.carfstone": "Carfstone",
   "block.dark_caverns.carfstone_luminite_ore": "Luminite Ore",
+  "block.dark_caverns.carfstone_coal_ore": "Luminite Ore",
+  "block.dark_caverns.carfstone_iron_ore": "Carfstone Iron Ore",
+  "block.dark_caverns.carfstone_gold_ore": "Carfstone Gold Ore",
+  "block.dark_caverns.carfstone_diamond_ore": "Carfstone Diamond Ore",
+  "block.dark_caverns.carfstone_redstone_ore": "Carfstone Redstone Ore",
+  "block.dark_caverns.carfstone_lapis_ore": "Carfstone Lapis Ore",
   "block.dark_caverns.luminite_block": "Luminite Block",
   "item.dark_caverns.luminite_dust": "Luminite Dust",
   "item.dark_caverns.luminite_helmet": "Luminite Helmet",
