@@ -7,7 +7,11 @@
     "DimensionGeneratorSettingsMixin"
   ],
   "client": [
-
+    "IBlockReaderMixin",
+    "MinecraftMixin"
   ],
+  "injectors": {
+    "defaultRequire": 1
+  },
   "minVersion": "0.8"
 }
