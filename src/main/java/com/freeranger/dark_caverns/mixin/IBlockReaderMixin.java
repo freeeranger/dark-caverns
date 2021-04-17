@@ -11,6 +11,8 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(IBlockReader.class)
 public interface IBlockReaderMixin
 {
+    @Shadow BlockState getBlockState(BlockPos p_180495_1_);
+
     /**
      * @author Freeranger
      */
@@ -18,10 +20,8 @@ public interface IBlockReaderMixin
     default int getLightEmission(BlockPos pos) {
         if (LuminiteHelmetLighting.SOURCES.containsKey(pos) && LuminiteHelmetLighting.SOURCES.get(pos).shouldStay)
             return 15;
+
         return this.getBlockState(pos).getLightValue((IBlockReader) this, pos);
     }
-
-    @Shadow
-    BlockState getBlockState(BlockPos pos);
 }
 
