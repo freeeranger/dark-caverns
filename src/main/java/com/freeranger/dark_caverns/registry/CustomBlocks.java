@@ -31,6 +31,15 @@ public class CustomBlocks {
             )
     );
 
+    public static final RegistryObject<Block> SHROOMGRASS = register("shroomgrass", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(5f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(0)
+                            .requiresCorrectToolForDrops()
+            )
+    );
+
     public static final RegistryObject<Block> LUMINITE_BLOCK = register("luminite_block", () -> new Block(
             AbstractBlock.Properties.of(Material.STONE)
                     .strength(6f, 7f)

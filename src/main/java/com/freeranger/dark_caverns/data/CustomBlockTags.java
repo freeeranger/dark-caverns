@@ -25,7 +25,7 @@ public class CustomBlockTags extends BlockTagsProvider {
     @Override
     protected void addTags() {
         tag(CustomTags.Blocks.BASE_STONE).add(
-                CustomBlocks.LUMINITE_BLOCK.get()
+                CustomBlocks.CARFSTONE.get()
         );
     }
 
