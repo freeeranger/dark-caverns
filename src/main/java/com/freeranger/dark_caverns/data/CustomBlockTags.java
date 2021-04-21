@@ -27,6 +27,12 @@ public class CustomBlockTags extends BlockTagsProvider {
         tag(CustomTags.Blocks.BASE_STONE).add(
                 CustomBlocks.CARFSTONE.get()
         );
+
+        tag(CustomTags.Blocks.BASE_CARVEABLE).add(
+                CustomBlocks.CARFSTONE.get(),
+                CustomBlocks.SHROOMGRASS_BLOCK.get(),
+                CustomBlocks.SHROOMGRASS.get()
+        );
     }
 
     protected TagsProvider.Builder<Block> tag(ITag.INamedTag<Block> tag) {

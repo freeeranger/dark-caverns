@@ -11,5 +11,9 @@ public class CustomTags {
         public static final ITag.INamedTag<Block> BASE_STONE = BlockTags.createOptional(
                 new ResourceLocation(DarkCaverns.MOD_ID, "dark_caverns_base_stone")
         );
+
+        public static final ITag.INamedTag<Block> BASE_CARVEABLE = BlockTags.createOptional(
+                new ResourceLocation(DarkCaverns.MOD_ID, "dark_caverns_base_carveable")
+        );
     };
 }

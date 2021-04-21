@@ -1,3 +1,6 @@
 {
-  "parent": "dark_caverns:block/shroomgrass"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dark_caverns:block/shroomgrass"
+  }
 }

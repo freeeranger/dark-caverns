@@ -2,7 +2,7 @@
   "type": "default",
   "config": {
     "top_material": {
-      "Name": "dark_caverns:shroomgrass"
+      "Name": "dark_caverns:shroomgrass_block"
     },
     "under_material": {
       "Name": "dark_caverns:carfstone"

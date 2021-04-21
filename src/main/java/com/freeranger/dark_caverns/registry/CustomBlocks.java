@@ -1,12 +1,14 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
+import com.freeranger.dark_caverns.blocks.CustomPlantBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteLanternBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.HugeMushroomBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -31,7 +33,13 @@ public class CustomBlocks {
             )
     );
 
-    public static final RegistryObject<Block> SHROOMGRASS = register("shroomgrass", () -> new Block(
+    public static final RegistryObject<Block> SHROOM_BLOCK = register("shroom_block", () -> new HugeMushroomBlock(
+            AbstractBlock.Properties.copy(Blocks.BROWN_MUSHROOM_BLOCK)
+                    .lightLevel((p_235464_0_) -> 11)
+            )
+    );
+
+    public static final RegistryObject<Block> SHROOMGRASS_BLOCK = register("shroomgrass_block", () -> new Block(
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(5f, 7f)
                             .harvestTool(ToolType.PICKAXE)
@@ -126,6 +134,11 @@ public class CustomBlocks {
 
     public static final RegistryObject<Block> LUMINITE_LANTERN = register("luminite_lantern", () -> new LuminiteLanternBlock(
             AbstractBlock.Properties.copy(Blocks.LANTERN)
+    ));
+
+    public static final RegistryObject<Block> SHROOMGRASS = register("shroomgrass", () -> new CustomPlantBlock(
+            AbstractBlock.Properties.copy(Blocks.GRASS)
+                    .lightLevel((state) -> 9)
     ));
 
     private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {

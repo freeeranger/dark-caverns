@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "dark_caverns:block/shroomgrass_block"
+      },
+      {
+        "model": "dark_caverns:block/shroomgrass_block",
+        "y": 90
+      },
+      {
+        "model": "dark_caverns:block/shroomgrass_block",
+        "y": 180
+      },
+      {
+        "model": "dark_caverns:block/shroomgrass_block",
+        "y": 270
+      }
+    ]
+  }
+}

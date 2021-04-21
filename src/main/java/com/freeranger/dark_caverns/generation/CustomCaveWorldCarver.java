@@ -31,7 +31,9 @@ public class CustomCaveWorldCarver extends CaveWorldCarver {
                 CustomBlocks.CARFSTONE_DIAMOND_ORE.get(),
                 CustomBlocks.CARFSTONE_REDSTONE_ORE.get(),
                 CustomBlocks.CARFSTONE_LAPIS_ORE.get(),
-                CustomBlocks.CARFSTONE.get()
+                CustomBlocks.CARFSTONE.get(),
+                CustomBlocks.SHROOMGRASS_BLOCK.get(),
+                CustomBlocks.SHROOMGRASS.get()
         );
         this.liquids = ImmutableSet.of(
                 Fluids.WATER
