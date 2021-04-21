@@ -123,7 +123,7 @@ public class CustomFeatures {
         ));
 
         registerConfiguredFeature("shroomgrass_patch", ConfiguredFeatures.SHROOMGRASS_PATCH.range(
-                256).squared().count(100)
+                256).squared().count(128)
         );
 
         registerConfiguredFeature("luminite_ore_feature", ConfiguredFeatures.LUMINITE_ORE_FEATURE.range(
@@ -135,11 +135,11 @@ public class CustomFeatures {
         );
 
         registerConfiguredFeature("iron_ore_feature", ConfiguredFeatures.IRON_ORE_FEATURE.range(
-                256).squared().count(22)
+                256).squared().count(20)
         );
 
         registerConfiguredFeature("gold_ore_feature", ConfiguredFeatures.GOLD_ORE_FEATURE.range(
-                256).squared().count(16)
+                256).squared().count(14)
         );
 
         registerConfiguredFeature("diamond_ore_feature", ConfiguredFeatures.DIAMOND_ORE_FEATURE.range(
@@ -147,11 +147,11 @@ public class CustomFeatures {
         );
 
         registerConfiguredFeature("redstone_ore_feature", ConfiguredFeatures.REDSTONE_ORE_FEATURE.range(
-                256).squared().count(18)
+                256).squared().count(16)
         );
 
         registerConfiguredFeature("lapis_ore_feature", ConfiguredFeatures.LAPIS_ORE_FEATURE.range(
-                256).squared().count(18)
+                256).squared().count(15)
         );
     }
 
