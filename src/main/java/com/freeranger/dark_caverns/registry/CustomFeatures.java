@@ -131,19 +131,19 @@ public class CustomFeatures {
         );
 
         registerConfiguredFeature("coal_ore_feature", ConfiguredFeatures.COAL_ORE_FEATURE.range(
-                256).squared().count(22)
+                256).squared().count(23)
         );
 
         registerConfiguredFeature("iron_ore_feature", ConfiguredFeatures.IRON_ORE_FEATURE.range(
-                256).squared().count(20)
+                256).squared().count(21)
         );
 
         registerConfiguredFeature("gold_ore_feature", ConfiguredFeatures.GOLD_ORE_FEATURE.range(
-                256).squared().count(14)
+                256).squared().count(16)
         );
 
         registerConfiguredFeature("diamond_ore_feature", ConfiguredFeatures.DIAMOND_ORE_FEATURE.range(
-                256).squared().count(6)
+                256).squared().count(7)
         );
 
         registerConfiguredFeature("redstone_ore_feature", ConfiguredFeatures.REDSTONE_ORE_FEATURE.range(
@@ -151,7 +151,7 @@ public class CustomFeatures {
         );
 
         registerConfiguredFeature("lapis_ore_feature", ConfiguredFeatures.LAPIS_ORE_FEATURE.range(
-                256).squared().count(15)
+                256).squared().count(16)
         );
     }
 
