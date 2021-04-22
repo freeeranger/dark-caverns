@@ -13,27 +13,11 @@
                 {
                   "condition": "minecraft:match_tool",
                   "predicate": {
-                    "enchantments": [
-                      {
-                        "enchantment": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
-                        }
-                      }
-                    ]
+                    "item": "minecraft:shears"
                   }
                 }
               ],
               "name": "dark_caverns:shroomgrass"
-            },
-            {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                }
-              ],
-              "name": "dark_caverns:carfstone"
             }
           ]
         }
