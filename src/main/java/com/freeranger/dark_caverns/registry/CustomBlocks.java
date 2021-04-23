@@ -1,14 +1,8 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.blocks.CustomPlantBlock;
-import com.freeranger.dark_caverns.blocks.LuminiteLanternBlock;
-import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
-import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HugeMushroomBlock;
+import com.freeranger.dark_caverns.blocks.*;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -32,6 +26,13 @@ public class CustomBlocks {
                     .requiresCorrectToolForDrops()
             )
     );
+
+    public static final RegistryObject<Block> GLOW_SHROOM = register("glow_shroom", () -> new CustomMushroomBlock(
+                    AbstractBlock.Properties.copy(Blocks.RED_MUSHROOM)
+                            .lightLevel((p_235464_0_) -> 13)
+            )
+    );
+
 
     public static final RegistryObject<Block> SHROOM_BLOCK = register("shroom_block", () -> new HugeMushroomBlock(
             AbstractBlock.Properties.copy(Blocks.BROWN_MUSHROOM_BLOCK)
@@ -57,7 +58,6 @@ public class CustomBlocks {
                     .lightLevel((p_235464_0_) -> 15)
             )
     );
-
 
     public static final RegistryObject<Block> LUMINITE_ORE = register("carfstone_luminite_ore", () -> new Block(
             AbstractBlock.Properties.of(Material.STONE)

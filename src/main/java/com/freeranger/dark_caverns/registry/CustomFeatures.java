@@ -5,7 +5,6 @@ import com.freeranger.dark_caverns.generation.CustomFlatBigMushroomFeature;
 import com.freeranger.dark_caverns.generation.CustomHighBigMushroomFeature;
 import com.freeranger.dark_caverns.generation.SpikeFeature;
 import com.google.common.collect.ImmutableSet;
-import com.ibm.icu.impl.locale.XCldrStub;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HugeMushroomBlock;
 import net.minecraft.util.ResourceLocation;
@@ -43,6 +42,12 @@ public class CustomFeatures {
         public static final ConfiguredFeature<?, ?> SHROOMGRASS_PATCH = Feature.RANDOM_PATCH.configured(
                 (new BlockClusterFeatureConfig.Builder(
                         new SimpleBlockStateProvider(CustomBlocks.SHROOMGRASS.get().defaultBlockState()), new SimpleBlockPlacer()))
+                        .tries(32).whitelist(ImmutableSet.of(CustomBlocks.SHROOMGRASS_BLOCK.get())).noProjection().build()
+        );
+
+        public static final ConfiguredFeature<?, ?> GLOW_SHROOM_PATCH = Feature.RANDOM_PATCH.configured(
+                (new BlockClusterFeatureConfig.Builder(
+                        new SimpleBlockStateProvider(CustomBlocks.GLOW_SHROOM.get().defaultBlockState()), new SimpleBlockPlacer()))
                         .tries(32).whitelist(ImmutableSet.of(CustomBlocks.SHROOMGRASS_BLOCK.get())).noProjection().build()
         );
 
@@ -124,6 +129,10 @@ public class CustomFeatures {
 
         registerConfiguredFeature("shroomgrass_patch", ConfiguredFeatures.SHROOMGRASS_PATCH.range(
                 256).squared().count(128)
+        );
+
+        registerConfiguredFeature("glow_shroom_patch", ConfiguredFeatures.GLOW_SHROOM_PATCH.range(
+                256).squared().count(48)
         );
 
         registerConfiguredFeature("luminite_ore_feature", ConfiguredFeatures.LUMINITE_ORE_FEATURE.range(
