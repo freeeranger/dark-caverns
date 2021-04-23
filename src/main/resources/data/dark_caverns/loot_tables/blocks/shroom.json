@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "dark_caverns:glow_shroom"
+          "name": "dark_caverns:shroom"
         }
       ],
       "conditions": [

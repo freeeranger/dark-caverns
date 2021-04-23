@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "dark_caverns:block/glow_shroom"
+    "layer0": "dark_caverns:block/shroom"
   }
 }

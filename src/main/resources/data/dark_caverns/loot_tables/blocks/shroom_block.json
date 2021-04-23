@@ -47,7 +47,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "dark_caverns:glow_shroom"
+              "name": "dark_caverns:shroom"
             }
           ]
         }

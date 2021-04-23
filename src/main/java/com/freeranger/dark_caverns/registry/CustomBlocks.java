@@ -27,7 +27,7 @@ public class CustomBlocks {
             )
     );
 
-    public static final RegistryObject<Block> GLOW_SHROOM = register("glow_shroom", () -> new CustomMushroomBlock(
+    public static final RegistryObject<Block> SHROOM = register("shroom", () -> new CustomMushroomBlock(
                     AbstractBlock.Properties.copy(Blocks.RED_MUSHROOM)
                             .lightLevel((p_235464_0_) -> 13)
             )

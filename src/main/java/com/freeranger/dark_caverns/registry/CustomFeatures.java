@@ -45,9 +45,9 @@ public class CustomFeatures {
                         .tries(32).whitelist(ImmutableSet.of(CustomBlocks.SHROOMGRASS_BLOCK.get())).noProjection().build()
         );
 
-        public static final ConfiguredFeature<?, ?> GLOW_SHROOM_PATCH = Feature.RANDOM_PATCH.configured(
+        public static final ConfiguredFeature<?, ?> SHROOM_PATCH = Feature.RANDOM_PATCH.configured(
                 (new BlockClusterFeatureConfig.Builder(
-                        new SimpleBlockStateProvider(CustomBlocks.GLOW_SHROOM.get().defaultBlockState()), new SimpleBlockPlacer()))
+                        new SimpleBlockStateProvider(CustomBlocks.SHROOM.get().defaultBlockState()), new SimpleBlockPlacer()))
                         .tries(32).whitelist(ImmutableSet.of(CustomBlocks.SHROOMGRASS_BLOCK.get())).noProjection().build()
         );
 
@@ -131,7 +131,7 @@ public class CustomFeatures {
                 256).squared().count(128)
         );
 
-        registerConfiguredFeature("glow_shroom_patch", ConfiguredFeatures.GLOW_SHROOM_PATCH.range(
+        registerConfiguredFeature("shroom_patch", ConfiguredFeatures.SHROOM_PATCH.range(
                 256).squared().count(48)
         );
 

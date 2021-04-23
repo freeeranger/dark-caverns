@@ -3,11 +3,9 @@ package com.freeranger.dark_caverns.blocks;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomFeatures;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.MushroomBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
@@ -21,7 +19,7 @@ public class CustomMushroomBlock extends MushroomBlock {
     public boolean growMushroom(ServerWorld world, BlockPos pos, BlockState state, Random rand) {
         world.removeBlock(pos, false);
         ConfiguredFeature<?, ?> feature;
-        if (this == CustomBlocks.GLOW_SHROOM.get()) {
+        if (this == CustomBlocks.SHROOM.get()) {
             if(rand.nextBoolean())
                 feature = CustomFeatures.ConfiguredFeatures.HUGE_MUSHROOM;
             else feature = CustomFeatures.ConfiguredFeatures.HUGE_HIGH_MUSHROOM;
