@@ -32,7 +32,8 @@
       "dark_caverns:gold_ore_feature",
       "dark_caverns:diamond_ore_feature",
       "dark_caverns:redstone_ore_feature",
-      "dark_caverns:lapis_ore_feature"
+      "dark_caverns:lapis_ore_feature",
+      "dark_caverns:platinum_ore_feature"
     ],
     [
       "dark_caverns:huge_mushroom_feature",

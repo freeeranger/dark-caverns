@@ -69,6 +69,24 @@ public class CustomBlocks {
             )
     );
 
+    public static final RegistryObject<Block> PLATINUM_ORE = register("carfstone_platinum_ore", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(8f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(3)
+                            .requiresCorrectToolForDrops()
+            )
+    );
+
+    public static final RegistryObject<Block> PLATINUM_BLOCK = register("platinum_block", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(8f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(3)
+                            .requiresCorrectToolForDrops()
+            )
+    );
+
     public static final RegistryObject<Block> CARFSTONE_COAL_ORE = register("carfstone_coal_ore", () -> new Block(
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(6.5f, 7f)

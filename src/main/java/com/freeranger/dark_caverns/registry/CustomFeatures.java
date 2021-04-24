@@ -70,15 +70,19 @@ public class CustomFeatures {
         );
 
         public static final ConfiguredFeature<?, ?> DIAMOND_ORE_FEATURE = Feature.ORE.configured(
-                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_DIAMOND_ORE.get().defaultBlockState(), 12)
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_DIAMOND_ORE.get().defaultBlockState(), 11)
         );
 
         public static final ConfiguredFeature<?, ?> REDSTONE_ORE_FEATURE = Feature.ORE.configured(
-                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_REDSTONE_ORE.get().defaultBlockState(), 8)
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_REDSTONE_ORE.get().defaultBlockState(), 12)
+        );
+
+        public static final ConfiguredFeature<?, ?> PLATINUM_ORE_FEATURE = Feature.ORE.configured(
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.PLATINUM_ORE.get().defaultBlockState(), 5)
         );
 
         public static final ConfiguredFeature<?, ?> LAPIS_ORE_FEATURE = Feature.ORE.configured(
-                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_LAPIS_ORE.get().defaultBlockState(), 8)
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_LAPIS_ORE.get().defaultBlockState(), 12)
         );
 
         public static final ConfiguredFeature<?, ?> HUGE_MUSHROOM = CustomFeatures.HUGE_MUSHROOM_FEATURE.get().configured(
@@ -136,7 +140,7 @@ public class CustomFeatures {
         );
 
         registerConfiguredFeature("luminite_ore_feature", ConfiguredFeatures.LUMINITE_ORE_FEATURE.range(
-                256).squared().count(42)
+                256).squared().count(47)
         );
 
         registerConfiguredFeature("coal_ore_feature", ConfiguredFeatures.COAL_ORE_FEATURE.range(
@@ -153,6 +157,10 @@ public class CustomFeatures {
 
         registerConfiguredFeature("diamond_ore_feature", ConfiguredFeatures.DIAMOND_ORE_FEATURE.range(
                 256).squared().count(7)
+        );
+
+        registerConfiguredFeature("platinum_ore_feature", ConfiguredFeatures.PLATINUM_ORE_FEATURE.range(
+                256).squared().count(4)
         );
 
         registerConfiguredFeature("redstone_ore_feature", ConfiguredFeatures.REDSTONE_ORE_FEATURE.range(
