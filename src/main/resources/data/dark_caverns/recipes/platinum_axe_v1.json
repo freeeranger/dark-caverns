@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ii",
+    "/i",
+    "/"
+  ],
+  "key": {
+    "i": {
+      "item": "dark_caverns:platinum_ingot"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "dark_caverns:platinum_axe",
+    "count": 1
+  }
+}

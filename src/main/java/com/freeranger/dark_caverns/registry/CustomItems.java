@@ -5,9 +5,7 @@ import com.freeranger.dark_caverns.armor.LuminiteArmorMaterial;
 import com.freeranger.dark_caverns.armor.PlatinumArmorMaterial;
 import com.freeranger.dark_caverns.items.ThrowableLuminiteTorchItem;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.WallOrFloorItem;
+import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -37,6 +35,31 @@ public class CustomItems {
                     EquipmentSlotType.HEAD,
                     new Item.Properties().tab(CustomItemGroups.GROUP)
             )
+    );
+
+    public static final RegistryObject<Item> PLATINUM_SWORD = ITEMS.register(
+            "platinum_sword",
+            () -> new SwordItem(CustomItemTiers.PLATINUM, 3, -2.4f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> PLATINUM_AXE = ITEMS.register(
+            "platinum_axe",
+            () -> new AxeItem(CustomItemTiers.PLATINUM, 5f, -3f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> PLATINUM_PICKAXE = ITEMS.register(
+            "platinum_pickaxe",
+            () -> new PickaxeItem(CustomItemTiers.PLATINUM, 1, -2.8f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> PLATINUM_SHOVEL = ITEMS.register(
+            "platinum_shovel",
+            () -> new ShovelItem(CustomItemTiers.PLATINUM, 1.5f, -3f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> PLATINUM_HOE = ITEMS.register(
+            "platinum_hoe",
+            () -> new HoeItem(CustomItemTiers.PLATINUM, -4, 0f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> PLATINUM_HELMET = ITEMS.register(
