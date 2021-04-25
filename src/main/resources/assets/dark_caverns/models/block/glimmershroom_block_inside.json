@@ -2,6 +2,6 @@
     "parent": "block/template_single_face",
     "ambientocclusion": false,
     "textures": {
-        "texture": "dark_caverns:block/shroom_block_inside"
+        "texture": "dark_caverns:block/glimmershroom_block_inside"
     }
 }

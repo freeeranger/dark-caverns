@@ -36,8 +36,8 @@ public class DarkCavernsClient {
         render(CustomBlocks.LUMINITE_TORCH, cutout);
         render(CustomBlocks.LUMINITE_WALL_TORCH, cutout);
         render(CustomBlocks.LUMINITE_LANTERN, cutout);
-        render(CustomBlocks.SHROOMGRASS, cutout);
-        render(CustomBlocks.SHROOM, cutout);
+        render(CustomBlocks.GLIMMERGRASS, cutout);
+        render(CustomBlocks.GLIMMERSHROOM, cutout);
     }
 
 

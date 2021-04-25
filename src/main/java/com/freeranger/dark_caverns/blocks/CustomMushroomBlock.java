@@ -19,7 +19,7 @@ public class CustomMushroomBlock extends MushroomBlock {
     public boolean growMushroom(ServerWorld world, BlockPos pos, BlockState state, Random rand) {
         world.removeBlock(pos, false);
         ConfiguredFeature<?, ?> feature;
-        if (this == CustomBlocks.SHROOM.get()) {
+        if (this == CustomBlocks.GLIMMERSHROOM.get()) {
             if(rand.nextBoolean())
                 feature = CustomFeatures.ConfiguredFeatures.HUGE_MUSHROOM;
             else feature = CustomFeatures.ConfiguredFeatures.HUGE_HIGH_MUSHROOM;

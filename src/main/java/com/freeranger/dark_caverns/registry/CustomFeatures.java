@@ -41,14 +41,14 @@ public class CustomFeatures {
 
         public static final ConfiguredFeature<?, ?> SHROOMGRASS_PATCH = Feature.RANDOM_PATCH.configured(
                 (new BlockClusterFeatureConfig.Builder(
-                        new SimpleBlockStateProvider(CustomBlocks.SHROOMGRASS.get().defaultBlockState()), new SimpleBlockPlacer()))
-                        .tries(32).whitelist(ImmutableSet.of(CustomBlocks.SHROOMGRASS_BLOCK.get())).noProjection().build()
+                        new SimpleBlockStateProvider(CustomBlocks.GLIMMERGRASS.get().defaultBlockState()), new SimpleBlockPlacer()))
+                        .tries(32).whitelist(ImmutableSet.of(CustomBlocks.GLIMMERGRASS_BLOCK.get())).noProjection().build()
         );
 
         public static final ConfiguredFeature<?, ?> SHROOM_PATCH = Feature.RANDOM_PATCH.configured(
                 (new BlockClusterFeatureConfig.Builder(
-                        new SimpleBlockStateProvider(CustomBlocks.SHROOM.get().defaultBlockState()), new SimpleBlockPlacer()))
-                        .tries(32).whitelist(ImmutableSet.of(CustomBlocks.SHROOMGRASS_BLOCK.get())).noProjection().build()
+                        new SimpleBlockStateProvider(CustomBlocks.GLIMMERSHROOM.get().defaultBlockState()), new SimpleBlockPlacer()))
+                        .tries(32).whitelist(ImmutableSet.of(CustomBlocks.GLIMMERGRASS_BLOCK.get())).noProjection().build()
         );
 
         static final RuleTest BASE_BLOCKS_TAG = new TagMatchRuleTest(CustomTags.Blocks.BASE_STONE);
@@ -88,7 +88,7 @@ public class CustomFeatures {
         public static final ConfiguredFeature<?, ?> HUGE_MUSHROOM = CustomFeatures.HUGE_MUSHROOM_FEATURE.get().configured(
                         new BigMushroomFeatureConfig(
                                 new SimpleBlockStateProvider(
-                                        CustomBlocks.SHROOM_BLOCK.get().defaultBlockState()
+                                        CustomBlocks.GLIMMERSHROOM_BLOCK.get().defaultBlockState()
                                                 .setValue(HugeMushroomBlock.UP, Boolean.TRUE)
                                                 .setValue(HugeMushroomBlock.DOWN, Boolean.FALSE)
                                 ),
@@ -104,7 +104,7 @@ public class CustomFeatures {
         public static final ConfiguredFeature<?, ?> HUGE_HIGH_MUSHROOM = CustomFeatures.HUGE_HIGH_MUSHROOM_FEATURE.get().configured(
                 new BigMushroomFeatureConfig(
                         new SimpleBlockStateProvider(
-                                CustomBlocks.SHROOM_BLOCK.get().defaultBlockState()
+                                CustomBlocks.GLIMMERSHROOM_BLOCK.get().defaultBlockState()
                                         .setValue(HugeMushroomBlock.UP, Boolean.TRUE)
                                         .setValue(HugeMushroomBlock.DOWN, Boolean.FALSE)
                         ),

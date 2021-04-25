@@ -30,8 +30,8 @@ public class CustomBlockTags extends BlockTagsProvider {
 
         tag(CustomTags.Blocks.BASE_CARVEABLE).add(
                 CustomBlocks.CARFSTONE.get(),
-                CustomBlocks.SHROOMGRASS_BLOCK.get(),
-                CustomBlocks.SHROOMGRASS.get()
+                CustomBlocks.GLIMMERGRASS_BLOCK.get(),
+                CustomBlocks.GLIMMERGRASS.get()
         );
     }
 

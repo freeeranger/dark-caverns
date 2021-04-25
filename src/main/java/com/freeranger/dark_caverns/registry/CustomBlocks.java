@@ -27,20 +27,20 @@ public class CustomBlocks {
             )
     );
 
-    public static final RegistryObject<Block> SHROOM = register("shroom", () -> new CustomMushroomBlock(
+    public static final RegistryObject<Block> GLIMMERSHROOM = register("glimmershroom", () -> new CustomMushroomBlock(
                     AbstractBlock.Properties.copy(Blocks.RED_MUSHROOM)
                             .lightLevel((p_235464_0_) -> 13)
             )
     );
 
 
-    public static final RegistryObject<Block> SHROOM_BLOCK = register("shroom_block", () -> new HugeMushroomBlock(
+    public static final RegistryObject<Block> GLIMMERSHROOM_BLOCK = register("glimmershroom_block", () -> new HugeMushroomBlock(
             AbstractBlock.Properties.copy(Blocks.BROWN_MUSHROOM_BLOCK)
                     .lightLevel((p_235464_0_) -> 11)
             )
     );
 
-    public static final RegistryObject<Block> SHROOMGRASS_BLOCK = register("shroomgrass_block", () -> new Block(
+    public static final RegistryObject<Block> GLIMMERGRASS_BLOCK = register("glimmergrass_block", () -> new Block(
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(5f, 7f)
                             .harvestTool(ToolType.PICKAXE)
@@ -154,7 +154,7 @@ public class CustomBlocks {
             AbstractBlock.Properties.copy(Blocks.LANTERN)
     ));
 
-    public static final RegistryObject<Block> SHROOMGRASS = register("shroomgrass", () -> new CustomPlantBlock(
+    public static final RegistryObject<Block> GLIMMERGRASS = register("glimmergrass", () -> new CustomPlantBlock(
             AbstractBlock.Properties.copy(Blocks.GRASS)
                     .lightLevel((state) -> 9)
     ));

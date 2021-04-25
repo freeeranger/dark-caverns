@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "top": "dark_caverns:block/shroomgrass_block_top",
+    "top": "dark_caverns:block/glimmergrass_block_top",
     "bottom": "dark_caverns:block/carfstone",
-    "side": "dark_caverns:block/shroomgrass_block_side"
+    "side": "dark_caverns:block/glimmergrass_block_side"
   }
 }

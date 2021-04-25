@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/template_single_face",
   "textures": {
-    "texture": "dark_caverns:block/shroom_block"
+    "texture": "dark_caverns:block/glimmershroom_block"
   }
 }

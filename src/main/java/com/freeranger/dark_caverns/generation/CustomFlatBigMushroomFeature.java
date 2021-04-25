@@ -44,7 +44,7 @@ public class CustomFlatBigMushroomFeature extends Feature<BigMushroomFeatureConf
         int i = p_227209_2_.getY();
         if (i >= 1 && i + p_227209_3_ + 1 < 256) {
             Block block = p_227209_1_.getBlockState(p_227209_2_.below()).getBlock();
-            if (!isDirt(block) && !block.is(CustomBlocks.SHROOMGRASS_BLOCK.get())) {
+            if (!isDirt(block) && !block.is(CustomBlocks.GLIMMERGRASS_BLOCK.get())) {
                 return false;
             } else {
                 for(int j = 0; j <= p_227209_3_; ++j) {

@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "dark_caverns:carfstone",
-    "dark_caverns:shroomgrass_block",
-    "dark_caverns:shroomgrass"
+    "dark_caverns:glimmergrass_block",
+    "dark_caverns:glimmergrass"
   ]
 }

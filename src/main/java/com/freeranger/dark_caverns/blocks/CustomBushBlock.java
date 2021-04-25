@@ -13,6 +13,6 @@ public class CustomBushBlock extends BushBlock {
 
     @Override
     protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return state.is(CustomBlocks.SHROOMGRASS_BLOCK.get());
+        return state.is(CustomBlocks.GLIMMERGRASS_BLOCK.get());
     }
 }
