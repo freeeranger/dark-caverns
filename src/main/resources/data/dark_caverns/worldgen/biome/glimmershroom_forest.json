@@ -147,7 +147,7 @@
   },
   "category": "none",
   "precipitation": "none",
-  "surface_builder": "dark_caverns:shroomgrass_surface",
+  "surface_builder": "dark_caverns:glimmershroomgrass_surface",
   "scale": 0.05,
   "downfall": 0.4,
   "depth": 0.12,
