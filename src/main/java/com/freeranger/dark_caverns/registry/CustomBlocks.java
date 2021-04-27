@@ -27,6 +27,15 @@ public class CustomBlocks {
             )
     );
 
+    public static final RegistryObject<Block> MOLTEN_CARFSTONE = register("molten_carfstone", () -> new Block(
+                    AbstractBlock.Properties.of(Material.STONE)
+                            .strength(5.5f, 7f)
+                            .harvestTool(ToolType.PICKAXE)
+                            .harvestLevel(0)
+                            .requiresCorrectToolForDrops()
+            )
+    );
+
     public static final RegistryObject<Block> GLIMMERSHROOM = register("glimmershroom", () -> new CustomMushroomBlock(
                     AbstractBlock.Properties.copy(Blocks.RED_MUSHROOM)
                             .lightLevel((p_235464_0_) -> 13)

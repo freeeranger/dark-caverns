@@ -14,8 +14,11 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import java.util.Random;
 
 public class SpikeFeature extends Feature<NoFeatureConfig> {
-    public SpikeFeature(Codec<NoFeatureConfig> noFeatureConfig) {
+    Block sourceBlock;
+
+    public SpikeFeature(Codec<NoFeatureConfig> noFeatureConfig, Block sourceBlock) {
         super(noFeatureConfig);
+        this.sourceBlock = sourceBlock;
     }
 
     public boolean place(ISeedReader seedReader, ChunkGenerator chunkGenerator, Random rand, BlockPos pos, NoFeatureConfig noFeatureConfig) {
@@ -23,7 +26,7 @@ public class SpikeFeature extends Feature<NoFeatureConfig> {
             pos = pos.below();
         }
 
-        if (!seedReader.getBlockState(pos).is(CustomBlocks.CARFSTONE.get())) {
+        if (!seedReader.getBlockState(pos).is(sourceBlock)) {
             return false;
         } else {
             pos = pos.above(rand.nextInt(4));
@@ -42,15 +45,15 @@ public class SpikeFeature extends Feature<NoFeatureConfig> {
                         if ((i1 == 0 && j1 == 0 || !(f1 * f1 + f2 * f2 > f * f)) && (i1 != -l && i1 != l && j1 != -l && j1 != l || !(rand.nextFloat() > 0.999f))) {
                             BlockState blockstate = seedReader.getBlockState(pos.offset(i1, k, j1));
                             Block block = blockstate.getBlock();
-                            if (blockstate.isAir(seedReader, pos.offset(i1, k, j1)) || isDirt(block) || block == CustomBlocks.CARFSTONE.get()) {
-                                this.setBlock(seedReader, pos.offset(i1, k, j1), CustomBlocks.CARFSTONE.get().defaultBlockState());
+                            if (blockstate.isAir(seedReader, pos.offset(i1, k, j1)) || isDirt(block) || block == sourceBlock) {
+                                this.setBlock(seedReader, pos.offset(i1, k, j1), sourceBlock.defaultBlockState());
                             }
 
                             if (k != 0 && l > 1) {
                                 blockstate = seedReader.getBlockState(pos.offset(i1, -k, j1));
                                 block = blockstate.getBlock();
-                                if (blockstate.isAir(seedReader, pos.offset(i1, -k, j1)) || isDirt(block) || block == CustomBlocks.CARFSTONE.get()) {
-                                    this.setBlock(seedReader, pos.offset(i1, -k, j1), CustomBlocks.CARFSTONE.get().defaultBlockState());
+                                if (blockstate.isAir(seedReader, pos.offset(i1, -k, j1)) || isDirt(block) || block == sourceBlock) {
+                                    this.setBlock(seedReader, pos.offset(i1, -k, j1), sourceBlock.defaultBlockState());
                                 }
                             }
                         }
@@ -76,11 +79,11 @@ public class SpikeFeature extends Feature<NoFeatureConfig> {
                     while(blockpos.getY() > 50) {
                         BlockState blockstate1 = seedReader.getBlockState(blockpos);
                         Block block1 = blockstate1.getBlock();
-                        if (!blockstate1.isAir(seedReader, blockpos) && !isDirt(block1) && block1 != CustomBlocks.CARFSTONE.get()) {
+                        if (!blockstate1.isAir(seedReader, blockpos) && !isDirt(block1) && block1 != sourceBlock) {
                             break;
                         }
 
-                        this.setBlock(seedReader, blockpos, CustomBlocks.CARFSTONE.get().defaultBlockState());
+                        this.setBlock(seedReader, blockpos, sourceBlock.defaultBlockState());
                         blockpos = blockpos.below();
                         --j2;
                         if (j2 <= 0) {

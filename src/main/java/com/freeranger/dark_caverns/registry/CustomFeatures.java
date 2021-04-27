@@ -26,7 +26,10 @@ public class CustomFeatures {
     );
 
     public static final RegistryObject<Feature<NoFeatureConfig>> SPIKE_FEATURE = FEATURES.register(
-            "spike_feature", () -> new SpikeFeature(NoFeatureConfig.CODEC));
+            "spike_feature", () -> new SpikeFeature(NoFeatureConfig.CODEC, CustomBlocks.CARFSTONE.get()));
+
+    public static final RegistryObject<Feature<NoFeatureConfig>> MOLTEN_SPIKE_FEATURE = FEATURES.register(
+            "molten_spike_feature", () -> new SpikeFeature(NoFeatureConfig.CODEC, CustomBlocks.MOLTEN_CARFSTONE.get()));
 
     public static final RegistryObject<Feature<BigMushroomFeatureConfig>> HUGE_MUSHROOM_FEATURE = FEATURES.register(
             "huge_mushroom_feature", () -> new CustomFlatBigMushroomFeature(BigMushroomFeatureConfig.CODEC));
@@ -37,6 +40,16 @@ public class CustomFeatures {
     public static final class ConfiguredFeatures {
         public static final ConfiguredFeature<?, ?> SPIKE_FEATURE = CustomFeatures.SPIKE_FEATURE.get().configured(
                 IFeatureConfig.NONE
+        );
+
+        public static final ConfiguredFeature<?, ?> MOLTEN_SPIKE_FEATURE = CustomFeatures.MOLTEN_SPIKE_FEATURE.get().configured(
+                IFeatureConfig.NONE
+        );
+
+        public static final ConfiguredFeature<?, ?> FIRE_PATCH = Feature.RANDOM_PATCH.configured(
+                (new BlockClusterFeatureConfig.Builder(
+                        new SimpleBlockStateProvider(Blocks.FIRE.defaultBlockState()), new SimpleBlockPlacer()))
+                        .tries(64).whitelist(ImmutableSet.of(CustomBlocks.MOLTEN_CARFSTONE.get())).noProjection().build()
         );
 
         public static final ConfiguredFeature<?, ?> SHROOMGRASS_PATCH = Feature.RANDOM_PATCH.configured(
@@ -123,6 +136,10 @@ public class CustomFeatures {
                 Placement.COUNT_MULTILAYER.configured(new FeatureSpreadConfig(2))
         ));
 
+        registerConfiguredFeature("molten_spike_feature", ConfiguredFeatures.MOLTEN_SPIKE_FEATURE.decorated(
+                Placement.COUNT_MULTILAYER.configured(new FeatureSpreadConfig(1))
+        ));
+
         registerConfiguredFeature("huge_mushroom_feature", ConfiguredFeatures.HUGE_MUSHROOM.decorated(
                 Placement.COUNT_MULTILAYER.configured(new FeatureSpreadConfig(2))
         ));
@@ -130,6 +147,10 @@ public class CustomFeatures {
         registerConfiguredFeature("huge_high_mushroom_feature", ConfiguredFeatures.HUGE_HIGH_MUSHROOM.decorated(
                 Placement.COUNT_MULTILAYER.configured(new FeatureSpreadConfig(2))
         ));
+
+        registerConfiguredFeature("fire_patch", ConfiguredFeatures.FIRE_PATCH.range(
+                256).squared().count(5)
+        );
 
         registerConfiguredFeature("shroomgrass_patch", ConfiguredFeatures.SHROOMGRASS_PATCH.range(
                 256).squared().count(128)
