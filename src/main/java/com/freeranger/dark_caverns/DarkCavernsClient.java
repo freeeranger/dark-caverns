@@ -31,16 +31,14 @@ public class DarkCavernsClient {
     }
 
     public static void registerBlockRenderers() {
-        RenderType cutout = RenderType.cutout();
-
-        render(CustomBlocks.LUMINITE_TORCH, cutout);
-        render(CustomBlocks.LUMINITE_WALL_TORCH, cutout);
-        render(CustomBlocks.LUMINITE_LANTERN, cutout);
-        render(CustomBlocks.GLIMMERGRASS, cutout);
-        render(CustomBlocks.GLIMMERSHROOM, cutout);
+        render(CustomBlocks.LUMINITE_TORCH, RenderType.cutout());
+        render(CustomBlocks.LUMINITE_WALL_TORCH, RenderType.cutout());
+        render(CustomBlocks.LUMINITE_LANTERN, RenderType.cutout());
+        render(CustomBlocks.GLIMMERGRASS, RenderType.cutout());
+        render(CustomBlocks.GLIMMERSHROOM, RenderType.cutout());
+        render(CustomBlocks.CHARRED_GRASS, RenderType.cutout());
     }
-
-
+    
     public static void registerEntityRenderers(){
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.THROWABLE_LUMINITE_TORCH_TYPE,
                 new ThrowableLuminiteTorchRenderingFactory());

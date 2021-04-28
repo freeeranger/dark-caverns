@@ -165,7 +165,12 @@ public class CustomBlocks {
 
     public static final RegistryObject<Block> GLIMMERGRASS = register("glimmergrass", () -> new CustomPlantBlock(
             AbstractBlock.Properties.copy(Blocks.GRASS)
-                    .lightLevel((state) -> 9)
+                    .lightLevel((state) -> 9),
+            CustomBlocks.GLIMMERGRASS_BLOCK.get()
+    ));
+
+    public static final RegistryObject<Block> CHARRED_GRASS = register("charred_grass", () -> new CustomPlantBlock(
+            AbstractBlock.Properties.copy(Blocks.GRASS), CustomBlocks.MOLTEN_CARFSTONE.get()
     ));
 
     private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {

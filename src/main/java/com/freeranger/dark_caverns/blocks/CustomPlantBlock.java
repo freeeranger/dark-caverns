@@ -14,8 +14,8 @@ import java.util.Random;
 public class CustomPlantBlock extends CustomBushBlock implements IGrowable {
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
 
-    public CustomPlantBlock(Properties properties) {
-        super(properties);
+    public CustomPlantBlock(Properties properties, Block baseBlock) {
+        super(properties, baseBlock);
     }
 
     @Override

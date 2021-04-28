@@ -13,6 +13,7 @@ import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.template.BlockMatchRuleTest;
 import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
 import net.minecraft.world.gen.placement.Placement;
@@ -37,6 +38,7 @@ public class CustomFeatures {
     public static final RegistryObject<Feature<BigMushroomFeatureConfig>> HUGE_HIGH_MUSHROOM_FEATURE = FEATURES.register(
             "huge_high_mushroom_feature", () -> new CustomHighBigMushroomFeature(BigMushroomFeatureConfig.CODEC));
 
+
     public static final class ConfiguredFeatures {
         public static final ConfiguredFeature<?, ?> SPIKE_FEATURE = CustomFeatures.SPIKE_FEATURE.get().configured(
                 IFeatureConfig.NONE
@@ -52,10 +54,16 @@ public class CustomFeatures {
                         .tries(64).whitelist(ImmutableSet.of(CustomBlocks.MOLTEN_CARFSTONE.get())).noProjection().build()
         );
 
-        public static final ConfiguredFeature<?, ?> SHROOMGRASS_PATCH = Feature.RANDOM_PATCH.configured(
+        public static final ConfiguredFeature<?, ?> GLIMMERGRASS_PATCH = Feature.RANDOM_PATCH.configured(
                 (new BlockClusterFeatureConfig.Builder(
                         new SimpleBlockStateProvider(CustomBlocks.GLIMMERGRASS.get().defaultBlockState()), new SimpleBlockPlacer()))
                         .tries(32).whitelist(ImmutableSet.of(CustomBlocks.GLIMMERGRASS_BLOCK.get())).noProjection().build()
+        );
+
+        public static final ConfiguredFeature<?, ?> CHARRED_GRASS_PATCH = Feature.RANDOM_PATCH.configured(
+                (new BlockClusterFeatureConfig.Builder(
+                        new SimpleBlockStateProvider(CustomBlocks.CHARRED_GRASS.get().defaultBlockState()), new SimpleBlockPlacer()))
+                        .tries(32).whitelist(ImmutableSet.of(CustomBlocks.MOLTEN_CARFSTONE.get())).noProjection().build()
         );
 
         public static final ConfiguredFeature<?, ?> SHROOM_PATCH = Feature.RANDOM_PATCH.configured(
@@ -68,6 +76,11 @@ public class CustomFeatures {
 
         public static final ConfiguredFeature<?, ?> LUMINITE_ORE_FEATURE = Feature.ORE.configured(
                 new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.LUMINITE_ORE.get().defaultBlockState(), 12)
+        );
+
+        public static final ConfiguredFeature<?, ?> MAGMA_PATCH = Feature.ORE.configured(
+                new OreFeatureConfig(new BlockMatchRuleTest(CustomBlocks.MOLTEN_CARFSTONE.get()),
+                        Blocks.MAGMA_BLOCK.defaultBlockState(), 24)
         );
 
         public static final ConfiguredFeature<?, ?> COAL_ORE_FEATURE = Feature.ORE.configured(
@@ -152,7 +165,11 @@ public class CustomFeatures {
                 256).squared().count(5)
         );
 
-        registerConfiguredFeature("shroomgrass_patch", ConfiguredFeatures.SHROOMGRASS_PATCH.range(
+        registerConfiguredFeature("glimmergrass_patch", ConfiguredFeatures.GLIMMERGRASS_PATCH.range(
+                256).squared().count(128)
+        );
+
+        registerConfiguredFeature("charred_grass_patch", ConfiguredFeatures.CHARRED_GRASS_PATCH.range(
                 256).squared().count(128)
         );
 
@@ -161,7 +178,11 @@ public class CustomFeatures {
         );
 
         registerConfiguredFeature("luminite_ore_feature", ConfiguredFeatures.LUMINITE_ORE_FEATURE.range(
-                256).squared().count(47)
+                256).squared().count(44)
+        );
+
+        registerConfiguredFeature("magma_patch", ConfiguredFeatures.MAGMA_PATCH.range(
+                256).squared().count(32)
         );
 
         registerConfiguredFeature("coal_ore_feature", ConfiguredFeatures.COAL_ORE_FEATURE.range(

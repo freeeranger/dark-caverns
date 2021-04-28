@@ -26,6 +26,9 @@
   "starts": [],
   "features": [
     [
+      "minecraft:spring_lava_double"
+    ],
+    [
       "dark_caverns:luminite_ore_feature",
       "dark_caverns:coal_ore_feature",
       "dark_caverns:iron_ore_feature",
@@ -33,13 +36,15 @@
       "dark_caverns:diamond_ore_feature",
       "dark_caverns:redstone_ore_feature",
       "dark_caverns:lapis_ore_feature",
-      "dark_caverns:platinum_ore_feature"
+      "dark_caverns:platinum_ore_feature",
+      "dark_caverns:magma_patch",
+      "dark_caverns:fire_patch"
+    ],
+    [
+      "dark_caverns:charred_grass_patch"
     ],
     [
       "dark_caverns:molten_spike_feature"
-    ],
-    [
-      "dark_caverns:fire_patch"
     ]
   ],
   "spawners": {
