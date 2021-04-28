@@ -162,7 +162,7 @@ public class CustomFeatures {
         ));
 
         registerConfiguredFeature("fire_patch", ConfiguredFeatures.FIRE_PATCH.range(
-                256).squared().count(5)
+                256).squared().count(14)
         );
 
         registerConfiguredFeature("glimmergrass_patch", ConfiguredFeatures.GLIMMERGRASS_PATCH.range(

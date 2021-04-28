@@ -38,7 +38,7 @@ public class DarkCavernsClient {
         render(CustomBlocks.GLIMMERSHROOM, RenderType.cutout());
         render(CustomBlocks.CHARRED_GRASS, RenderType.cutout());
     }
-    
+
     public static void registerEntityRenderers(){
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.THROWABLE_LUMINITE_TORCH_TYPE,
                 new ThrowableLuminiteTorchRenderingFactory());
