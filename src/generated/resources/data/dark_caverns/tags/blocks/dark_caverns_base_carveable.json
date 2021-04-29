@@ -4,6 +4,11 @@
     "dark_caverns:carfstone",
     "dark_caverns:glimmergrass_block",
     "dark_caverns:glimmergrass",
-    "dark_caverns:molten_carfstone"
+    "dark_caverns:molten_carfstone",
+    "dark_caverns:glimmershroom",
+    "dark_caverns:glimmershroom_block",
+    "minecraft:mushroom_stem",
+    "dark_caverns:scorched_berry_bush",
+    "dark_caverns:charred_grass"
   ]
 }

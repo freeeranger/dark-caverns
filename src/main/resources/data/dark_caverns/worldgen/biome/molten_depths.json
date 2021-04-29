@@ -41,11 +41,11 @@
       "dark_caverns:fire_patch"
     ],
     [
-      "dark_caverns:charred_grass_patch",
-      "dark_caverns:scorched_berry_bush_patch"
+      "dark_caverns:molten_spike_feature"
     ],
     [
-      "dark_caverns:molten_spike_feature"
+      "dark_caverns:charred_grass_patch",
+      "dark_caverns:scorched_berry_bush_patch"
     ]
   ],
   "spawners": {

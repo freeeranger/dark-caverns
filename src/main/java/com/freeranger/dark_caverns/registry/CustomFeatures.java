@@ -1,6 +1,7 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
+import com.freeranger.dark_caverns.blocks.ScorchedBerryBushBlock;
 import com.freeranger.dark_caverns.generation.CustomFlatBigMushroomFeature;
 import com.freeranger.dark_caverns.generation.CustomHighBigMushroomFeature;
 import com.freeranger.dark_caverns.generation.SpikeFeature;
@@ -56,8 +57,9 @@ public class CustomFeatures {
 
         public static final ConfiguredFeature<?, ?> SCORCHED_BERRY_BUSH_PATCH = Feature.RANDOM_PATCH.configured(
                 (new BlockClusterFeatureConfig.Builder(
-                        new SimpleBlockStateProvider(CustomBlocks.SCORCHED_BERRY_BUSH.get().defaultBlockState()), new SimpleBlockPlacer()))
-                    .tries(32).whitelist(ImmutableSet.of(CustomBlocks.MOLTEN_CARFSTONE.get())).noProjection().build()
+                        new SimpleBlockStateProvider(CustomBlocks.SCORCHED_BERRY_BUSH.get().defaultBlockState()
+                        .setValue(ScorchedBerryBushBlock.AGE, 3)), new SimpleBlockPlacer()))
+                        .tries(32).whitelist(ImmutableSet.of(CustomBlocks.MOLTEN_CARFSTONE.get())).noProjection().build()
         );
 
         public static final ConfiguredFeature<?, ?> GLIMMERGRASS_PATCH = Feature.RANDOM_PATCH.configured(

@@ -4,6 +4,7 @@ import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomTags;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.TagsProvider;
@@ -32,7 +33,12 @@ public class CustomBlockTags extends BlockTagsProvider {
                 CustomBlocks.CARFSTONE.get(),
                 CustomBlocks.GLIMMERGRASS_BLOCK.get(),
                 CustomBlocks.GLIMMERGRASS.get(),
-                CustomBlocks.MOLTEN_CARFSTONE.get()
+                CustomBlocks.MOLTEN_CARFSTONE.get(),
+                CustomBlocks.GLIMMERSHROOM.get(),
+                CustomBlocks.GLIMMERSHROOM_BLOCK.get(),
+                Blocks.MUSHROOM_STEM,
+                CustomBlocks.SCORCHED_BERRY_BUSH.get(),
+                CustomBlocks.CHARRED_GRASS.get()
         );
     }
 
