@@ -170,11 +170,11 @@ public class CustomFeatures {
         ));
 
         registerConfiguredFeature("fire_patch", ConfiguredFeatures.FIRE_PATCH.range(
-                256).squared().count(16)
+                256).squared().count(14)
         );
 
         registerConfiguredFeature("scorched_berry_bush_patch", ConfiguredFeatures.SCORCHED_BERRY_BUSH_PATCH.range(
-                256).squared().count(36)
+                256).squared().count(30)
         );
 
         registerConfiguredFeature("glimmergrass_patch", ConfiguredFeatures.GLIMMERGRASS_PATCH.range(
@@ -194,7 +194,7 @@ public class CustomFeatures {
         );
 
         registerConfiguredFeature("magma_patch", ConfiguredFeatures.MAGMA_PATCH.range(
-                256).squared().count(32)
+                256).squared().count(24)
         );
 
         registerConfiguredFeature("coal_ore_feature", ConfiguredFeatures.COAL_ORE_FEATURE.range(
