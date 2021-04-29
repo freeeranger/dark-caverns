@@ -6,12 +6,22 @@ import com.freeranger.dark_caverns.armor.PlatinumArmorMaterial;
 import com.freeranger.dark_caverns.items.ThrowableLuminiteTorchItem;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class CustomItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, DarkCaverns.MOD_ID);
+
+    public static final RegistryObject<Item> SCORCHED_BERRIES = ITEMS.register(
+            "scorched_berries",
+            () -> new BlockNamedItem(CustomBlocks.SCORCHED_BERRY_BUSH.get(), (new Item.Properties().tab(CustomItemGroups.GROUP).food(
+                    new Food.Builder().effect(() -> new EffectInstance(Effects.FIRE_RESISTANCE, 300), 1f)
+                    .alwaysEat().fast().nutrition(3).saturationMod(0.2f).build())
+            ))
+    );
 
     public static final RegistryObject<Item> LUMINITE_DUST = ITEMS.register(
             "luminite_dust",

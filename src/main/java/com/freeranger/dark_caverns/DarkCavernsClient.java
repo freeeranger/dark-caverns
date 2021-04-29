@@ -37,6 +37,7 @@ public class DarkCavernsClient {
         render(CustomBlocks.GLIMMERGRASS, RenderType.cutout());
         render(CustomBlocks.GLIMMERSHROOM, RenderType.cutout());
         render(CustomBlocks.CHARRED_GRASS, RenderType.cutout());
+        render(CustomBlocks.SCORCHED_BERRY_BUSH, RenderType.cutout());
     }
 
     public static void registerEntityRenderers(){

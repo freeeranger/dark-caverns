@@ -6,6 +6,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -34,6 +35,11 @@ public class CustomBlocks {
                             .harvestLevel(0)
                             .requiresCorrectToolForDrops()
             )
+    );
+
+    public static final RegistryObject<Block> SCORCHED_BERRY_BUSH = BLOCKS.register("scorched_berry_bush",
+            () -> new ScorchedBerryBushBlock(AbstractBlock.Properties.copy(Blocks.SWEET_BERRY_BUSH)
+                    .lightLevel((p_235464_0_) -> 7), MOLTEN_CARFSTONE.get())
     );
 
     public static final RegistryObject<Block> GLIMMERSHROOM = register("glimmershroom", () -> new CustomMushroomBlock(

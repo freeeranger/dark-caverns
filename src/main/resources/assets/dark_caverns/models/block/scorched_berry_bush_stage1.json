@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "dark_caverns:block/scorched_berry_bush_stage1"
+  }
+}

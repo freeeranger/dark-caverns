@@ -1,6 +1,5 @@
 package com.freeranger.dark_caverns.blocks;
 
-import com.freeranger.dark_caverns.registry.CustomBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
