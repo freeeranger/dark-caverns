@@ -54,6 +54,12 @@ public class CustomFeatures {
                         .tries(64).whitelist(ImmutableSet.of(CustomBlocks.MOLTEN_CARFSTONE.get())).noProjection().build()
         );
 
+        public static final ConfiguredFeature<?, ?> SCORCHED_BERRY_BUSH_PATCH = Feature.RANDOM_PATCH.configured(
+                (new BlockClusterFeatureConfig.Builder(
+                        new SimpleBlockStateProvider(CustomBlocks.SCORCHED_BERRY_BUSH.get().defaultBlockState()), new SimpleBlockPlacer()))
+                    .tries(32).whitelist(ImmutableSet.of(CustomBlocks.MOLTEN_CARFSTONE.get())).noProjection().build()
+        );
+
         public static final ConfiguredFeature<?, ?> GLIMMERGRASS_PATCH = Feature.RANDOM_PATCH.configured(
                 (new BlockClusterFeatureConfig.Builder(
                         new SimpleBlockStateProvider(CustomBlocks.GLIMMERGRASS.get().defaultBlockState()), new SimpleBlockPlacer()))
@@ -66,7 +72,7 @@ public class CustomFeatures {
                         .tries(32).whitelist(ImmutableSet.of(CustomBlocks.MOLTEN_CARFSTONE.get())).noProjection().build()
         );
 
-        public static final ConfiguredFeature<?, ?> SHROOM_PATCH = Feature.RANDOM_PATCH.configured(
+        public static final ConfiguredFeature<?, ?> GLIMMERSHROOM_PATCH = Feature.RANDOM_PATCH.configured(
                 (new BlockClusterFeatureConfig.Builder(
                         new SimpleBlockStateProvider(CustomBlocks.GLIMMERSHROOM.get().defaultBlockState()), new SimpleBlockPlacer()))
                         .tries(32).whitelist(ImmutableSet.of(CustomBlocks.GLIMMERGRASS_BLOCK.get())).noProjection().build()
@@ -165,6 +171,10 @@ public class CustomFeatures {
                 256).squared().count(14)
         );
 
+        registerConfiguredFeature("fire_patch", ConfiguredFeatures.SCORCHED_BERRY_BUSH_PATCH.range(
+                256).squared().count(51)
+        );
+
         registerConfiguredFeature("glimmergrass_patch", ConfiguredFeatures.GLIMMERGRASS_PATCH.range(
                 256).squared().count(128)
         );
@@ -173,7 +183,7 @@ public class CustomFeatures {
                 256).squared().count(128)
         );
 
-        registerConfiguredFeature("shroom_patch", ConfiguredFeatures.SHROOM_PATCH.range(
+        registerConfiguredFeature("shroom_patch", ConfiguredFeatures.GLIMMERSHROOM_PATCH.range(
                 256).squared().count(48)
         );
 
