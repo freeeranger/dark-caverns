@@ -4,9 +4,6 @@ import com.freeranger.dark_caverns.data.CustomBlockTags;
 import com.freeranger.dark_caverns.entities.ScorchlingEntity;
 import com.freeranger.dark_caverns.entities.ScorchlingEntityRenderer;
 import com.freeranger.dark_caverns.registry.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -69,15 +66,7 @@ public class DarkCaverns {
 
 	@SubscribeEvent
 	public void registerAttributes(EntityAttributeCreationEvent event){
-		event.put(CustomEntityTypes.SCORCHLING_ENTITY.get(),
-				MonsterEntity.createMonsterAttributes()
-						.add(Attributes.ATTACK_DAMAGE, 4.0D)
-						.add(Attributes.ATTACK_KNOCKBACK, 3.0D)
-						.add(Attributes.ARMOR, 1.0D)
-						.add(Attributes.MOVEMENT_SPEED, 0.5D)
-						.add(Attributes.FOLLOW_RANGE, 24.0D)
-						.build()
-		);
+		event.put(CustomEntityTypes.SCORCHLING_ENTITY.get(), ScorchlingEntity.ATTRIBUTE_MAP);
 	}
 
 	@SubscribeEvent
