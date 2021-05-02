@@ -1,13 +1,17 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
+import com.freeranger.dark_caverns.entities.ScorchlingEntity;
 import com.freeranger.dark_caverns.entities.ThrowableLuminiteTorchEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import software.bernie.example.entity.BikeEntity;
 
 @Mod.EventBusSubscriber(modid = DarkCaverns.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CustomEntityTypes {
@@ -21,4 +25,11 @@ public class CustomEntityTypes {
             .build("throwable_luminite_torch");
     public static final RegistryObject<EntityType<ThrowableLuminiteTorchEntity>> THROWABLE_LUMINITE_TORCH =
             ENTITIES.register("throwable_luminite_torch", () -> THROWABLE_LUMINITE_TORCH_TYPE);
+
+    public static final RegistryObject<EntityType<ScorchlingEntity>> SCORCHLING_ENTITY = buildEntity(ScorchlingEntity::new,
+            ScorchlingEntity.class, 0.5f, 0.6F);
+
+    public static <T extends Entity> RegistryObject<EntityType<T>> buildEntity(EntityType.IFactory<T> entity, Class<T> entityClass, float width, float height) {
+        return ENTITIES.register("scorchling", () -> EntityType.Builder.of(entity, EntityClassification.CREATURE).sized(width, height).build("scorchling"));
+    }
 }
