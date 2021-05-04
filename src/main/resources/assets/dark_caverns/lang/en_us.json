@@ -34,5 +34,7 @@
   "item.dark_caverns.platinum_ingot": "Platinum Ingot",
   "block.dark_caverns.luminite_torch": "Luminite Torch",
   "block.dark_caverns.luminite_wall_torch": "Luminite Torch",
-  "itemGroup.dark_caverns": "Dark Caverns"
+  "itemGroup.dark_caverns": "Dark Caverns",
+  "entity.dark_caverns.scorchling": "Scorchling",
+  "item.dark_caverns.scorchling_spawn_egg": "Scorchling Spawn Egg"
 }

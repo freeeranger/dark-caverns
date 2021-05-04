@@ -9,6 +9,6 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 public class ScorchlingEntityRenderer extends GeoEntityRenderer {
     public ScorchlingEntityRenderer(EntityRendererManager renderManager) {
         super(renderManager, new ScorchlingEntityModel());
-        this.shadowRadius = 0.3f;
+        this.shadowRadius = 0.4f;
     }
 }

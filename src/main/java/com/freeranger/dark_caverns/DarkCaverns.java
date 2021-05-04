@@ -3,7 +3,16 @@ package com.freeranger.dark_caverns;
 import com.freeranger.dark_caverns.data.CustomBlockTags;
 import com.freeranger.dark_caverns.entities.ScorchlingEntity;
 import com.freeranger.dark_caverns.entities.ScorchlingEntityRenderer;
+import com.freeranger.dark_caverns.items.CustomSpawnEggItem;
 import com.freeranger.dark_caverns.registry.*;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.dispenser.IBlockSource;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SpawnEggItem;
+import net.minecraft.util.Direction;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -40,6 +49,7 @@ public class DarkCaverns {
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> DarkCavernsClient::init);
 
 		DeferredRegister<?>[] registers = {
+				CustomEntityTypes.ENTITIES,
 				CustomBlocks.BLOCKS,
 				CustomItems.ITEMS,
 				CustomParticles.PARTICLES,
@@ -47,7 +57,6 @@ public class DarkCaverns {
 				CustomCarvers.CARVERS,
 				CustomFeatures.FEATURES,
 				CustomSurfaceBuilders.SURFACE_BUILDERS,
-				CustomEntityTypes.ENTITIES
 		};
 
 		for (DeferredRegister<?> register : registers) {
@@ -62,6 +71,18 @@ public class DarkCaverns {
 			CustomDimensions.register();
 			CustomFeatures.register();
 		});
+
+		DefaultDispenseItemBehavior spawnEggDispenserBehavior = new DefaultDispenseItemBehavior() {
+			public ItemStack execute(IBlockSource source, ItemStack stack) {
+				Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+				EntityType<?> type = ((CustomSpawnEggItem)stack.getItem()).getType(stack.getTag());
+				type.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+				stack.shrink(1);
+				return stack;
+			}
+		};
+
+		DispenserBlock.registerBehavior(CustomItems.SCORCHLING_SPAWN_EGG.get(), spawnEggDispenserBehavior);
 	}
 
 	@SubscribeEvent

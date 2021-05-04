@@ -7,7 +7,6 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -22,11 +21,12 @@ public class ScorchlingEntity extends MonsterEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
     public static AttributeModifierMap ATTRIBUTE_MAP = MonsterEntity.createMonsterAttributes()
-            .add(Attributes.ATTACK_DAMAGE, 4.0D)
+            .add(Attributes.ATTACK_DAMAGE, 4D)
             .add(Attributes.ATTACK_KNOCKBACK, 1.7D)
-            .add(Attributes.ARMOR, 1.0D)
+            .add(Attributes.ARMOR, 4D)
+            .add(Attributes.MAX_HEALTH, 15D)
             .add(Attributes.MOVEMENT_SPEED, .2D)
-            .add(Attributes.FOLLOW_RANGE, 24.0D)
+            .add(Attributes.FOLLOW_RANGE, 24D)
             .build();
 
     public ScorchlingEntity(EntityType<? extends ScorchlingEntity> type, World world) {

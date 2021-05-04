@@ -27,9 +27,9 @@ public class CustomEntityTypes {
             ENTITIES.register("throwable_luminite_torch", () -> THROWABLE_LUMINITE_TORCH_TYPE);
 
     public static final RegistryObject<EntityType<ScorchlingEntity>> SCORCHLING_ENTITY = buildEntity(ScorchlingEntity::new,
-            ScorchlingEntity.class, 0.5f, 0.6F);
+            ScorchlingEntity.class, 0.6f, 0.4F);
 
     public static <T extends Entity> RegistryObject<EntityType<T>> buildEntity(EntityType.IFactory<T> entity, Class<T> entityClass, float width, float height) {
-        return ENTITIES.register("scorchling", () -> EntityType.Builder.of(entity, EntityClassification.CREATURE).sized(width, height).build("scorchling"));
+        return ENTITIES.register("scorchling", () -> EntityType.Builder.of(entity, EntityClassification.CREATURE).sized(width, height).fireImmune().build("scorchling"));
     }
 }
