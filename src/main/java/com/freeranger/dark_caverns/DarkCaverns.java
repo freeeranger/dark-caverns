@@ -67,6 +67,7 @@ public class DarkCaverns {
 
 	public void setup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
+			CustomEntityTypes.registerSpawnPlacements();
 			CustomCarvers.register();
 			CustomBiomes.toDictionary();
 			CustomDimensions.register();

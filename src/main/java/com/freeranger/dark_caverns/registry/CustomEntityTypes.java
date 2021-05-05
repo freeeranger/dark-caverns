@@ -5,8 +5,10 @@ import com.freeranger.dark_caverns.entities.ScorchlingEntity;
 import com.freeranger.dark_caverns.entities.ThrowableLuminiteTorchEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -31,5 +33,10 @@ public class CustomEntityTypes {
 
     public static <T extends Entity> RegistryObject<EntityType<T>> buildEntity(EntityType.IFactory<T> entity, Class<T> entityClass, float width, float height) {
         return ENTITIES.register("scorchling", () -> EntityType.Builder.of(entity, EntityClassification.CREATURE).sized(width, height).fireImmune().build("scorchling"));
+    }
+
+    public static void registerSpawnPlacements(){
+        EntitySpawnPlacementRegistry.register(SCORCHLING_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ScorchlingEntity::canScorchlingSpawn);
     }
 }

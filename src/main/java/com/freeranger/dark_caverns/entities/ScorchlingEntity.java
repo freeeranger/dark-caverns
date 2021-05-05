@@ -2,15 +2,19 @@ package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -21,6 +25,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class ScorchlingEntity extends MonsterEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
@@ -45,6 +50,10 @@ public class ScorchlingEntity extends MonsterEntity implements IAnimatable {
         }
         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scorchling.idle", true));
         return PlayState.CONTINUE;
+    }
+
+    public static boolean canScorchlingSpawn(EntityType<? extends MonsterEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
+        return rand.nextInt(15) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
     }
 
     @Override
