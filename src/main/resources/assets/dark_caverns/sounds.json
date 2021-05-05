@@ -1,4 +1,13 @@
 {
+  "entity.scorchling.ambient": {
+    "subtitle": "subtitles.entity.scorchling_ambient",
+    "sounds": [
+      "dark_caverns:entity/scorchling_ambient_1",
+      "dark_caverns:entity/scorchling_ambient_2",
+      "dark_caverns:entity/scorchling_ambient_3",
+      "dark_caverns:entity/scorchling_ambient_4"
+    ]
+  },
   "entity.scorchling.hurt": {
     "subtitle": "subtitles.entity.scorchling_hurt",
     "sounds": [

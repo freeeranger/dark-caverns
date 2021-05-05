@@ -20,6 +20,8 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import javax.annotation.Nullable;
+
 public class ScorchlingEntity extends MonsterEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
@@ -71,5 +73,11 @@ public class ScorchlingEntity extends MonsterEntity implements IAnimatable {
     @Override
     protected SoundEvent getDeathSound() {
         return CustomSoundEvents.SCORCHLING_DEATH.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return CustomSoundEvents.SCORCHLING_AMBIENT.get();
     }
 }

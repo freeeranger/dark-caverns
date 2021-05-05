@@ -10,6 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class CustomSoundEvents {
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, DarkCaverns.MOD_ID);
 
+    public static final RegistryObject<SoundEvent> SCORCHLING_AMBIENT = register("entity.scorchling.ambient");
     public static final RegistryObject<SoundEvent> SCORCHLING_HURT = register("entity.scorchling.hurt");
     public static final RegistryObject<SoundEvent> SCORCHLING_DEATH = register("entity.scorchling.death");
 

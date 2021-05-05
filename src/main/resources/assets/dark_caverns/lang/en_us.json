@@ -37,6 +37,7 @@
   "itemGroup.dark_caverns": "Dark Caverns",
   "entity.dark_caverns.scorchling": "Scorchling",
   "item.dark_caverns.scorchling_spawn_egg": "Scorchling Spawn Egg",
+  "subtitles.entity.scorchling_ambient": "Scorchling growls",
   "subtitles.entity.scorchling_hurt": "Scorchling hurts",
   "subtitles.entity.scorchling_death": "Scorchling dies"
 }
