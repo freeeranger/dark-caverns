@@ -1,0 +1,14 @@
+{
+  "entity.scorchling.hurt": {
+    "subtitle": "subtitles.entity.scorchling_hurt",
+    "sounds": [
+      "dark_caverns:entity/scorchling_hurt"
+    ]
+  },
+  "entity.scorchling.death": {
+    "subtitle": "subtitles.entity.scorchling_death",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  }
+}

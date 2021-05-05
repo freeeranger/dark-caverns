@@ -1,5 +1,6 @@
 package com.freeranger.dark_caverns.entities;
 
+import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -8,6 +9,8 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -58,5 +61,15 @@ public class ScorchlingEntity extends MonsterEntity implements IAnimatable {
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 2d, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
         super.registerGoals();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return CustomSoundEvents.SCORCHLING_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return CustomSoundEvents.SCORCHLING_DEATH.get();
     }
 }

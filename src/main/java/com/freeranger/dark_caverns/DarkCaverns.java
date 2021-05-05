@@ -56,6 +56,7 @@ public class DarkCaverns {
 				CustomBiomes.BIOMES,
 				CustomCarvers.CARVERS,
 				CustomFeatures.FEATURES,
+				CustomSoundEvents.SOUNDS,
 				CustomSurfaceBuilders.SURFACE_BUILDERS,
 		};
 
