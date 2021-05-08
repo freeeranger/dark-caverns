@@ -5,6 +5,7 @@ import com.freeranger.dark_caverns.entities.ScorchlingEntity;
 import com.freeranger.dark_caverns.entities.ScorchlingEntityRenderer;
 import com.freeranger.dark_caverns.items.CustomSpawnEggItem;
 import com.freeranger.dark_caverns.registry.*;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
@@ -13,9 +14,19 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.Direction;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.gen.feature.template.BlockMatchRuleTest;
+import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -63,6 +74,9 @@ public class DarkCaverns {
 		for (DeferredRegister<?> register : registers) {
 			register.register(bus);
 		}
+
+		MinecraftForge.EVENT_BUS.addListener(this::gen);
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	public void setup(FMLCommonSetupEvent event) {
@@ -109,5 +123,18 @@ public class DarkCaverns {
 		if(event.includeServer()){
 			event.getGenerator().addProvider(new CustomBlockTags(event.getGenerator(), event.getExistingFileHelper()));
 		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void gen(BiomeLoadingEvent event) {
+		event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.configured(
+				new OreFeatureConfig(
+						new BlockMatchRuleTest(Blocks.BEDROCK),
+						CustomBlocks.CRACKED_BEDROCK.get().defaultBlockState(),
+						3
+				)
+		).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(0, 0, 5)))
+				.squared()
+				.count(100));
 	}
 }
