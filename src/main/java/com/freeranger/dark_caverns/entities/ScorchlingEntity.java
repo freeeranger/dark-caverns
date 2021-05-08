@@ -9,7 +9,6 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -53,7 +52,7 @@ public class ScorchlingEntity extends MonsterEntity implements IAnimatable {
     }
 
     public static boolean canScorchlingSpawn(EntityType<? extends MonsterEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(15) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
+        return rand.nextInt(13) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
     }
 
     @Override

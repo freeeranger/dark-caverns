@@ -19,9 +19,17 @@ public class CustomItems {
     public static final RegistryObject<Item> SCORCHED_BERRIES = ITEMS.register(
             "scorched_berries",
             () -> new BlockNamedItem(CustomBlocks.SCORCHED_BERRY_BUSH.get(), (new Item.Properties().tab(CustomItemGroups.GROUP).food(
-                    new Food.Builder().effect(() -> new EffectInstance(Effects.FIRE_RESISTANCE, 300), 1f)
+                    new Food.Builder().effect(() -> new EffectInstance(Effects.FIRE_RESISTANCE, 320), 1f)
                     .alwaysEat().fast().nutrition(3).saturationMod(0.2f).build())
             ))
+    );
+
+    public static final RegistryObject<Item> SCORCHLING_MEAT = ITEMS.register(
+            "scorchling_meat",
+            () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP).food(
+                    new Food.Builder().effect(() -> new EffectInstance(Effects.SATURATION, 620), 1f)
+                            .alwaysEat().nutrition(7).saturationMod(0.7f).build())
+            )
     );
 
     public static final RegistryObject<CustomSpawnEggItem> SCORCHLING_SPAWN_EGG = ITEMS.register(
@@ -122,5 +130,4 @@ public class CustomItems {
                     new Item.Properties().tab(CustomItemGroups.GROUP)
             )
     );
-
 }

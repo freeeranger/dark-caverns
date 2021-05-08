@@ -28,6 +28,11 @@ public class CustomBlocks {
             )
     );
 
+    public static final RegistryObject<Block> CRACKED_BEDROCK = register("cracked_bedrock", () -> new CrackedBedrockBlock(
+                    AbstractBlock.Properties.copy(Blocks.BEDROCK)
+            )
+    );
+
     public static final RegistryObject<Block> MOLTEN_CARFSTONE = register("molten_carfstone", () -> new Block(
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(5.5f, 7f)
