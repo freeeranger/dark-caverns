@@ -4,6 +4,7 @@ import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.armor.LuminiteArmorMaterial;
 import com.freeranger.dark_caverns.armor.PlatinumArmorMaterial;
 import com.freeranger.dark_caverns.items.CustomSpawnEggItem;
+import com.freeranger.dark_caverns.items.KeyToTheCavernsItem;
 import com.freeranger.dark_caverns.items.ThrowableLuminiteTorchItem;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -30,6 +31,11 @@ public class CustomItems {
                     new Food.Builder().effect(() -> new EffectInstance(Effects.SATURATION, 620), 1f)
                             .alwaysEat().nutrition(7).saturationMod(0.7f).build())
             )
+    );
+
+    public static final RegistryObject<Item> KEY_TO_THE_CAVERNS = ITEMS.register(
+            "key_to_the_caverns",
+            () -> new KeyToTheCavernsItem(new Item.Properties().tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<CustomSpawnEggItem> SCORCHLING_SPAWN_EGG = ITEMS.register(

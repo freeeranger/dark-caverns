@@ -55,7 +55,6 @@ public class DarkCaverns {
 		bus.addListener(this::clientSetup);
 		bus.addListener(this::gatherData);
 		bus.addListener(EventPriority.NORMAL, this::registerAttributes);
-		bus.addListener(EventPriority.NORMAL, this::registerRenderers);
 
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> DarkCavernsClient::init);
 
@@ -106,14 +105,6 @@ public class DarkCaverns {
 		event.put(CustomEntityTypes.SCORCHLING_ENTITY.get(), ScorchlingEntity.ATTRIBUTE_MAP);
 	}
 
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
-	public void registerRenderers(final FMLClientSetupEvent event){
-		if (!FMLEnvironment.production && !GeckoLibMod.DISABLE_IN_DEV) {
-			RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.SCORCHLING_ENTITY.get(), ScorchlingEntityRenderer::new);
-		}
-	}
-
 	public void clientSetup(FMLClientSetupEvent event){
 		DarkCavernsClient.registerBlockRenderers();
 		DarkCavernsClient.registerEntityRenderers();
@@ -135,6 +126,6 @@ public class DarkCaverns {
 				)
 		).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(0, 0, 5)))
 				.squared()
-				.count(100));
+				.count(116));
 	}
 }
