@@ -11,8 +11,8 @@ import com.freeranger.dark_caverns.generation.CustomChunkGenerator;
 
 public class CustomDimensions {
 
-    public static final RegistryKey<DimensionType> UNDERGARDEN_DIMENSION = RegistryKey.create(Registry.DIMENSION_TYPE_REGISTRY, name("dark_caverns"));
-    public static final RegistryKey<World> UNDERGARDEN_WORLD = RegistryKey.create(Registry.DIMENSION_REGISTRY, name("dark_caverns"));
+    public static final RegistryKey<DimensionType> DARK_CAVERNS_DIMENSION = RegistryKey.create(Registry.DIMENSION_TYPE_REGISTRY, name("dark_caverns"));
+    public static final RegistryKey<World> DARK_CAVERNS_WORLD = RegistryKey.create(Registry.DIMENSION_REGISTRY, name("dark_caverns"));
 
     private static ResourceLocation name(String name) {
         return new ResourceLocation(DarkCaverns.MOD_ID, name);

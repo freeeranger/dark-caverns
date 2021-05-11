@@ -35,7 +35,7 @@ public class CustomItems {
 
     public static final RegistryObject<Item> KEY_TO_THE_CAVERNS = ITEMS.register(
             "key_to_the_caverns",
-            () -> new KeyToTheCavernsItem(new Item.Properties().tab(CustomItemGroups.GROUP))
+            () -> new KeyToTheCavernsItem(new Item.Properties().tab(CustomItemGroups.GROUP).stacksTo(1))
     );
 
     public static final RegistryObject<CustomSpawnEggItem> SCORCHLING_SPAWN_EGG = ITEMS.register(

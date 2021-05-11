@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "dark_caverns:block/gateway_to_the_caverns",
+    "bottom": "dark_caverns:block/gateway_to_the_caverns",
+    "side": "dark_caverns:block/cracked_bedrock"
+  }
+}

@@ -33,6 +33,11 @@ public class CustomBlocks {
             )
     );
 
+    public static final RegistryObject<Block> GATEWAY_TO_THE_CAVERNS = register("gateway_to_the_caverns", () -> new GatewayToTheCavernsBlock(
+                    AbstractBlock.Properties.copy(Blocks.BEDROCK)
+            )
+    );
+
     public static final RegistryObject<Block> MOLTEN_CARFSTONE = register("molten_carfstone", () -> new Block(
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(5.5f, 7f)
