@@ -38,6 +38,11 @@ public class CustomBlocks {
             )
     );
 
+    public static final RegistryObject<Block> GATEWAY_TO_THE_OVERWORLD = register("gateway_to_the_overworld", () -> new GatewayToTheOverworldBlock(
+                    AbstractBlock.Properties.copy(Blocks.BEDROCK).noCollission()
+            )
+    );
+
     public static final RegistryObject<Block> MOLTEN_CARFSTONE = register("molten_carfstone", () -> new Block(
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(5.5f, 7f)

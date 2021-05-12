@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "dark_caverns:block/gateway_to_the_caverns",
+    "north": "dark_caverns:block/cracked_bedrock",
+    "south": "dark_caverns:block/cracked_bedrock",
+    "east": "dark_caverns:block/cracked_bedrock",
+    "west": "dark_caverns:block/cracked_bedrock",
+    "up": "dark_caverns:block/cracked_bedrock",
+    "down": "dark_caverns:block/gateway_to_the_caverns"
+  }
+}
