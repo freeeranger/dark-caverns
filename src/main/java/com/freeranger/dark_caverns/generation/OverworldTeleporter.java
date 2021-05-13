@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.state.Property;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.ITeleporter;
@@ -55,7 +56,8 @@ public class OverworldTeleporter implements ITeleporter {
         for(int i = 5; i >= 0; i--){
             Block block = world.getBlockState(new BlockPos(pos.getX(), i, pos.getZ())).getBlock();
 
-            if(block == Blocks.BEDROCK) return new BlockPos(pos.getX(), i, pos.getZ());
+            if(block == Blocks.BEDROCK || block == CustomBlocks.CRACKED_BEDROCK.get())
+                return new BlockPos(pos.getX(), i, pos.getZ());
         }
         return new BlockPos(pos.getX(), 4, pos.getZ());
     }

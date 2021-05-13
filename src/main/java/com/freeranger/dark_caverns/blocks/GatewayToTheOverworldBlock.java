@@ -9,8 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class GatewayToTheOverworldBlock extends Block {
     public GatewayToTheOverworldBlock(Properties properties) {
         super(properties);

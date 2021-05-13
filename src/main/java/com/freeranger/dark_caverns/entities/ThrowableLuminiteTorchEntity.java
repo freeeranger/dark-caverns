@@ -41,7 +41,6 @@ public class ThrowableLuminiteTorchEntity extends ProjectileItemEntity {
         super(CustomEntityTypes.THROWABLE_LUMINITE_TORCH.get(), x, y, z, world);
     }
 
-    // TODO remove this check from minecraft dev plugin and then remove this constructor
     public ThrowableLuminiteTorchEntity(World world) {
         super(CustomEntityTypes.THROWABLE_LUMINITE_TORCH.get(), 0, 0, 0, world);
     }
