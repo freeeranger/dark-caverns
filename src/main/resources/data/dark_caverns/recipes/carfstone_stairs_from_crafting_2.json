@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    " ##",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "dark_caverns:carfstone"
+    }
+  },
+  "result": {
+    "item": "dark_caverns:carfstone_stairs",
+    "count": 4
+  }
+}

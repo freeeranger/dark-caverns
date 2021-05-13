@@ -28,19 +28,25 @@ public class CustomBlocks {
             )
     );
 
+    public static final RegistryObject<Block> CARFSTONE_STAIRS = register("carfstone_stairs", () -> new StairsBlock(
+                    () -> CARFSTONE.get().defaultBlockState(),
+                    AbstractBlock.Properties.copy(CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> CARFSTONE_SLAB = register("carfstone_slab", () -> new SlabBlock(
+                    AbstractBlock.Properties.copy(CARFSTONE.get()))
+    );
+
     public static final RegistryObject<Block> CRACKED_BEDROCK = register("cracked_bedrock", () -> new CrackedBedrockBlock(
-                    AbstractBlock.Properties.copy(Blocks.BEDROCK)
-            )
+                    AbstractBlock.Properties.copy(Blocks.BEDROCK))
     );
 
     public static final RegistryObject<Block> GATEWAY_TO_THE_CAVERNS = register("gateway_to_the_caverns", () -> new GatewayToTheCavernsBlock(
-                    AbstractBlock.Properties.copy(Blocks.BEDROCK)
-            )
+                    AbstractBlock.Properties.copy(Blocks.BEDROCK))
     );
 
     public static final RegistryObject<Block> GATEWAY_TO_THE_OVERWORLD = register("gateway_to_the_overworld", () -> new GatewayToTheOverworldBlock(
-                    AbstractBlock.Properties.copy(Blocks.BEDROCK).noCollission()
-            )
+                    AbstractBlock.Properties.copy(Blocks.BEDROCK).noCollission())
     );
 
     public static final RegistryObject<Block> MOLTEN_CARFSTONE = register("molten_carfstone", () -> new Block(
@@ -48,8 +54,7 @@ public class CustomBlocks {
                             .strength(5.5f, 7f)
                             .harvestTool(ToolType.PICKAXE)
                             .harvestLevel(0)
-                            .requiresCorrectToolForDrops()
-            )
+                            .requiresCorrectToolForDrops())
     );
 
     public static final RegistryObject<Block> SCORCHED_BERRY_BUSH = BLOCKS.register("scorched_berry_bush",
@@ -59,8 +64,7 @@ public class CustomBlocks {
 
     public static final RegistryObject<Block> GLIMMERSHROOM = register("glimmershroom", () -> new CustomMushroomBlock(
                     AbstractBlock.Properties.copy(Blocks.RED_MUSHROOM)
-                            .lightLevel((p_235464_0_) -> 13)
-            )
+                            .lightLevel((p_235464_0_) -> 13))
     );
 
 

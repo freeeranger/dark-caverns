@@ -111,7 +111,7 @@ public class DarkCaverns {
 			event.getGenerator().addProvider(new CustomBlockTags(event.getGenerator(), event.getExistingFileHelper()));
 		}
 	}
-
+	
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void gen(BiomeLoadingEvent event) {
 		event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.configured(

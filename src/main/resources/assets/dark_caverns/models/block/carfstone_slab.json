@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "dark_caverns:block/carfstone",
+    "top": "dark_caverns:block/carfstone",
+    "side": "dark_caverns:block/carfstone"
+  }
+}

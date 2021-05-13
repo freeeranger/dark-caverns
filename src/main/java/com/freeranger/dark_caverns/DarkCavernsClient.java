@@ -64,6 +64,8 @@ public class DarkCavernsClient {
         render(CustomBlocks.GLIMMERSHROOM, RenderType.cutout());
         render(CustomBlocks.CHARRED_GRASS, RenderType.cutout());
         render(CustomBlocks.SCORCHED_BERRY_BUSH, RenderType.cutout());
+        render(CustomBlocks.CARFSTONE_STAIRS, RenderType.cutout());
+        render(CustomBlocks.CARFSTONE_SLAB, RenderType.cutout());
     }
 
     public static void registerEntityRenderers(){

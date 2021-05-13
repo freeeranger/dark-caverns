@@ -6,6 +6,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 
@@ -26,6 +28,16 @@ public class KeyToTheCavernsItem extends Item {
                         context.getItemInHand().shrink(1);
                     }
                 }
+                context.getLevel().playSound(
+                        null,
+                        context.getClickedPos().getX(),
+                        context.getClickedPos().getY(),
+                        context.getClickedPos().getZ(),
+                        SoundEvents.GENERIC_EXPLODE,
+                        SoundCategory.BLOCKS,
+                        1f,
+                        1f
+                );
             }else{
                 BlockPos pos = context.getClickedPos();
                 for(int i = 0; i < 10; i++) {
