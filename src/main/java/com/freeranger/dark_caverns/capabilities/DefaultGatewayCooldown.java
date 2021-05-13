@@ -10,11 +10,6 @@ public class DefaultGatewayCooldown implements IGatewayCooldownCapability {
     }
 
     @Override
-    public int tickCooldown() {
-        return --gatewayCooldown;
-    }
-
-    @Override
     public int getCooldown() {
         return gatewayCooldown;
     }
