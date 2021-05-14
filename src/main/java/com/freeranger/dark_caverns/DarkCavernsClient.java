@@ -66,6 +66,8 @@ public class DarkCavernsClient {
         render(CustomBlocks.SCORCHED_BERRY_BUSH, RenderType.cutout());
         render(CustomBlocks.CARFSTONE_STAIRS, RenderType.cutout());
         render(CustomBlocks.CARFSTONE_SLAB, RenderType.cutout());
+        render(CustomBlocks.SMOOTH_CARFSTONE_STAIRS, RenderType.cutout());
+        render(CustomBlocks.SMOOTH_CARFSTONE_SLAB, RenderType.cutout());
     }
 
     public static void registerEntityRenderers(){

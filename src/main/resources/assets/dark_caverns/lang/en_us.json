@@ -1,6 +1,8 @@
 {
   "block.dark_caverns.carfstone": "Carfstone",
   "block.dark_caverns.smooth_carfstone": "Smooth Carfstone",
+  "block.dark_caverns.smooth_carfstone_slab": "Smooth Carfstone Slab",
+  "block.dark_caverns.smooth_carfstone_stairs": "Smooth Carfstone Stairs",
   "block.dark_caverns.carfstone_stairs": "Carfstone Stairs",
   "block.dark_caverns.carfstone_slab": "Carfstone Slab",
   "block.dark_caverns.cracked_bedrock": "Cracked Bedrock",
