@@ -28,6 +28,10 @@ public class CustomBlocks {
             )
     );
 
+    public static final RegistryObject<Block> SMOOTH_CARFSTONE = register("smooth_carfstone", () -> new Block(
+                    AbstractBlock.Properties.copy(CARFSTONE.get()))
+    );
+
     public static final RegistryObject<Block> CARFSTONE_STAIRS = register("carfstone_stairs", () -> new StairsBlock(
                     () -> CARFSTONE.get().defaultBlockState(),
                     AbstractBlock.Properties.copy(CARFSTONE.get()))
