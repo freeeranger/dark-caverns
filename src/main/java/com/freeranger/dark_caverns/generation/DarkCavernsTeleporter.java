@@ -50,8 +50,8 @@ public class DarkCavernsTeleporter implements ITeleporter {
         for(int i = 250; i <= 255; i++){
             Block block = world.getBlockState(new BlockPos(pos.getX(), i, pos.getZ())).getBlock();
 
-            if(block == Blocks.BEDROCK) return new BlockPos(pos.getX(), i, pos.getZ());
+            if(block == Blocks.BEDROCK || block == CustomBlocks.GATEWAY_TO_THE_OVERWORLD.get()) return new BlockPos(pos.getX(), i, pos.getZ());
         }
-        return new BlockPos(pos.getX(), 249, pos.getZ());
+        return new BlockPos(pos.getX(), 250, pos.getZ());
     }
 }
