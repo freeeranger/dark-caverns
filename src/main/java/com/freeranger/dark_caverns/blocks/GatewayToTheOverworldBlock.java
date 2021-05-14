@@ -25,7 +25,7 @@ public class GatewayToTheOverworldBlock extends Block {
             BlockPos targetPos = new BlockPos(entity.position().x, entity.position().y, entity.position().z);
 
             entity.getCapability(GatewayCooldownCapability.GATEWAY_COOLDOWN_CAPABILITY).ifPresent(h -> {
-                h.setCooldown(250);
+                h.setCooldown(175);
             });
             entity.changeDimension(world2, new OverworldTeleporter(targetPos));
         }
