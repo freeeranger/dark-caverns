@@ -200,7 +200,7 @@
       "uvlock": true
     },
     "facing=west,half=top,shape=straight": {
-      "model": "dark_caverns:block/carfston_brick_stairs",
+      "model": "dark_caverns:block/carfstone_brick_stairs",
       "x": 180,
       "y": 180,
       "uvlock": true

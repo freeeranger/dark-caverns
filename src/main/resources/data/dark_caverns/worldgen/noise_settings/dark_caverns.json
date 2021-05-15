@@ -14,25 +14,25 @@
   },
   "noise": {
     "height": 256,
-    "density_factor": 0,
+    "density_factor": 0.1,
     "density_offset": 0,
     "size_horizontal": 1,
     "size_vertical": 1,
     "simplex_surface_noise": false,
-    "random_density_offset": false,
+    "random_density_offset": true,
     "sampling": {
       "xz_scale": 1,
       "y_scale": 1,
-      "xz_factor": 80,
-      "y_factor": 80
+      "xz_factor": 200,
+      "y_factor": 220
     },
     "bottom_slide": {
-      "target": 40,
-      "size": 70,
+      "target": 35,
+      "size": 80,
       "offset": 0
     },
     "top_slide": {
-      "target": 20,
+      "target": 40,
       "size": 10,
       "offset": 0
     }
