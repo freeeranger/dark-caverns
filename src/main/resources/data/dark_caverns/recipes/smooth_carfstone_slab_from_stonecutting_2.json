@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "dark_caverns:carfstone"
+  },
+  "result": "dark_caverns:smooth_carfstone_slab",
+  "count": 2
+}
