@@ -70,6 +70,9 @@ public class DarkCavernsClient {
         render(CustomBlocks.SMOOTH_CARFSTONE_SLAB, RenderType.cutout());
         render(CustomBlocks.CARFSTONE_BRICK_STAIRS, RenderType.cutout());
         render(CustomBlocks.CARFSTONE_BRICK_SLAB, RenderType.cutout());
+        render(CustomBlocks.CARFSTONE_WALL, RenderType.cutout());
+        render(CustomBlocks.CARFSTONE_BRICK_WALL, RenderType.cutout());
+        render(CustomBlocks.SMOOTH_CARFSTONE_WALL, RenderType.cutout());
     }
 
     public static void registerEntityRenderers(){

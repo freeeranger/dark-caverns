@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "dark_caverns:block/smooth_carfstone"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "dark_caverns:smooth_carfstone"
+    }
+  },
+  "result": {
+    "item": "dark_caverns:smooth_carfstone_wall",
+    "count": 6
+  }
+}

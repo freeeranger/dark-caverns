@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "dark_caverns:carfstone_wall",
+    "dark_caverns:smooth_carfstone_wall",
+    "dark_caverns:carfstone_brick_wall"
+  ]
+}

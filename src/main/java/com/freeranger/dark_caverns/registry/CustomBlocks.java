@@ -63,6 +63,18 @@ public class CustomBlocks {
             AbstractBlock.Properties.copy(SMOOTH_CARFSTONE.get()))
     );
 
+    public static final RegistryObject<Block> CARFSTONE_WALL = register("carfstone_wall", () -> new WallBlock(
+            AbstractBlock.Properties.copy(CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> SMOOTH_CARFSTONE_WALL = register("smooth_carfstone_wall", () -> new WallBlock(
+            AbstractBlock.Properties.copy(SMOOTH_CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> CARFSTONE_BRICK_WALL = register("carfstone_brick_wall", () -> new WallBlock(
+            AbstractBlock.Properties.copy(CARFSTONE_BRICKS.get()))
+    );
+
     public static final RegistryObject<Block> CRACKED_BEDROCK = register("cracked_bedrock", () -> new CrackedBedrockBlock(
                     AbstractBlock.Properties.copy(Blocks.BEDROCK))
     );
