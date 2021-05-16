@@ -14,7 +14,7 @@
   },
   "noise": {
     "height": 256,
-    "density_factor": 0.1,
+    "density_factor": 0.05,
     "density_offset": 0,
     "size_horizontal": 1,
     "size_vertical": 1,
@@ -23,8 +23,8 @@
     "sampling": {
       "xz_scale": 1,
       "y_scale": 1,
-      "xz_factor": 200,
-      "y_factor": 220
+      "xz_factor": 100,
+      "y_factor": 100
     },
     "bottom_slide": {
       "target": 35,

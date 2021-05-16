@@ -22,7 +22,7 @@ import java.util.function.Function;
 public class CustomCaveWorldCarver extends CaveWorldCarver {
 
     public CustomCaveWorldCarver(Codec<ProbabilityConfig> configCodec) {
-        super(configCodec, 170);
+        super(configCodec, 240);
         this.replaceableBlocks = ImmutableSet.of(
                 CustomBlocks.LUMINITE_ORE.get(),
                 CustomBlocks.CARFSTONE_COAL_ORE.get(),
@@ -38,7 +38,8 @@ public class CustomCaveWorldCarver extends CaveWorldCarver {
                 CustomBlocks.GLIMMERSHROOM.get(),
                 CustomBlocks.MOLTEN_CARFSTONE.get(),
                 CustomBlocks.CHARRED_GRASS.get(),
-                CustomBlocks.SCORCHED_BERRY_BUSH.get()
+                CustomBlocks.SCORCHED_BERRY_BUSH.get(),
+                CustomBlocks.MOLTEN_CARFSTONE.get()
         );
         this.liquids = ImmutableSet.of(
                 Fluids.WATER
