@@ -14,7 +14,7 @@
   },
   "noise": {
     "height": 256,
-    "density_factor": 0.05,
+    "density_factor": 0.04,
     "density_offset": 0,
     "size_horizontal": 1,
     "size_vertical": 1,

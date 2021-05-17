@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "dark_caverns:block/molten_carfstone",
+    "top": "dark_caverns:block/molten_carfstone",
+    "side": "dark_caverns:block/molten_carfstone"
+  }
+}

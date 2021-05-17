@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "dark_caverns:molten_carfstone"
+    }
+  },
+  "result": {
+    "item": "dark_caverns:smooth_molten_carfstone",
+    "count": 4
+  }
+}

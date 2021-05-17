@@ -95,6 +95,53 @@ public class CustomBlocks {
                             .requiresCorrectToolForDrops())
     );
 
+    public static final RegistryObject<Block> SMOOTH_MOLTEN_CARFSTONE = register("smooth_molten_carfstone", () -> new Block(
+            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> MOLTEN_CARFSTONE_BRICKS = register("molten_carfstone_bricks", () -> new Block(
+            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> MOLTEN_CARFSTONE_BRICK_STAIRS = register("molten_carfstone_brick_stairs", () -> new StairsBlock(
+            () -> MOLTEN_CARFSTONE_BRICKS.get().defaultBlockState(),
+            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE_BRICKS.get()))
+    );
+
+    public static final RegistryObject<Block> MOLTEN_CARFSTONE_BRICK_SLAB = register("molten_carfstone_brick_slab", () -> new SlabBlock(
+            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE_BRICKS.get()))
+    );
+
+    public static final RegistryObject<Block> MOLTEN_CARFSTONE_STAIRS = register("molten_carfstone_stairs", () -> new StairsBlock(
+            () -> MOLTEN_CARFSTONE.get().defaultBlockState(),
+            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> MOLTEN_CARFSTONE_SLAB = register("molten_carfstone_slab", () -> new SlabBlock(
+            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> SMOOTH_MOLTEN_CARFSTONE_STAIRS = register("smooth_molten_carfstone_stairs", () -> new StairsBlock(
+            () -> SMOOTH_MOLTEN_CARFSTONE.get().defaultBlockState(),
+            AbstractBlock.Properties.copy(SMOOTH_MOLTEN_CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> SMOOTH_MOLTEN_CARFSTONE_SLAB = register("smooth_molten_carfstone_slab", () -> new SlabBlock(
+            AbstractBlock.Properties.copy(SMOOTH_MOLTEN_CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> MOLTEN_CARFSTONE_WALL = register("molten_carfstone_wall", () -> new WallBlock(
+            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> SMOOTH_MOLTEN_CARFSTONE_WALL = register("smooth_molten_carfstone_wall", () -> new WallBlock(
+            AbstractBlock.Properties.copy(SMOOTH_MOLTEN_CARFSTONE.get()))
+    );
+
+    public static final RegistryObject<Block> MOLTEN_CARFSTONE_BRICK_WALL = register("molten_carfstone_brick_wall", () -> new WallBlock(
+            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE_BRICKS.get()))
+    );
+
     public static final RegistryObject<Block> SCORCHED_BERRY_BUSH = BLOCKS.register("scorched_berry_bush",
             () -> new ScorchedBerryBushBlock(AbstractBlock.Properties.copy(Blocks.SWEET_BERRY_BUSH)
                     .lightLevel((p_235464_0_) -> 7), MOLTEN_CARFSTONE.get())
