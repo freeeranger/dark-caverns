@@ -67,6 +67,5 @@
   "item.dark_caverns.scorchling_spawn_egg": "Scorchling Spawn Egg",
   "subtitles.entity.scorchling_ambient": "Scorchling growls",
   "subtitles.entity.scorchling_hurt": "Scorchling hurts",
-  "subtitles.entity.scorchling_death": "Scorchling dies",
-  "filled_map.dark_caverns.forgotten_tower": "Forgotten Tower Map"
+  "subtitles.entity.scorchling_death": "Scorchling dies"
 }
