@@ -54,7 +54,7 @@
           "biome": "dark_caverns:rocky_caverns",
           "parameters": {
             "altitude": 0,
-            "temperature": 0,
+            "temperature": 0.1,
             "humidity": 0,
             "weirdness": 0,
             "offset": 0
@@ -66,7 +66,7 @@
             "altitude": 0,
             "temperature": 0,
             "humidity": 0.2,
-            "weirdness": 0.5,
+            "weirdness": 0,
             "offset": 0
           }
         },
@@ -75,8 +75,8 @@
           "parameters": {
             "altitude": 0,
             "temperature": 0.2,
-            "humidity": 0.2,
-            "weirdness": 0.4,
+            "humidity": 0,
+            "weirdness": 0.1,
             "offset": 0
           }
         }
