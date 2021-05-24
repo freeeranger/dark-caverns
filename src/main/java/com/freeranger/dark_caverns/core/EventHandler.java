@@ -44,7 +44,7 @@ public class EventHandler {
     public void addTrades(VillagerTradesEvent event) {
         if (event.getType() == VillagerProfession.CARTOGRAPHER) {
             event.getTrades().get(5).add(new VillagerTrades.EmeraldForMapTrade(
-                    new Random().nextInt(13) + 49,
+                    64,
                     CustomStructures.FORGOTTEN_TOWER.get(),
                     MapDecoration.Type.RED_X,
                     5,
