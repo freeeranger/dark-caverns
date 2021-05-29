@@ -1,4 +1,11 @@
 {
+  "ambient.dark_caverns_ambience": {
+    "sounds": [
+      {
+        "name": "dark_caverns:ambient/dark_caverns_ambience", "stream": true
+      }
+    ]
+  },
   "entity.scorchling.ambient": {
     "subtitle": "subtitles.entity.scorchling_ambient",
     "sounds": [

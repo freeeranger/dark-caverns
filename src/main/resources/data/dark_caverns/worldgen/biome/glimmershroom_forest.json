@@ -16,7 +16,7 @@
       },
       "probability": 0.03
     },
-    "ambient_sound": "minecraft:ambient.basalt_deltas.loop"
+    "ambient_sound": "dark_caverns:ambient.dark_caverns_ambience"
   },
   "carvers": {
     "air": [
