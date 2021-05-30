@@ -115,6 +115,10 @@ public class CustomFeatures {
                 new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.PLATINUM_ORE.get().defaultBlockState(), 5)
         );
 
+        public static final ConfiguredFeature<?, ?> HELLSTONE_ORE_FEATURE = Feature.ORE.configured(
+                new OreFeatureConfig(new BlockMatchRuleTest(CustomBlocks.MOLTEN_CARFSTONE.get()), CustomBlocks.HELLSTONE_ORE.get().defaultBlockState(), 5)
+        );
+
         public static final ConfiguredFeature<?, ?> LAPIS_ORE_FEATURE = Feature.ORE.configured(
                 new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_LAPIS_ORE.get().defaultBlockState(), 12)
         );
@@ -206,14 +210,18 @@ public class CustomFeatures {
         );
 
         registerConfiguredFeature("gold_ore_feature", ConfiguredFeatures.GOLD_ORE_FEATURE.range(
-                256).squared().count(16)
+                200).squared().count(16)
         );
 
         registerConfiguredFeature("diamond_ore_feature", ConfiguredFeatures.DIAMOND_ORE_FEATURE.range(
-                256).squared().count(7)
+                180).squared().count(7)
         );
 
         registerConfiguredFeature("platinum_ore_feature", ConfiguredFeatures.PLATINUM_ORE_FEATURE.range(
+                100).squared().count(4)
+        );
+
+        registerConfiguredFeature("hellstone_ore_feature", ConfiguredFeatures.HELLSTONE_ORE_FEATURE.range(
                 256).squared().count(4)
         );
 

@@ -1,6 +1,7 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
+import com.freeranger.dark_caverns.armor.HellstoneArmorMaterial;
 import com.freeranger.dark_caverns.armor.LuminiteArmorMaterial;
 import com.freeranger.dark_caverns.armor.PlatinumArmorMaterial;
 import com.freeranger.dark_caverns.items.CustomSpawnEggItem;
@@ -46,6 +47,11 @@ public class CustomItems {
     public static final RegistryObject<Item> LUMINITE_DUST = ITEMS.register(
             "luminite_dust",
             () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> HELLSTONE = ITEMS.register(
+            "hellstone",
+            () -> new Item(new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> PLATINUM_INGOT = ITEMS.register(
@@ -125,6 +131,42 @@ public class CustomItems {
                     PlatinumArmorMaterial.PLATINUM,
                     EquipmentSlotType.FEET,
                     new Item.Properties().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> HELLSTONE_HELMET = ITEMS.register(
+            "hellstone_helmet",
+            () -> new ArmorItem(
+                    HellstoneArmorMaterial.HELLSTONE,
+                    EquipmentSlotType.HEAD,
+                    new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> HELLSTONE_CHESTPLATE = ITEMS.register(
+            "hellstone_chestplate",
+            () -> new ArmorItem(
+                    HellstoneArmorMaterial.HELLSTONE,
+                    EquipmentSlotType.CHEST,
+                    new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> HELLSTONE_LEGGINGS = ITEMS.register(
+            "hellstone_leggings",
+            () -> new ArmorItem(
+                    HellstoneArmorMaterial.HELLSTONE,
+                    EquipmentSlotType.LEGS,
+                    new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> HELLSTONE_BOOTS = ITEMS.register(
+            "hellstone_boots",
+            () -> new ArmorItem(
+                    HellstoneArmorMaterial.HELLSTONE,
+                    EquipmentSlotType.FEET,
+                    new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
             )
     );
 
