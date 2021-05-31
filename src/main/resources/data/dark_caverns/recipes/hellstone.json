@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "dark_caverns:hellstone_rock"
+    },
+    {
+      "item": "dark_caverns:hellstone_rock"
+    },
+    {
+      "item": "dark_caverns:hellstone_rock"
+    },
+    {
+      "item": "dark_caverns:hellstone_rock"
+    }
+  ],
+  "result": {
+    "item": "dark_caverns:hellstone"
+  }
+}

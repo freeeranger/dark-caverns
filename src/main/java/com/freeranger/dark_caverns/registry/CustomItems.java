@@ -1,6 +1,7 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
+import com.freeranger.dark_caverns.armor.HellstoneArmorItem;
 import com.freeranger.dark_caverns.armor.HellstoneArmorMaterial;
 import com.freeranger.dark_caverns.armor.LuminiteArmorMaterial;
 import com.freeranger.dark_caverns.armor.PlatinumArmorMaterial;
@@ -54,6 +55,11 @@ public class CustomItems {
             () -> new Item(new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP))
     );
 
+    public static final RegistryObject<Item> HELLSTONE_ROCK = ITEMS.register(
+            "hellstone_rock",
+            () -> new Item(new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP))
+    );
+
     public static final RegistryObject<Item> PLATINUM_INGOT = ITEMS.register(
             "platinum_ingot",
             () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP))
@@ -98,6 +104,31 @@ public class CustomItems {
             () -> new HoeItem(CustomItemTiers.PLATINUM, -4, 0f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
     );
 
+    public static final RegistryObject<Item> HELLSTONE_SWORD = ITEMS.register(
+            "hellstone_sword",
+            () -> new SwordItem(CustomItemTiers.HELLSTONE, 3, -2.4f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> HELLSTONE_AXE = ITEMS.register(
+            "hellstone_axe",
+            () -> new AxeItem(CustomItemTiers.HELLSTONE, 5f, -3f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> HELLSTONE_PICKAXE = ITEMS.register(
+            "hellstone_pickaxe",
+            () -> new PickaxeItem(CustomItemTiers.HELLSTONE, 1, -2.8f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> HELLSTONE_SHOVEL = ITEMS.register(
+            "hellstone_shovel",
+            () -> new ShovelItem(CustomItemTiers.HELLSTONE, 1.5f, -3f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> HELLSTONE_HOE = ITEMS.register(
+            "hellstone_hoe",
+            () -> new HoeItem(CustomItemTiers.HELLSTONE, -4, 0f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
     public static final RegistryObject<Item> PLATINUM_HELMET = ITEMS.register(
             "platinum_helmet",
             () -> new ArmorItem(
@@ -136,7 +167,7 @@ public class CustomItems {
 
     public static final RegistryObject<Item> HELLSTONE_HELMET = ITEMS.register(
             "hellstone_helmet",
-            () -> new ArmorItem(
+            () -> new HellstoneArmorItem(
                     HellstoneArmorMaterial.HELLSTONE,
                     EquipmentSlotType.HEAD,
                     new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
@@ -145,7 +176,7 @@ public class CustomItems {
 
     public static final RegistryObject<Item> HELLSTONE_CHESTPLATE = ITEMS.register(
             "hellstone_chestplate",
-            () -> new ArmorItem(
+            () -> new HellstoneArmorItem(
                     HellstoneArmorMaterial.HELLSTONE,
                     EquipmentSlotType.CHEST,
                     new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
@@ -154,7 +185,7 @@ public class CustomItems {
 
     public static final RegistryObject<Item> HELLSTONE_LEGGINGS = ITEMS.register(
             "hellstone_leggings",
-            () -> new ArmorItem(
+            () -> new HellstoneArmorItem(
                     HellstoneArmorMaterial.HELLSTONE,
                     EquipmentSlotType.LEGS,
                     new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
@@ -163,7 +194,7 @@ public class CustomItems {
 
     public static final RegistryObject<Item> HELLSTONE_BOOTS = ITEMS.register(
             "hellstone_boots",
-            () -> new ArmorItem(
+            () -> new HellstoneArmorItem(
                     HellstoneArmorMaterial.HELLSTONE,
                     EquipmentSlotType.FEET,
                     new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)

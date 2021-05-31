@@ -7,8 +7,11 @@ import net.minecraft.util.LazyValue;
 import java.util.function.Supplier;
 
 public enum CustomItemTiers implements IItemTier{
-    PLATINUM(4, 1843, 10.0F, 3.5F, 20, () -> {
+    PLATINUM(4, 1843, 10f, 3.5f, 20, () -> {
         return Ingredient.of(CustomItems.PLATINUM_INGOT.get());
+    }),
+    HELLSTONE(4, 1843, 10f, 3.5f, 15, () -> {
+        return Ingredient.of(CustomItems.HELLSTONE.get());
     });
 
     private final int level;

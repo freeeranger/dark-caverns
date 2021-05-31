@@ -233,7 +233,7 @@ public class CustomBlocks {
             )
     );
 
-    public static final RegistryObject<Block> CARFSTONE_DIAMOND_ORE = register("carfstone_diamond_ore", () -> new Block(
+        public static final RegistryObject<Block> CARFSTONE_DIAMOND_ORE = register("carfstone_diamond_ore", () -> new Block(
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(7f, 7f)
                             .harvestTool(ToolType.PICKAXE)
@@ -264,7 +264,7 @@ public class CustomBlocks {
                     AbstractBlock.Properties.of(Material.STONE)
                             .strength(9f, 7f)
                             .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(4)
+                            .harvestLevel(3)
                             .requiresCorrectToolForDrops()
             )
     );

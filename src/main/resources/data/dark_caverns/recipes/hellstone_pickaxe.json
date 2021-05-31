@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "dark_caverns:platinum_pickaxe"
+  },
+  "addition": {
+    "item": "dark_caverns:hellstone"
+  },
+  "result": {
+    "item": "dark_caverns:hellstone_pickaxe"
+  }
+}
