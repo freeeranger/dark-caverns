@@ -269,6 +269,9 @@ public class CustomBlocks {
             )
     );
 
+    public static final RegistryObject<Block> HELLSTONE_BLOCK = register("hellstone_block", () -> new Block(
+            AbstractBlock.Properties.copy(HELLSTONE_ORE.get()))
+    );
     public static final RegistryObject<Block> LUMINITE_TORCH = BLOCKS.register("luminite_torch", () -> new LuminiteTorchBlock(
             AbstractBlock.Properties.copy(Blocks.TORCH)
                     .lightLevel((state) -> 15))

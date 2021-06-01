@@ -5,9 +5,7 @@ import com.freeranger.dark_caverns.armor.HellstoneArmorItem;
 import com.freeranger.dark_caverns.armor.HellstoneArmorMaterial;
 import com.freeranger.dark_caverns.armor.LuminiteArmorMaterial;
 import com.freeranger.dark_caverns.armor.PlatinumArmorMaterial;
-import com.freeranger.dark_caverns.items.CustomSpawnEggItem;
-import com.freeranger.dark_caverns.items.KeyToTheCavernsItem;
-import com.freeranger.dark_caverns.items.ThrowableLuminiteTorchItem;
+import com.freeranger.dark_caverns.items.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.potion.EffectInstance;
@@ -106,27 +104,27 @@ public class CustomItems {
 
     public static final RegistryObject<Item> HELLSTONE_SWORD = ITEMS.register(
             "hellstone_sword",
-            () -> new SwordItem(CustomItemTiers.HELLSTONE, 3, -2.4f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+            () -> new HellstoneSwordItem(CustomItemTiers.HELLSTONE, 3, -2.4f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> HELLSTONE_AXE = ITEMS.register(
             "hellstone_axe",
-            () -> new AxeItem(CustomItemTiers.HELLSTONE, 5f, -3f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+            () -> new HellstoneAxeItem(CustomItemTiers.HELLSTONE, 5f, -3f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> HELLSTONE_PICKAXE = ITEMS.register(
             "hellstone_pickaxe",
-            () -> new PickaxeItem(CustomItemTiers.HELLSTONE, 1, -2.8f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+            () -> new HellstonePickaxeItem(CustomItemTiers.HELLSTONE, 1, -2.8f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> HELLSTONE_SHOVEL = ITEMS.register(
             "hellstone_shovel",
-            () -> new ShovelItem(CustomItemTiers.HELLSTONE, 1.5f, -3f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+            () -> new HellstoneShovelItem(CustomItemTiers.HELLSTONE, 1.5f, -3f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> HELLSTONE_HOE = ITEMS.register(
             "hellstone_hoe",
-            () -> new HoeItem(CustomItemTiers.HELLSTONE, -4, 0f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+            () -> new HellstoneHoeItem(CustomItemTiers.HELLSTONE, -4, 0f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> PLATINUM_HELMET = ITEMS.register(

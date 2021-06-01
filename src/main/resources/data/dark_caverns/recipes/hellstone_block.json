@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "dark_caverns:hellstone"
+    }
+  },
+  "result": {
+    "item": "dark_caverns:hellstone_block",
+    "count": 1
+  }
+}

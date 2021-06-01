@@ -1,6 +1,7 @@
 {
   "block.dark_caverns.carfstone": "Carfstone",
   "block.dark_caverns.hellstone_ore": "Hellstone Ore",
+  "block.dark_caverns.hellstone_block": "Block of Hellstone",
   "block.dark_caverns.carfstone_bricks": "Carfstone Bricks",
   "block.dark_caverns.carfstone_brick_stairs": "Carfstone Brick Stairs",
   "block.dark_caverns.carfstone_brick_slab": "Carfstone Brick Slab",
@@ -34,8 +35,8 @@
   "block.dark_caverns.carfstone_redstone_ore": "Carfstone Redstone Ore",
   "block.dark_caverns.carfstone_lapis_ore": "Carfstone Lapis Ore",
   "block.dark_caverns.carfstone_platinum_ore": "Carfstone Platinum Ore",
-  "block.dark_caverns.platinum_block": "Platinum Block",
-  "block.dark_caverns.luminite_block": "Luminite Block",
+  "block.dark_caverns.platinum_block": "Block of Platinum",
+  "block.dark_caverns.luminite_block": "Block of Luminite",
   "block.dark_caverns.luminite_lantern": "Luminite Lantern",
   "block.dark_caverns.glimmershroom": "Glimmershroom",
   "block.dark_caverns.glimmershroom_block": "Glimmershroom Block",
