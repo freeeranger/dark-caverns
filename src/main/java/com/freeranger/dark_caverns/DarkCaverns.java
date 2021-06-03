@@ -3,6 +3,7 @@ package com.freeranger.dark_caverns;
 import com.freeranger.dark_caverns.capabilities.GatewayCooldownCapability;
 import com.freeranger.dark_caverns.core.EventHandler;
 import com.freeranger.dark_caverns.data.CustomBlockTags;
+import com.freeranger.dark_caverns.entities.ScorchhoundEntity;
 import com.freeranger.dark_caverns.entities.ScorchlingEntity;
 import com.freeranger.dark_caverns.items.CustomSpawnEggItem;
 import com.freeranger.dark_caverns.registry.*;
@@ -134,6 +135,7 @@ public class DarkCaverns {
 	@SubscribeEvent
 	public void registerAttributes(EntityAttributeCreationEvent event){
 		event.put(CustomEntityTypes.SCORCHLING_ENTITY.get(), ScorchlingEntity.ATTRIBUTE_MAP);
+		event.put(CustomEntityTypes.SCORCHHOUND_ENTITY.get(), ScorchhoundEntity.ATTRIBUTE_MAP);
 	}
 
 	public void clientSetup(FMLClientSetupEvent event){
