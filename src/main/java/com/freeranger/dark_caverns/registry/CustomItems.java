@@ -33,6 +33,11 @@ public class CustomItems {
             )
     );
 
+    public static final RegistryObject<CustomSpawnEggItem> SCORCHHOUND_SPAWN_EGG = ITEMS.register(
+            "scorchhound_spawn_egg",
+            () -> new CustomSpawnEggItem(CustomEntityTypes.SCORCHHOUND_ENTITY, 2368548, 16751393)
+    );
+
     public static final RegistryObject<Item> KEY_TO_THE_CAVERNS = ITEMS.register(
             "key_to_the_caverns",
             () -> new KeyToTheCavernsItem(new Item.Properties().tab(CustomItemGroups.GROUP).stacksTo(1))

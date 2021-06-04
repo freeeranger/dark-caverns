@@ -59,6 +59,12 @@
         "weight": 85,
         "minCount": 1,
         "maxCount": 4
+      },
+      {
+        "type": "dark_caverns:scorchhound",
+        "weight": 60,
+        "minCount": 1,
+        "maxCount": 3
       }
     ],
     "water_ambient": [],

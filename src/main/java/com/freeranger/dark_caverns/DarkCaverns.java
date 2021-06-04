@@ -130,6 +130,7 @@ public class DarkCaverns {
 		};
 
 		DispenserBlock.registerBehavior(CustomItems.SCORCHLING_SPAWN_EGG.get(), spawnEggDispenserBehavior);
+		DispenserBlock.registerBehavior(CustomItems.SCORCHHOUND_SPAWN_EGG.get(), spawnEggDispenserBehavior);
 	}
 
 	@SubscribeEvent

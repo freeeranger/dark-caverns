@@ -1,7 +1,10 @@
 package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
+import net.minecraft.client.renderer.entity.ZoglinRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -9,16 +12,16 @@ import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.SkeletonEntity;
-import net.minecraft.entity.monster.ZoglinEntity;
-import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -55,8 +58,35 @@ public class ScorchhoundEntity extends MonsterEntity implements IAnimatable {
         return PlayState.CONTINUE;
     }
 
+    public boolean doHurtTarget(Entity entity) {
+        if (!(entity instanceof LivingEntity)) {
+            return false;
+        } else {
+            this.level.broadcastEntityEvent(this, (byte)4);
+            this.playSound(SoundEvents.ZOGLIN_ATTACK, 1.0F, this.getVoicePitch());
+            return IFlinging.hurtAndThrowTarget(this, (LivingEntity)entity);
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void handleEntityEvent(byte value) {
+        if (value == 4) {
+            this.playSound(SoundEvents.ZOGLIN_ATTACK, 1.0F, this.getVoicePitch());
+        } else {
+            super.handleEntityEvent(value);
+        }
+
+    }
+
+    protected void blockedByShield(LivingEntity livingEntity) {
+        if (!this.isBaby()) {
+            IFlinging.throwTarget(this, livingEntity);
+        }
+
+    }
+
     public static boolean canScorchhoundSpawn(EntityType<? extends MonsterEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(27) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
+        return rand.nextInt(18) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
     }
 
     @Override
