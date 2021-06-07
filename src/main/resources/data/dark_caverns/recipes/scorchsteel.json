@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "dark_caverns:scorchling_tail"
+    },
+    {
+      "item": "dark_caverns:scorchling_tail"
+    },
+    {
+      "item": "dark_caverns:scorchling_tail"
+    },
+    {
+      "item": "dark_caverns:scorchling_tail"
+    }
+  ],
+  "result": {
+    "item": "dark_caverns:scorchsteel_ingot"
+  }
+}

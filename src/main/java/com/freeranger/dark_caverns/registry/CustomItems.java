@@ -1,10 +1,7 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.armor.HellstoneArmorItem;
-import com.freeranger.dark_caverns.armor.HellstoneArmorMaterial;
-import com.freeranger.dark_caverns.armor.LuminiteArmorMaterial;
-import com.freeranger.dark_caverns.armor.PlatinumArmorMaterial;
+import com.freeranger.dark_caverns.armor.*;
 import com.freeranger.dark_caverns.items.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -25,8 +22,17 @@ public class CustomItems {
             ))
     );
 
-    public static final RegistryObject<Item> SCORCHLING_MEAT = ITEMS.register(
-            "scorchling_meat",
+    public static final RegistryObject<Item> KEY_TO_THE_CAVERNS = ITEMS.register(
+            "key_to_the_caverns",
+            () -> new KeyToTheCavernsItem(new Item.Properties().tab(CustomItemGroups.GROUP).stacksTo(1))
+    );
+
+    public static final RegistryObject<Item> SCORCHLING_TAIL = ITEMS.register(
+            "scorchling_tail", () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> SCORCHED_MEAT = ITEMS.register(
+            "scorched_meat",
             () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP).food(
                     new Food.Builder().effect(() -> new EffectInstance(Effects.SATURATION, 620), 1f)
                             .alwaysEat().nutrition(7).saturationMod(0.7f).build())
@@ -35,17 +41,12 @@ public class CustomItems {
 
     public static final RegistryObject<CustomSpawnEggItem> SCORCHHOUND_SPAWN_EGG = ITEMS.register(
             "scorchhound_spawn_egg",
-            () -> new CustomSpawnEggItem(CustomEntityTypes.SCORCHHOUND_ENTITY, 2368548, 16751393)
-    );
-
-    public static final RegistryObject<Item> KEY_TO_THE_CAVERNS = ITEMS.register(
-            "key_to_the_caverns",
-            () -> new KeyToTheCavernsItem(new Item.Properties().tab(CustomItemGroups.GROUP).stacksTo(1))
+            () -> new CustomSpawnEggItem(CustomEntityTypes.SCORCHHOUND_ENTITY, 5195333, 16737280)
     );
 
     public static final RegistryObject<CustomSpawnEggItem> SCORCHLING_SPAWN_EGG = ITEMS.register(
             "scorchling_spawn_egg",
-            () -> new CustomSpawnEggItem(CustomEntityTypes.SCORCHLING_ENTITY, 2368548, 16751393)
+            () -> new CustomSpawnEggItem(CustomEntityTypes.SCORCHLING_ENTITY, 5195333, 16751880)
     );
 
     public static final RegistryObject<Item> LUMINITE_DUST = ITEMS.register(
@@ -61,6 +62,11 @@ public class CustomItems {
     public static final RegistryObject<Item> HELLSTONE_ROCK = ITEMS.register(
             "hellstone_rock",
             () -> new Item(new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> SCORCHSTEEL_INGOT = ITEMS.register(
+            "scorchsteel_ingot",
+            () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> PLATINUM_INGOT = ITEMS.register(
@@ -201,6 +207,42 @@ public class CustomItems {
                     HellstoneArmorMaterial.HELLSTONE,
                     EquipmentSlotType.FEET,
                     new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> SCORCHSTEEL_HELMET = ITEMS.register(
+            "scorchsteel_helmet",
+            () -> new ScorchsteelArmorItem(
+                    ScorchsteelArmorMaterial.SCORCHSTEEL,
+                    EquipmentSlotType.HEAD,
+                    new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> SCORCHSTEEL_CHESTPLATE = ITEMS.register(
+            "scorchsteel_chestplate",
+            () -> new ScorchsteelArmorItem(
+                    ScorchsteelArmorMaterial.SCORCHSTEEL,
+                    EquipmentSlotType.CHEST,
+                    new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> SCORCHSTEEL_LEGGINGS = ITEMS.register(
+            "scorchsteel_leggings",
+            () -> new ScorchsteelArmorItem(
+                    ScorchsteelArmorMaterial.SCORCHSTEEL,
+                    EquipmentSlotType.LEGS,
+                    new Item.Properties().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> SCORCHSTEEL_BOOTS = ITEMS.register(
+            "scorchsteel_boots",
+            () -> new ScorchsteelArmorItem(
+                    ScorchsteelArmorMaterial.SCORCHSTEEL,
+                    EquipmentSlotType.FEET,
+                    new Item.Properties().tab(CustomItemGroups.GROUP)
             )
     );
 

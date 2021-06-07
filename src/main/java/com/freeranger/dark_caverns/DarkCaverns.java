@@ -118,19 +118,6 @@ public class DarkCaverns {
 			CustomStructures.setupStructures();
 			ConfiguredStructures.registerConfiguredStructures();
 		});
-
-		DefaultDispenseItemBehavior spawnEggDispenserBehavior = new DefaultDispenseItemBehavior() {
-			public ItemStack execute(IBlockSource source, ItemStack stack) {
-				Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-				EntityType<?> type = ((CustomSpawnEggItem)stack.getItem()).getType(stack.getTag());
-				type.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
-				stack.shrink(1);
-				return stack;
-			}
-		};
-
-		DispenserBlock.registerBehavior(CustomItems.SCORCHLING_SPAWN_EGG.get(), spawnEggDispenserBehavior);
-		DispenserBlock.registerBehavior(CustomItems.SCORCHHOUND_SPAWN_EGG.get(), spawnEggDispenserBehavior);
 	}
 
 	@SubscribeEvent

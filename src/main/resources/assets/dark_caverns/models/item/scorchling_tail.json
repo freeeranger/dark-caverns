@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "dark_caverns:item/scorchhound_spawn_egg"
+    "layer0": "dark_caverns:item/scorchling_tail"
   }
 }
