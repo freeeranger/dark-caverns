@@ -1,6 +1,7 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
+import com.freeranger.dark_caverns.entities.MoltenerEntityRenderer;
 import com.freeranger.dark_caverns.entities.ScorchhoundEntityRenderer;
 import com.freeranger.dark_caverns.entities.ScorchlingEntityRenderer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,5 +16,6 @@ public class ClientEventBusSubscriber {
     public static void onClientSetup (FMLClientSetupEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.SCORCHLING_ENTITY.get(), ScorchlingEntityRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.SCORCHHOUND_ENTITY.get(), ScorchhoundEntityRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.MOLTENER_ENTITY.get(), MoltenerEntityRenderer::new);
     }
 }

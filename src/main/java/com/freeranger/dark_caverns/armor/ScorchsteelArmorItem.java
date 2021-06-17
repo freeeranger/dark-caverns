@@ -1,6 +1,9 @@
 package com.freeranger.dark_caverns.armor;
 
 import com.freeranger.dark_caverns.registry.CustomItems;
+import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
@@ -11,6 +14,10 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 public class ScorchsteelArmorItem extends ArmorItem {
     private double lastPosX, lastPosY, lastPosZ;
@@ -22,10 +29,6 @@ public class ScorchsteelArmorItem extends ArmorItem {
 
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-        if(player.hasEffect(Effects.INVISIBILITY)) {
-            player.setInvisible(true);
-            return;
-        }
         if(player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == CustomItems.SCORCHSTEEL_HELMET.get() &&
                 player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == CustomItems.SCORCHSTEEL_CHESTPLATE.get() &&
                 player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == CustomItems.SCORCHSTEEL_LEGGINGS.get() &&
@@ -33,11 +36,10 @@ public class ScorchsteelArmorItem extends ArmorItem {
             if(lastPosX == player.getX() && lastPosY == player.getY() && lastPosZ == player.getZ()){
                 timer++;
                 if(timer >= 20){
-                    player.setInvisible(true);
+                    player.addEffect(new EffectInstance(Effects.INVISIBILITY, 20, 0));
                 }
             }else{
                 timer = 0;
-                player.setInvisible(false);
             }
             lastPosX = player.getX();
             lastPosY = player.getY();

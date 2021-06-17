@@ -2,6 +2,8 @@ package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.generation.ForgottenTowerStructure;
+import com.freeranger.dark_caverns.generation.SacretTorchStructure;
+import com.freeranger.dark_caverns.generation.TerritoryMarkerStructure;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.util.RegistryKey;
@@ -28,6 +30,12 @@ public class CustomStructures {
     public static final RegistryObject<Structure<NoFeatureConfig>> FORGOTTEN_TOWER =
             STRUCTURES.register("forgotten_tower", () -> (new ForgottenTowerStructure(NoFeatureConfig.CODEC)));
 
+    public static final RegistryObject<Structure<NoFeatureConfig>> SACRET_TORCH =
+            STRUCTURES.register("sacret_torch", () -> (new SacretTorchStructure(NoFeatureConfig.CODEC)));
+
+    public static final RegistryObject<Structure<NoFeatureConfig>> TERRITORY_MARKER =
+            STRUCTURES.register("territory_marker", () -> (new TerritoryMarkerStructure(NoFeatureConfig.CODEC)));
+
     public static void setupStructures() {
         setupMapSpacingAndLand(
                 FORGOTTEN_TOWER.get(),
@@ -35,7 +43,26 @@ public class CustomStructures {
                         70,
                         153573859
                 ),
-                true);
+                true
+        );
+
+        setupMapSpacingAndLand(
+                SACRET_TORCH.get(),
+                new StructureSeparationSettings(3,
+                        1,
+                        354645646
+                ),
+                true
+        );
+
+        setupMapSpacingAndLand(
+                TERRITORY_MARKER.get(),
+                new StructureSeparationSettings(4,
+                        1,
+                        856753493
+                ),
+                true
+        );
     }
 
     public static <F extends Structure<?>> void setupMapSpacingAndLand(

@@ -3,19 +3,12 @@ package com.freeranger.dark_caverns;
 import com.freeranger.dark_caverns.capabilities.GatewayCooldownCapability;
 import com.freeranger.dark_caverns.core.EventHandler;
 import com.freeranger.dark_caverns.data.CustomBlockTags;
+import com.freeranger.dark_caverns.entities.MoltenerEntity;
 import com.freeranger.dark_caverns.entities.ScorchhoundEntity;
 import com.freeranger.dark_caverns.entities.ScorchlingEntity;
-import com.freeranger.dark_caverns.items.CustomSpawnEggItem;
 import com.freeranger.dark_caverns.registry.*;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -36,7 +29,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -101,8 +93,10 @@ public class DarkCaverns {
 					(event.getName() == Biomes.DARK_FOREST.getRegistryName()
 					|| event.getName() == Biomes.DARK_FOREST_HILLS.getRegistryName()))
 				return;
-
 			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_FORGOTTEN_TOWER);
+		}else if(event.getName() != null && event.getName().equals(CustomBiomes.MOLTEN_DEPTHS.location())) {
+			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_SACRET_TORCH);
+			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_TERRITORY_MARKER);
 		}
 	}
 
@@ -124,6 +118,7 @@ public class DarkCaverns {
 	public void registerAttributes(EntityAttributeCreationEvent event){
 		event.put(CustomEntityTypes.SCORCHLING_ENTITY.get(), ScorchlingEntity.ATTRIBUTE_MAP);
 		event.put(CustomEntityTypes.SCORCHHOUND_ENTITY.get(), ScorchhoundEntity.ATTRIBUTE_MAP);
+		event.put(CustomEntityTypes.MOLTENER_ENTITY.get(), MoltenerEntity.ATTRIBUTE_MAP);
 	}
 
 	public void clientSetup(FMLClientSetupEvent event){
@@ -171,6 +166,8 @@ public class DarkCaverns {
 
 			Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
 			tempMap.putIfAbsent(CustomStructures.FORGOTTEN_TOWER.get(), DimensionStructuresSettings.DEFAULTS.get(CustomStructures.FORGOTTEN_TOWER.get()));
+			tempMap.putIfAbsent(CustomStructures.SACRET_TORCH.get(), DimensionStructuresSettings.DEFAULTS.get(CustomStructures.SACRET_TORCH.get()));
+			tempMap.putIfAbsent(CustomStructures.TERRITORY_MARKER.get(), DimensionStructuresSettings.DEFAULTS.get(CustomStructures.TERRITORY_MARKER.get()));
 			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 		}
 	}

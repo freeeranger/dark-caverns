@@ -14,9 +14,13 @@ public class CustomBiomes {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, DarkCaverns.MOD_ID);
 
     public static final RegistryKey<Biome> ROCKY_CAVERNS = register("rocky_caverns");
+    public static final RegistryKey<Biome> GLIMMERSHROOM_FOREST = register("glimmershroom_forest");
+    public static final RegistryKey<Biome> MOLTEN_DEPTHS = register("molten_depths");
 
     public static void toDictionary() {
         BiomeDictionary.addTypes(ROCKY_CAVERNS, BiomeDictionary.Type.DEAD);
+        BiomeDictionary.addTypes(GLIMMERSHROOM_FOREST, BiomeDictionary.Type.MAGICAL);
+        BiomeDictionary.addTypes(MOLTEN_DEPTHS, BiomeDictionary.Type.HOT);
     }
 
     private static ResourceLocation name(String name) {

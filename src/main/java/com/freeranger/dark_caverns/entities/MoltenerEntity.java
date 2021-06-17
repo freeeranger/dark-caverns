@@ -1,13 +1,15 @@
 package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.SpiderEntity;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.PanicGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -25,33 +27,30 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class ScorchlingEntity extends MonsterEntity implements IAnimatable {
+public class MoltenerEntity extends CreatureEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
-    public static AttributeModifierMap ATTRIBUTE_MAP = MonsterEntity.createMonsterAttributes()
-            .add(Attributes.ATTACK_DAMAGE, 4D)
-            .add(Attributes.ATTACK_KNOCKBACK, 1.7D)
-            .add(Attributes.ARMOR, 4D)
-            .add(Attributes.MAX_HEALTH, 15D)
-            .add(Attributes.MOVEMENT_SPEED, .2D)
+    public static AttributeModifierMap ATTRIBUTE_MAP = createLivingAttributes()
+            .add(Attributes.MAX_HEALTH, 10D)
+            .add(Attributes.MOVEMENT_SPEED, .15D)
             .add(Attributes.FOLLOW_RANGE, 24D)
             .build();
 
-    public ScorchlingEntity(EntityType<? extends ScorchlingEntity> type, World world) {
+    public MoltenerEntity(EntityType<? extends MoltenerEntity> type, World world) {
         super(type, world);
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if(event.isMoving()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scorchling.run", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.moltener.walk", true));
             return PlayState.CONTINUE;
         }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scorchling.idle", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.moltener.idle", true));
         return PlayState.CONTINUE;
     }
 
-    public static boolean canScorchlingSpawn(EntityType<? extends MonsterEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(14) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
+    public static boolean canMoltenerSpawn(EntityType<? extends CreatureEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
+        return rand.nextInt(12) == 0;
     }
 
     @Override
@@ -66,11 +65,10 @@ public class ScorchlingEntity extends MonsterEntity implements IAnimatable {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 2d, true));
-        this.goalSelector.addGoal(2, new LeapAtTargetGoal(this, 0.4F));
-        this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+        this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 2.0D));
+        this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 6.0F));
+        this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
         super.registerGoals();
     }
 

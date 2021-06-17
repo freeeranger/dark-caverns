@@ -8,10 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
@@ -43,6 +40,7 @@ public class ScorchhoundEntity extends MonsterEntity implements IAnimatable {
             .add(Attributes.MAX_HEALTH, 40D)
             .add(Attributes.MOVEMENT_SPEED, .2D)
             .add(Attributes.KNOCKBACK_RESISTANCE, 2D)
+            .add(Attributes.FOLLOW_RANGE, 32D)
             .build();
 
     public ScorchhoundEntity(EntityType<? extends ScorchhoundEntity> type, World world) {
@@ -103,10 +101,13 @@ public class ScorchhoundEntity extends MonsterEntity implements IAnimatable {
     protected void registerGoals() {
         this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.6d, true));
+        this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         super.registerGoals();
     }
+
+
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {

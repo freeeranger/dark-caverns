@@ -1,6 +1,7 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
+import com.freeranger.dark_caverns.entities.MoltenerEntity;
 import com.freeranger.dark_caverns.entities.ScorchhoundEntity;
 import com.freeranger.dark_caverns.entities.ScorchlingEntity;
 import com.freeranger.dark_caverns.entities.ThrowableLuminiteTorchEntity;
@@ -30,6 +31,9 @@ public class CustomEntityTypes {
     public static final RegistryObject<EntityType<ScorchlingEntity>> SCORCHLING_ENTITY = buildEntity(ScorchlingEntity::new,
             0.6f, 0.4F, "scorchling");
 
+    public static final RegistryObject<EntityType<MoltenerEntity>> MOLTENER_ENTITY = buildEntity(MoltenerEntity::new,
+            0.7f, 0.9F, "moltener");
+
     public static final RegistryObject<EntityType<ScorchhoundEntity>> SCORCHHOUND_ENTITY = buildEntity(ScorchhoundEntity::new,
             1.5f, 1F, "scorchhound");
 
@@ -43,5 +47,8 @@ public class CustomEntityTypes {
 
         EntitySpawnPlacementRegistry.register(SCORCHHOUND_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ScorchhoundEntity::canScorchhoundSpawn);
+
+        EntitySpawnPlacementRegistry.register(MOLTENER_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MoltenerEntity::canMoltenerSpawn);
     }
 }

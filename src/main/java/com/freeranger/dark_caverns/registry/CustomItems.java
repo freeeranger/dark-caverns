@@ -44,6 +44,11 @@ public class CustomItems {
             () -> new CustomSpawnEggItem(CustomEntityTypes.SCORCHHOUND_ENTITY, 5195333, 16737280)
     );
 
+    public static final RegistryObject<CustomSpawnEggItem> MOLTENER_SPAWN_EGG = ITEMS.register(
+            "moltener_spawn_egg",
+            () -> new CustomSpawnEggItem(CustomEntityTypes.MOLTENER_ENTITY, 5195333, 4018742)
+    );
+
     public static final RegistryObject<CustomSpawnEggItem> SCORCHLING_SPAWN_EGG = ITEMS.register(
             "scorchling_spawn_egg",
             () -> new CustomSpawnEggItem(CustomEntityTypes.SCORCHLING_ENTITY, 5195333, 16751880)

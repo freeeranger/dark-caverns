@@ -23,7 +23,7 @@
         },
         {
           "type": "item",
-          "name": "dark_caverns:scorchling_meat",
+          "name": "dark_caverns:scorched_meat",
           "weight": 30,
           "functions": [
             {
