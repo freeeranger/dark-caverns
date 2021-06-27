@@ -47,6 +47,12 @@
         "weight": 125,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "dark_caverns:moltener",
+        "weight": 300,
+        "minCount": 1,
+        "maxCount": 4
       }
     ],
     "misc": [],
