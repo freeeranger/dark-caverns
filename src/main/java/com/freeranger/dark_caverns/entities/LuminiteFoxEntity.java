@@ -53,7 +53,7 @@ public class LuminiteFoxEntity extends CreatureEntity implements IAnimatable {
     }
 
     public static boolean canLuminiteFoxSpawn(EntityType<? extends CreatureEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(2) == 0;
+        return rand.nextInt(10) == 0;
     }
 
     @Override
