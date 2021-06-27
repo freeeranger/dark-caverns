@@ -1,9 +1,7 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.entities.MoltenerEntityRenderer;
-import com.freeranger.dark_caverns.entities.ScorchhoundEntityRenderer;
-import com.freeranger.dark_caverns.entities.ScorchlingEntityRenderer;
+import com.freeranger.dark_caverns.entities.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -17,5 +15,8 @@ public class ClientEventBusSubscriber {
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.SCORCHLING_ENTITY.get(), ScorchlingEntityRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.SCORCHHOUND_ENTITY.get(), ScorchhoundEntityRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.MOLTENER_ENTITY.get(), MoltenerEntityRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.CAMOROCK_ENTITY.get(), CamorockEntityRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(), LuminiteGolemEntityRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.LUMINITE_FOX_ENTITY.get(), LuminiteFoxEntityRenderer::new);
     }
 }

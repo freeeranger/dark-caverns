@@ -1,10 +1,7 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.entities.MoltenerEntity;
-import com.freeranger.dark_caverns.entities.ScorchhoundEntity;
-import com.freeranger.dark_caverns.entities.ScorchlingEntity;
-import com.freeranger.dark_caverns.entities.ThrowableLuminiteTorchEntity;
+import com.freeranger.dark_caverns.entities.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -34,8 +31,17 @@ public class CustomEntityTypes {
     public static final RegistryObject<EntityType<MoltenerEntity>> MOLTENER_ENTITY = buildEntity(MoltenerEntity::new,
             0.7f, 0.9F, "moltener");
 
+    public static final RegistryObject<EntityType<CamorockEntity>> CAMOROCK_ENTITY = buildEntity(CamorockEntity::new,
+            0.9f, 0.6F, "camorock");
+
     public static final RegistryObject<EntityType<ScorchhoundEntity>> SCORCHHOUND_ENTITY = buildEntity(ScorchhoundEntity::new,
             1.5f, 1F, "scorchhound");
+
+    public static final RegistryObject<EntityType<LuminiteGolemEntity>> LUMINITE_GOLEM_ENTITY = buildEntity(LuminiteGolemEntity::new,
+            1.3f, 2F, "luminite_golem");
+
+    public static final RegistryObject<EntityType<LuminiteFoxEntity>> LUMINITE_FOX_ENTITY = buildEntity(LuminiteFoxEntity::new,
+            0.7f, 0.4F, "luminite_fox");
 
     public static <T extends Entity> RegistryObject<EntityType<T>> buildEntity(EntityType.IFactory<T> entity, float width, float height, String name) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(entity, EntityClassification.CREATURE).sized(width, height).fireImmune().build(name));
@@ -50,5 +56,14 @@ public class CustomEntityTypes {
 
         EntitySpawnPlacementRegistry.register(MOLTENER_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MoltenerEntity::canMoltenerSpawn);
+
+        EntitySpawnPlacementRegistry.register(CAMOROCK_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CamorockEntity::canCamorockSpawn);
+
+        EntitySpawnPlacementRegistry.register(LUMINITE_GOLEM_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, LuminiteGolemEntity::canLuminiteGolemSpawn);
+
+        EntitySpawnPlacementRegistry.register(LUMINITE_FOX_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, LuminiteFoxEntity::canLuminiteFoxSpawn);
     }
 }

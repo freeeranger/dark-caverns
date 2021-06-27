@@ -49,6 +49,21 @@ public class CustomItems {
             () -> new CustomSpawnEggItem(CustomEntityTypes.MOLTENER_ENTITY, 5195333, 4018742)
     );
 
+    public static final RegistryObject<CustomSpawnEggItem> CAMOROCK_SPAWN_EGG = ITEMS.register(
+            "camorock_spawn_egg",
+            () -> new CustomSpawnEggItem(CustomEntityTypes.CAMOROCK_ENTITY, 4342338, 15263976)
+    );
+
+    public static final RegistryObject<CustomSpawnEggItem> LUMINITE_GOLEM_SPAWN_EGG = ITEMS.register(
+            "luminite_golem_spawn_egg",
+            () -> new CustomSpawnEggItem(CustomEntityTypes.LUMINITE_GOLEM_ENTITY, 4935256, 3276702)
+    );
+
+    public static final RegistryObject<CustomSpawnEggItem> LUMINITE_FOX_SPAWN_EGG = ITEMS.register(
+            "luminite_fox_spawn_egg",
+            () -> new CustomSpawnEggItem(CustomEntityTypes.LUMINITE_FOX_ENTITY, 4935256, 3276702)
+    );
+
     public static final RegistryObject<CustomSpawnEggItem> SCORCHLING_SPAWN_EGG = ITEMS.register(
             "scorchling_spawn_egg",
             () -> new CustomSpawnEggItem(CustomEntityTypes.SCORCHLING_ENTITY, 5195333, 16751880)
