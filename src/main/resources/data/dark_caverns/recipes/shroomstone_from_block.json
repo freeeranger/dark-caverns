@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "dark_caverns:shroomstone_block"
+    }
+  ],
+  "result": {
+    "item": "dark_caverns:shroomstone",
+    "count": 9
+  }
+}

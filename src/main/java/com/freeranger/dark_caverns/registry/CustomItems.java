@@ -3,6 +3,7 @@ package com.freeranger.dark_caverns.registry;
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.armor.*;
 import com.freeranger.dark_caverns.items.*;
+import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.potion.EffectInstance;
@@ -54,6 +55,11 @@ public class CustomItems {
             () -> new CustomSpawnEggItem(CustomEntityTypes.CAMOROCK_ENTITY, 4342338, 15263976)
     );
 
+    public static final RegistryObject<CustomSpawnEggItem> SHROOMIE_SPAWN_EGG = ITEMS.register(
+            "shroomie_spawn_egg",
+            () -> new CustomSpawnEggItem(CustomEntityTypes.SHROOMIE_ENTITY, 6663388, 16777215)
+    );
+
     public static final RegistryObject<CustomSpawnEggItem> LUMINITE_GOLEM_SPAWN_EGG = ITEMS.register(
             "luminite_golem_spawn_egg",
             () -> new CustomSpawnEggItem(CustomEntityTypes.LUMINITE_GOLEM_ENTITY, 4935256, 3276702)
@@ -84,6 +90,16 @@ public class CustomItems {
             () -> new Item(new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP))
     );
 
+    public static final RegistryObject<Item> SHROOMSTONE = ITEMS.register(
+            "shroomstone",
+            () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> SHROOMSTONE_PIECE = ITEMS.register(
+            "shroomstone_piece",
+            () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP))
+    );
+
     public static final RegistryObject<Item> SCORCHSTEEL_INGOT = ITEMS.register(
             "scorchsteel_ingot",
             () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP))
@@ -97,6 +113,11 @@ public class CustomItems {
     public static final RegistryObject<Item> THROWABLE_LUMINITE_TORCH = ITEMS.register(
             "throwable_luminite_torch",
             () -> new ThrowableLuminiteTorchItem(new Item.Properties().tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> CORRUPTED_PEARL = ITEMS.register(
+            "corrupted_pearl",
+            () -> new CorruptedPearlItem(new Item.Properties().tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> LUMINITE_HELMET = ITEMS.register(
@@ -158,6 +179,31 @@ public class CustomItems {
             () -> new HellstoneHoeItem(CustomItemTiers.HELLSTONE, -4, 0f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
     );
 
+    public static final RegistryObject<Item> SHROOMSTONE_SWORD = ITEMS.register(
+            "shroomstone_sword",
+            () -> new ShroomstoneSwordItem(CustomItemTiers.SHROOMSTONE, 3, -2.4f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> SHROOMSTONE_AXE = ITEMS.register(
+            "shroomstone_axe",
+            () -> new ShroomstoneAxeItem(CustomItemTiers.SHROOMSTONE, 5f, -3f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> SHROOMSTONE_PICKAXE = ITEMS.register(
+            "shroomstone_pickaxe",
+            () -> new ShroomstonePickaxeItem(CustomItemTiers.SHROOMSTONE, 1, -2.8f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> SHROOMSTONE_SHOVEL = ITEMS.register(
+            "shroomstone_shovel",
+            () -> new ShroomstoneShovelItem(CustomItemTiers.SHROOMSTONE, 1.5f, -3f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> SHROOMSTONE_HOE = ITEMS.register(
+            "shroomstone_hoe",
+            () -> new ShroomstoneHoeItem(CustomItemTiers.SHROOMSTONE, -4, 0f, (new Item.Properties()).tab(CustomItemGroups.GROUP))
+    );
+
     public static final RegistryObject<Item> PLATINUM_HELMET = ITEMS.register(
             "platinum_helmet",
             () -> new ArmorItem(
@@ -189,6 +235,42 @@ public class CustomItems {
             "platinum_boots",
             () -> new ArmorItem(
                     PlatinumArmorMaterial.PLATINUM,
+                    EquipmentSlotType.FEET,
+                    new Item.Properties().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> SHROOMSTONE_HELMET = ITEMS.register(
+            "shroomstone_helmet",
+            () -> new ShroomstoneArmorItem(
+                    ShroomstoneArmorMaterial.SHROOMSTONE,
+                    EquipmentSlotType.HEAD,
+                    new Item.Properties().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> SHROOMSTONE_CHESTPLATE = ITEMS.register(
+            "shroomstone_chestplate",
+            () -> new ShroomstoneArmorItem(
+                    ShroomstoneArmorMaterial.SHROOMSTONE,
+                    EquipmentSlotType.CHEST,
+                    new Item.Properties().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> SHROOMSTONE_LEGGINGS = ITEMS.register(
+            "shroomstone_leggings",
+            () -> new ShroomstoneArmorItem(
+                    ShroomstoneArmorMaterial.SHROOMSTONE,
+                    EquipmentSlotType.LEGS,
+                    new Item.Properties().tab(CustomItemGroups.GROUP)
+            )
+    );
+
+    public static final RegistryObject<Item> SHROOMSTONE_BOOTS = ITEMS.register(
+            "shroomstone_boots",
+            () -> new ShroomstoneArmorItem(
+                    ShroomstoneArmorMaterial.SHROOMSTONE,
                     EquipmentSlotType.FEET,
                     new Item.Properties().tab(CustomItemGroups.GROUP)
             )

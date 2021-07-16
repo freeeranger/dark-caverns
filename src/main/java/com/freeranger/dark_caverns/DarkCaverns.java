@@ -5,8 +5,13 @@ import com.freeranger.dark_caverns.core.EventHandler;
 import com.freeranger.dark_caverns.data.CustomBlockTags;
 import com.freeranger.dark_caverns.entities.*;
 import com.freeranger.dark_caverns.registry.*;
+import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -120,6 +125,8 @@ public class DarkCaverns {
 		event.put(CustomEntityTypes.CAMOROCK_ENTITY.get(), CamorockEntity.ATTRIBUTE_MAP);
 		event.put(CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(), LuminiteGolemEntity.ATTRIBUTE_MAP);
 		event.put(CustomEntityTypes.LUMINITE_FOX_ENTITY.get(), LuminiteGolemEntity.ATTRIBUTE_MAP);
+		event.put(CustomEntityTypes.SHROOMIE_ENTITY.get(), ShroomieEntity.ATTRIBUTE_MAP);
+
 	}
 
 	public void clientSetup(FMLClientSetupEvent event){

@@ -25,6 +25,16 @@ public class CustomEntityTypes {
     public static final RegistryObject<EntityType<ThrowableLuminiteTorchEntity>> THROWABLE_LUMINITE_TORCH =
             ENTITIES.register("throwable_luminite_torch", () -> THROWABLE_LUMINITE_TORCH_TYPE);
 
+    public static final EntityType<CorruptedPearlEntity> CORRUPTED_PEARL_TYPE =
+            EntityType.Builder.<CorruptedPearlEntity>of(CorruptedPearlEntity::new, EntityClassification.MISC)
+                    .sized(0.25F, 0.25F)
+                    .updateInterval(10)
+                    .setTrackingRange(4)
+                    .build("corrupted_pearl");
+    public static final RegistryObject<EntityType<CorruptedPearlEntity>> CORRUPTED_PEARL =
+            ENTITIES.register("corrupted_pearl", () -> CORRUPTED_PEARL_TYPE);
+
+
     public static final RegistryObject<EntityType<ScorchlingEntity>> SCORCHLING_ENTITY = buildEntity(ScorchlingEntity::new,
             0.6f, 0.4F, "scorchling");
 
@@ -42,6 +52,9 @@ public class CustomEntityTypes {
 
     public static final RegistryObject<EntityType<LuminiteFoxEntity>> LUMINITE_FOX_ENTITY = buildEntity(LuminiteFoxEntity::new,
             0.7f, 0.4F, "luminite_fox");
+
+    public static final RegistryObject<EntityType<ShroomieEntity>> SHROOMIE_ENTITY = buildEntity(ShroomieEntity::new,
+            0.5f, 1.2F, "shroomie");
 
     public static <T extends Entity> RegistryObject<EntityType<T>> buildEntity(EntityType.IFactory<T> entity, float width, float height, String name) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(entity, EntityClassification.CREATURE).sized(width, height).fireImmune().build(name));
@@ -65,5 +78,8 @@ public class CustomEntityTypes {
 
         EntitySpawnPlacementRegistry.register(LUMINITE_FOX_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, LuminiteFoxEntity::canLuminiteFoxSpawn);
+
+        EntitySpawnPlacementRegistry.register(SHROOMIE_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ShroomieEntity::canShroomieSpawn);
     }
 }

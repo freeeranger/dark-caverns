@@ -18,5 +18,6 @@ public class ClientEventBusSubscriber {
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.CAMOROCK_ENTITY.get(), CamorockEntityRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(), LuminiteGolemEntityRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.LUMINITE_FOX_ENTITY.get(), LuminiteFoxEntityRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.SHROOMIE_ENTITY.get(), ShroomieEntityRenderer::new);
     }
 }

@@ -12,6 +12,9 @@ public enum CustomItemTiers implements IItemTier{
     }),
     HELLSTONE(4, 1843, 10f, 3.5f, 15, () -> {
         return Ingredient.of(CustomItems.HELLSTONE.get());
+    }),
+    SHROOMSTONE(4, 1843, 10f, 3.5f, 20, () -> {
+        return Ingredient.of(CustomItems.SHROOMSTONE.get());
     });
 
     private final int level;

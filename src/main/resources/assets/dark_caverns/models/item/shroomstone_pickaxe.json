@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "dark_caverns:item/shroomstone_pickaxe"
+  }
+}

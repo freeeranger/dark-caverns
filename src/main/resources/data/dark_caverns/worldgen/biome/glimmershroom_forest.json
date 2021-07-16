@@ -48,7 +48,14 @@
     "ambient": [],
     "creature": [],
     "misc": [],
-    "monster": [],
+    "monster": [
+      {
+        "type": "dark_caverns:shroomie",
+        "weight": 100,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
     "water_ambient": [],
     "water_creature": []
   },

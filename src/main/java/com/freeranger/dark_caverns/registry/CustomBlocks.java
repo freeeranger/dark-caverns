@@ -272,6 +272,16 @@ public class CustomBlocks {
     public static final RegistryObject<Block> HELLSTONE_BLOCK = register("hellstone_block", () -> new Block(
             AbstractBlock.Properties.copy(HELLSTONE_ORE.get()))
     );
+
+    public static final RegistryObject<Block> SHROOMSTONE_BLOCK = register("shroomstone_block", () -> new Block(
+        AbstractBlock.Properties.of(Material.STONE)
+            .strength(9f, 7f)
+            .harvestTool(ToolType.PICKAXE)
+            .harvestLevel(3)
+            .requiresCorrectToolForDrops()
+        )
+    );
+
     public static final RegistryObject<Block> LUMINITE_TORCH = BLOCKS.register("luminite_torch", () -> new LuminiteTorchBlock(
             AbstractBlock.Properties.copy(Blocks.TORCH)
                     .lightLevel((state) -> 15))
