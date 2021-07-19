@@ -1,0 +1,44 @@
+{
+    "parent": "dark_caverns:obtain_shroomstone_piece",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:shroomstone_chestplate"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.shroomstone_armor_set.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.shroomstone_armor_set.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "shroomstone_armor": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:shroomstone_helmet"
+            },
+            {
+              "item": "dark_caverns:shroomstone_chestplate"
+            },
+            {
+              "item": "dark_caverns:shroomstone_leggings"
+            },
+            {
+              "item": "dark_caverns:shroomstone_boots"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "shroomstone_armor"
+      ]
+    ]
+  }

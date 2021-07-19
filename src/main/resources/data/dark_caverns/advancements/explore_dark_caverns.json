@@ -1,0 +1,58 @@
+{
+  "parent": "dark_caverns:enter_dark_caverns",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:glimmergrass_block"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.explore_dark_caverns.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.explore_dark_caverns.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+  },
+  "rewards": {
+    "experience": 500
+  },
+  "criteria": {
+    "dark_caverns:rocky_caverns": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "biome": "dark_caverns:rocky_caverns"
+        }
+      }
+    },
+    "dark_caverns:molten_depths": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "biome": "dark_caverns:molten_depths"
+        }
+      }
+    },
+    "dark_caverns:glimmershroom_forest": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "biome": "dark_caverns:glimmershroom_forest"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "dark_caverns:rocky_caverns"
+    ],
+    [
+      "dark_caverns:molten_depths"
+    ],
+    [
+      "dark_caverns:glimmershroom_forest"
+    ]
+  ]
+}

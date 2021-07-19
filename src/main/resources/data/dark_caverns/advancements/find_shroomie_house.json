@@ -1,0 +1,33 @@
+{
+  "parent": "dark_caverns:enter_dark_caverns",
+  "display": {
+    "icon": {
+      "item": "dark_caverns:glimmershroom_block"
+    },
+    "title": {
+      "translate": "advancements.dark_caverns.find_shroomie_house.title"
+    },
+    "description": {
+      "translate": "advancements.dark_caverns.find_shroomie_house.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "find_shroomie_house": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "feature": "dark_caverns:shroomie_house"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "find_shroomie_house"
+    ]
+  ]
+}

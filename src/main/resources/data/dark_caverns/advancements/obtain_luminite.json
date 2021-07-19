@@ -1,0 +1,35 @@
+{
+    "parent": "dark_caverns:enter_dark_caverns",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:carfstone_luminite_ore"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.obtain_luminite_dust.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.obtain_luminite_dust.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "luminite_dust": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:luminite_dust"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "luminite_dust"
+      ]
+    ]
+  }

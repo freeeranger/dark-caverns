@@ -40,20 +40,20 @@ public class CustomFlatBigMushroomFeature extends Feature<BigMushroomFeatureConf
         return i;
     }
 
-    protected boolean isValidPosition(IWorld p_227209_1_, BlockPos p_227209_2_, int p_227209_3_, BlockPos.Mutable p_227209_4_, BigMushroomFeatureConfig p_227209_5_) {
-        int i = p_227209_2_.getY();
-        if (i >= 1 && i + p_227209_3_ + 1 < 256) {
-            Block block = p_227209_1_.getBlockState(p_227209_2_.below()).getBlock();
+    protected boolean isValidPosition(IWorld world, BlockPos pos, int flag, BlockPos.Mutable pos2, BigMushroomFeatureConfig conf) {
+        int i = pos.getY();
+        if (i >= 1 && i + flag + 1 < 256) {
+            Block block = world.getBlockState(pos.below()).getBlock();
             if (!isDirt(block) && !block.is(CustomBlocks.GLIMMERGRASS_BLOCK.get())) {
                 return false;
             } else {
-                for(int j = 0; j <= p_227209_3_; ++j) {
-                    int k = this.getTreeRadiusForHeight(-1, -1, p_227209_5_.foliageRadius, j);
+                for(int j = 0; j <= flag; ++j) {
+                    int k = this.getTreeRadiusForHeight(-1, -1, conf.foliageRadius, j);
 
                     for(int l = -k; l <= k; ++l) {
                         for(int i1 = -k; i1 <= k; ++i1) {
-                            BlockState blockstate = p_227209_1_.getBlockState(p_227209_4_.setWithOffset(p_227209_2_, l, j, i1));
-                            if (!blockstate.isAir(p_227209_1_, p_227209_4_.setWithOffset(p_227209_2_, l, j, i1)) && !blockstate.is(BlockTags.LEAVES)) {
+                            BlockState blockstate = world.getBlockState(pos2.setWithOffset(pos, l, j, i1));
+                            if (!blockstate.isAir(world, pos2.setWithOffset(pos, l, j, i1)) && !blockstate.is(BlockTags.LEAVES)) {
                                 return false;
                             }
                         }

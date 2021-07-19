@@ -1,0 +1,44 @@
+{
+    "parent": "dark_caverns:obtain_scorchling_tail",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:scorchsteel_chestplate"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.scorchsteel_armor_set.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.scorchsteel_armor_set.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "scorchsteel_armor": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:scorchsteel_helmet"
+            },
+            {
+              "item": "dark_caverns:scorchsteel_chestplate"
+            },
+            {
+              "item": "dark_caverns:scorchsteel_leggings"
+            },
+            {
+              "item": "dark_caverns:scorchsteel_boots"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "scorchsteel_armor"
+      ]
+    ]
+  }

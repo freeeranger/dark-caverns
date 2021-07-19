@@ -43,9 +43,9 @@ public class ShroomieTrades {
                 new ItemsForItemsTrade(CustomItems.SHROOMSTONE_PIECE.get(), 5, Items.DIAMOND, 2, 4, 10),
                 new ItemsForItemsTrade(Items.SADDLE, 1, Items.EMERALD, 29, 1, 10),
                 new ItemsForItemsTrade(Items.LEAD, 1, Items.EMERALD, 14, 5, 10),
-                new ItemsForItemsTrade(Blocks.LIME_STAINED_GLASS.asItem(), 7, CustomItems.LUMINITE_DUST.get(), 9, 2, 10),
+                new ItemsForItemsTrade(Blocks.LIME_STAINED_GLASS, 7, CustomItems.LUMINITE_DUST.get(), 9, 2, 10),
                 new ItemsForItemsTrade(Items.REDSTONE, 2, Items.LAPIS_LAZULI, 1, 3, 10),
-                new ItemsForItemsTrade(Blocks.SPONGE, 1, Items.EMERALD, 20, 2, 10)
+                new ItemsForItemsTrade(CustomItems.CORRUPTED_PEARL.get(), 1, Items.EMERALD, 20, 2, 10)
             }
     ));
 

@@ -1,0 +1,35 @@
+{
+    "parent": "dark_caverns:platinum_armor",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:scorchling_tail"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.obtain_scorchling_tail.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.obtain_scorchling_tail.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "scorchling_tail": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:scorchling_tail"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "scorchling_tail"
+      ]
+    ]
+  }

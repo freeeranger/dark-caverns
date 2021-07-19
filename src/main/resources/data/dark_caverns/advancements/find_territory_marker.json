@@ -1,0 +1,33 @@
+{
+  "parent": "dark_caverns:enter_dark_caverns",
+  "display": {
+    "icon": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "title": {
+      "translate": "advancements.dark_caverns.find_territory_marker.title"
+    },
+    "description": {
+      "translate": "advancements.dark_caverns.find_territory_marker.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "find_territory_marker": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "feature": "dark_caverns:territory_marker"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "find_territory_marker"
+    ]
+  ]
+}

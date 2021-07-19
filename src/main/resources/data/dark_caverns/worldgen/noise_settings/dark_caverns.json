@@ -23,7 +23,7 @@
     "sampling": {
       "xz_scale": 1,
       "y_scale": 1,
-      "xz_factor": 100,
+      "xz_factor": 120,
       "y_factor": 100
     },
     "bottom_slide": {

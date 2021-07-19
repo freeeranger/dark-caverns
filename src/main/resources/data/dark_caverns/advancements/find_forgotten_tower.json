@@ -1,0 +1,33 @@
+{
+    "parent": "dark_caverns:root",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:carfstone_bricks"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.find_forgotten_tower.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.find_forgotten_tower.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "find_forgotten_tower": {
+        "trigger": "minecraft:location",
+        "conditions": {
+          "location": {
+            "feature": "dark_caverns:forgotten_tower"
+          }
+        }
+      }
+    },
+    "requirements": [
+      [
+        "find_forgotten_tower"
+      ]
+    ]
+  }

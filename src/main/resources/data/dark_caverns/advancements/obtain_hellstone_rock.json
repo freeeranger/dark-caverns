@@ -1,0 +1,35 @@
+{
+    "parent": "dark_caverns:platinum_armor",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:hellstone_rock"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.obtain_hellstone_rock.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.obtain_hellstone_rock.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "hellstone_rock": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:hellstone_rock"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "hellstone_rock"
+      ]
+    ]
+  }

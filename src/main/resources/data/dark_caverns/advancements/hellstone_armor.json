@@ -1,0 +1,44 @@
+{
+    "parent": "dark_caverns:obtain_hellstone_rock",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:hellstone_chestplate"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.hellstone_armor_set.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.hellstone_armor_set.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "hellstone_armor": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:hellstone_helmet"
+            },
+            {
+              "item": "dark_caverns:hellstone_chestplate"
+            },
+            {
+              "item": "dark_caverns:hellstone_leggings"
+            },
+            {
+              "item": "dark_caverns:hellstone_boots"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "hellstone_armor"
+      ]
+    ]
+  }

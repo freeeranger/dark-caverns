@@ -56,6 +56,9 @@ public class CustomEntityTypes {
     public static final RegistryObject<EntityType<ShroomieEntity>> SHROOMIE_ENTITY = buildEntity(ShroomieEntity::new,
             0.5f, 1.2F, "shroomie");
 
+    public static final RegistryObject<EntityType<ShroomlingEntity>> SHROOMLING_ENTITY = buildEntity(ShroomlingEntity::new,
+            1.5f, 0.6F, "shroomling");
+
     public static <T extends Entity> RegistryObject<EntityType<T>> buildEntity(EntityType.IFactory<T> entity, float width, float height, String name) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(entity, EntityClassification.CREATURE).sized(width, height).fireImmune().build(name));
     }
@@ -81,5 +84,8 @@ public class CustomEntityTypes {
 
         EntitySpawnPlacementRegistry.register(SHROOMIE_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ShroomieEntity::canShroomieSpawn);
+
+        EntitySpawnPlacementRegistry.register(SHROOMLING_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ShroomlingEntity::canShroomlingSpawn);
     }
 }

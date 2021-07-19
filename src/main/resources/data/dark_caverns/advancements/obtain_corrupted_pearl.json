@@ -1,0 +1,35 @@
+{
+    "parent": "dark_caverns:enter_dark_caverns",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:corrupted_pearl"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.obtain_corrupted_pearl.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.obtain_corrupted_pearl.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "corrupted_pearl": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:corrupted_pearl"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "corrupted_pearl"
+      ]
+    ]
+  }

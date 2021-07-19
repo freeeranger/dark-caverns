@@ -1,0 +1,35 @@
+{
+    "parent": "dark_caverns:obtain_luminite",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:luminite_helmet"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.obtain_luminite_helmet.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.obtain_luminite_helmet.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "luminite_helmet": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:luminite_helmet"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "luminite_helmet"
+      ]
+    ]
+  }

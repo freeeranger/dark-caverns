@@ -46,19 +46,25 @@
     "monster": [
       {
         "type": "dark_caverns:luminite_golem",
-        "weight": 30,
+        "weight": 40,
         "minCount": 1,
         "maxCount": 2
       },
       {
         "type": "dark_caverns:camorock",
-        "weight": 30,
+        "weight": 35,
         "minCount": 1,
         "maxCount": 1
       },
       {
         "type": "dark_caverns:luminite_fox",
-        "weight": 50,
+        "weight": 70,
+        "minCount": 1,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft:skeleton",
+        "weight": 10,
         "minCount": 1,
         "maxCount": 3
       }

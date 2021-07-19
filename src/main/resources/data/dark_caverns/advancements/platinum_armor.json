@@ -1,0 +1,44 @@
+{
+    "parent": "dark_caverns:obtain_platinum_ore",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:platinum_chestplate"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.platinum_armor_set.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.platinum_armor_set.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "platinum_armor": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:platinum_helmet"
+            },
+            {
+              "item": "dark_caverns:platinum_chestplate"
+            },
+            {
+              "item": "dark_caverns:platinum_leggings"
+            },
+            {
+              "item": "dark_caverns:platinum_boots"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "platinum_armor"
+      ]
+    ]
+  }

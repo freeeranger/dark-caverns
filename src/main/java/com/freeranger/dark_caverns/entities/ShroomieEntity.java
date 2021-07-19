@@ -12,6 +12,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
+import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -56,7 +57,7 @@ public class ShroomieEntity extends AbstractVillagerEntity implements IAnimatabl
     }
 
     public static boolean canShroomieSpawn(EntityType<? extends CreatureEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(15) == 0 && worldIn.getBlockState(pos.below()).is(CustomBlocks.GLIMMERGRASS_BLOCK.get());
+        return rand.nextInt(6) == 0 && worldIn.getBlockState(pos.below()).is(CustomBlocks.GLIMMERGRASS_BLOCK.get());
     }
 
     @Override
@@ -151,6 +152,7 @@ public class ShroomieEntity extends AbstractVillagerEntity implements IAnimatabl
     @Nullable
     @Override
     public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) { return null; }
+
     public boolean showProgressBar() {
         return false;
     }

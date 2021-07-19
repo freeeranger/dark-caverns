@@ -1,0 +1,35 @@
+{
+    "parent": "dark_caverns:obtain_luminite",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:throwable_luminite_torch"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.obtain_throwable_luminite_torch.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.obtain_throwable_luminite_torch.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "throwable_luminite_torch": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:throwable_luminite_torch"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "throwable_luminite_torch"
+      ]
+    ]
+  }

@@ -5,13 +5,8 @@ import com.freeranger.dark_caverns.core.EventHandler;
 import com.freeranger.dark_caverns.data.CustomBlockTags;
 import com.freeranger.dark_caverns.entities.*;
 import com.freeranger.dark_caverns.registry.*;
-import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -100,6 +95,8 @@ public class DarkCaverns {
 		}else if(event.getName() != null && event.getName().equals(CustomBiomes.MOLTEN_DEPTHS.location())) {
 			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_SACRET_TORCH);
 			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_TERRITORY_MARKER);
+		}else if(event.getName() != null && event.getName().equals(CustomBiomes.GLIMMERSHROOM_FOREST.location())) {
+			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_SHROOMIE_HOUSE);
 		}
 	}
 
@@ -126,6 +123,7 @@ public class DarkCaverns {
 		event.put(CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(), LuminiteGolemEntity.ATTRIBUTE_MAP);
 		event.put(CustomEntityTypes.LUMINITE_FOX_ENTITY.get(), LuminiteGolemEntity.ATTRIBUTE_MAP);
 		event.put(CustomEntityTypes.SHROOMIE_ENTITY.get(), ShroomieEntity.ATTRIBUTE_MAP);
+		event.put(CustomEntityTypes.SHROOMLING_ENTITY.get(), ShroomlingEntity.ATTRIBUTE_MAP);
 
 	}
 
@@ -176,6 +174,7 @@ public class DarkCaverns {
 			tempMap.putIfAbsent(CustomStructures.FORGOTTEN_TOWER.get(), DimensionStructuresSettings.DEFAULTS.get(CustomStructures.FORGOTTEN_TOWER.get()));
 			tempMap.putIfAbsent(CustomStructures.SACRET_TORCH.get(), DimensionStructuresSettings.DEFAULTS.get(CustomStructures.SACRET_TORCH.get()));
 			tempMap.putIfAbsent(CustomStructures.TERRITORY_MARKER.get(), DimensionStructuresSettings.DEFAULTS.get(CustomStructures.TERRITORY_MARKER.get()));
+			tempMap.putIfAbsent(CustomStructures.SHROOMIE_HOUSE.get(), DimensionStructuresSettings.DEFAULTS.get(CustomStructures.SHROOMIE_HOUSE.get()));
 			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 		}
 	}

@@ -1,0 +1,35 @@
+{
+    "parent": "dark_caverns:platinum_armor",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:shroomstone_piece"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.obtain_shroomstone_piece.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.obtain_shroomstone_piece.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "shroomstone_piece": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:shroomstone_piece"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "shroomstone_piece"
+      ]
+    ]
+  }

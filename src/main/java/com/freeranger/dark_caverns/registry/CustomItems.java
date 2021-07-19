@@ -3,6 +3,7 @@ package com.freeranger.dark_caverns.registry;
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.armor.*;
 import com.freeranger.dark_caverns.items.*;
+import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -58,6 +59,11 @@ public class CustomItems {
     public static final RegistryObject<CustomSpawnEggItem> SHROOMIE_SPAWN_EGG = ITEMS.register(
             "shroomie_spawn_egg",
             () -> new CustomSpawnEggItem(CustomEntityTypes.SHROOMIE_ENTITY, 6663388, 16777215)
+    );
+
+    public static final RegistryObject<CustomSpawnEggItem> SHROOMLING_SPAWN_EGG = ITEMS.register(
+            "shroomling_spawn_egg",
+            () -> new CustomSpawnEggItem(CustomEntityTypes.SHROOMLING_ENTITY, 6663388, 16777215)
     );
 
     public static final RegistryObject<CustomSpawnEggItem> LUMINITE_GOLEM_SPAWN_EGG = ITEMS.register(
@@ -117,7 +123,7 @@ public class CustomItems {
 
     public static final RegistryObject<Item> CORRUPTED_PEARL = ITEMS.register(
             "corrupted_pearl",
-            () -> new CorruptedPearlItem(new Item.Properties().tab(CustomItemGroups.GROUP))
+            () -> new CorruptedPearlItem(new Item.Properties().stacksTo(16).tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> LUMINITE_HELMET = ITEMS.register(

@@ -54,6 +54,12 @@
         "weight": 100,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "dark_caverns:shroomling",
+        "weight": 60,
+        "minCount": 1,
+        "maxCount": 2
       }
     ],
     "water_ambient": [],

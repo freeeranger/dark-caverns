@@ -3,15 +3,11 @@ package com.freeranger.dark_caverns.registry;
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.generation.ForgottenTowerStructure;
 import com.freeranger.dark_caverns.generation.SacretTorchStructure;
+import com.freeranger.dark_caverns.generation.ShroomieHouseStructure;
 import com.freeranger.dark_caverns.generation.TerritoryMarkerStructure;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeMaker;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
@@ -35,6 +31,9 @@ public class CustomStructures {
 
     public static final RegistryObject<Structure<NoFeatureConfig>> TERRITORY_MARKER =
             STRUCTURES.register("territory_marker", () -> (new TerritoryMarkerStructure(NoFeatureConfig.CODEC)));
+
+    public static final RegistryObject<Structure<NoFeatureConfig>> SHROOMIE_HOUSE =
+            STRUCTURES.register("shroomie_house", () -> (new ShroomieHouseStructure(NoFeatureConfig.CODEC)));
 
     public static void setupStructures() {
         setupMapSpacingAndLand(
@@ -60,6 +59,15 @@ public class CustomStructures {
                 new StructureSeparationSettings(4,
                         1,
                         856753493
+                ),
+                true
+        );
+
+        setupMapSpacingAndLand(
+                SHROOMIE_HOUSE.get(),
+                new StructureSeparationSettings(2,
+                        1,
+                        545345352
                 ),
                 true
         );

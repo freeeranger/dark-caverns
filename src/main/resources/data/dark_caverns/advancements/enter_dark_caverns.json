@@ -1,0 +1,31 @@
+{
+    "parent": "dark_caverns:obtain_key",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:gateway_to_the_caverns"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.enter_dark_caverns.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.enter_dark_caverns.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "enter_dark_caverns": {
+        "trigger": "minecraft:changed_dimension",
+        "conditions": {
+          "to": "dark_caverns:dark_caverns"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "enter_dark_caverns"
+      ]
+    ]
+  }

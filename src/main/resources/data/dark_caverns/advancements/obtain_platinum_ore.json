@@ -1,0 +1,35 @@
+{
+    "parent": "dark_caverns:enter_dark_caverns",
+    "display": {
+      "icon": {
+        "item": "dark_caverns:carfstone_platinum_ore"
+      },
+      "title": {
+        "translate": "advancements.dark_caverns.obtain_platinum_ore.title"
+      },
+      "description": {
+        "translate": "advancements.dark_caverns.obtain_platinum_ore.description"
+      },
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "criteria": {
+      "platinum_ore": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "dark_caverns:carfstone_platinum_ore"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "platinum_ore"
+      ]
+    ]
+  }
