@@ -76,16 +76,16 @@ public class LuminiteFoxEntity extends CreatureEntity implements IAnimatable {
         super.registerGoals();
     }
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.FOX_HURT; }
+    protected SoundEvent getHurtSound(DamageSource source) { return CustomSoundEvents.LUMINITE_FOX_HURT.get(); }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.FOX_DEATH;
+        return CustomSoundEvents.LUMINITE_FOX_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.FOX_AMBIENT;
+        return CustomSoundEvents.LUMINITE_FOX_AMBIENT.get();
     }
 }

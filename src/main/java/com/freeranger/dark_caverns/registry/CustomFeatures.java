@@ -8,6 +8,7 @@ import com.freeranger.dark_caverns.generation.SpikeFeature;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HugeMushroomBlock;
+import net.minecraft.block.SlimeBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -96,7 +97,7 @@ public class CustomFeatures {
         );
 
         public static final ConfiguredFeature<?, ?> IRON_ORE_FEATURE = Feature.ORE.configured(
-                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_IRON_ORE.get().defaultBlockState(), 14)
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_IRON_ORE.get().defaultBlockState(), 12)
         );
 
         public static final ConfiguredFeature<?, ?> GOLD_ORE_FEATURE = Feature.ORE.configured(
@@ -104,7 +105,7 @@ public class CustomFeatures {
         );
 
         public static final ConfiguredFeature<?, ?> DIAMOND_ORE_FEATURE = Feature.ORE.configured(
-                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_DIAMOND_ORE.get().defaultBlockState(), 11)
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_DIAMOND_ORE.get().defaultBlockState(), 8)
         );
 
         public static final ConfiguredFeature<?, ?> REDSTONE_ORE_FEATURE = Feature.ORE.configured(
@@ -112,15 +113,15 @@ public class CustomFeatures {
         );
 
         public static final ConfiguredFeature<?, ?> PLATINUM_ORE_FEATURE = Feature.ORE.configured(
-                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.PLATINUM_ORE.get().defaultBlockState(), 5)
-        );
-
-        public static final ConfiguredFeature<?, ?> HELLSTONE_ORE_FEATURE = Feature.ORE.configured(
-                new OreFeatureConfig(new BlockMatchRuleTest(CustomBlocks.MOLTEN_CARFSTONE.get()), CustomBlocks.HELLSTONE_ORE.get().defaultBlockState(), 5)
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.PLATINUM_ORE.get().defaultBlockState(), 4)
         );
 
         public static final ConfiguredFeature<?, ?> LAPIS_ORE_FEATURE = Feature.ORE.configured(
-                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_LAPIS_ORE.get().defaultBlockState(), 12)
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.CARFSTONE_LAPIS_ORE.get().defaultBlockState(), 9)
+        );
+
+        public static final ConfiguredFeature<?, ?> HELLSTONE_ORE_FEATURE = Feature.ORE.configured(
+                new OreFeatureConfig(new BlockMatchRuleTest(CustomBlocks.MOLTEN_CARFSTONE.get()), CustomBlocks.HELLSTONE_ORE.get().defaultBlockState(), 4)
         );
 
         public static final ConfiguredFeature<?, ?> HUGE_MUSHROOM = CustomFeatures.HUGE_MUSHROOM_FEATURE.get().configured(
@@ -194,7 +195,7 @@ public class CustomFeatures {
         );
 
         registerConfiguredFeature("luminite_ore_feature", ConfiguredFeatures.LUMINITE_ORE_FEATURE.range(
-                256).squared().count(44)
+                256).squared().count(40)
         );
 
         registerConfiguredFeature("magma_patch", ConfiguredFeatures.MAGMA_PATCH.range(
@@ -202,27 +203,23 @@ public class CustomFeatures {
         );
 
         registerConfiguredFeature("coal_ore_feature", ConfiguredFeatures.COAL_ORE_FEATURE.range(
-                256).squared().count(23)
+                256).squared().count(20)
         );
 
         registerConfiguredFeature("iron_ore_feature", ConfiguredFeatures.IRON_ORE_FEATURE.range(
-                256).squared().count(21)
+                256).squared().count(13)
         );
 
         registerConfiguredFeature("gold_ore_feature", ConfiguredFeatures.GOLD_ORE_FEATURE.range(
-                200).squared().count(16)
+                200).squared().count(11)
         );
 
         registerConfiguredFeature("diamond_ore_feature", ConfiguredFeatures.DIAMOND_ORE_FEATURE.range(
-                180).squared().count(7)
+                180).squared().count(4)
         );
 
         registerConfiguredFeature("platinum_ore_feature", ConfiguredFeatures.PLATINUM_ORE_FEATURE.range(
-                100).squared().count(4)
-        );
-
-        registerConfiguredFeature("hellstone_ore_feature", ConfiguredFeatures.HELLSTONE_ORE_FEATURE.range(
-                256).squared().count(4)
+                100).squared().count(2)
         );
 
         registerConfiguredFeature("redstone_ore_feature", ConfiguredFeatures.REDSTONE_ORE_FEATURE.range(
@@ -231,6 +228,10 @@ public class CustomFeatures {
 
         registerConfiguredFeature("lapis_ore_feature", ConfiguredFeatures.LAPIS_ORE_FEATURE.range(
                 256).squared().count(16)
+        );
+
+        registerConfiguredFeature("hellstone_ore_feature", ConfiguredFeatures.HELLSTONE_ORE_FEATURE.range(
+                256).squared().count(8)
         );
     }
 

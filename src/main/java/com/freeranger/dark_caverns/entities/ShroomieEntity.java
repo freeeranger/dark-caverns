@@ -2,6 +2,7 @@ package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomItems;
+import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import com.freeranger.dark_caverns.registry.ShroomieTrades;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.CreatureEntity;
@@ -80,29 +81,29 @@ public class ShroomieEntity extends AbstractVillagerEntity implements IAnimatabl
         super.registerGoals();
     }
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.FOX_HURT; }
+    protected SoundEvent getHurtSound(DamageSource source) { return CustomSoundEvents.SHROOMIE_HURT.get(); }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.FOX_DEATH;
+        return CustomSoundEvents.SHROOMIE_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.FOX_AMBIENT;
+        return CustomSoundEvents.SHROOMIE_AMBIENT.get();
     }
 
     public SoundEvent getNotifyTradeSound() {
-        return SoundEvents.VILLAGER_YES;
+        return CustomSoundEvents.SHROOMIE_TRADE_YES.get();
     }
 
     protected SoundEvent getTradeUpdatedSound(boolean answer) {
-        return answer ? SoundEvents.VILLAGER_YES : SoundEvents.VILLAGER_NO;
+        return answer ? CustomSoundEvents.SHROOMIE_TRADE_YES.get() : CustomSoundEvents.SHROOMIE_TRADE_NO.get();
     }
 
     public void playCelebrateSound() {
-        this.playSound(SoundEvents.VILLAGER_CELEBRATE, this.getSoundVolume(), this.getVoicePitch());
+        this.playSound(CustomSoundEvents.SHROOMIE_TRADE_YES.get(), this.getSoundVolume(), this.getVoicePitch());
     }
 
 

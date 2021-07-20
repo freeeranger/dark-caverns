@@ -26,5 +26,147 @@
     "sounds": [
       "dark_caverns:entity/scorchling_death"
     ]
+  },
+  "entity.scorchhound.ambient": {
+    "subtitle": "subtitles.entity.scorchhound_ambient",
+    "sounds": [
+      "dark_caverns:entity/scorchhound_ambient_1",
+      "dark_caverns:entity/scorchhound_ambient_2",
+      "dark_caverns:entity/scorchhound_ambient_3",
+      "dark_caverns:entity/scorchhound_ambient_4",
+      "dark_caverns:entity/scorchhound_ambient_5"
+    ]
+  },
+  "entity.scorchhound.hurt": {
+    "subtitle": "subtitles.entity.scorchhound_hurt",
+    "sounds": [
+      "dark_caverns:entity/scorchhound_hurt"
+    ]
+  },
+  "entity.scorchhound.death": {
+    "subtitle": "subtitles.entity.scorchhound_death",
+    "sounds": [
+      "dark_caverns:entity/scorchhound_death"
+    ]
+  },
+  "entity.moltener.ambient": {
+    "subtitle": "subtitles.entity.moltener_ambient",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.moltener.hurt": {
+    "subtitle": "subtitles.entity.moltener_hurt",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.moltener.death": {
+    "subtitle": "subtitles.entity.moltener_death",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.shroomie.ambient": {
+    "subtitle": "subtitles.entity.shroomie_ambient",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.shroomie.hurt": {
+    "subtitle": "subtitles.entity.shroomie_hurt",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.shroomie.death": {
+    "subtitle": "subtitles.entity.shroomie_death",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.shroomie.trade_yes": {
+    "subtitle": "subtitles.entity.shroomie_trade_yes",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.shroomie.trade_no": {
+    "subtitle": "subtitles.entity.shroomie_trade_no",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.shroomling.ambient": {
+    "subtitle": "subtitles.entity.shroomling_ambient",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.shroomling.hurt": {
+    "subtitle": "subtitles.entity.shroomling_hurt",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.shroomling.death": {
+    "subtitle": "subtitles.entity.shroomling_death",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.luminite_golem.ambient": {
+    "subtitle": "subtitles.entity.luminite_golem_ambient",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.luminite_golem.hurt": {
+    "subtitle": "subtitles.entity.luminite_golem_hurt",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.luminite_golem.death": {
+    "subtitle": "subtitles.entity.luminite_golem_death",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.luminite_golem.attack": {
+    "subtitle": "subtitles.entity.luminite_golem_attack",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.luminite_fox.ambient": {
+    "subtitle": "subtitles.entity.luminite_fox_ambient",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.luminite_fox.hurt": {
+    "subtitle": "subtitles.entity.luminite_fox_hurt",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.luminite_fox.death": {
+    "subtitle": "subtitles.entity.luminite_fox_death",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.camorock.hurt": {
+    "subtitle": "subtitles.entity.camorock_hurt",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
+  },
+  "entity.camorock.death": {
+    "subtitle": "subtitles.entity.camorock_death",
+    "sounds": [
+      "dark_caverns:entity/scorchling_death"
+    ]
   }
 }

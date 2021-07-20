@@ -50,7 +50,7 @@ public class MoltenerEntity extends CreatureEntity implements IAnimatable {
     }
 
     public static boolean canMoltenerSpawn(EntityType<? extends CreatureEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(5) == 0;
+        return rand.nextInt(4) == 0;
     }
 
     @Override
@@ -74,17 +74,17 @@ public class MoltenerEntity extends CreatureEntity implements IAnimatable {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return CustomSoundEvents.SCORCHLING_HURT.get();
+        return CustomSoundEvents.MOLTENER_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return CustomSoundEvents.SCORCHLING_DEATH.get();
+        return CustomSoundEvents.MOLTENER_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return CustomSoundEvents.SCORCHLING_AMBIENT.get();
+        return CustomSoundEvents.MOLTENER_AMBIENT.get();
     }
 }

@@ -153,7 +153,7 @@ public class CustomBlocks {
     );
 
 
-    public static final RegistryObject<Block> GLIMMERSHROOM_BLOCK = register("glimmershroom_block", () -> new HugeMushroomBlock(
+    public static final RegistryObject<Block> GLIMMERSHROOM_BLOCK = register("glimmershroom_block", () -> new GlimmershroomBlock(
             AbstractBlock.Properties.copy(Blocks.BROWN_MUSHROOM_BLOCK)
                     .lightLevel((p_235464_0_) -> 11)
             )

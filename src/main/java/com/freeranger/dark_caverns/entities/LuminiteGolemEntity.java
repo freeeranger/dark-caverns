@@ -99,7 +99,7 @@ public class LuminiteGolemEntity extends MonsterEntity implements IAnimatable {
             entity.setDeltaMovement(entity.getDeltaMovement().add(0.0D, .5F, 0.0D));
             this.doEnchantDamageEffects(this, entity);
         }
-        this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);
+        this.playSound(CustomSoundEvents.LUMINITE_GOLEM_ATTACK.get(), 1.0F, 1.0F);
         return flag;
     }
 
@@ -107,7 +107,7 @@ public class LuminiteGolemEntity extends MonsterEntity implements IAnimatable {
     public void handleEntityEvent(byte val) {
         if (val == 4) {
             this.attackAnimationTick = 10;
-            this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);
+            this.playSound(CustomSoundEvents.LUMINITE_GOLEM_ATTACK.get(), 1.0F, 1.0F);
         }
         else {
             super.handleEntityEvent(val);
@@ -124,17 +124,17 @@ public class LuminiteGolemEntity extends MonsterEntity implements IAnimatable {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return CustomSoundEvents.SCORCHLING_HURT.get();
+        return CustomSoundEvents.LUMINITE_GOLEM_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return CustomSoundEvents.SCORCHLING_DEATH.get();
+        return CustomSoundEvents.LUMINITE_GOLEM_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return CustomSoundEvents.SCORCHLING_AMBIENT.get();
+        return CustomSoundEvents.LUMINITE_GOLEM_AMBIENT.get();
     }
 }

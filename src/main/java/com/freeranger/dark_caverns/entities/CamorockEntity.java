@@ -71,17 +71,17 @@ public class CamorockEntity extends CreatureEntity implements IAnimatable {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return CustomSoundEvents.SCORCHLING_HURT.get();
+        return CustomSoundEvents.CAMOROCK_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return CustomSoundEvents.SCORCHLING_DEATH.get();
+        return CustomSoundEvents.CAMOROCK_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return CustomSoundEvents.SCORCHLING_AMBIENT.get();
+        return null;
     }
 }

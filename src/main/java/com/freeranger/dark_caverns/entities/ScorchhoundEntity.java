@@ -84,7 +84,7 @@ public class ScorchhoundEntity extends MonsterEntity implements IAnimatable {
     }
 
     public static boolean canScorchhoundSpawn(EntityType<? extends MonsterEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(18) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
+        return rand.nextInt(12) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
     }
 
     @Override
@@ -111,17 +111,17 @@ public class ScorchhoundEntity extends MonsterEntity implements IAnimatable {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return CustomSoundEvents.SCORCHLING_HURT.get();
+        return CustomSoundEvents.SCORCHHOUND_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return CustomSoundEvents.SCORCHLING_DEATH.get();
+        return CustomSoundEvents.SCORCHHOUND_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return CustomSoundEvents.SCORCHLING_AMBIENT.get();
+        return CustomSoundEvents.SCORCHHOUND_AMBIENT.get();
     }
 }

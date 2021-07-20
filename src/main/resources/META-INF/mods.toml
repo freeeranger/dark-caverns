@@ -4,12 +4,12 @@ issueTrackerURL=""
 license="All rights reserved"
 [[mods]]
 modId="dark_caverns"
-version="${file.jarVersion}"
+version="1.0"
 displayName="Dark Caverns"
 logoFile="logo.png"
 logoBlur=false
-authors="freeranger"
-description='''A new dimension hidden below the surface'''
+authors="Freeranger"
+description='''A new dimension hidden deep below the surface...'''
 [[dependencies.dark_caverns]]
     modId="forge"
     mandatory=true
@@ -20,5 +20,11 @@ description='''A new dimension hidden below the surface'''
     modId="minecraft"
     mandatory=true
     versionRange="[1.16.3,1.16.5]"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.dark_caverns]]
+    modId="geckolib3"
+    mandatory=true
+    versionRange="[3.0.33,]"
     ordering="NONE"
     side="BOTH"

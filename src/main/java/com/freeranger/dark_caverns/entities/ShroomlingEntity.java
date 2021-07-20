@@ -1,5 +1,6 @@
 package com.freeranger.dark_caverns.entities;
 
+import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
@@ -106,17 +107,17 @@ public class ShroomlingEntity extends CreatureEntity implements IAnimatable, IAn
         super.registerGoals();
     }
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.FOX_HURT; }
+    protected SoundEvent getHurtSound(DamageSource source) { return CustomSoundEvents.SHROOMLING_HURT.get(); }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.FOX_DEATH;
+        return CustomSoundEvents.SHROOMLING_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.FOX_AMBIENT;
+        return CustomSoundEvents.SHROOMLING_AMBIENT.get();
     }
 
     public void setRemainingPersistentAngerTime(int p_230260_1_) {
