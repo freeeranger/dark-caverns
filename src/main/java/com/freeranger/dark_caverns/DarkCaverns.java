@@ -121,7 +121,7 @@ public class DarkCaverns {
 		event.put(CustomEntityTypes.MOLTENER_ENTITY.get(), MoltenerEntity.ATTRIBUTE_MAP);
 		event.put(CustomEntityTypes.CAMOROCK_ENTITY.get(), CamorockEntity.ATTRIBUTE_MAP);
 		event.put(CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(), LuminiteGolemEntity.ATTRIBUTE_MAP);
-		event.put(CustomEntityTypes.LUMINITE_FOX_ENTITY.get(), LuminiteGolemEntity.ATTRIBUTE_MAP);
+		event.put(CustomEntityTypes.LUMINITE_FOX_ENTITY.get(), LuminiteFoxEntity.ATTRIBUTE_MAP);
 		event.put(CustomEntityTypes.SHROOMIE_ENTITY.get(), ShroomieEntity.ATTRIBUTE_MAP);
 		event.put(CustomEntityTypes.SHROOMLING_ENTITY.get(), ShroomlingEntity.ATTRIBUTE_MAP);
 

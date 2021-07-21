@@ -1,6 +1,7 @@
 package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -8,14 +9,9 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -135,6 +131,10 @@ public class LuminiteGolemEntity extends MonsterEntity implements IAnimatable {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return CustomSoundEvents.LUMINITE_GOLEM_AMBIENT.get();
+        return null;
+    }
+
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(CustomSoundEvents.LUMINITE_GOLEM_STEP.get(), 1.0F, 1.0F);
     }
 }

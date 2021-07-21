@@ -120,6 +120,8 @@ public class ShroomlingEntity extends CreatureEntity implements IAnimatable, IAn
         return CustomSoundEvents.SHROOMLING_AMBIENT.get();
     }
 
+
+
     public void setRemainingPersistentAngerTime(int p_230260_1_) {
         this.remainingPersistentAngerTime = p_230260_1_;
     }

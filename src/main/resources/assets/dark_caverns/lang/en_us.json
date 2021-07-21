@@ -127,7 +127,7 @@
   "subtitles.entity.shroomling_ambient": "Shroomling squeaks",
   "subtitles.entity.shroomling_hurt": "Shroomling hurts",
   "subtitles.entity.shroomling_death": "Shroomling dies",
-  "subtitles.entity.luminite_golem_ambient": "Luminite golem breathes",
+  "subtitles.entity.luminite_golem_step": "Luminite golem walks",
   "subtitles.entity.luminite_golem_hurt": "Luminite golem hurts",
   "subtitles.entity.luminite_golem_death": "Luminite golem dies",
   "subtitles.entity.luminite_golem_attack": "Luminite golem attacks",

@@ -34,7 +34,7 @@ public class LuminiteFoxEntity extends CreatureEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
     public static AttributeModifierMap ATTRIBUTE_MAP = createLivingAttributes()
-            .add(Attributes.MAX_HEALTH, 6D)
+            .add(Attributes.MAX_HEALTH, 8D)
             .add(Attributes.MOVEMENT_SPEED, .25D)
             .add(Attributes.FOLLOW_RANGE, 24D)
             .build();
@@ -70,7 +70,7 @@ public class LuminiteFoxEntity extends CreatureEntity implements IAnimatable {
     protected void registerGoals() {
         this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.5D, Ingredient.of(CustomBlocks.LUMINITE_BLOCK.get()), false));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 2.5D));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.6D));
         this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
         super.registerGoals();
