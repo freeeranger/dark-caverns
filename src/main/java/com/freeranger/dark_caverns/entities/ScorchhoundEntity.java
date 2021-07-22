@@ -84,7 +84,7 @@ public class ScorchhoundEntity extends MonsterEntity implements IAnimatable {
     }
 
     public static boolean canScorchhoundSpawn(EntityType<? extends MonsterEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(12) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
+        return rand.nextInt(6) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
     }
 
     @Override

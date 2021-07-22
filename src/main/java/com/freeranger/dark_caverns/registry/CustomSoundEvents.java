@@ -37,7 +37,6 @@ public class CustomSoundEvents {
     public static final RegistryObject<SoundEvent> SHROOMLING_HURT = register("entity.shroomling.hurt");
     public static final RegistryObject<SoundEvent> SHROOMLING_DEATH = register("entity.shroomling.death");
 
-    // TODO
     public static final RegistryObject<SoundEvent> LUMINITE_GOLEM_STEP = register("entity.luminite_golem.step");
     public static final RegistryObject<SoundEvent> LUMINITE_GOLEM_HURT = register("entity.luminite_golem.hurt");
     public static final RegistryObject<SoundEvent> LUMINITE_GOLEM_DEATH = register("entity.luminite_golem.death");

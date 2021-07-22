@@ -14,17 +14,17 @@
   },
   "noise": {
     "height": 256,
-    "density_factor": 0.04,
+    "density_factor": 0.22,
     "density_offset": 0,
     "size_horizontal": 1,
     "size_vertical": 1,
     "simplex_surface_noise": false,
     "random_density_offset": true,
     "sampling": {
-      "xz_scale": 1,
-      "y_scale": 1,
+      "xz_scale": 3,
+      "y_scale": 2,
       "xz_factor": 120,
-      "y_factor": 100
+      "y_factor": 120
     },
     "bottom_slide": {
       "target": 35,

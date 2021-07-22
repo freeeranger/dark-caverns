@@ -57,25 +57,25 @@
     "monster": [
       {
         "type": "dark_caverns:scorchling",
-        "weight": 95,
+        "weight": 100,
         "minCount": 1,
         "maxCount": 3
       },
       {
         "type": "dark_caverns:scorchhound",
-        "weight": 90,
+        "weight": 80,
         "minCount": 1,
         "maxCount": 3
       },
       {
         "type": "dark_caverns:moltener",
-        "weight": 70,
+        "weight": 60,
         "minCount": 1,
         "maxCount": 2
       },
       {
         "type": "minecraft:blaze",
-        "weight": 7,
+        "weight": 5,
         "minCount": 1,
         "maxCount": 3
       }
