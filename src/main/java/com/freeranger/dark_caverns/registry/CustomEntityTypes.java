@@ -36,31 +36,32 @@ public class CustomEntityTypes {
 
 
     public static final RegistryObject<EntityType<ScorchlingEntity>> SCORCHLING_ENTITY = buildEntity(ScorchlingEntity::new,
-            0.6f, 0.4F, "scorchling");
+            0.6f, 0.4F, "scorchling", true);
 
     public static final RegistryObject<EntityType<MoltenerEntity>> MOLTENER_ENTITY = buildEntity(MoltenerEntity::new,
-            0.7f, 0.9F, "moltener");
+            0.7f, 0.9F, "moltener", true);
 
     public static final RegistryObject<EntityType<CamorockEntity>> CAMOROCK_ENTITY = buildEntity(CamorockEntity::new,
-            0.9f, 0.6F, "camorock");
+            0.9f, 0.6F, "camorock", false);
 
     public static final RegistryObject<EntityType<ScorchhoundEntity>> SCORCHHOUND_ENTITY = buildEntity(ScorchhoundEntity::new,
-            1.5f, 1F, "scorchhound");
+            1.5f, 1F, "scorchhound", true);
 
     public static final RegistryObject<EntityType<LuminiteGolemEntity>> LUMINITE_GOLEM_ENTITY = buildEntity(LuminiteGolemEntity::new,
-            1.3f, 2F, "luminite_golem");
+            1.3f, 2F, "luminite_golem", false);
 
     public static final RegistryObject<EntityType<LuminiteFoxEntity>> LUMINITE_FOX_ENTITY = buildEntity(LuminiteFoxEntity::new,
-            0.7f, 0.4F, "luminite_fox");
+            0.7f, 0.4F, "luminite_fox", false);
 
     public static final RegistryObject<EntityType<ShroomieEntity>> SHROOMIE_ENTITY = buildEntity(ShroomieEntity::new,
-            0.5f, 1.2F, "shroomie");
+            0.5f, 1.2F, "shroomie", false);
 
     public static final RegistryObject<EntityType<ShroomlingEntity>> SHROOMLING_ENTITY = buildEntity(ShroomlingEntity::new,
-            1.5f, 0.6F, "shroomling");
+            1.5f, 0.6F, "shroomling", false);
 
-    public static <T extends Entity> RegistryObject<EntityType<T>> buildEntity(EntityType.IFactory<T> entity, float width, float height, String name) {
-        return ENTITIES.register(name, () -> EntityType.Builder.of(entity, EntityClassification.CREATURE).sized(width, height).fireImmune().build(name));
+    public static <T extends Entity> RegistryObject<EntityType<T>> buildEntity(EntityType.IFactory<T> entity, float width, float height, String name, boolean isFireImmune) {
+        return isFireImmune ? ENTITIES.register(name, () -> EntityType.Builder.of(entity, EntityClassification.CREATURE).sized(width, height).fireImmune().build(name))
+                : ENTITIES.register(name, () -> EntityType.Builder.of(entity, EntityClassification.CREATURE).sized(width, height).build(name));
     }
 
     public static void registerSpawnPlacements(){

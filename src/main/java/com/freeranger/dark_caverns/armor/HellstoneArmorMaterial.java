@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public enum HellstoneArmorMaterial implements IArmorMaterial {
 
-    HELLSTONE("hellstone", 37, new int[]{3, 6, 8, 3}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 3F, 0.1F, () -> {
+    HELLSTONE("hellstone", 37, new int[]{3, 6, 8, 3}, 20, SoundEvents.ARMOR_EQUIP_NETHERITE, 3F, 0.1F, () -> {
         return Ingredient.of(CustomItems.HELLSTONE.get());
     });
 

@@ -10,10 +10,10 @@ public enum CustomItemTiers implements IItemTier{
     PLATINUM(4, 1843, 10f, 3.5f, 20, () -> {
         return Ingredient.of(CustomItems.PLATINUM_INGOT.get());
     }),
-    HELLSTONE(4, 1843, 10f, 3.5f, 15, () -> {
+    HELLSTONE(4, 1912, 10f, 3.5f, 15, () -> {
         return Ingredient.of(CustomItems.HELLSTONE.get());
     }),
-    SHROOMSTONE(4, 1843, 10f, 3.5f, 20, () -> {
+    SHROOMSTONE(4, 1912, 10f, 3.5f, 20, () -> {
         return Ingredient.of(CustomItems.SHROOMSTONE.get());
     });
 
