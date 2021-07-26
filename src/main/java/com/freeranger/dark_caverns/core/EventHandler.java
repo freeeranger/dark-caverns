@@ -48,8 +48,8 @@ public class EventHandler {
     @SubscribeEvent
     public void addTrades(VillagerTradesEvent event) {
         if (event.getType() == VillagerProfession.CARTOGRAPHER) {
-            event.getTrades().get(4).add(new VillagerTrades.EmeraldForMapTrade(
-                    48,
+            event.getTrades().get(5).add(new VillagerTrades.EmeraldForMapTrade(
+                    36,
                     CustomStructures.FORGOTTEN_TOWER.get(),
                     MapDecoration.Type.RED_X,
                     1,
