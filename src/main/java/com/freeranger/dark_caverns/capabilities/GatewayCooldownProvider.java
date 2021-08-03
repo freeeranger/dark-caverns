@@ -3,6 +3,7 @@ package com.freeranger.dark_caverns.capabilities;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -20,7 +21,7 @@ public class GatewayCooldownProvider implements ICapabilitySerializable<Compound
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        return cooldownOptional.cast();
+        return cap == GatewayCooldownCapability.GATEWAY_COOLDOWN_CAPABILITY ? cooldownOptional.cast() : LazyOptional.empty();
     }
 
     @Override
