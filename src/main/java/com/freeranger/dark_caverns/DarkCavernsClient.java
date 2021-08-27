@@ -2,6 +2,7 @@ package com.freeranger.dark_caverns;
 
 import com.freeranger.dark_caverns.core.LuminiteHelmetLighting;
 import com.freeranger.dark_caverns.entities.CorruptedPearlEntity;
+import com.freeranger.dark_caverns.entities.ShroombombEntity;
 import com.freeranger.dark_caverns.entities.ThrowableLuminiteTorchEntity;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
@@ -64,11 +65,22 @@ public class DarkCavernsClient {
 
         RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.CORRUPTED_PEARL_TYPE,
                 new CorruptedPearlRenderingFactory());
+
+        RenderingRegistry.registerEntityRenderingHandler(CustomEntityTypes.SHROOMBOMB_TYPE,
+                new ShroombombRenderingFactory());
     }
 
     private static class ThrowableLuminiteTorchRenderingFactory implements IRenderFactory<ThrowableLuminiteTorchEntity> {
         @Override
         public EntityRenderer<? super ThrowableLuminiteTorchEntity> createRenderFor(EntityRendererManager manager) {
+            ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+            return new SpriteRenderer<>(manager, itemRenderer);
+        }
+    }
+
+    private static class ShroombombRenderingFactory implements IRenderFactory<ShroombombEntity> {
+        @Override
+        public EntityRenderer<? super ShroombombEntity> createRenderFor(EntityRendererManager manager) {
             ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
             return new SpriteRenderer<>(manager, itemRenderer);
         }

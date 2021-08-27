@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 
 public enum ShroomstoneArmorMaterial implements IArmorMaterial {
 
-    SHROOMSTONE("shroomstone", 37, new int[]{3, 6, 8, 3}, 20, SoundEvents.SLIME_BLOCK_PLACE, 2F, 0.1F, () -> {
+    SHROOMSTONE("shroomstone", 36, new int[]{3, 6, 8, 3}, 20, SoundEvents.SLIME_BLOCK_PLACE, 2.5F, 0.0F, () -> {
         return Ingredient.of(CustomItems.SHROOMSTONE.get());
     });
 

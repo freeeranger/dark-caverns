@@ -1,9 +1,9 @@
 {
-  "type": "minecraft:blasting",
+  "type": "minecraft:smelting",
   "ingredient": {
     "item": "dark_caverns:carfstone_platinum_ore"
   },
-  "result": "dark_caverns:platinum_ingot",
+  "result": "dark_caverns:platinum_piece",
   "experience": 0.1,
-  "cookingtime": 100
+  "cookingtime": 200
 }

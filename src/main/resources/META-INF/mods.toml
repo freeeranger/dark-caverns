@@ -4,7 +4,7 @@ issueTrackerURL=""
 license="All rights reserved"
 [[mods]]
 modId="dark_caverns"
-version="1.0"
+version="1.1"
 displayName="Dark Caverns"
 logoFile="logo.png"
 logoBlur=false

@@ -113,7 +113,7 @@ public class CustomFeatures {
         );
 
         public static final ConfiguredFeature<?, ?> PLATINUM_ORE_FEATURE = Feature.ORE.configured(
-                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.PLATINUM_ORE.get().defaultBlockState(), 4)
+                new OreFeatureConfig(BASE_BLOCKS_TAG, CustomBlocks.PLATINUM_ORE.get().defaultBlockState(), 2)
         );
 
         public static final ConfiguredFeature<?, ?> LAPIS_ORE_FEATURE = Feature.ORE.configured(

@@ -96,6 +96,11 @@ public class CustomItems {
             () -> new Item(new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP))
     );
 
+    public static final RegistryObject<Item> PLATINUM_PIECE = ITEMS.register(
+            "platinum_piece",
+            () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP))
+    );
+
     public static final RegistryObject<Item> SHROOMSTONE = ITEMS.register(
             "shroomstone",
             () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP))
@@ -119,6 +124,11 @@ public class CustomItems {
     public static final RegistryObject<Item> THROWABLE_LUMINITE_TORCH = ITEMS.register(
             "throwable_luminite_torch",
             () -> new ThrowableLuminiteTorchItem(new Item.Properties().tab(CustomItemGroups.GROUP))
+    );
+
+    public static final RegistryObject<Item> SHROOMBOMB = ITEMS.register(
+            "shroombomb",
+            () -> new ShroombombItem(new Item.Properties().tab(CustomItemGroups.GROUP))
     );
 
     public static final RegistryObject<Item> CORRUPTED_PEARL = ITEMS.register(

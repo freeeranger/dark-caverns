@@ -25,6 +25,15 @@ public class CustomEntityTypes {
     public static final RegistryObject<EntityType<ThrowableLuminiteTorchEntity>> THROWABLE_LUMINITE_TORCH =
             ENTITIES.register("throwable_luminite_torch", () -> THROWABLE_LUMINITE_TORCH_TYPE);
 
+    public static final EntityType<ShroombombEntity> SHROOMBOMB_TYPE =
+            EntityType.Builder.<ShroombombEntity>of(ShroombombEntity::new, EntityClassification.MISC)
+                    .sized(0.25F, 0.25F)
+                    .updateInterval(10)
+                    .setTrackingRange(4)
+                    .build("shroombomb");
+    public static final RegistryObject<EntityType<ShroombombEntity>> SHROOMBOMB =
+            ENTITIES.register("shroombomb", () -> SHROOMBOMB_TYPE);
+
     public static final EntityType<CorruptedPearlEntity> CORRUPTED_PEARL_TYPE =
             EntityType.Builder.<CorruptedPearlEntity>of(CorruptedPearlEntity::new, EntityClassification.MISC)
                     .sized(0.25F, 0.25F)

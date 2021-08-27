@@ -21,7 +21,7 @@ public class HellstoneArmorItem extends ArmorItem {
                 player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == CustomItems.HELLSTONE_CHESTPLATE.get() &&
                 player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == CustomItems.HELLSTONE_LEGGINGS.get() &&
                 player.getItemBySlot(EquipmentSlotType.FEET).getItem() == CustomItems.HELLSTONE_BOOTS.get()){
-            player.addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 20, 0));
+            player.addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 20, 0, false, false, false));
         }
     }
 }

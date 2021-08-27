@@ -29,21 +29,37 @@ public class ScorchsteelArmorItem extends ArmorItem {
 
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-        if(player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == CustomItems.SCORCHSTEEL_HELMET.get() &&
-                player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == CustomItems.SCORCHSTEEL_CHESTPLATE.get() &&
-                player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == CustomItems.SCORCHSTEEL_LEGGINGS.get() &&
-                player.getItemBySlot(EquipmentSlotType.FEET).getItem() == CustomItems.SCORCHSTEEL_BOOTS.get()){
+        int armorCount = 0;
+
+        if(player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == CustomItems.SCORCHSTEEL_HELMET.get()){
+            armorCount++;
+        }
+        if(player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == CustomItems.SCORCHSTEEL_CHESTPLATE.get()){
+            armorCount++;
+        }
+        if(player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == CustomItems.SCORCHSTEEL_LEGGINGS.get()){
+            armorCount++;
+        }
+        if(player.getItemBySlot(EquipmentSlotType.FEET).getItem() == CustomItems.SCORCHSTEEL_BOOTS.get()){
+            armorCount++;
+        }
+
+        if(armorCount > 0){
             if(lastPosX == player.getX() && lastPosY == player.getY() && lastPosZ == player.getZ()){
                 timer++;
+                int effectTime = 20;
+                if(armorCount == 2) effectTime = 20 * 2;
+                else if(armorCount == 3) effectTime = 20 * 3;
+                else if(armorCount == 4) effectTime = 20 * 6;
                 if(timer >= 20){
-                    player.addEffect(new EffectInstance(Effects.INVISIBILITY, 20, 0));
+                    player.addEffect(new EffectInstance(Effects.INVISIBILITY, effectTime, 0, false, false, true));
                 }
             }else{
                 timer = 0;
             }
-            lastPosX = player.getX();
-            lastPosY = player.getY();
-            lastPosZ = player.getZ();
         }
+        lastPosX = player.getX();
+        lastPosY = player.getY();
+        lastPosZ = player.getZ();
     }
 }

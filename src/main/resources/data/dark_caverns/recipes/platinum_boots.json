@@ -1,16 +1,12 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "# #",
-    "# #"
-  ],
-  "key": {
-    "#": {
-      "item": "dark_caverns:platinum_ingot"
-    }
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:diamond_boots"
+  },
+  "addition": {
+    "item": "dark_caverns:platinum_ingot"
   },
   "result": {
-    "item": "dark_caverns:platinum_boots",
-    "count": 1
+    "item": "dark_caverns:platinum_boots"
   }
 }

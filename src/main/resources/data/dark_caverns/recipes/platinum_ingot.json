@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "dark_caverns:platinum_piece"
+    },
+    {
+      "item": "dark_caverns:platinum_piece"
+    },
+    {
+      "item": "dark_caverns:platinum_piece"
+    },
+    {
+      "item": "dark_caverns:platinum_piece"
+    }
+  ],
+  "result": {
+    "item": "dark_caverns:platinum_ingot"
+  }
+}

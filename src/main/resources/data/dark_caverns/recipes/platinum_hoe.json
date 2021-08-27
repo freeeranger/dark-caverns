@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smithing",
   "base": {
-    "item": "minecraft:diamond_shovel"
+    "item": "minecraft:diamond_hoe"
   },
   "addition": {
     "item": "dark_caverns:platinum_ingot"
   },
   "result": {
-    "item": "dark_caverns:platinum_shovel"
+    "item": "dark_caverns:platinum_hoe"
   }
 }

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "X#X",
+    " X "
+  ],
+  "key": {
+    "#": {
+      "item": "dark_caverns:glimmershroom"
+    },
+    "X": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "item": "dark_caverns:shroombomb",
+    "count": 4
+  }
+}
