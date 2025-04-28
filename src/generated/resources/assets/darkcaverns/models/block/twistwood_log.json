@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "darkcaverns:block/twistwood_log_top",
+    "side": "darkcaverns:block/twistwood_log"
+  }
+}

@@ -1,0 +1,9 @@
+// 1.21.5	2025-04-16T22:42:07.866374	Recipe Provider: Dark Caverns
+126f9625cbe706b5b60c852c1d5f59693c046bdc data/darkcaverns/advancement/recipes/building_blocks/luminite_block.json
+65899e883a3007893196a26b6eb0d8d64ea2f61f data/darkcaverns/advancement/recipes/building_blocks/luminite_dust.json
+d22fda404504b9d7a213b7dc0a408ae1b5daa7b9 data/darkcaverns/recipe/luminite_block.json
+57d9c34a1d13a3fd0a828b1c125221799fd9fcc5 data/darkcaverns/recipe/luminite_dust.json
+9d285260e14fd695c0078ee007c538940cde3c60 data/minecraft/advancement/recipes/food/luminite_dust_blasting.json
+dc34e83669eeb168cf3bb703d9ae5abdaa40644e data/minecraft/advancement/recipes/food/luminite_dust_smelting.json
+fc6834087129ec83f86d9cbe94c96ef5e0b29126 data/minecraft/recipe/luminite_dust_blasting.json
+50c5b40877f08fd68af3ea70ae788760cec74fa7 data/minecraft/recipe/luminite_dust_smelting.json

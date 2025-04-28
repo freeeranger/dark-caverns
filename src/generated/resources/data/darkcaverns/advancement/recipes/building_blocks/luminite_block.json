@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_luminite_dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": "darkcaverns:luminite_dust"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "darkcaverns:luminite_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_luminite_dust"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "darkcaverns:luminite_block"
+    ]
+  }
+}

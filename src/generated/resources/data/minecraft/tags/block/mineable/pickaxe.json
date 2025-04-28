@@ -1,0 +1,30 @@
+{
+  "values": [
+    "darkcaverns:luminite_ore",
+    "darkcaverns:carfstone",
+    "darkcaverns:carfstone_slab",
+    "darkcaverns:carfstone_stairs",
+    "darkcaverns:carfstone_wall",
+    "darkcaverns:carfstone_bricks",
+    "darkcaverns:carfstone_brick_slab",
+    "darkcaverns:carfstone_brick_stairs",
+    "darkcaverns:carfstone_brick_wall",
+    "darkcaverns:chiseled_carfstone_bricks",
+    "darkcaverns:molten_carfstone",
+    "darkcaverns:molten_carfstone_slab",
+    "darkcaverns:molten_carfstone_stairs",
+    "darkcaverns:molten_carfstone_wall",
+    "darkcaverns:ashy_molten_carfstone",
+    "darkcaverns:molten_carfstone_bricks",
+    "darkcaverns:molten_carfstone_brick_slab",
+    "darkcaverns:molten_carfstone_brick_stairs",
+    "darkcaverns:molten_carfstone_brick_wall",
+    "darkcaverns:hellstone_ore",
+    "darkcaverns:carfstone_iron_ore",
+    "darkcaverns:carfstone_gold_ore",
+    "darkcaverns:carfstone_diamond_ore",
+    "darkcaverns:chiseled_molten_carfstone_bricks",
+    "darkcaverns:overgrown_carfstone",
+    "darkcaverns:luminite_block"
+  ]
+}

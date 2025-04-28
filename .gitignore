@@ -1,0 +1,19 @@
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+run
+runs
+run-data
+
+repo
+
+.DS_Store

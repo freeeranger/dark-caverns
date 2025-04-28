@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.3,
+  "ingredient": "darkcaverns:luminite_ore",
+  "result": {
+    "count": 1,
+    "id": "darkcaverns:luminite_dust"
+  }
+}

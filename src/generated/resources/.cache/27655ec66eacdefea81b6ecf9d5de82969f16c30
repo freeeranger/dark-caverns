@@ -1,0 +1,14 @@
+// 1.21.5	2025-04-23T11:33:34.853769	Tags for minecraft:block mod id darkcaverns
+564fa44384e4212674e8f9c76b20772f667d274c data/minecraft/tags/block/doors.json
+cdb24c75ca2431f2047df7b9cb7f1de9789312f1 data/minecraft/tags/block/leaves.json
+4f5792a11650e42871f34efc813027d54154596d data/minecraft/tags/block/logs.json
+4f5792a11650e42871f34efc813027d54154596d data/minecraft/tags/block/logs_that_burn.json
+f6fc9c57217f254b0b39b166dea7fcb2560a446a data/minecraft/tags/block/mineable/axe.json
+08e271fbac547172ed344063fce1d248a209df72 data/minecraft/tags/block/mineable/pickaxe.json
+c75c467f4a69d6340445569cb625a8f0411b97d0 data/minecraft/tags/block/needs_iron_tool.json
+f0e59c3888f5cf4f9d7cc3570b3179eb7e7f6f0e data/minecraft/tags/block/needs_stone_tool.json
+290b7d7b14eac205dd7adb6e8a5ef3ee59c964eb data/minecraft/tags/block/planks.json
+0ef0e210e90b5510d6d31a43947e82242cf65a20 data/minecraft/tags/block/trapdoors.json
+6db8b4a67a2315e7fa0454acb65391395d3d3e6b data/minecraft/tags/block/walls.json
+564fa44384e4212674e8f9c76b20772f667d274c data/minecraft/tags/block/wooden_doors.json
+0ef0e210e90b5510d6d31a43947e82242cf65a20 data/minecraft/tags/block/wooden_trapdoors.json

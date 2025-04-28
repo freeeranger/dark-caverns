@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "darkcaverns:block/molten_carfstone_bricks",
+    "side": "darkcaverns:block/molten_carfstone_bricks",
+    "top": "darkcaverns:block/molten_carfstone_bricks"
+  }
+}

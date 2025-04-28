@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:ore",
+    "config": {
+        "targets": [
+            {
+                "target": {
+                    "predicate_type": "minecraft:block_match",
+                    "block": "darkcaverns:carfstone"
+                },
+                "state": {
+                    "Name": "darkcaverns:carfstone_iron_ore"
+                }
+            }
+        ],
+        "size": 12,
+        "discard_chance_on_air_exposure": 0
+    }
+}

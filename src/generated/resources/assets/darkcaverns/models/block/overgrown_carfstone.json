@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "darkcaverns:block/carfstone",
+    "side": "darkcaverns:block/overgrown_carfstone_side",
+    "top": "darkcaverns:block/overgrown_carfstone_top"
+  }
+}

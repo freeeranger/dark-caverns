@@ -1,0 +1,9 @@
+{
+    "feature": "darkcaverns:patch_small_undersprouts",
+    "placement": [
+        {
+            "type": "minecraft:heightmap",
+            "heightmap": "WORLD_SURFACE_WG"
+        }
+    ]
+}

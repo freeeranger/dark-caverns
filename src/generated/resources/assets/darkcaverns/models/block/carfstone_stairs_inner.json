@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "darkcaverns:block/carfstone",
+    "side": "darkcaverns:block/carfstone",
+    "top": "darkcaverns:block/carfstone"
+  }
+}

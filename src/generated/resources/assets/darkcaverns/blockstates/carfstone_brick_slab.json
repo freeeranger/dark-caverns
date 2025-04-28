@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "darkcaverns:block/carfstone_brick_slab"
+    },
+    "type=double": {
+      "model": "darkcaverns:block/carfstone_bricks"
+    },
+    "type=top": {
+      "model": "darkcaverns:block/carfstone_brick_slab_top"
+    }
+  }
+}
