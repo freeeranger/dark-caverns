@@ -1,9 +1,6 @@
 package com.freeranger.darkcaverns;
 
-import com.freeranger.darkcaverns.registries.BlockRegistry;
-import com.freeranger.darkcaverns.registries.CreativeTabRegistry;
-import com.freeranger.darkcaverns.registries.FeatureRegistry;
-import com.freeranger.darkcaverns.registries.ItemRegistry;
+import com.freeranger.darkcaverns.registries.*;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Block;
@@ -31,6 +28,7 @@ public class DarkCaverns {
     public DarkCaverns(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
         
+        SoundRegistry.register(modEventBus);
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
         CreativeTabRegistry.register(modEventBus);

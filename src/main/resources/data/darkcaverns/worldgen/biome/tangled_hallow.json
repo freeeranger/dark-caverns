@@ -13,6 +13,26 @@
             "sound": "minecraft:ambient.cave",
             "tick_delay": 6000
         },
+        "music": [
+            {
+                "weight": 1,
+                "data": {
+                    "sound": "darkcaverns:music.whispers_below",
+                    "min_delay": 200,
+                    "max_delay": 200,
+                    "replace_current_music": false
+                }
+            },
+            {
+                "weight": 1,
+                "data": {
+                    "sound": "darkcaverns:music.crystal_dreams",
+                    "min_delay": 200,
+                    "max_delay": 200,
+                    "replace_current_music": false
+                }
+            }
+        ],
         "music_volume": 1,
         "sky_color": 657930,
         "water_color": 3126883,

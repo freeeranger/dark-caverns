@@ -1,0 +1,18 @@
+{
+  "music.whispers_below": {
+    "sounds": [
+      {
+        "name": "darkcaverns:music_whispers_below",
+        "stream": true
+      }
+    ]
+  },
+  "music.crystal_dreams": {
+    "sounds": [
+      {
+        "name": "darkcaverns:music_crystal_dreams",
+        "stream": true
+      }
+    ]
+  }
+}
