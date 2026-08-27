@@ -41,17 +41,31 @@ public class LuminiteHelmetLighting {
 
     public static boolean shouldGlow(LivingEntity entity)
     {
+        if (entity == null || MC.player == null || MC.player.level == null)
+        {
+            return false;
+        }
+
+        if (entity.getItemBySlot(EquipmentSlotType.HEAD).getItem() != CustomItems.LUMINITE_HELMET.get())
+        {
+            return false;
+        }
+
+        double distSq = MC.player.distanceToSqr(entity);
         int maxDist = 64;
-        int dist = 0;
-        if (MC.player != null) {
-            dist = (int) MC.player.distanceTo(entity);
+        if (distSq > maxDist * maxDist)
+        {
+            return false;
+        }
+
+        if (distSq < 24 * 24)
+        {
+            return true;
         }
 
         Vector3d playerPos = new Vector3d(MC.player.position().x, MC.player.getEyeY(), MC.player.position().z);
-        Vector3d entityPos = new Vector3d(entity.position().x, entity.getEyeY(),entity.position().z);
-        boolean visible = MC.player.level.clip(new RayTraceContext(playerPos, entityPos, RayTraceContext.BlockMode.VISUAL, RayTraceContext.FluidMode.NONE, entity)).getType() == RayTraceResult.Type.MISS;
-
-        return entity.getItemBySlot(EquipmentSlotType.HEAD).getItem() == CustomItems.LUMINITE_HELMET.get() && dist <= maxDist && (visible || dist < 24);
+        Vector3d entityPos = new Vector3d(entity.position().x, entity.getEyeY(), entity.position().z);
+        return MC.player.level.clip(new RayTraceContext(playerPos, entityPos, RayTraceContext.BlockMode.VISUAL, RayTraceContext.FluidMode.NONE, entity)).getType() == RayTraceResult.Type.MISS;
     }
 
     public static void cleanUp()
