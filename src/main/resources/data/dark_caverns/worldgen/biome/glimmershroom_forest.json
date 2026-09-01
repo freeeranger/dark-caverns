@@ -16,7 +16,12 @@
       },
       "probability": 0.03
     },
-    "ambient_sound": "dark_caverns:ambient.dark_caverns_ambience"
+    "music": {
+      "sound": "dark_caverns:ambient.dark_caverns_ambience",
+      "min_delay": 6000,
+      "max_delay": 24000,
+      "replace_current_music": true
+    }
   },
   "carvers": {
     "air": [

@@ -45,6 +45,8 @@ public class CustomSoundEvents {
     public static final RegistryObject<SoundEvent> CAMOROCK_HURT = register("entity.camorock.hurt");
     public static final RegistryObject<SoundEvent> CAMOROCK_DEATH = register("entity.camorock.death");
 
+    public static final RegistryObject<SoundEvent> DARK_CAVERNS_MUSIC = register("ambient.dark_caverns_ambience");
+
     private static RegistryObject<SoundEvent> register(String registryName) {
         return SOUNDS.register(registryName, () -> new SoundEvent(new ResourceLocation(DarkCaverns.MOD_ID, registryName)));
     }
