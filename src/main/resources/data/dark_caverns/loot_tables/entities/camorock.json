@@ -44,7 +44,7 @@
               }
             }
           ],
-          "name": "minecraft:iron_ore"
+          "name": "dark_caverns:carfstone_iron_ore"
         },
         {
           "type": "minecraft:item",
@@ -65,7 +65,7 @@
               }
             }
           ],
-          "name": "minecraft:gold_ore"
+          "name": "dark_caverns:carfstone_gold_ore"
         },
         {
           "type": "minecraft:item",
@@ -107,7 +107,7 @@
               }
             }
           ],
-          "name": "minecraft:diamond_ore"
+          "name": "dark_caverns:carfstone_diamond_ore"
         }
       ]
     }
