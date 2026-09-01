@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "dark_caverns:hellstone_ore"
+  },
+  "result": "dark_caverns:hellstone_rock",
+  "experience": 1.0,
+  "cookingtime": 100
+}

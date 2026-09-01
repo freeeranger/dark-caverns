@@ -21,6 +21,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -38,6 +39,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event){
+        if (event.phase != TickEvent.Phase.END || event.player.level.isClientSide) return;
         event.player.getCapability(GatewayCooldownCapability.GATEWAY_COOLDOWN_CAPABILITY).ifPresent(h -> {
             int cooldown = h.getCooldown();
             if(cooldown > 0) {
@@ -136,4 +138,10 @@ public class EventHandler {
         }
     }
 
+    @SubscribeEvent
+    public void onFurnaceFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
+        if (event.getItemStack().getItem() == CustomItems.SCORCHLING_TAIL.get()) {
+            event.setBurnTime(1600);
+        }
+    }
 }

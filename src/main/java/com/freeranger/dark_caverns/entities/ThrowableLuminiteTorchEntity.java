@@ -4,6 +4,7 @@ import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomItems;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
@@ -26,8 +27,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nonnull;
 
 public class ThrowableLuminiteTorchEntity extends ProjectileItemEntity {
-
-    Boolean hasHit = false;
 
     public ThrowableLuminiteTorchEntity(EntityType<? extends ThrowableLuminiteTorchEntity> entityType, World world) {
         super(entityType, world);
@@ -81,23 +80,29 @@ public class ThrowableLuminiteTorchEntity extends ProjectileItemEntity {
 
     @Override
     protected void onHitBlock(BlockRayTraceResult result) {
-        Direction direction = result.getDirection();
-        BlockPos placeAt = result.getBlockPos().offset(direction.getNormal());
-        if (!hasHit && direction == Direction.UP) {
-            level.setBlock(placeAt, CustomBlocks.LUMINITE_TORCH.get().defaultBlockState(), 3);
-            hasHit = true;
-        } else if (!hasHit && direction == Direction.NORTH) {
-            level.setBlock(placeAt, CustomBlocks.LUMINITE_WALL_TORCH.get().defaultBlockState().setValue(LuminiteWallTorchBlock.FACING, Direction.NORTH), 3);
-            hasHit = true;
-        } else if (!hasHit && direction == Direction.SOUTH) {
-            level.setBlock(placeAt, CustomBlocks.LUMINITE_WALL_TORCH.get().defaultBlockState().setValue(LuminiteWallTorchBlock.FACING, Direction.SOUTH), 3);
-            hasHit = true;
-        } else if (!hasHit && direction == Direction.WEST) {
-            level.setBlock(placeAt, CustomBlocks.LUMINITE_WALL_TORCH.get().defaultBlockState().setValue(LuminiteWallTorchBlock.FACING, Direction.WEST), 3);
-            hasHit = true;
-        } else if (!hasHit && direction == Direction.EAST) {
-            level.setBlock(placeAt, CustomBlocks.LUMINITE_WALL_TORCH.get().defaultBlockState().setValue(LuminiteWallTorchBlock.FACING, Direction.EAST), 3);
-            hasHit = true;
+        super.onHitBlock(result);
+        if (!this.level.isClientSide) {
+            Direction direction = result.getDirection();
+            BlockPos placeAt = result.getBlockPos().relative(direction);
+            BlockState existingState = this.level.getBlockState(placeAt);
+
+            if (existingState.getMaterial().isReplaceable()) {
+                BlockState stateToPlace = null;
+                if (direction == Direction.UP) {
+                    stateToPlace = CustomBlocks.LUMINITE_TORCH.get().defaultBlockState();
+                } else if (direction.getAxis().isHorizontal()) {
+                    stateToPlace = CustomBlocks.LUMINITE_WALL_TORCH.get().defaultBlockState().setValue(LuminiteWallTorchBlock.FACING, direction);
+                }
+
+                if (stateToPlace != null && stateToPlace.canSurvive(this.level, placeAt)) {
+                    this.level.setBlock(placeAt, stateToPlace, 3);
+                } else {
+                    this.spawnAtLocation(this.getItem());
+                }
+            } else {
+                this.spawnAtLocation(this.getItem());
+            }
         }
+        this.remove();
     }
 }

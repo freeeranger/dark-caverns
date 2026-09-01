@@ -59,7 +59,6 @@ public enum ShroomstoneArmorMaterial implements IArmorMaterial {
         return this.repairIngredient.get();
     }
 
-    @OnlyIn(Dist.CLIENT)
     public String getName() {
         return this.name;
     }

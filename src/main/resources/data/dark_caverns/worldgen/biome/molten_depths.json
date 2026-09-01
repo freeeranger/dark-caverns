@@ -52,6 +52,12 @@
   "spawners": {
     "ambient": [],
     "creature": [
+      {
+        "type": "dark_caverns:moltener",
+        "weight": 60,
+        "minCount": 1,
+        "maxCount": 2
+      }
     ],
     "misc": [],
     "monster": [
@@ -66,12 +72,6 @@
         "weight": 80,
         "minCount": 1,
         "maxCount": 3
-      },
-      {
-        "type": "dark_caverns:moltener",
-        "weight": 60,
-        "minCount": 1,
-        "maxCount": 2
       },
       {
         "type": "minecraft:blaze",

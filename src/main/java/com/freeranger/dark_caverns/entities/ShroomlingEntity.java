@@ -36,7 +36,6 @@ import java.util.UUID;
 public class ShroomlingEntity extends CreatureEntity implements IAnimatable, IAngerable {
     private AnimationFactory factory = new AnimationFactory(this);
 
-    protected static final DataParameter<Byte> DATA_FLAGS_ID = EntityDataManager.defineId(IronGolemEntity.class, DataSerializers.BYTE);
     private static final RangedInteger PERSISTENT_ANGER_TIME = TickRangeConverter.rangeOfSeconds(20, 39);
     private int remainingPersistentAngerTime;
     private UUID persistentAngerTarget;

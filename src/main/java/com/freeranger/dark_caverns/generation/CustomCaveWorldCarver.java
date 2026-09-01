@@ -38,8 +38,7 @@ public class CustomCaveWorldCarver extends CaveWorldCarver {
                 CustomBlocks.GLIMMERSHROOM.get(),
                 CustomBlocks.MOLTEN_CARFSTONE.get(),
                 CustomBlocks.CHARRED_GRASS.get(),
-                CustomBlocks.SCORCHED_BERRY_BUSH.get(),
-                CustomBlocks.MOLTEN_CARFSTONE.get()
+                CustomBlocks.SCORCHED_BERRY_BUSH.get()
         );
         this.liquids = ImmutableSet.of(
                 Fluids.WATER

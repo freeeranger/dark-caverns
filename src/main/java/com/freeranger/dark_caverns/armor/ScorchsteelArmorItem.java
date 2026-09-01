@@ -20,46 +20,63 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 
 public class ScorchsteelArmorItem extends ArmorItem {
-    private double lastPosX, lastPosY, lastPosZ;
-    private int timer = 0;
-
     public ScorchsteelArmorItem(IArmorMaterial material, EquipmentSlotType slot, Properties properties) {
         super(material, slot, properties);
     }
 
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-        int armorCount = 0;
+        if (world.isClientSide()) return;
 
-        if(player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == CustomItems.SCORCHSTEEL_HELMET.get()){
-            armorCount++;
-        }
-        if(player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == CustomItems.SCORCHSTEEL_CHESTPLATE.get()){
-            armorCount++;
-        }
-        if(player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == CustomItems.SCORCHSTEEL_LEGGINGS.get()){
-            armorCount++;
-        }
-        if(player.getItemBySlot(EquipmentSlotType.FEET).getItem() == CustomItems.SCORCHSTEEL_BOOTS.get()){
-            armorCount++;
-        }
-
-        if(armorCount > 0){
-            if(lastPosX == player.getX() && lastPosY == player.getY() && lastPosZ == player.getZ()){
-                timer++;
-                int effectTime = 20;
-                if(armorCount == 2) effectTime = 20 * 2;
-                else if(armorCount == 3) effectTime = 20 * 3;
-                else if(armorCount == 4) effectTime = 20 * 6;
-                if(timer >= 20){
-                    player.addEffect(new EffectInstance(Effects.INVISIBILITY, effectTime, 0, false, false, true));
+        boolean isFirstPiece = false;
+        for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
+            if (slotType.getType() == EquipmentSlotType.Group.ARMOR) {
+                if (player.getItemBySlot(slotType).getItem() instanceof ScorchsteelArmorItem) {
+                    isFirstPiece = (player.getItemBySlot(slotType) == stack);
+                    break;
                 }
-            }else{
-                timer = 0;
             }
         }
-        lastPosX = player.getX();
-        lastPosY = player.getY();
-        lastPosZ = player.getZ();
+        if (!isFirstPiece) return;
+
+        int armorCount = 0;
+        if (player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == CustomItems.SCORCHSTEEL_HELMET.get()) {
+            armorCount++;
+        }
+        if (player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == CustomItems.SCORCHSTEEL_CHESTPLATE.get()) {
+            armorCount++;
+        }
+        if (player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == CustomItems.SCORCHSTEEL_LEGGINGS.get()) {
+            armorCount++;
+        }
+        if (player.getItemBySlot(EquipmentSlotType.FEET).getItem() == CustomItems.SCORCHSTEEL_BOOTS.get()) {
+            armorCount++;
+        }
+
+        if (armorCount > 0) {
+            net.minecraft.nbt.CompoundNBT data = player.getPersistentData();
+            double lastPosX = data.getDouble("dark_caverns_scorch_x");
+            double lastPosY = data.getDouble("dark_caverns_scorch_y");
+            double lastPosZ = data.getDouble("dark_caverns_scorch_z");
+            int timer = data.getInt("dark_caverns_scorch_timer");
+
+            if (lastPosX == player.getX() && lastPosY == player.getY() && lastPosZ == player.getZ()) {
+                timer++;
+                int effectTime = 20;
+                if (armorCount == 2) effectTime = 20 * 2;
+                else if (armorCount == 3) effectTime = 20 * 3;
+                else if (armorCount == 4) effectTime = 20 * 6;
+                if (timer >= 20) {
+                    player.addEffect(new EffectInstance(Effects.INVISIBILITY, effectTime, 0, false, false, true));
+                }
+            } else {
+                timer = 0;
+            }
+
+            data.putDouble("dark_caverns_scorch_x", player.getX());
+            data.putDouble("dark_caverns_scorch_y", player.getY());
+            data.putDouble("dark_caverns_scorch_z", player.getZ());
+            data.putInt("dark_caverns_scorch_timer", timer);
+        }
     }
 }

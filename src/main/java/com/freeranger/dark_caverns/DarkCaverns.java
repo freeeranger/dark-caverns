@@ -4,9 +4,11 @@ import com.freeranger.dark_caverns.capabilities.GatewayCooldownCapability;
 import com.freeranger.dark_caverns.core.EventHandler;
 import com.freeranger.dark_caverns.data.CustomBlockTags;
 import com.freeranger.dark_caverns.entities.*;
+import com.freeranger.dark_caverns.items.CustomSpawnEggItem;
 import com.freeranger.dark_caverns.registry.*;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -78,7 +80,6 @@ public class DarkCaverns {
 			register.register(bus);
 		}
 
-		MinecraftForge.EVENT_BUS.addListener(this::gen);
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::biomeModification);
 		MinecraftForge.EVENT_BUS.register(this);
@@ -88,8 +89,8 @@ public class DarkCaverns {
 	public void biomeModification(final BiomeLoadingEvent event) {
 		if(event.getCategory() == Biome.Category.FOREST) {
 			if(event.getName() != null &&
-					(event.getName() == Biomes.DARK_FOREST.getRegistryName()
-					|| event.getName() == Biomes.DARK_FOREST_HILLS.getRegistryName()))
+					(event.getName().equals(Biomes.DARK_FOREST.location())
+					|| event.getName().equals(Biomes.DARK_FOREST_HILLS.location())))
 				return;
 			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_FORGOTTEN_TOWER);
 		}else if(event.getName() != null && event.getName().equals(CustomBiomes.MOLTEN_DEPTHS.location())) {
@@ -105,12 +106,19 @@ public class DarkCaverns {
 
 		event.enqueueWork(() -> {
 			CustomEntityTypes.registerSpawnPlacements();
+			CustomSpawnEggItem.initUnaddedEggs();
 			CustomCarvers.register();
 			CustomBiomes.toDictionary();
 			CustomDimensions.register();
 			CustomFeatures.register();
 			CustomStructures.setupStructures();
 			ConfiguredStructures.registerConfiguredStructures();
+
+			ComposterBlock.COMPOSTABLES.put(CustomBlocks.GLIMMERSHROOM.get().asItem(), 0.65F);
+			ComposterBlock.COMPOSTABLES.put(CustomBlocks.GLIMMERSHROOM_BLOCK.get().asItem(), 0.85F);
+			ComposterBlock.COMPOSTABLES.put(CustomBlocks.GLIMMERGRASS.get().asItem(), 0.3F);
+			ComposterBlock.COMPOSTABLES.put(CustomBlocks.CHARRED_GRASS.get().asItem(), 0.3F);
+			ComposterBlock.COMPOSTABLES.put(CustomItems.SCORCHED_BERRIES.get(), 0.3F);
 		});
 	}
 

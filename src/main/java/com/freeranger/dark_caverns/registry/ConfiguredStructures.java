@@ -18,6 +18,7 @@ public class ConfiguredStructures {
         Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
         Registry.register(registry, new ResourceLocation(DarkCaverns.MOD_ID, "configured_forgotten_tower"), CONFIGURED_FORGOTTEN_TOWER);
         Registry.register(registry, new ResourceLocation(DarkCaverns.MOD_ID, "configured_sacret_torch"), CONFIGURED_SACRET_TORCH);
+        Registry.register(registry, new ResourceLocation(DarkCaverns.MOD_ID, "configured_territory_marker"), CONFIGURED_TERRITORY_MARKER);
         Registry.register(registry, new ResourceLocation(DarkCaverns.MOD_ID, "configured_shroomie_house"), CONFIGURED_SHROOMIE_HOUSE);
 
         FlatGenerationSettings.STRUCTURE_FEATURES.put(CustomStructures.FORGOTTEN_TOWER.get(), CONFIGURED_FORGOTTEN_TOWER);

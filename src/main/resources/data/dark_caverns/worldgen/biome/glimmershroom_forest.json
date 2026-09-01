@@ -46,9 +46,7 @@
   ],
   "spawners": {
     "ambient": [],
-    "creature": [],
-    "misc": [],
-    "monster": [
+    "creature": [
       {
         "type": "dark_caverns:shroomie",
         "weight": 100,
@@ -62,6 +60,8 @@
         "maxCount": 2
       }
     ],
+    "misc": [],
+    "monster": [],
     "water_ambient": [],
     "water_creature": []
   },

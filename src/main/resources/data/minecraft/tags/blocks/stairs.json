@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "dark_caverns:carfstone_stairs",
+    "dark_caverns:carfstone_brick_stairs",
+    "dark_caverns:smooth_carfstone_stairs",
+    "dark_caverns:molten_carfstone_stairs",
+    "dark_caverns:molten_carfstone_brick_stairs",
+    "dark_caverns:smooth_molten_carfstone_stairs"
+  ]
+}

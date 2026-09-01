@@ -176,5 +176,8 @@
   "advancements.dark_caverns.shroomstone_armor_set.title": "A bouncy upgrade!",
   "advancements.dark_caverns.shroomstone_armor_set.description": "Upgrade your platinum armor and obtain a full suit of shroomstone armor",
   "advancements.dark_caverns.scorchsteel_armor_set.title": "An invisible upgrade!",
-  "advancements.dark_caverns.scorchsteel_armor_set.description": "Upgrade your platinum armor and obtain a full suit of scorchsteel armor"
+  "advancements.dark_caverns.scorchsteel_armor_set.description": "Upgrade your platinum armor and obtain a full suit of scorchsteel armor",
+  "biome.dark_caverns.rocky_caverns": "Rocky Caverns",
+  "biome.dark_caverns.glimmershroom_forest": "Glimmershroom Forest",
+  "biome.dark_caverns.molten_depths": "Molten Depths"
 }

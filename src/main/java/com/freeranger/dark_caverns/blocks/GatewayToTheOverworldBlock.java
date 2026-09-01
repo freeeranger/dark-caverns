@@ -18,7 +18,12 @@ public class GatewayToTheOverworldBlock extends Block {
     public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity.getVehicle() != null || entity.isVehicle()) return;
 
-        if(world instanceof ServerWorld && world.getServer() != null){
+        java.util.concurrent.atomic.AtomicInteger cooldown = new java.util.concurrent.atomic.AtomicInteger();
+        entity.getCapability(GatewayCooldownCapability.GATEWAY_COOLDOWN_CAPABILITY).ifPresent(h -> {
+            cooldown.set(h.getCooldown());
+        });
+
+        if(world instanceof ServerWorld && world.getServer() != null && cooldown.get() <= 0){
             ServerWorld world2 = world.getServer().getLevel(World.OVERWORLD);
             if(world2 == null) return;
 

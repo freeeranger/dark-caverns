@@ -36,7 +36,7 @@ public class CustomItems {
     public static final RegistryObject<Item> SCORCHED_MEAT = ITEMS.register(
             "scorched_meat",
             () -> new Item(new Item.Properties().tab(CustomItemGroups.GROUP).food(
-                    new Food.Builder().effect(() -> new EffectInstance(Effects.SATURATION, 620), 1f)
+                    new Food.Builder().effect(() -> new EffectInstance(Effects.SATURATION, 7), 1f)
                             .alwaysEat().nutrition(7).saturationMod(0.7f).build())
             )
     );
@@ -351,7 +351,7 @@ public class CustomItems {
             () -> new ScorchsteelArmorItem(
                     ScorchsteelArmorMaterial.SCORCHSTEEL,
                     EquipmentSlotType.LEGS,
-                    new Item.Properties().tab(CustomItemGroups.GROUP)
+                    new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
             )
     );
 
@@ -360,7 +360,7 @@ public class CustomItems {
             () -> new ScorchsteelArmorItem(
                     ScorchsteelArmorMaterial.SCORCHSTEEL,
                     EquipmentSlotType.FEET,
-                    new Item.Properties().tab(CustomItemGroups.GROUP)
+                    new Item.Properties().fireResistant().tab(CustomItemGroups.GROUP)
             )
     );
 

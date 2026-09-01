@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "dark_caverns:platinum_helmet",
+    "dark_caverns:hellstone_helmet",
+    "dark_caverns:scorchsteel_helmet",
+    "dark_caverns:shroomstone_helmet",
+    "dark_caverns:luminite_helmet"
+  ]
+}

@@ -41,15 +41,7 @@
   ],
   "spawners": {
     "ambient": [],
-    "creature": [],
-    "misc": [],
-    "monster": [
-      {
-        "type": "dark_caverns:luminite_golem",
-        "weight": 40,
-        "minCount": 1,
-        "maxCount": 2
-      },
+    "creature": [
       {
         "type": "dark_caverns:camorock",
         "weight": 35,
@@ -61,6 +53,15 @@
         "weight": 70,
         "minCount": 1,
         "maxCount": 3
+      }
+    ],
+    "misc": [],
+    "monster": [
+      {
+        "type": "dark_caverns:luminite_golem",
+        "weight": 40,
+        "minCount": 1,
+        "maxCount": 2
       },
       {
         "type": "minecraft:skeleton",

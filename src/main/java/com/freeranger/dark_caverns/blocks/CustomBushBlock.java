@@ -3,6 +3,7 @@ package com.freeranger.dark_caverns.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
@@ -17,5 +18,20 @@ public class CustomBushBlock extends BushBlock {
     @Override
     protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return state.is(baseBlock);
+    }
+
+    @Override
+    public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+        return 100;
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+        return 60;
+    }
+
+    @Override
+    public boolean isFlammable(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+        return true;
     }
 }

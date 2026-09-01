@@ -31,6 +31,9 @@ public class GatewayToTheCavernsBlock extends Block {
 
             BlockPos targetPos = new BlockPos(entity.position().x, 248, entity.position().z);
 
+            entity.getCapability(GatewayCooldownCapability.GATEWAY_COOLDOWN_CAPABILITY).ifPresent(h -> {
+                h.setCooldown(175);
+            });
             entity.changeDimension(world2, new DarkCavernsTeleporter(targetPos));
         }
     }

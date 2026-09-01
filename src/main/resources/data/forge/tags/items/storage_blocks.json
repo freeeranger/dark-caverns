@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:storage_blocks/platinum",
+    "#forge:storage_blocks/luminite",
+    "#forge:storage_blocks/hellstone",
+    "#forge:storage_blocks/shroomstone"
+  ]
+}

@@ -49,4 +49,19 @@ public class GlimmershroomBlock extends HugeMushroomBlock {
 
         super.stepOn(world, pos, entity);
     }
+
+    @Override
+    public int getFlammability(net.minecraft.block.BlockState state, IBlockReader world, BlockPos pos, net.minecraft.util.Direction face) {
+        return 60;
+    }
+
+    @Override
+    public int getFireSpreadSpeed(net.minecraft.block.BlockState state, IBlockReader world, BlockPos pos, net.minecraft.util.Direction face) {
+        return 30;
+    }
+
+    @Override
+    public boolean isFlammable(net.minecraft.block.BlockState state, IBlockReader world, BlockPos pos, net.minecraft.util.Direction face) {
+        return true;
+    }
 }

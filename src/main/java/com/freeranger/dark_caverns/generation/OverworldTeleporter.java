@@ -26,10 +26,6 @@ public class OverworldTeleporter implements ITeleporter {
     @Override
     public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
         Entity e = repositionEntity.apply(false);
-        if (!(e instanceof ServerPlayerEntity)) {
-            return e;
-        }
-        ServerPlayerEntity player = (ServerPlayerEntity) e;
 
         BlockPos gatewayPos = findGatewayToTheCavernsBlock(destWorld, pos);
 
@@ -42,7 +38,11 @@ public class OverworldTeleporter implements ITeleporter {
         destWorld.setBlock(new BlockPos(gatewayPos.getX(), gatewayPos.getY() + 2, gatewayPos.getZ()),
                 Blocks.AIR.defaultBlockState(), 4);
 
-        player.teleportTo(gatewayPos.getX() + 0.5D, gatewayPos.getY()+1, gatewayPos.getZ() + 0.5D);
+        if (e instanceof ServerPlayerEntity) {
+            ((ServerPlayerEntity) e).teleportTo(gatewayPos.getX() + 0.5D, gatewayPos.getY() + 1, gatewayPos.getZ() + 0.5D);
+        } else {
+            e.moveTo(gatewayPos.getX() + 0.5D, gatewayPos.getY() + 1, gatewayPos.getZ() + 0.5D, yaw, e.xRot);
+        }
 
         return e;
     }

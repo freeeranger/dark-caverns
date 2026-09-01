@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:ores/coal",
+    "#forge:ores/iron",
+    "#forge:ores/gold",
+    "#forge:ores/diamond",
+    "#forge:ores/redstone",
+    "#forge:ores/lapis",
+    "#forge:ores/platinum",
+    "#forge:ores/luminite",
+    "#forge:ores/hellstone"
+  ]
+}

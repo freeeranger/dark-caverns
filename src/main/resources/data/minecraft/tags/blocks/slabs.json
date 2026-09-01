@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "dark_caverns:carfstone_slab",
+    "dark_caverns:carfstone_brick_slab",
+    "dark_caverns:smooth_carfstone_slab",
+    "dark_caverns:molten_carfstone_slab",
+    "dark_caverns:molten_carfstone_brick_slab",
+    "dark_caverns:smooth_molten_carfstone_slab"
+  ]
+}

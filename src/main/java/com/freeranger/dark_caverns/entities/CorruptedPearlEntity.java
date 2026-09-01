@@ -96,47 +96,38 @@ public class CorruptedPearlEntity extends ProjectileItemEntity {
         }
 
         if (!this.level.isClientSide && !this.removed) {
-            AxisAlignedBB box = new AxisAlignedBB(
-                    new BlockPos(
-                            entity.blockPosition().getX() - 5,
-                            entity.blockPosition().getY() - 5,
-                            entity.blockPosition().getZ() - 5
-                    ),
-                    new BlockPos(
-                            entity.blockPosition().getX() + 5,
-                            entity.blockPosition().getY() + 5,
-                            entity.blockPosition().getZ() + 5
-                    )
-            );
-            List<Entity> entities = entity.level.getEntities(entity, box);
-            LivingEntity victim = null;
-            for (Entity i : entities){
-                if(i instanceof LivingEntity && !(i instanceof PlayerEntity)){
-                    if(victim == null || i.distanceTo(entity) < victim.distanceTo(entity)){
-                        victim = (LivingEntity) i;
-                    }
-                }
-            }
-
-            if (entity instanceof ServerPlayerEntity && victim != null) {
-                ServerPlayerEntity splayer = (ServerPlayerEntity)entity;
-
-                if (splayer.connection.getConnection().isConnected() && splayer.level == this.level && !splayer.isSleeping()) {
-
-                    CorruptedPearlTeleportEvent event;
-                    event = CustomEvents.onCorruptedPearlLand(splayer, this.getX(), this.getY(), this.getZ(), this, 5.0F);
-                    if (!event.isCanceled()) {
-                        if (victim.isPassenger()) {
-                            victim.stopRiding();
+            if (entity != null) {
+                AxisAlignedBB box = entity.getBoundingBox().inflate(5.0D);
+                List<Entity> entities = entity.level.getEntities(entity, box);
+                LivingEntity victim = null;
+                for (Entity i : entities){
+                    if(i instanceof LivingEntity && !(i instanceof PlayerEntity)){
+                        if(victim == null || i.distanceTo(entity) < victim.distanceTo(entity)){
+                            victim = (LivingEntity) i;
                         }
-
-                        victim.teleportTo(event.getTargetX(), event.getTargetY(), event.getTargetZ());
-                        victim.fallDistance = 0.0F;
                     }
                 }
-            } else if (victim != null) {
-                victim.teleportTo(this.getX(), this.getY(), this.getZ());
-                victim.fallDistance = 0.0F;
+
+                if (entity instanceof ServerPlayerEntity && victim != null) {
+                    ServerPlayerEntity splayer = (ServerPlayerEntity)entity;
+
+                    if (splayer.connection.getConnection().isConnected() && splayer.level == this.level && !splayer.isSleeping()) {
+
+                        CorruptedPearlTeleportEvent event;
+                        event = CustomEvents.onCorruptedPearlLand(splayer, this.getX(), this.getY(), this.getZ(), this, 5.0F);
+                        if (!event.isCanceled()) {
+                            if (victim.isPassenger()) {
+                                victim.stopRiding();
+                            }
+
+                            victim.teleportTo(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+                            victim.fallDistance = 0.0F;
+                        }
+                    }
+                } else if (victim != null) {
+                    victim.teleportTo(this.getX(), this.getY(), this.getZ());
+                    victim.fallDistance = 0.0F;
+                }
             }
             this.remove();
         }

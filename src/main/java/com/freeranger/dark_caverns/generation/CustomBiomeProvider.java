@@ -59,7 +59,6 @@ public class CustomBiomeProvider extends NetherBiomeProvider {
         return CODEC;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public BiomeProvider withSeed(long seed) {
         return new CustomBiomeProvider(seed, this.parameters, this.preset);

@@ -33,7 +33,6 @@ public class CustomChunkGenerator extends NoiseChunkGenerator {
         return CODEC;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public ChunkGenerator withSeed(long seed) {
         return new CustomChunkGenerator(this.biomeSource.withSeed(seed), seed, this.settings);
