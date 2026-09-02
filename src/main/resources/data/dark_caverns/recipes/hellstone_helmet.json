@@ -4,7 +4,7 @@
     "item": "dark_caverns:platinum_helmet"
   },
   "addition": {
-    "item": "dark_caverns:hellstone"
+    "tag": "forge:gems/hellstone"
   },
   "result": {
     "item": "dark_caverns:hellstone_helmet"

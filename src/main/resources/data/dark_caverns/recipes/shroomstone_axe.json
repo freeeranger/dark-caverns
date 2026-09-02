@@ -4,7 +4,7 @@
     "item": "dark_caverns:platinum_axe"
   },
   "addition": {
-    "item": "dark_caverns:shroomstone"
+    "tag": "forge:gems/shroomstone"
   },
   "result": {
     "item": "dark_caverns:shroomstone_axe"
