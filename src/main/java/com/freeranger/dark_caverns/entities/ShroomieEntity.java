@@ -58,7 +58,7 @@ public class ShroomieEntity extends AbstractVillagerEntity implements IAnimatabl
     }
 
     public static boolean canShroomieSpawn(EntityType<? extends CreatureEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(6) == 0 && worldIn.getBlockState(pos.below()).is(CustomBlocks.GLIMMERGRASS_BLOCK.get());
+        return rand.nextInt(com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.shroomieSpawnChance.get()) == 0 && worldIn.getBlockState(pos.below()).is(CustomBlocks.GLIMMERGRASS_BLOCK.get());
     }
 
     @Override

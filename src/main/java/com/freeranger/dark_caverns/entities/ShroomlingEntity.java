@@ -79,7 +79,7 @@ public class ShroomlingEntity extends CreatureEntity implements IAnimatable, IAn
     }
 
     public static boolean canShroomlingSpawn(EntityType<? extends CreatureEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(6) == 0;
+        return rand.nextInt(com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.shroomlingSpawnChance.get()) == 0;
     }
 
     @Override

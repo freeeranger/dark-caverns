@@ -61,7 +61,7 @@ public class LuminiteGolemEntity extends MonsterEntity implements IAnimatable {
     }
 
     public static boolean canLuminiteGolemSpawn(EntityType<? extends MonsterEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(10) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
+        return rand.nextInt(com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.luminiteGolemSpawnChance.get()) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
     }
 
     @Override

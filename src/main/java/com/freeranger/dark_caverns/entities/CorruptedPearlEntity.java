@@ -97,7 +97,7 @@ public class CorruptedPearlEntity extends ProjectileItemEntity {
 
         if (!this.level.isClientSide && !this.removed) {
             if (entity != null) {
-                AxisAlignedBB box = entity.getBoundingBox().inflate(5.0D);
+                AxisAlignedBB box = entity.getBoundingBox().inflate(com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.corruptedPearlScanRadius.get());
                 List<Entity> entities = entity.level.getEntities(entity, box);
                 LivingEntity victim = null;
                 for (Entity i : entities){

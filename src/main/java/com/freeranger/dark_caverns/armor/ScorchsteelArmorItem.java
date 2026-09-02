@@ -66,7 +66,7 @@ public class ScorchsteelArmorItem extends ArmorItem {
                 if (armorCount == 2) effectTime = 20 * 2;
                 else if (armorCount == 3) effectTime = 20 * 3;
                 else if (armorCount == 4) effectTime = 20 * 6;
-                if (timer >= 20) {
+                if (timer >= com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.scorchsteelStealthStandstillTicks.get()) {
                     player.addEffect(new EffectInstance(Effects.INVISIBILITY, effectTime, 0, false, false, true));
                 }
             } else {

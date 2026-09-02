@@ -50,7 +50,7 @@ public class MoltenerEntity extends CreatureEntity implements IAnimatable {
     }
 
     public static boolean canMoltenerSpawn(EntityType<? extends CreatureEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(4) == 0;
+        return rand.nextInt(com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.moltenerSpawnChance.get()) == 0;
     }
 
     @Override

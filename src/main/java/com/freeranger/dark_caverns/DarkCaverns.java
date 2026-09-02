@@ -1,7 +1,10 @@
 package com.freeranger.dark_caverns;
 
 import com.freeranger.dark_caverns.capabilities.GatewayCooldownCapability;
+import com.freeranger.dark_caverns.core.DarkCavernsConfig;
 import com.freeranger.dark_caverns.core.EventHandler;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 import com.freeranger.dark_caverns.data.CustomBlockTags;
 import com.freeranger.dark_caverns.entities.*;
 import com.freeranger.dark_caverns.items.CustomSpawnEggItem;
@@ -55,6 +58,9 @@ public class DarkCaverns {
 	public DarkCaverns() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, DarkCavernsConfig.COMMON_SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, DarkCavernsConfig.CLIENT_SPEC);
+
 		GeckoLib.initialize();
 		bus.addListener(this::setup);
 		bus.addListener(this::clientSetup);
@@ -92,7 +98,9 @@ public class DarkCaverns {
 					(event.getName().equals(Biomes.DARK_FOREST.location())
 					|| event.getName().equals(Biomes.DARK_FOREST_HILLS.location())))
 				return;
-			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_FORGOTTEN_TOWER);
+			if(DarkCavernsConfig.COMMON.generateForgottenTower.get()) {
+				event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_FORGOTTEN_TOWER);
+			}
 		}else if(event.getName() != null && event.getName().equals(CustomBiomes.MOLTEN_DEPTHS.location())) {
 			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_SACRET_TORCH);
 			event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_TERRITORY_MARKER);
@@ -152,11 +160,11 @@ public class DarkCaverns {
 				new OreFeatureConfig(
 						new BlockMatchRuleTest(Blocks.BEDROCK),
 						CustomBlocks.CRACKED_BEDROCK.get().defaultBlockState(),
-						3
+						DarkCavernsConfig.COMMON.crackedBedrockVeinSize.get()
 				)
 		).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(0, 0, 5)))
 				.squared()
-				.count(116));
+				.count(DarkCavernsConfig.COMMON.crackedBedrockVeinCount.get()));
 	}
 
 	private static Method GETCODEC_METHOD;

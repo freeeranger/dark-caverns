@@ -79,7 +79,7 @@ public class ShroombombEntity extends ProjectileItemEntity {
         super.onHit(result);
         if(!level.isClientSide()){
             BlockPos pos = blockPosition();
-            level.explode(this, pos.getX(), pos.getY(), pos.getZ(), 4, Explosion.Mode.BREAK);
+            level.explode(this, pos.getX(), pos.getY(), pos.getZ(), com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.shroombombExplosionPower.get().floatValue(), Explosion.Mode.BREAK);
         }
         this.remove();
     }

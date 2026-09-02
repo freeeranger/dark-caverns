@@ -41,7 +41,7 @@ public class LuminiteHelmetLighting {
 
     public static boolean shouldGlow(LivingEntity entity)
     {
-        if (entity == null || MC.player == null || MC.player.level == null)
+        if (!DarkCavernsConfig.CLIENT.enableDynamicLighting.get() || entity == null || MC.player == null || MC.player.level == null)
         {
             return false;
         }
@@ -52,7 +52,7 @@ public class LuminiteHelmetLighting {
         }
 
         double distSq = MC.player.distanceToSqr(entity);
-        int maxDist = 64;
+        int maxDist = DarkCavernsConfig.CLIENT.maxDynamicLightDistance.get();
         if (distSq > maxDist * maxDist)
         {
             return false;

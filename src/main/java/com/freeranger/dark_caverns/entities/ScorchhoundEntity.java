@@ -77,14 +77,14 @@ public class ScorchhoundEntity extends MonsterEntity implements IAnimatable {
     }
 
     protected void blockedByShield(LivingEntity livingEntity) {
-        if (!this.isBaby()) {
+        if (!this.isBaby() && com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.scorchhoundBypassShields.get()) {
             IFlinging.throwTarget(this, livingEntity);
         }
 
     }
 
     public static boolean canScorchhoundSpawn(EntityType<? extends MonsterEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(6) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
+        return rand.nextInt(com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.scorchhoundSpawnChance.get()) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, rand);
     }
 
     @Override

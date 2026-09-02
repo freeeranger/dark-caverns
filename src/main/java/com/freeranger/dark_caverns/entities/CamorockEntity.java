@@ -50,7 +50,7 @@ public class CamorockEntity extends CreatureEntity implements IAnimatable {
     }
 
     public static boolean canCamorockSpawn(EntityType<? extends CreatureEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random rand){
-        return rand.nextInt(7) == 0;
+        return rand.nextInt(com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.camorockSpawnChance.get()) == 0;
     }
 
     @Override
