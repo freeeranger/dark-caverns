@@ -7,10 +7,10 @@
   ],
   "key": {
     "#": {
-      "item": "dark_caverns:glimmershroom"
+      "tag": "forge:mushrooms"
     },
     "X": {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   },
   "result": {

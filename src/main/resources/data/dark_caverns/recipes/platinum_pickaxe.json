@@ -4,7 +4,7 @@
     "item": "minecraft:diamond_pickaxe"
   },
   "addition": {
-    "item": "dark_caverns:platinum_ingot"
+    "tag": "forge:ingots/platinum"
   },
   "result": {
     "item": "dark_caverns:platinum_pickaxe"

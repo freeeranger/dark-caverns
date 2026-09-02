@@ -4,7 +4,7 @@
     "item": "dark_caverns:platinum_chestplate"
   },
   "addition": {
-    "item": "minecraft:netherite_ingot"
+    "tag": "forge:ingots/netherite"
   },
   "result": {
     "item": "minecraft:netherite_chestplate"

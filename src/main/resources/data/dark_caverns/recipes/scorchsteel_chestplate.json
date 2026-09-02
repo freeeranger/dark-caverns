@@ -4,7 +4,7 @@
     "item": "dark_caverns:platinum_chestplate"
   },
   "addition": {
-    "item": "dark_caverns:scorchsteel_ingot"
+    "tag": "forge:ingots/scorchsteel"
   },
   "result": {
     "item": "dark_caverns:scorchsteel_chestplate"

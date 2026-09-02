@@ -1,7 +1,7 @@
 {
   "type": "minecraft:blasting",
   "ingredient": {
-    "item": "dark_caverns:carfstone_luminite_ore"
+    "tag": "forge:ores/luminite"
   },
   "result": "dark_caverns:luminite_dust",
   "experience": 0.9,

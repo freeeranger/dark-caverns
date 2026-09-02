@@ -4,7 +4,7 @@
     "item": "minecraft:diamond_hoe"
   },
   "addition": {
-    "item": "dark_caverns:platinum_ingot"
+    "tag": "forge:ingots/platinum"
   },
   "result": {
     "item": "dark_caverns:platinum_hoe"

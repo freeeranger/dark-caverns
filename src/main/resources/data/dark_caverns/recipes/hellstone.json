@@ -2,16 +2,16 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     },
     {
       "item": "dark_caverns:hellstone_rock"

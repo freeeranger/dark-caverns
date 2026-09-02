@@ -10,7 +10,7 @@
       "item": "dark_caverns:luminite_torch"
     },
     "S": {
-      "item": "minecraft:slime_ball"
+      "tag": "forge:slimeballs"
     }
   },
   "result": {
