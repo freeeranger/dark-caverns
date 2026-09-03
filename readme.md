@@ -1,5 +1,3 @@
-# Dark Caverns
-
 [![Dark Caverns Mod Trailer](https://img.youtube.com/vi/Z3q_B4iXvOw/maxresdefault.jpg)](https://www.youtube.com/watch?v=Z3q_B4iXvOw)
 
 [![CurseForge](https://img.shields.io/badge/CurseForge-Dark%20Caverns-f16436?logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![Wiki](https://img.shields.io/badge/Documentation-Official%20Wiki-blue?logo=github)](https://github.com/freeeranger/dark-caverns/wiki) [![YouTube Trailer](https://img.shields.io/badge/YouTube-Mod%20Trailer-red?logo=youtube)](https://www.youtube.com/watch?v=Z3q_B4iXvOw) [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.16.5-brightgreen)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![Forge](https://img.shields.io/badge/Modloader-Forge-blue)](https://files.minecraftforge.net/)
