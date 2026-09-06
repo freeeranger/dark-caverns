@@ -1,0 +1,12 @@
+{
+  "type": "dark_caverns:ported_jigsaw",
+  "biomes": "#dark_caverns:has_structure/shroomie_house",
+  "cavern_placement": true,
+  "max_distance_from_center": 80,
+  "size": 10,
+  "spawn_overrides": {},
+  "start_pool": "dark_caverns:shroomie_house/start_pool",
+  "step": "underground_structures",
+  "terrain_adaptation": "beard_thin",
+  "use_expansion_hack": false
+}

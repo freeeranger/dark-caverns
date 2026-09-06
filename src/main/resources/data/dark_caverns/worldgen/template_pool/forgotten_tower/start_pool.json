@@ -1,6 +1,4 @@
-  
 {
-  "name": "dark_caverns:forgotten_tower/start_pool",
   "fallback": "minecraft:empty",
   "elements": [
     {

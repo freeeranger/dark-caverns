@@ -1,30 +1,25 @@
 package com.freeranger.dark_caverns.blocks;
 
 import com.freeranger.dark_caverns.registry.CustomParticles;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.TorchBlock;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.TorchBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Random;
-
-import net.minecraft.block.AbstractBlock.Properties;
-
-public class LuminiteTorchBlock extends TorchBlock {
-    public LuminiteTorchBlock(Properties properties) {
-        super(properties, ParticleTypes.FLAME);
+public final class LuminiteTorchBlock extends TorchBlock {
+    public LuminiteTorchBlock(BlockBehaviour.Properties properties) {
+        super(ParticleTypes.FLAME, properties);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        double x = (double)pos.getX() + 0.5D;
-        double y = (double)pos.getY() + 0.7D;
-        double z = (double)pos.getZ() + 0.5D;
-        worldIn.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.0D, 0.0D);
-        worldIn.addParticle(CustomParticles.LUMINITE_FLAME.get(), x, y, z, 0.0D, 0.0D, 0.0D);
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        double x = pos.getX() + 0.5;
+        double y = pos.getY() + 0.7;
+        double z = pos.getZ() + 0.5;
+        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
+        level.addParticle(CustomParticles.LUMINITE_FLAME.get(), x, y, z, 0.0, 0.0, 0.0);
     }
 }

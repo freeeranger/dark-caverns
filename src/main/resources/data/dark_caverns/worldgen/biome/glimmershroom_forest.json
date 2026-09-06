@@ -1,35 +1,41 @@
 {
+  "carvers": {
+    "air": [
+      "dark_caverns:dark_caverns_cave"
+    ]
+  },
+  "downfall": 0.4,
   "effects": {
-    "mood_sound": {
-      "sound": "minecraft:ambient.basalt_deltas.mood",
-      "tick_delay": 6000,
-      "block_search_extent": 8,
-      "offset": 2
-    },
-    "sky_color": 0,
     "fog_color": 65793,
-    "water_color": 4159204,
-    "water_fog_color": 329011,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.basalt_deltas.mood",
+      "tick_delay": 6000
+    },
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 6000,
+      "replace_current_music": true,
+      "sound": "dark_caverns:ambient.dark_caverns_ambience"
+    },
     "particle": {
       "options": {
         "type": "minecraft:ash"
       },
       "probability": 0.03
     },
-    "music": {
-      "sound": "dark_caverns:ambient.dark_caverns_ambience",
-      "min_delay": 6000,
-      "max_delay": 24000,
-      "replace_current_music": true
-    }
+    "sky_color": 0,
+    "water_color": 4159204,
+    "water_fog_color": 329011
   },
-  "carvers": {
-    "air": [
-      "dark_caverns:dark_caverns_cave"
-    ]
-  },
-  "starts": [],
   "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
     [
       "dark_caverns:luminite_ore_feature",
       "dark_caverns:coal_ore_feature",
@@ -40,43 +46,40 @@
       "dark_caverns:lapis_ore_feature",
       "dark_caverns:platinum_ore_feature"
     ],
+    [],
+    [],
     [
       "dark_caverns:huge_mushroom_feature",
-      "dark_caverns:huge_high_mushroom_feature"
-    ],
-    [
+      "dark_caverns:huge_high_mushroom_feature",
       "dark_caverns:glimmergrass_patch",
       "dark_caverns:shroom_patch"
-    ]
+    ],
+    []
   ],
+  "has_precipitation": false,
+  "spawn_costs": {},
   "spawners": {
     "ambient": [],
+    "axolotls": [],
     "creature": [
       {
         "type": "dark_caverns:shroomie",
-        "weight": 100,
+        "maxCount": 1,
         "minCount": 1,
-        "maxCount": 1
+        "weight": 100
       },
       {
         "type": "dark_caverns:shroomling",
-        "weight": 60,
+        "maxCount": 2,
         "minCount": 1,
-        "maxCount": 2
+        "weight": 60
       }
     ],
     "misc": [],
     "monster": [],
+    "underground_water_creature": [],
     "water_ambient": [],
     "water_creature": []
   },
-  "category": "none",
-  "precipitation": "none",
-  "surface_builder": "dark_caverns:glimmershroomgrass_surface",
-  "scale": 0.05,
-  "downfall": 0.4,
-  "depth": 0.12,
-  "temperature": 0.8,
-  "player_spawn_friendly": true,
-  "spawn_costs": {}
+  "temperature": 0.8
 }

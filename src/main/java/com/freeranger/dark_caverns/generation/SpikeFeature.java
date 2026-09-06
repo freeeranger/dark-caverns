@@ -1,100 +1,99 @@
 package com.freeranger.dark_caverns.generation;
 
-import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import java.util.function.Supplier;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.Random;
+/** Builds the mirrored floor-and-ceiling stone spikes used by the original dimension. */
+public final class SpikeFeature extends Feature<NoneFeatureConfiguration> {
+    private final Supplier<? extends Block> sourceBlock;
 
-public class SpikeFeature extends Feature<NoFeatureConfig> {
-    Block sourceBlock;
-
-    public SpikeFeature(Codec<NoFeatureConfig> noFeatureConfig, Block sourceBlock) {
-        super(noFeatureConfig);
+    public SpikeFeature(Codec<NoneFeatureConfiguration> codec, Supplier<? extends Block> sourceBlock) {
+        super(codec);
         this.sourceBlock = sourceBlock;
     }
 
-    public boolean place(ISeedReader seedReader, ChunkGenerator chunkGenerator, Random rand, BlockPos pos, NoFeatureConfig noFeatureConfig) {
-        while(seedReader.isEmptyBlock(pos) && pos.getY() > 2) {
-            pos = pos.below();
+    @Override
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        WorldGenLevel level = context.level();
+        RandomSource random = context.random();
+        BlockPos origin = context.origin();
+
+        while (level.isEmptyBlock(origin) && origin.getY() > level.getMinBuildHeight() + 2) {
+            origin = origin.below();
         }
 
-        if (!seedReader.getBlockState(pos).is(sourceBlock)) {
+        Block source = sourceBlock.get();
+        if (!level.getBlockState(origin).is(source)) {
             return false;
-        } else {
-            pos = pos.above(rand.nextInt(4));
-            int i = rand.nextInt(4) + 7;
-            int j = i / 4 + rand.nextInt(2);
+        }
 
-            for(int k = 0; k < i; ++k) {
-                float f = (1.0f - (float)k / (float)i) * (float)j;
-                int l = MathHelper.ceil(f);
+        origin = origin.above(random.nextInt(4));
+        int height = random.nextInt(4) + 7;
+        int radius = height / 4 + random.nextInt(2);
 
-                for(int i1 = -l; i1 <= l; ++i1) {
-                    float f1 = (float)MathHelper.abs(i1) - 0.25f;
+        for (int yOffset = 0; yOffset < height; yOffset++) {
+            float scaledRadius = (1.0F - (float)yOffset / (float)height) * (float)radius;
+            int extent = Mth.ceil(scaledRadius);
 
-                    for(int j1 = -l; j1 <= l; ++j1) {
-                        float f2 = (float)MathHelper.abs(j1) - 0.25f;
-                        if ((i1 == 0 && j1 == 0 || !(f1 * f1 + f2 * f2 > f * f)) && (i1 != -l && i1 != l && j1 != -l && j1 != l || !(rand.nextFloat() > 0.999f))) {
-                            BlockState blockstate = seedReader.getBlockState(pos.offset(i1, k, j1));
-                            Block block = blockstate.getBlock();
-                            if (blockstate.isAir(seedReader, pos.offset(i1, k, j1)) || isDirt(block) || block == sourceBlock) {
-                                this.setBlock(seedReader, pos.offset(i1, k, j1), sourceBlock.defaultBlockState());
-                            }
+            for (int xOffset = -extent; xOffset <= extent; xOffset++) {
+                float xDistance = (float)Mth.abs(xOffset) - 0.25F;
+                for (int zOffset = -extent; zOffset <= extent; zOffset++) {
+                    float zDistance = (float)Mth.abs(zOffset) - 0.25F;
+                    boolean insideRadius = xOffset == 0 && zOffset == 0
+                            || xDistance * xDistance + zDistance * zDistance <= scaledRadius * scaledRadius;
+                    boolean keepEdge = xOffset != -extent && xOffset != extent
+                            && zOffset != -extent && zOffset != extent
+                            || random.nextFloat() <= 0.999F;
+                    if (!insideRadius || !keepEdge) {
+                        continue;
+                    }
 
-                            if (k != 0 && l > 1) {
-                                blockstate = seedReader.getBlockState(pos.offset(i1, -k, j1));
-                                block = blockstate.getBlock();
-                                if (blockstate.isAir(seedReader, pos.offset(i1, -k, j1)) || isDirt(block) || block == sourceBlock) {
-                                    this.setBlock(seedReader, pos.offset(i1, -k, j1), sourceBlock.defaultBlockState());
-                                }
-                            }
-                        }
+                    replace(level, origin.offset(xOffset, yOffset, zOffset), source);
+                    if (yOffset != 0 && extent > 1) {
+                        replace(level, origin.offset(xOffset, -yOffset, zOffset), source);
                     }
                 }
             }
+        }
 
-            int k1 = j - 1;
-            if (k1 < 0) {
-                k1 = 0;
-            } else if (k1 > 1) {
-                k1 = 1;
-            }
+        int foundationRadius = Mth.clamp(radius - 1, 0, 1);
+        for (int xOffset = -foundationRadius; xOffset <= foundationRadius; xOffset++) {
+            for (int zOffset = -foundationRadius; zOffset <= foundationRadius; zOffset++) {
+                BlockPos foundation = origin.offset(xOffset, -1, zOffset);
+                int remaining = Math.abs(xOffset) == 1 && Math.abs(zOffset) == 1 ? random.nextInt(5) : 50;
 
-            for(int l1 = -k1; l1 <= k1; ++l1) {
-                for(int i2 = -k1; i2 <= k1; ++i2) {
-                    BlockPos blockpos = pos.offset(l1, -1, i2);
-                    int j2 = 50;
-                    if (Math.abs(l1) == 1 && Math.abs(i2) == 1) {
-                        j2 = rand.nextInt(5);
+                while (foundation.getY() > level.getMinBuildHeight() + 50) {
+                    BlockState state = level.getBlockState(foundation);
+                    if (!state.isAir() && !isDirt(state) && !state.is(source)) {
+                        break;
                     }
 
-                    while(blockpos.getY() > 50) {
-                        BlockState blockstate1 = seedReader.getBlockState(blockpos);
-                        Block block1 = blockstate1.getBlock();
-                        if (!blockstate1.isAir(seedReader, blockpos) && !isDirt(block1) && block1 != sourceBlock) {
-                            break;
-                        }
-
-                        this.setBlock(seedReader, blockpos, sourceBlock.defaultBlockState());
-                        blockpos = blockpos.below();
-                        --j2;
-                        if (j2 <= 0) {
-                            blockpos = blockpos.below(rand.nextInt(5) + 1);
-                            j2 = rand.nextInt(5);
-                        }
+                    setBlock(level, foundation, source.defaultBlockState());
+                    foundation = foundation.below();
+                    if (--remaining <= 0) {
+                        foundation = foundation.below(random.nextInt(5) + 1);
+                        remaining = random.nextInt(5);
                     }
                 }
             }
+        }
 
-            return true;
+        return true;
+    }
+
+    private void replace(WorldGenLevel level, BlockPos pos, Block source) {
+        BlockState state = level.getBlockState(pos);
+        if (state.isAir() || isDirt(state) || state.is(source)) {
+            setBlock(level, pos, source.defaultBlockState());
         }
     }
 }

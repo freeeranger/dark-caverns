@@ -1,0 +1,82 @@
+{
+  "effects": {
+    "mood_sound": {
+      "sound": "minecraft:ambient.basalt_deltas.mood",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2
+    },
+    "sky_color": 0,
+    "fog_color": 65793,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "particle": {
+      "options": {
+        "type": "minecraft:ash"
+      },
+      "probability": 0.03
+    },
+    "music": {
+      "sound": "dark_caverns:ambient.dark_caverns_ambience",
+      "min_delay": 6000,
+      "max_delay": 24000,
+      "replace_current_music": true
+    }
+  },
+  "carvers": {
+    "air": [
+      "dark_caverns:dark_caverns_cave"
+    ]
+  },
+  "starts": [],
+  "features": [
+    [
+      "dark_caverns:luminite_ore_feature",
+      "dark_caverns:coal_ore_feature",
+      "dark_caverns:iron_ore_feature",
+      "dark_caverns:gold_ore_feature",
+      "dark_caverns:diamond_ore_feature",
+      "dark_caverns:redstone_ore_feature",
+      "dark_caverns:lapis_ore_feature",
+      "dark_caverns:platinum_ore_feature"
+    ],
+    [
+      "dark_caverns:huge_mushroom_feature",
+      "dark_caverns:huge_high_mushroom_feature"
+    ],
+    [
+      "dark_caverns:glimmergrass_patch",
+      "dark_caverns:shroom_patch"
+    ]
+  ],
+  "spawners": {
+    "ambient": [],
+    "creature": [
+      {
+        "type": "dark_caverns:shroomie",
+        "weight": 100,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "dark_caverns:shroomling",
+        "weight": 60,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "category": "none",
+  "precipitation": "none",
+  "surface_builder": "dark_caverns:glimmershroomgrass_surface",
+  "scale": 0.05,
+  "downfall": 0.4,
+  "depth": 0.12,
+  "temperature": 0.8,
+  "player_spawn_friendly": true,
+  "spawn_costs": {}
+}

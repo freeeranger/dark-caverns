@@ -1,42 +1,24 @@
 package com.freeranger.dark_caverns.blocks;
 
-import com.freeranger.dark_caverns.capabilities.GatewayCooldownCapability;
-import com.freeranger.dark_caverns.generation.DarkCavernsTeleporter;
-import com.freeranger.dark_caverns.registry.CustomDimensions;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import com.freeranger.dark_caverns.generation.GatewayTeleports;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-public class GatewayToTheCavernsBlock extends Block {
-    public GatewayToTheCavernsBlock(Properties properties) {
+public final class GatewayToTheCavernsBlock extends Block {
+    public GatewayToTheCavernsBlock(BlockBehaviour.Properties properties) {
         super(properties);
     }
 
     @Override
-    public void stepOn(World world, BlockPos pos, Entity entity) {
-        if (entity.getVehicle() != null || entity.isVehicle()) return;
-
-        AtomicInteger cooldown = new AtomicInteger();
-        entity.getCapability(GatewayCooldownCapability.GATEWAY_COOLDOWN_CAPABILITY).ifPresent(h -> {
-            cooldown.set(h.getCooldown());
-        });
-
-        if(world instanceof ServerWorld && world.getServer() != null && cooldown.get() <= 0){
-            ServerWorld world2 = world.getServer().getLevel(CustomDimensions.DARK_CAVERNS_WORLD);
-            if(world2 == null) return;
-
-            BlockPos targetPos = new BlockPos(entity.position().x, 248, entity.position().z);
-
-            entity.getCapability(GatewayCooldownCapability.GATEWAY_COOLDOWN_CAPABILITY).ifPresent(h -> {
-                h.setCooldown(com.freeranger.dark_caverns.core.DarkCavernsConfig.COMMON.gatewayCooldownTicks.get());
-            });
-            entity.changeDimension(world2, new DarkCavernsTeleporter(targetPos));
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+        if (level instanceof ServerLevel serverLevel && entity.getVehicle() == null && !entity.isVehicle()) {
+            GatewayTeleports.toDarkCaverns(serverLevel, entity);
         }
+        super.stepOn(level, pos, state, entity);
     }
-
-
 }

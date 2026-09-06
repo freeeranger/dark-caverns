@@ -1,42 +1,42 @@
 package com.freeranger.dark_caverns.events;
 
 import com.freeranger.dark_caverns.entities.CorruptedPearlEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.event.entity.living.EntityTeleportEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 
-@Cancelable
-public class CorruptedPearlTeleportEvent extends EntityTeleportEvent
-{
-    private final ServerPlayerEntity player;
+/** Fired before a player-owned corrupted pearl teleports its selected victim. */
+public final class CorruptedPearlTeleportEvent extends EntityTeleportEvent {
+    private final ServerPlayer player;
     private final CorruptedPearlEntity pearlEntity;
     private float attackDamage;
 
-    public CorruptedPearlTeleportEvent(ServerPlayerEntity entity, double targetX, double targetY, double targetZ, CorruptedPearlEntity pearlEntity, float attackDamage)
-    {
-        super(entity, targetX, targetY, targetZ);
+    public CorruptedPearlTeleportEvent(
+            ServerPlayer player,
+            double targetX,
+            double targetY,
+            double targetZ,
+            CorruptedPearlEntity pearlEntity,
+            float attackDamage
+    ) {
+        super(player, targetX, targetY, targetZ);
+        this.player = player;
         this.pearlEntity = pearlEntity;
-        this.player = entity;
         this.attackDamage = attackDamage;
     }
 
-    public CorruptedPearlEntity getPearlEntity()
-    {
-        return pearlEntity;
-    }
-
-    public ServerPlayerEntity getPlayer()
-    {
+    public ServerPlayer getPlayer() {
         return player;
     }
 
-    public float getAttackDamage()
-    {
+    public CorruptedPearlEntity getPearlEntity() {
+        return pearlEntity;
+    }
+
+    public float getAttackDamage() {
         return attackDamage;
     }
 
-    public void setAttackDamage(float attackDamage)
-    {
+    public void setAttackDamage(float attackDamage) {
         this.attackDamage = attackDamage;
     }
 }

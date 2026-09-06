@@ -1,67 +1,67 @@
 package com.freeranger.dark_caverns.blocks;
 
-import net.minecraft.block.HugeMushroomBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.HugeMushroomBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
-public class GlimmershroomBlock extends HugeMushroomBlock {
-    public GlimmershroomBlock(Properties properties) {
+public final class GlimmershroomBlock extends HugeMushroomBlock {
+    public GlimmershroomBlock(BlockBehaviour.Properties properties) {
         super(properties);
     }
 
-    public void fallOn(World world, BlockPos pos, Entity entity, float val) {
-        if (entity.isSuppressingBounce()) {
-            super.fallOn(world, pos, entity, val);
-        } else {
-            entity.causeFallDamage(val, 0.0F);
-        }
-
-    }
-
-    public void updateEntityAfterFallOn(IBlockReader reader, Entity entity) {
-        if (entity.isSuppressingBounce()) {
-            super.updateEntityAfterFallOn(reader, entity);
-        } else {
-            this.bounceUp(entity);
-        }
-
-    }
-
-    private void bounceUp(Entity entity) {
-        Vector3d vector3d = entity.getDeltaMovement();
-        if (vector3d.y < 0.0D) {
-            double d0 = entity instanceof LivingEntity ? 1.0D : 0.8D;
-            entity.setDeltaMovement(vector3d.x, -vector3d.y * d0, vector3d.z);
-        }
-
-    }
-
-    public void stepOn(World world, BlockPos pos, Entity entity) {
-        double d0 = Math.abs(entity.getDeltaMovement().y);
-        if (d0 < 0.1D && !entity.isSteppingCarefully()) {
-            double d1 = 0.4D + d0 * 0.2D;
-            entity.setDeltaMovement(entity.getDeltaMovement().multiply(d1, 1.0D, d1));
-        }
-
-        super.stepOn(world, pos, entity);
+    @Override
+    public MapCodec<HugeMushroomBlock> codec() {
+        return MapCodec.unit(this);
     }
 
     @Override
-    public int getFlammability(net.minecraft.block.BlockState state, IBlockReader world, BlockPos pos, net.minecraft.util.Direction face) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+        if (entity.isSuppressingBounce()) {
+            super.fallOn(level, state, pos, entity, fallDistance);
+        } else {
+            entity.causeFallDamage(fallDistance, 0.0F, level.damageSources().fall());
+        }
+    }
+
+    @Override
+    public void updateEntityAfterFallOn(BlockGetter level, Entity entity) {
+        if (entity.isSuppressingBounce()) {
+            super.updateEntityAfterFallOn(level, entity);
+            return;
+        }
+
+        Vec3 movement = entity.getDeltaMovement();
+        if (movement.y < 0.0) {
+            double bounce = entity instanceof LivingEntity ? 1.0 : 0.8;
+            entity.setDeltaMovement(movement.x, -movement.y * bounce, movement.z);
+        }
+    }
+
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+        double verticalSpeed = Math.abs(entity.getDeltaMovement().y);
+        if (verticalSpeed < 0.1 && !entity.isSteppingCarefully()) {
+            double horizontalMultiplier = 0.4 + verticalSpeed * 0.2;
+            entity.setDeltaMovement(entity.getDeltaMovement().multiply(horizontalMultiplier, 1.0, horizontalMultiplier));
+        }
+        super.stepOn(level, pos, state, entity);
+    }
+
+    @Override
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
         return 60;
     }
 
     @Override
-    public int getFireSpreadSpeed(net.minecraft.block.BlockState state, IBlockReader world, BlockPos pos, net.minecraft.util.Direction face) {
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
         return 30;
-    }
-
-    @Override
-    public boolean isFlammable(net.minecraft.block.BlockState state, IBlockReader world, BlockPos pos, net.minecraft.util.Direction face) {
-        return true;
     }
 }

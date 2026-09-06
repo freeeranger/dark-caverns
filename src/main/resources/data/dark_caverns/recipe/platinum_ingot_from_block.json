@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/platinum"
+    }
+  ],
+  "result": {
+    "id": "dark_caverns:platinum_ingot",
+    "count": 9
+  }
+}

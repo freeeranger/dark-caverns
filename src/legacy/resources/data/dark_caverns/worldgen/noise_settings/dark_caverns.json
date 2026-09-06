@@ -1,0 +1,43 @@
+{
+  "bedrock_roof_position": 0,
+  "bedrock_floor_position": 0,
+  "sea_level": 0,
+  "disable_mob_generation": false,
+  "default_block": {
+    "Name": "dark_caverns:carfstone"
+  },
+  "default_fluid": {
+    "Name": "minecraft:lava",
+    "Properties": {
+      "level": "0"
+    }
+  },
+  "noise": {
+    "height": 256,
+    "density_factor": 0.22,
+    "density_offset": 0,
+    "size_horizontal": 1,
+    "size_vertical": 1,
+    "simplex_surface_noise": false,
+    "random_density_offset": true,
+    "sampling": {
+      "xz_scale": 3,
+      "y_scale": 2,
+      "xz_factor": 120,
+      "y_factor": 120
+    },
+    "bottom_slide": {
+      "target": 35,
+      "size": 80,
+      "offset": 0
+    },
+    "top_slide": {
+      "target": 40,
+      "size": 10,
+      "offset": 0
+    }
+  },
+  "structures": {
+    "structures": {}
+  }
+}

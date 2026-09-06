@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "c:nuggets/platinum"
+    },
+    {
+      "tag": "c:nuggets/platinum"
+    },
+    {
+      "tag": "c:nuggets/platinum"
+    },
+    {
+      "tag": "c:nuggets/platinum"
+    }
+  ],
+  "result": {
+    "id": "dark_caverns:platinum_ingot",
+    "count": 1
+  }
+}

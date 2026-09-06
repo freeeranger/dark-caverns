@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:blasting",
-  "ingredient": {
-    "tag": "forge:ores/luminite"
-  },
-  "result": "dark_caverns:luminite_dust",
-  "experience": 0.9,
-  "cookingtime": 100
-}

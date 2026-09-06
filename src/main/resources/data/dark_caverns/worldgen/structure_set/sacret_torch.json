@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 354645646,
+    "separation": 1,
+    "spacing": 3
+  },
+  "structures": [
+    {
+      "structure": "dark_caverns:sacret_torch",
+      "weight": 1
+    }
+  ]
+}

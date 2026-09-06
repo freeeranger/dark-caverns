@@ -1,33 +1,27 @@
 package com.freeranger.dark_caverns.blocks;
 
 import com.freeranger.dark_caverns.registry.CustomParticles;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.WallTorchBlock;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.WallTorchBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Random;
-
-import net.minecraft.block.AbstractBlock.Properties;
-
-public class LuminiteWallTorchBlock extends WallTorchBlock {
-    public LuminiteWallTorchBlock(Properties properties) {
-        super(properties, ParticleTypes.FLAME);
+public final class LuminiteWallTorchBlock extends WallTorchBlock {
+    public LuminiteWallTorchBlock(BlockBehaviour.Properties properties) {
+        super(ParticleTypes.FLAME, properties);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        Direction direction = stateIn.getValue(FACING);
-        double x = (double)pos.getX() + 0.5D;
-        double y = (double)pos.getY() + 0.7D;
-        double z = (double)pos.getZ() + 0.5D;
-        Direction oppositeDirection = direction.getOpposite();
-        worldIn.addParticle(ParticleTypes.SMOKE, x + 0.27D * (double)oppositeDirection.getStepX(), y + 0.22D, z + 0.27D * (double)oppositeDirection.getStepZ(), 0.0D, 0.0D, 0.0D);
-        worldIn.addParticle(CustomParticles.LUMINITE_FLAME.get(), x + 0.27D * (double)oppositeDirection.getStepX(), y + 0.22D, z + 0.27D * (double)oppositeDirection.getStepZ(), 0.0D, 0.0D, 0.0D);
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        Direction awayFromWall = state.getValue(FACING).getOpposite();
+        double x = pos.getX() + 0.5 + 0.27 * awayFromWall.getStepX();
+        double y = pos.getY() + 0.92;
+        double z = pos.getZ() + 0.5 + 0.27 * awayFromWall.getStepZ();
+        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
+        level.addParticle(CustomParticles.LUMINITE_FLAME.get(), x, y, z, 0.0, 0.0, 0.0);
     }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "tag": "c:ores/platinum"
+  },
+  "result": {
+    "id": "dark_caverns:platinum_piece"
+  },
+  "experience": 0.1,
+  "cookingtime": 100
+}

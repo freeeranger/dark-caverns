@@ -1,108 +1,65 @@
 package com.freeranger.dark_caverns.entities;
 
-import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomItems;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.WallTorchBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 
-import javax.annotation.Nonnull;
-
-public class ThrowableLuminiteTorchEntity extends ProjectileItemEntity {
-
-    public ThrowableLuminiteTorchEntity(EntityType<? extends ThrowableLuminiteTorchEntity> entityType, World world) {
-        super(entityType, world);
+public final class ThrowableLuminiteTorchEntity extends DarkCavernsThrowableItemProjectile {
+    public ThrowableLuminiteTorchEntity(EntityType<? extends ThrowableLuminiteTorchEntity> type, Level level) {
+        super(type, level);
     }
 
-    public ThrowableLuminiteTorchEntity(World world, LivingEntity entity) {
-        super(CustomEntityTypes.THROWABLE_LUMINITE_TORCH.get(), entity, world);
+    public ThrowableLuminiteTorchEntity(Level level, LivingEntity owner) {
+        super(CustomEntityTypes.THROWABLE_LUMINITE_TORCH.get(), owner, level);
     }
 
-    public ThrowableLuminiteTorchEntity(World world, double x, double y, double z) {
-        super(CustomEntityTypes.THROWABLE_LUMINITE_TORCH.get(), x, y, z, world);
-    }
-
-    public ThrowableLuminiteTorchEntity(World world) {
-        super(CustomEntityTypes.THROWABLE_LUMINITE_TORCH.get(), 0, 0, 0, world);
-    }
-
-    @Nonnull
     @Override
-    public IPacket<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
     protected Item getDefaultItem() {
         return CustomItems.THROWABLE_LUMINITE_TORCH.get();
     }
 
-    @OnlyIn(Dist.CLIENT)
-    private IParticleData getParticle() {
-        ItemStack itemstack = this.getItemRaw();
-        return itemstack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemParticleData(ParticleTypes.ITEM, itemstack);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void handleEntityEvent(byte p_70103_1_) {
-        if (p_70103_1_ == 3) {
-            IParticleData iparticledata = this.getParticle();
-
-            for(int i = 0; i < 8; ++i) {
-                this.level.addParticle(iparticledata, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
-            }
-        }
-
-    }
-
-    protected void onHitEntity(EntityRayTraceResult result) {
+    @Override
+    protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        result.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), 1f);
-        this.remove();
+        result.getEntity().hurt(damageSources().thrown(this, getOwner()), 1.0F);
+        finishImpact();
     }
 
     @Override
-    protected void onHitBlock(BlockRayTraceResult result) {
+    protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        if (!this.level.isClientSide) {
-            Direction direction = result.getDirection();
-            BlockPos placeAt = result.getBlockPos().relative(direction);
-            BlockState existingState = this.level.getBlockState(placeAt);
+        if (!level().isClientSide) {
+            Direction face = result.getDirection();
+            BlockPos placeAt = result.getBlockPos().relative(face);
+            BlockState existing = level().getBlockState(placeAt);
+            BlockState placed = null;
 
-            if (existingState.getMaterial().isReplaceable()) {
-                BlockState stateToPlace = null;
-                if (direction == Direction.UP) {
-                    stateToPlace = CustomBlocks.LUMINITE_TORCH.get().defaultBlockState();
-                } else if (direction.getAxis().isHorizontal()) {
-                    stateToPlace = CustomBlocks.LUMINITE_WALL_TORCH.get().defaultBlockState().setValue(LuminiteWallTorchBlock.FACING, direction);
+            if (existing.canBeReplaced()) {
+                if (face == Direction.UP) {
+                    placed = CustomBlocks.LUMINITE_TORCH.get().defaultBlockState();
+                } else if (face.getAxis().isHorizontal()) {
+                    placed = CustomBlocks.LUMINITE_WALL_TORCH.get()
+                            .defaultBlockState()
+                            .setValue(WallTorchBlock.FACING, face);
                 }
+            }
 
-                if (stateToPlace != null && stateToPlace.canSurvive(this.level, placeAt)) {
-                    this.level.setBlock(placeAt, stateToPlace, 3);
-                } else {
-                    this.spawnAtLocation(this.getItem());
-                }
+            if (placed != null && placed.canSurvive(level(), placeAt)) {
+                level().setBlock(placeAt, placed, 3);
             } else {
-                this.spawnAtLocation(this.getItem());
+                spawnAtLocation(getItem());
             }
         }
-        this.remove();
+        finishImpact();
     }
 }

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 856753493,
+    "separation": 1,
+    "spacing": 4
+  },
+  "structures": [
+    {
+      "structure": "dark_caverns:territory_marker",
+      "weight": 1
+    }
+  ]
+}

@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:blasting",
-  "ingredient": {
-    "tag": "forge:ores/platinum"
-  },
-  "result": "dark_caverns:platinum_piece",
-  "experience": 0.1,
-  "cookingtime": 100
-}

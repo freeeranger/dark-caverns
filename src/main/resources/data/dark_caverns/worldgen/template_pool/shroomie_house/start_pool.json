@@ -1,5 +1,4 @@
 {
-  "name": "dark_caverns:territory_marker/start_pool",
   "fallback": "minecraft:empty",
   "elements": [
     {

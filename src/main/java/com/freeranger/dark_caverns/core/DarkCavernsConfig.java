@@ -1,48 +1,46 @@
 package com.freeranger.dark_caverns.core;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import org.apache.commons.lang3.tuple.Pair;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
-public class DarkCavernsConfig {
+public final class DarkCavernsConfig {
     public static final Common COMMON;
-    public static final ForgeConfigSpec COMMON_SPEC;
+    public static final ModConfigSpec COMMON_SPEC;
     public static final Client CLIENT;
-    public static final ForgeConfigSpec CLIENT_SPEC;
+    public static final ModConfigSpec CLIENT_SPEC;
 
     static {
-        Pair<Common, ForgeConfigSpec> commonPair = new ForgeConfigSpec.Builder().configure(Common::new);
-        COMMON = commonPair.getLeft();
-        COMMON_SPEC = commonPair.getRight();
+        ModConfigSpec.Builder commonBuilder = new ModConfigSpec.Builder();
+        COMMON = new Common(commonBuilder);
+        COMMON_SPEC = commonBuilder.build();
 
-        Pair<Client, ForgeConfigSpec> clientPair = new ForgeConfigSpec.Builder().configure(Client::new);
-        CLIENT = clientPair.getLeft();
-        CLIENT_SPEC = clientPair.getRight();
+        ModConfigSpec.Builder clientBuilder = new ModConfigSpec.Builder();
+        CLIENT = new Client(clientBuilder);
+        CLIENT_SPEC = clientBuilder.build();
     }
 
-    public static class Common {
-        // World Generation
-        public final ForgeConfigSpec.BooleanValue generateForgottenTower;
-        public final ForgeConfigSpec.IntValue crackedBedrockVeinCount;
-        public final ForgeConfigSpec.IntValue crackedBedrockVeinSize;
+    private DarkCavernsConfig() {}
 
-        // Gameplay Mechanics
-        public final ForgeConfigSpec.IntValue gatewayCooldownTicks;
-        public final ForgeConfigSpec.IntValue scorchsteelStealthStandstillTicks;
-        public final ForgeConfigSpec.DoubleValue corruptedPearlScanRadius;
-        public final ForgeConfigSpec.DoubleValue shroombombExplosionPower;
-        public final ForgeConfigSpec.BooleanValue scorchhoundBypassShields;
+    public static final class Common {
+        public final ModConfigSpec.BooleanValue generateForgottenTower;
+        public final ModConfigSpec.IntValue crackedBedrockVeinCount;
+        public final ModConfigSpec.IntValue crackedBedrockVeinSize;
 
-        // Mob Spawn Chances (1 in N chance)
-        public final ForgeConfigSpec.IntValue scorchhoundSpawnChance;
-        public final ForgeConfigSpec.IntValue scorchlingSpawnChance;
-        public final ForgeConfigSpec.IntValue luminiteGolemSpawnChance;
-        public final ForgeConfigSpec.IntValue luminiteFoxSpawnChance;
-        public final ForgeConfigSpec.IntValue camorockSpawnChance;
-        public final ForgeConfigSpec.IntValue moltenerSpawnChance;
-        public final ForgeConfigSpec.IntValue shroomlingSpawnChance;
-        public final ForgeConfigSpec.IntValue shroomieSpawnChance;
+        public final ModConfigSpec.IntValue gatewayCooldownTicks;
+        public final ModConfigSpec.IntValue scorchsteelStealthStandstillTicks;
+        public final ModConfigSpec.DoubleValue corruptedPearlScanRadius;
+        public final ModConfigSpec.DoubleValue shroombombExplosionPower;
+        public final ModConfigSpec.BooleanValue scorchhoundBypassShields;
 
-        Common(ForgeConfigSpec.Builder builder) {
+        public final ModConfigSpec.IntValue scorchhoundSpawnChance;
+        public final ModConfigSpec.IntValue scorchlingSpawnChance;
+        public final ModConfigSpec.IntValue luminiteGolemSpawnChance;
+        public final ModConfigSpec.IntValue luminiteFoxSpawnChance;
+        public final ModConfigSpec.IntValue camorockSpawnChance;
+        public final ModConfigSpec.IntValue moltenerSpawnChance;
+        public final ModConfigSpec.IntValue shroomlingSpawnChance;
+        public final ModConfigSpec.IntValue shroomieSpawnChance;
+
+        private Common(ModConfigSpec.Builder builder) {
             builder.push("worldgen");
             generateForgottenTower = builder
                     .comment("Whether the Forgotten Tower structure generates in Overworld forests.")
@@ -60,61 +58,54 @@ public class DarkCavernsConfig {
                     .comment("Cooldown in ticks before a player can use a gateway again after teleporting (20 ticks = 1s).")
                     .defineInRange("gatewayCooldownTicks", 175, 0, 1200);
             scorchsteelStealthStandstillTicks = builder
-                    .comment("Ticks of standing completely still required to trigger Scorchsteel invisibility (20 ticks = 1s).")
+                    .comment("Ticks of standing still required to trigger Scorchsteel invisibility (20 ticks = 1s).")
                     .defineInRange("scorchsteelStealthStandstillTicks", 20, 0, 200);
             corruptedPearlScanRadius = builder
-                    .comment("Radius in blocks around the player to find and banish a nearby mob when throwing a Corrupted Pearl.")
+                    .comment("Radius around the player used to find a Corrupted Pearl target.")
                     .defineInRange("corruptedPearlScanRadius", 5.0, 1.0, 32.0);
             shroombombExplosionPower = builder
                     .comment("Explosion power of thrown Shroombombs (TNT is 4.0).")
                     .defineInRange("shroombombExplosionPower", 4.0, 0.5, 20.0);
             scorchhoundBypassShields = builder
-                    .comment("Whether Scorchhounds throw players into the air even when blocked by a shield.")
+                    .comment("Whether Scorchhounds fling players even when an attack is blocked by a shield.")
                     .define("scorchhoundBypassShields", true);
             builder.pop();
 
             builder.push("entities");
             builder.push("spawn_chances");
-            scorchhoundSpawnChance = builder
-                    .comment("Spawn rarity for Scorchhounds in Molten Depths (1 in N chance). Lower is more common.")
-                    .defineInRange("scorchhoundSpawnChance", 6, 1, 100);
-            scorchlingSpawnChance = builder
-                    .comment("Spawn rarity for Scorchlings in Molten Depths (1 in N chance).")
-                    .defineInRange("scorchlingSpawnChance", 6, 1, 100);
-            luminiteGolemSpawnChance = builder
-                    .comment("Spawn rarity for Luminite Golems (1 in N chance).")
-                    .defineInRange("luminiteGolemSpawnChance", 10, 1, 100);
-            luminiteFoxSpawnChance = builder
-                    .comment("Spawn rarity for Luminite Foxes (1 in N chance).")
-                    .defineInRange("luminiteFoxSpawnChance", 10, 1, 100);
-            camorockSpawnChance = builder
-                    .comment("Spawn rarity for Camorocks (1 in N chance).")
-                    .defineInRange("camorockSpawnChance", 7, 1, 100);
-            moltenerSpawnChance = builder
-                    .comment("Spawn rarity for Molteners (1 in N chance).")
-                    .defineInRange("moltenerSpawnChance", 4, 1, 100);
-            shroomlingSpawnChance = builder
-                    .comment("Spawn rarity for Shroomlings in Glimmershroom Forests (1 in N chance).")
-                    .defineInRange("shroomlingSpawnChance", 6, 1, 100);
-            shroomieSpawnChance = builder
-                    .comment("Spawn rarity for Shroomies in Glimmershroom Forests (1 in N chance).")
-                    .defineInRange("shroomieSpawnChance", 6, 1, 100);
-            builder.pop();
-            builder.pop();
+            scorchhoundSpawnChance = spawnChance(builder, "scorchhoundSpawnChance", 6);
+            scorchlingSpawnChance = spawnChance(builder, "scorchlingSpawnChance", 6);
+            luminiteGolemSpawnChance = spawnChance(builder, "luminiteGolemSpawnChance", 10);
+            luminiteFoxSpawnChance = spawnChance(builder, "luminiteFoxSpawnChance", 10);
+            camorockSpawnChance = spawnChance(builder, "camorockSpawnChance", 7);
+            moltenerSpawnChance = spawnChance(builder, "moltenerSpawnChance", 4);
+            shroomlingSpawnChance = spawnChance(builder, "shroomlingSpawnChance", 6);
+            shroomieSpawnChance = spawnChance(builder, "shroomieSpawnChance", 6);
+            builder.pop(2);
+        }
+
+        private static ModConfigSpec.IntValue spawnChance(
+                ModConfigSpec.Builder builder,
+                String name,
+                int defaultValue
+        ) {
+            return builder
+                    .comment("Spawn rarity expressed as a 1-in-N chance. Lower is more common.")
+                    .defineInRange(name, defaultValue, 1, 100);
         }
     }
 
-    public static class Client {
-        public final ForgeConfigSpec.BooleanValue enableDynamicLighting;
-        public final ForgeConfigSpec.IntValue maxDynamicLightDistance;
+    public static final class Client {
+        public final ModConfigSpec.BooleanValue enableDynamicLighting;
+        public final ModConfigSpec.IntValue maxDynamicLightDistance;
 
-        Client(ForgeConfigSpec.Builder builder) {
+        private Client(ModConfigSpec.Builder builder) {
             builder.push("rendering");
             enableDynamicLighting = builder
                     .comment("Enable dynamic headlamp lighting for the Luminite Helmet on the client.")
                     .define("enableDynamicLighting", true);
             maxDynamicLightDistance = builder
-                    .comment("Maximum distance in blocks for rendering dynamic lights from glowing entities.")
+                    .comment("Maximum distance for rendering dynamic light from glowing entities.")
                     .defineInRange("maxDynamicLightDistance", 64, 16, 256);
             builder.pop();
         }

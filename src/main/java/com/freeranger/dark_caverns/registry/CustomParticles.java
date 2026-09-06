@@ -1,30 +1,16 @@
 package com.freeranger.dark_caverns.registry;
 
-import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.particles.LuminiteFlameParticle;
-import net.minecraft.client.Minecraft;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
-@Mod.EventBusSubscriber(modid = DarkCaverns.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class CustomParticles {
-    public static final DeferredRegister<ParticleType<?>> PARTICLES =
-            DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, DarkCaverns.MOD_ID);
+public final class CustomParticles {
+    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> LUMINITE_FLAME =
+            ModRegistries.PARTICLES.register("luminite_flame", () -> new SimpleParticleType(false));
 
-    public static final RegistryObject<BasicParticleType> LUMINITE_FLAME =
-            PARTICLES.register("luminite_flame", () -> new BasicParticleType(false));
+    private CustomParticles() {
+    }
 
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void registerParticleFactories(ParticleFactoryRegisterEvent event){
-        Minecraft.getInstance().particleEngine.register(LUMINITE_FLAME.get(), LuminiteFlameParticle.Factory::new);
+    public static void bootstrap() {
+        // Forces class initialization before the deferred register attaches to the event bus.
     }
 }

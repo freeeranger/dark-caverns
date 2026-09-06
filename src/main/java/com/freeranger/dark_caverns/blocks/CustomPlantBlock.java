@@ -1,43 +1,49 @@
 package com.freeranger.dark_caverns.blocks;
 
-import net.minecraft.block.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import com.mojang.serialization.MapCodec;
+import java.util.function.Supplier;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.Random;
+public final class CustomPlantBlock extends BushBlock {
+    private static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
 
-public class CustomPlantBlock extends CustomBushBlock implements IGrowable {
-    protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
+    private final Supplier<? extends Block> baseBlock;
 
-    public CustomPlantBlock(Properties properties, Block baseBlock) {
-        super(properties, baseBlock);
+    public CustomPlantBlock(BlockBehaviour.Properties properties, Supplier<? extends Block> baseBlock) {
+        super(properties);
+        this.baseBlock = baseBlock;
     }
 
     @Override
-    public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return false;
+    protected MapCodec<? extends BushBlock> codec() {
+        return MapCodec.unit(this);
     }
 
     @Override
-    public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return false;
+    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.is(baseBlock.get());
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    public AbstractBlock.OffsetType getOffsetType() {
-        return AbstractBlock.OffsetType.XZ;
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return 100;
     }
 
     @Override
-    public void performBonemeal(ServerWorld serverWorld, Random rand, BlockPos pos, BlockState state) {}
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return 60;
+    }
 }

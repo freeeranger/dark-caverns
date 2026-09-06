@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 153573859,
+    "separation": 70,
+    "spacing": 110
+  },
+  "structures": [
+    {
+      "structure": "dark_caverns:forgotten_tower",
+      "weight": 1
+    }
+  ]
+}

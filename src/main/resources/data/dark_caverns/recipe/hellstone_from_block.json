@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/hellstone"
+    }
+  ],
+  "result": {
+    "id": "dark_caverns:hellstone",
+    "count": 9
+  }
+}

@@ -1,321 +1,193 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.blocks.*;
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.Objects;
-import java.util.function.Function;
+import com.freeranger.dark_caverns.blocks.CustomPlantBlock;
+import com.freeranger.dark_caverns.blocks.CustomMushroomBlock;
+import com.freeranger.dark_caverns.blocks.GatewayToTheCavernsBlock;
+import com.freeranger.dark_caverns.blocks.GatewayToTheOverworldBlock;
+import com.freeranger.dark_caverns.blocks.GlimmershroomBlock;
+import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
+import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
+import com.freeranger.dark_caverns.blocks.ScorchedBerryBushBlock;
 import java.util.function.Supplier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
-public class CustomBlocks {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, DarkCaverns.MOD_ID);
+public final class CustomBlocks {
+    private static final ResourceKey<ConfiguredFeature<?, ?>> HUGE_GLIMMERSHROOM = featureKey("huge_mushroom_feature");
+    private static final ResourceKey<ConfiguredFeature<?, ?>> HUGE_HIGH_GLIMMERSHROOM = featureKey("huge_high_mushroom_feature");
 
-    public static final RegistryObject<Block> CARFSTONE = register("carfstone", () -> new Block(
-            AbstractBlock.Properties.of(Material.STONE)
-                    .strength(4f, 7f)
-                    .harvestTool(ToolType.PICKAXE)
-                    .harvestLevel(0)
-                    .requiresCorrectToolForDrops()
+    public static final DeferredBlock<Block> CARFSTONE = register("carfstone", () -> new Block(stone(4.0F)));
+    public static final DeferredBlock<Block> SMOOTH_CARFSTONE = copy("smooth_carfstone", CARFSTONE);
+    public static final DeferredBlock<Block> CARFSTONE_BRICKS = copy("carfstone_bricks", CARFSTONE);
+    public static final DeferredBlock<StairBlock> CARFSTONE_BRICK_STAIRS = stairs("carfstone_brick_stairs", CARFSTONE_BRICKS);
+    public static final DeferredBlock<SlabBlock> CARFSTONE_BRICK_SLAB = slab("carfstone_brick_slab", CARFSTONE_BRICKS);
+    public static final DeferredBlock<StairBlock> CARFSTONE_STAIRS = stairs("carfstone_stairs", CARFSTONE);
+    public static final DeferredBlock<SlabBlock> CARFSTONE_SLAB = slab("carfstone_slab", CARFSTONE);
+    public static final DeferredBlock<StairBlock> SMOOTH_CARFSTONE_STAIRS = stairs("smooth_carfstone_stairs", SMOOTH_CARFSTONE);
+    public static final DeferredBlock<SlabBlock> SMOOTH_CARFSTONE_SLAB = slab("smooth_carfstone_slab", SMOOTH_CARFSTONE);
+    public static final DeferredBlock<WallBlock> CARFSTONE_WALL = wall("carfstone_wall", CARFSTONE);
+    public static final DeferredBlock<WallBlock> SMOOTH_CARFSTONE_WALL = wall("smooth_carfstone_wall", SMOOTH_CARFSTONE);
+    public static final DeferredBlock<WallBlock> CARFSTONE_BRICK_WALL = wall("carfstone_brick_wall", CARFSTONE_BRICKS);
+
+    public static final DeferredBlock<Block> CRACKED_BEDROCK = register(
+            "cracked_bedrock", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK))
+    );
+    public static final DeferredBlock<Block> GATEWAY_TO_THE_CAVERNS = register(
+            "gateway_to_the_caverns",
+            () -> new GatewayToTheCavernsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK))
+    );
+    public static final DeferredBlock<Block> GATEWAY_TO_THE_OVERWORLD = register(
+            "gateway_to_the_overworld",
+            () -> new GatewayToTheOverworldBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).noCollission())
+    );
+
+    public static final DeferredBlock<Block> MOLTEN_CARFSTONE = register("molten_carfstone", () -> new Block(stone(4.5F)));
+    public static final DeferredBlock<Block> SMOOTH_MOLTEN_CARFSTONE = copy("smooth_molten_carfstone", MOLTEN_CARFSTONE);
+    public static final DeferredBlock<Block> MOLTEN_CARFSTONE_BRICKS = copy("molten_carfstone_bricks", MOLTEN_CARFSTONE);
+    public static final DeferredBlock<StairBlock> MOLTEN_CARFSTONE_BRICK_STAIRS = stairs(
+            "molten_carfstone_brick_stairs", MOLTEN_CARFSTONE_BRICKS
+    );
+    public static final DeferredBlock<SlabBlock> MOLTEN_CARFSTONE_BRICK_SLAB = slab(
+            "molten_carfstone_brick_slab", MOLTEN_CARFSTONE_BRICKS
+    );
+    public static final DeferredBlock<StairBlock> MOLTEN_CARFSTONE_STAIRS = stairs("molten_carfstone_stairs", MOLTEN_CARFSTONE);
+    public static final DeferredBlock<SlabBlock> MOLTEN_CARFSTONE_SLAB = slab("molten_carfstone_slab", MOLTEN_CARFSTONE);
+    public static final DeferredBlock<StairBlock> SMOOTH_MOLTEN_CARFSTONE_STAIRS = stairs(
+            "smooth_molten_carfstone_stairs", SMOOTH_MOLTEN_CARFSTONE
+    );
+    public static final DeferredBlock<SlabBlock> SMOOTH_MOLTEN_CARFSTONE_SLAB = slab(
+            "smooth_molten_carfstone_slab", SMOOTH_MOLTEN_CARFSTONE
+    );
+    public static final DeferredBlock<WallBlock> MOLTEN_CARFSTONE_WALL = wall("molten_carfstone_wall", MOLTEN_CARFSTONE);
+    public static final DeferredBlock<WallBlock> SMOOTH_MOLTEN_CARFSTONE_WALL = wall(
+            "smooth_molten_carfstone_wall", SMOOTH_MOLTEN_CARFSTONE
+    );
+    public static final DeferredBlock<WallBlock> MOLTEN_CARFSTONE_BRICK_WALL = wall(
+            "molten_carfstone_brick_wall", MOLTEN_CARFSTONE_BRICKS
+    );
+
+    public static final DeferredBlock<ScorchedBerryBushBlock> SCORCHED_BERRY_BUSH = ModRegistries.BLOCKS.register(
+            "scorched_berry_bush",
+            () -> new ScorchedBerryBushBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.SWEET_BERRY_BUSH).lightLevel(state -> 7),
+                    MOLTEN_CARFSTONE
+            )
+    );
+    public static final DeferredBlock<CustomMushroomBlock> GLIMMERSHROOM = register(
+            "glimmershroom",
+            () -> new CustomMushroomBlock(
+                    HUGE_GLIMMERSHROOM,
+                    HUGE_HIGH_GLIMMERSHROOM,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.RED_MUSHROOM).lightLevel(state -> 13)
+            )
+    );
+    public static final DeferredBlock<GlimmershroomBlock> GLIMMERSHROOM_BLOCK = register(
+            "glimmershroom_block",
+            () -> new GlimmershroomBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.BROWN_MUSHROOM_BLOCK).lightLevel(state -> 11)
+            )
+    );
+    public static final DeferredBlock<Block> GLIMMERGRASS_BLOCK = register("glimmergrass_block", () -> new Block(stone(4.0F)));
+
+    public static final DeferredBlock<Block> LUMINITE_BLOCK = register(
+            "luminite_block", () -> new Block(stone(5.0F).lightLevel(state -> 15))
+    );
+    public static final DeferredBlock<Block> LUMINITE_ORE = register(
+            "carfstone_luminite_ore", () -> new Block(stone(5.0F).lightLevel(state -> 9))
+    );
+    public static final DeferredBlock<Block> PLATINUM_ORE = register("carfstone_platinum_ore", () -> new Block(stone(7.0F)));
+    public static final DeferredBlock<Block> PLATINUM_BLOCK = register("platinum_block", () -> new Block(stone(7.0F)));
+    public static final DeferredBlock<Block> CARFSTONE_COAL_ORE = register("carfstone_coal_ore", () -> new Block(stone(4.5F)));
+    public static final DeferredBlock<Block> CARFSTONE_IRON_ORE = register("carfstone_iron_ore", () -> new Block(stone(5.0F)));
+    public static final DeferredBlock<Block> CARFSTONE_GOLD_ORE = register("carfstone_gold_ore", () -> new Block(stone(6.0F)));
+    public static final DeferredBlock<Block> CARFSTONE_DIAMOND_ORE = register("carfstone_diamond_ore", () -> new Block(stone(7.0F)));
+    public static final DeferredBlock<Block> CARFSTONE_REDSTONE_ORE = register("carfstone_redstone_ore", () -> new Block(stone(6.0F)));
+    public static final DeferredBlock<Block> CARFSTONE_LAPIS_ORE = register("carfstone_lapis_ore", () -> new Block(stone(6.0F)));
+    public static final DeferredBlock<Block> HELLSTONE_ORE = register("hellstone_ore", () -> new Block(stone(9.0F)));
+    public static final DeferredBlock<Block> HELLSTONE_BLOCK = copy("hellstone_block", HELLSTONE_ORE);
+    public static final DeferredBlock<Block> SHROOMSTONE_BLOCK = register("shroomstone_block", () -> new Block(stone(9.0F)));
+
+    public static final DeferredBlock<LuminiteTorchBlock> LUMINITE_TORCH = ModRegistries.BLOCKS.register(
+            "luminite_torch",
+            () -> new LuminiteTorchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TORCH).lightLevel(state -> 15))
+    );
+    public static final DeferredBlock<LuminiteWallTorchBlock> LUMINITE_WALL_TORCH = ModRegistries.BLOCKS.register(
+            "luminite_wall_torch",
+            () -> new LuminiteWallTorchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WALL_TORCH).lightLevel(state -> 15))
+    );
+    public static final DeferredBlock<LanternBlock> LUMINITE_LANTERN = register(
+            "luminite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.LANTERN))
+    );
+    public static final DeferredBlock<CustomPlantBlock> GLIMMERGRASS = register(
+            "glimmergrass",
+            () -> new CustomPlantBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS)
+                            .lightLevel(state -> 9)
+                            .offsetType(BlockBehaviour.OffsetType.XZ),
+                    GLIMMERGRASS_BLOCK
+            )
+    );
+    public static final DeferredBlock<CustomPlantBlock> CHARRED_GRASS = register(
+            "charred_grass",
+            () -> new CustomPlantBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS).offsetType(BlockBehaviour.OffsetType.XZ),
+                    MOLTEN_CARFSTONE
             )
     );
 
-    public static final RegistryObject<Block> SMOOTH_CARFSTONE = register("smooth_carfstone", () -> new Block(
-                    AbstractBlock.Properties.copy(CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_BRICKS = register("carfstone_bricks", () -> new Block(
-            AbstractBlock.Properties.copy(CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_BRICK_STAIRS = register("carfstone_brick_stairs", () -> new StairsBlock(
-            () -> CARFSTONE_BRICKS.get().defaultBlockState(),
-            AbstractBlock.Properties.copy(CARFSTONE_BRICKS.get()))
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_BRICK_SLAB = register("carfstone_brick_slab", () -> new SlabBlock(
-            AbstractBlock.Properties.copy(CARFSTONE_BRICKS.get()))
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_STAIRS = register("carfstone_stairs", () -> new StairsBlock(
-            () -> CARFSTONE.get().defaultBlockState(),
-            AbstractBlock.Properties.copy(CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_SLAB = register("carfstone_slab", () -> new SlabBlock(
-            AbstractBlock.Properties.copy(CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> SMOOTH_CARFSTONE_STAIRS = register("smooth_carfstone_stairs", () -> new StairsBlock(
-            () -> SMOOTH_CARFSTONE.get().defaultBlockState(),
-            AbstractBlock.Properties.copy(SMOOTH_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> SMOOTH_CARFSTONE_SLAB = register("smooth_carfstone_slab", () -> new SlabBlock(
-            AbstractBlock.Properties.copy(SMOOTH_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_WALL = register("carfstone_wall", () -> new WallBlock(
-            AbstractBlock.Properties.copy(CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> SMOOTH_CARFSTONE_WALL = register("smooth_carfstone_wall", () -> new WallBlock(
-            AbstractBlock.Properties.copy(SMOOTH_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_BRICK_WALL = register("carfstone_brick_wall", () -> new WallBlock(
-            AbstractBlock.Properties.copy(CARFSTONE_BRICKS.get()))
-    );
-
-    public static final RegistryObject<Block> CRACKED_BEDROCK = register("cracked_bedrock", () -> new CrackedBedrockBlock(
-                    AbstractBlock.Properties.copy(Blocks.BEDROCK))
-    );
-
-    public static final RegistryObject<Block> GATEWAY_TO_THE_CAVERNS = register("gateway_to_the_caverns", () -> new GatewayToTheCavernsBlock(
-                    AbstractBlock.Properties.copy(Blocks.BEDROCK))
-    );
-
-    public static final RegistryObject<Block> GATEWAY_TO_THE_OVERWORLD = register("gateway_to_the_overworld", () -> new GatewayToTheOverworldBlock(
-                    AbstractBlock.Properties.copy(Blocks.BEDROCK).noCollission())
-    );
-
-    public static final RegistryObject<Block> MOLTEN_CARFSTONE = register("molten_carfstone", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(4.5f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(0)
-                            .requiresCorrectToolForDrops())
-    );
-
-    public static final RegistryObject<Block> SMOOTH_MOLTEN_CARFSTONE = register("smooth_molten_carfstone", () -> new Block(
-            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> MOLTEN_CARFSTONE_BRICKS = register("molten_carfstone_bricks", () -> new Block(
-            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> MOLTEN_CARFSTONE_BRICK_STAIRS = register("molten_carfstone_brick_stairs", () -> new StairsBlock(
-            () -> MOLTEN_CARFSTONE_BRICKS.get().defaultBlockState(),
-            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE_BRICKS.get()))
-    );
-
-    public static final RegistryObject<Block> MOLTEN_CARFSTONE_BRICK_SLAB = register("molten_carfstone_brick_slab", () -> new SlabBlock(
-            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE_BRICKS.get()))
-    );
-
-    public static final RegistryObject<Block> MOLTEN_CARFSTONE_STAIRS = register("molten_carfstone_stairs", () -> new StairsBlock(
-            () -> MOLTEN_CARFSTONE.get().defaultBlockState(),
-            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> MOLTEN_CARFSTONE_SLAB = register("molten_carfstone_slab", () -> new SlabBlock(
-            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> SMOOTH_MOLTEN_CARFSTONE_STAIRS = register("smooth_molten_carfstone_stairs", () -> new StairsBlock(
-            () -> SMOOTH_MOLTEN_CARFSTONE.get().defaultBlockState(),
-            AbstractBlock.Properties.copy(SMOOTH_MOLTEN_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> SMOOTH_MOLTEN_CARFSTONE_SLAB = register("smooth_molten_carfstone_slab", () -> new SlabBlock(
-            AbstractBlock.Properties.copy(SMOOTH_MOLTEN_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> MOLTEN_CARFSTONE_WALL = register("molten_carfstone_wall", () -> new WallBlock(
-            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> SMOOTH_MOLTEN_CARFSTONE_WALL = register("smooth_molten_carfstone_wall", () -> new WallBlock(
-            AbstractBlock.Properties.copy(SMOOTH_MOLTEN_CARFSTONE.get()))
-    );
-
-    public static final RegistryObject<Block> MOLTEN_CARFSTONE_BRICK_WALL = register("molten_carfstone_brick_wall", () -> new WallBlock(
-            AbstractBlock.Properties.copy(MOLTEN_CARFSTONE_BRICKS.get()))
-    );
-
-    public static final RegistryObject<Block> SCORCHED_BERRY_BUSH = BLOCKS.register("scorched_berry_bush",
-            () -> new ScorchedBerryBushBlock(AbstractBlock.Properties.copy(Blocks.SWEET_BERRY_BUSH)
-                    .lightLevel((p_235464_0_) -> 7), MOLTEN_CARFSTONE.get())
-    );
-
-    public static final RegistryObject<Block> GLIMMERSHROOM = register("glimmershroom", () -> new CustomMushroomBlock(
-                    AbstractBlock.Properties.copy(Blocks.RED_MUSHROOM)
-                            .lightLevel((p_235464_0_) -> 13))
-    );
-
-
-    public static final RegistryObject<Block> GLIMMERSHROOM_BLOCK = register("glimmershroom_block", () -> new GlimmershroomBlock(
-            AbstractBlock.Properties.copy(Blocks.BROWN_MUSHROOM_BLOCK)
-                    .lightLevel((p_235464_0_) -> 11)
-            )
-    );
-
-    public static final RegistryObject<Block> GLIMMERGRASS_BLOCK = register("glimmergrass_block", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(4f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(0)
-                            .requiresCorrectToolForDrops()
-            )
-    );
-
-    public static final RegistryObject<Block> LUMINITE_BLOCK = register("luminite_block", () -> new Block(
-            AbstractBlock.Properties.of(Material.STONE)
-                    .strength(5f, 7f)
-                    .harvestTool(ToolType.PICKAXE)
-                    .harvestLevel(2)
-                    .requiresCorrectToolForDrops()
-                    .lightLevel((p_235464_0_) -> 15)
-            )
-    );
-
-    public static final RegistryObject<Block> LUMINITE_ORE = register("carfstone_luminite_ore", () -> new Block(
-            AbstractBlock.Properties.of(Material.STONE)
-                    .strength(5f, 7f)
-                    .harvestTool(ToolType.PICKAXE)
-                    .harvestLevel(2)
-                    .requiresCorrectToolForDrops()
-                    .lightLevel((p_235464_0_) -> 9)
-            )
-    );
-
-    public static final RegistryObject<Block> PLATINUM_ORE = register("carfstone_platinum_ore", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(7f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(3)
-                            .requiresCorrectToolForDrops()
-            )
-    );
-
-    public static final RegistryObject<Block> PLATINUM_BLOCK = register("platinum_block", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(7f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(3)
-                            .requiresCorrectToolForDrops()
-            )
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_COAL_ORE = register("carfstone_coal_ore", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(4.5f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(0)
-                            .requiresCorrectToolForDrops()
-            )
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_IRON_ORE = register("carfstone_iron_ore", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(5f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(1)
-                            .requiresCorrectToolForDrops()
-            )
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_GOLD_ORE = register("carfstone_gold_ore", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(6f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(2)
-                            .requiresCorrectToolForDrops()
-            )
-    );
-
-        public static final RegistryObject<Block> CARFSTONE_DIAMOND_ORE = register("carfstone_diamond_ore", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(7f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(2)
-                            .requiresCorrectToolForDrops()
-            )
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_REDSTONE_ORE = register("carfstone_redstone_ore", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(6f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(2)
-                            .requiresCorrectToolForDrops()
-            )
-    );
-
-    public static final RegistryObject<Block> CARFSTONE_LAPIS_ORE = register("carfstone_lapis_ore", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(6f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(2)
-                            .requiresCorrectToolForDrops()
-            )
-    );
-
-    public static final RegistryObject<Block> HELLSTONE_ORE = register("hellstone_ore", () -> new Block(
-                    AbstractBlock.Properties.of(Material.STONE)
-                            .strength(9f, 7f)
-                            .harvestTool(ToolType.PICKAXE)
-                            .harvestLevel(3)
-                            .requiresCorrectToolForDrops()
-            )
-    );
-
-    public static final RegistryObject<Block> HELLSTONE_BLOCK = register("hellstone_block", () -> new Block(
-            AbstractBlock.Properties.copy(HELLSTONE_ORE.get()))
-    );
-
-    public static final RegistryObject<Block> SHROOMSTONE_BLOCK = register("shroomstone_block", () -> new Block(
-        AbstractBlock.Properties.of(Material.STONE)
-            .strength(9f, 7f)
-            .harvestTool(ToolType.PICKAXE)
-            .harvestLevel(3)
-            .requiresCorrectToolForDrops()
-        )
-    );
-
-    public static final RegistryObject<Block> LUMINITE_TORCH = BLOCKS.register("luminite_torch", () -> new LuminiteTorchBlock(
-            AbstractBlock.Properties.copy(Blocks.TORCH)
-                    .lightLevel((state) -> 15))
-    );
-    public static final RegistryObject<Block> LUMINITE_WALL_TORCH = BLOCKS.register("luminite_wall_torch", () -> new LuminiteWallTorchBlock(
-            AbstractBlock.Properties.copy(Blocks.WALL_TORCH)
-                    .lightLevel((state) -> 15))
-    );
-
-    public static final RegistryObject<Block> LUMINITE_LANTERN = register("luminite_lantern", () -> new LuminiteLanternBlock(
-            AbstractBlock.Properties.copy(Blocks.LANTERN)
-    ));
-
-    public static final RegistryObject<Block> GLIMMERGRASS = register("glimmergrass", () -> new CustomPlantBlock(
-            AbstractBlock.Properties.copy(Blocks.GRASS)
-                    .lightLevel((state) -> 9),
-            CustomBlocks.GLIMMERGRASS_BLOCK.get()
-    ));
-
-    public static final RegistryObject<Block> CHARRED_GRASS = register("charred_grass", () -> new CustomPlantBlock(
-            AbstractBlock.Properties.copy(Blocks.GRASS), CustomBlocks.MOLTEN_CARFSTONE.get()
-    ));
-
-    private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
-        RegistryObject<T> register = BLOCKS.register(name, block);
-        CustomItems.ITEMS.register(name, item.apply(register));
-        return register;
+    private CustomBlocks() {
     }
 
-    private static <T extends Block> RegistryObject<T> register(String name, Supplier<? extends Block> block) {
-        return (RegistryObject<T>)baseRegister(name, block, CustomBlocks::registerBlockItem);
+    public static void bootstrap() {
+        // Forces class initialization before the deferred registers attach to the event bus.
     }
 
-    private static <T extends Block> Supplier<BlockItem> registerBlockItem(final RegistryObject<T> block) {
-        return () -> new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().tab(CustomItemGroups.GROUP));
+    private static BlockBehaviour.Properties stone(float strength) {
+        return BlockBehaviour.Properties.of().strength(strength, 7.0F).requiresCorrectToolForDrops();
+    }
+
+    private static DeferredBlock<Block> copy(String name, Supplier<? extends Block> source) {
+        return register(name, () -> new Block(BlockBehaviour.Properties.ofFullCopy(source.get())));
+    }
+
+    private static DeferredBlock<StairBlock> stairs(String name, Supplier<? extends Block> source) {
+        return register(
+                name,
+                () -> new StairBlock(source.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(source.get()))
+        );
+    }
+
+    private static DeferredBlock<SlabBlock> slab(String name, Supplier<? extends Block> source) {
+        return register(name, () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(source.get())));
+    }
+
+    private static DeferredBlock<WallBlock> wall(String name, Supplier<? extends Block> source) {
+        return register(name, () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(source.get())));
+    }
+
+    private static <T extends Block> DeferredBlock<T> register(String name, Supplier<? extends T> factory) {
+        DeferredBlock<T> block = ModRegistries.BLOCKS.register(name, factory);
+        ModRegistries.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        return block;
+    }
+
+    private static ResourceKey<ConfiguredFeature<?, ?>> featureKey(String path) {
+        return ResourceKey.create(
+                Registries.CONFIGURED_FEATURE,
+                ResourceLocation.fromNamespaceAndPath(DarkCaverns.MOD_ID, path)
+        );
     }
 }

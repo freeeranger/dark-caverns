@@ -1,157 +1,136 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net/' }
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-    }
-}
-apply plugin: 'net.minecraftforge.gradle'
-//
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
-
-version = project.dark_caverns_version
-group = 'com.freeranger.dark_caverns'
-archivesBaseName = 'dark_caverns'
-
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
-
-createMcpToSrg {
-    outputs.upToDateWhen { false }
-    doLast {
-        def inFile = output.get().asFile
-        def outFile = file("${buildDir}/fixMcpToSrg/output.tsrg")
-        outFile.parentFile.mkdirs()
-        inFile.withReader { reader ->
-            outFile.withWriter { writer ->
-                reader.eachLine { line ->
-                    if (!line.startsWith("tsrg2") && !line.trim().equals("static")) {
-                        writer.println(line)
-                    }
-                }
-            }
-        }
-    }
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.146'
+    id 'idea'
 }
 
-mixin {
-    add sourceSets.main, "dark_caverns.refmap.json"
-    config "dark_caverns.mixins.json"
-    reobfSrgFile = file("${buildDir}/fixMcpToSrg/output.tsrg")
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
 }
 
+version = mod_version
+group = mod_group_id
 
-minecraft {
-    mappings channel: 'official', version: project.mc_version
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            arg "-mixin.config=dark_caverns.mixins.json"
-
-            // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            // property 'forge.logging.console.level', 'debug'
-
-            mods {
-                dark_caverns {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-
-            arg "-mixin.config=dark_caverns.mixins.json"
-
-            //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            //property 'forge.logging.console.level', 'debug'
-
-            mods {
-                dark_caverns {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            args '--mod', 'dark_caverns', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources')
-
-            environment 'target', 'fmluserdevdata'
-
-            mods {
-                dark_caverns {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+base {
+    archivesName = mod_id
 }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
+
+    // Keep the 1.16.5 files in the tree as migration references without
+    // loading them in the NeoForge runtime.
+    exclude 'META-INF/mods.toml'
+    exclude 'META-INF/accesstransformer.cfg'
+    exclude 'pack.mcmeta'
+    exclude '**/.cache/**'
 }
 
 repositories {
-    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    maven {
+        name = 'GeckoLib'
+        url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content {
+            includeGroup 'software.bernie.geckolib'
+        }
+    }
+}
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        gameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', project.mod_id, '--all',
+                    '--output', file('src/generated/resources/').absolutePath,
+                    '--existing', file('src/main/resources/').absolutePath
+        }
+
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
 }
 
 dependencies {
-
-    minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
-
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.33')
-
-    if (project.hasProperty('mixin_version')) {
-        annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor".toString()
-    }
+    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
 }
 
-jar {
-    manifest {
-        attributes([
-            "Specification-Title": "dark_caverns",
-            "Specification-Vendor": "freeranger",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"freeranger",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "dark_caverns.mixins.json"
-        ])
-    }
+def generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    def replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            loader_version_range   : loader_version_range,
+            geckolib_version       : geckolib_version,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from 'src/main/templates'
+    into 'build/generated/sources/modMetadata'
 }
 
-// Example configuration to allow publishing using the maven-publish task
-// we define a custom artifact that is sourced from the reobfJar output task
-// and then declare that to be published
-// Note you'll need to add a repository here
-def reobfFile = file("$buildDir/reobfJar/output.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
-    type 'jar'
-    builtBy 'reobfJar'
-}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            artifact reobfArtifact
+        register('mavenJava', MavenPublication) {
+            from components.java
         }
     }
-    repositories {
-        maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
-        }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
     }
 }

@@ -1,0 +1,7 @@
+{
+  "feature": "dark_caverns:spike_feature",
+  "placement": [
+    { "type": "minecraft:count_on_every_layer", "count": 2 },
+    { "type": "minecraft:biome" }
+  ]
+}

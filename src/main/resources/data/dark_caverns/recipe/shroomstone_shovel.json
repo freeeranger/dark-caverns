@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": {
+    "item": "dark_caverns:platinum_shovel"
+  },
+  "addition": {
+    "tag": "c:gems/shroomstone"
+  },
+  "result": {
+    "id": "dark_caverns:shroomstone_shovel",
+    "count": 1
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

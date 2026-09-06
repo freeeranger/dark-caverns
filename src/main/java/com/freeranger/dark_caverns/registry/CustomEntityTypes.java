@@ -1,101 +1,136 @@
 package com.freeranger.dark_caverns.registry;
 
-import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.entities.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import com.freeranger.dark_caverns.entities.CorruptedPearlEntity;
+import com.freeranger.dark_caverns.entities.PortedCreature;
+import com.freeranger.dark_caverns.entities.PortedMonster;
+import com.freeranger.dark_caverns.entities.ShroombombEntity;
+import com.freeranger.dark_caverns.entities.ShroomieEntity;
+import com.freeranger.dark_caverns.entities.ThrowableLuminiteTorchEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
-@Mod.EventBusSubscriber(modid = DarkCaverns.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class CustomEntityTypes {
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, DarkCaverns.MOD_ID);
+public final class CustomEntityTypes {
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrowableLuminiteTorchEntity>> THROWABLE_LUMINITE_TORCH =
+            projectile("throwable_luminite_torch", ThrowableLuminiteTorchEntity::new);
+    public static final DeferredHolder<EntityType<?>, EntityType<ShroombombEntity>> SHROOMBOMB =
+            projectile("shroombomb", ShroombombEntity::new);
+    public static final DeferredHolder<EntityType<?>, EntityType<CorruptedPearlEntity>> CORRUPTED_PEARL =
+            projectile("corrupted_pearl", CorruptedPearlEntity::new);
 
-    public static final EntityType<ThrowableLuminiteTorchEntity> THROWABLE_LUMINITE_TORCH_TYPE =
-            EntityType.Builder.<ThrowableLuminiteTorchEntity>of(ThrowableLuminiteTorchEntity::new, EntityClassification.MISC)
-            .sized(0.25F, 0.25F)
-            .updateInterval(10)
-            .setTrackingRange(4)
-            .build("throwable_luminite_torch");
-    public static final RegistryObject<EntityType<ThrowableLuminiteTorchEntity>> THROWABLE_LUMINITE_TORCH =
-            ENTITIES.register("throwable_luminite_torch", () -> THROWABLE_LUMINITE_TORCH_TYPE);
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedMonster>> SCORCHLING_ENTITY = monster(
+            "scorchling", PortedMonster::scorchling, 0.6F, 0.4F, true
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>> MOLTENER_ENTITY = creature(
+            "moltener", PortedCreature::moltener, 0.7F, 0.9F, true
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>> CAMOROCK_ENTITY = creature(
+            "camorock", PortedCreature::camorock, 0.9F, 0.6F, false
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedMonster>> SCORCHHOUND_ENTITY = monster(
+            "scorchhound", PortedMonster::scorchhound, 1.5F, 1.0F, true
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedMonster>> LUMINITE_GOLEM_ENTITY = monster(
+            "luminite_golem", PortedMonster::luminiteGolem, 1.3F, 2.0F, false
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>> LUMINITE_FOX_ENTITY = creature(
+            "luminite_fox", PortedCreature::luminiteFox, 0.7F, 0.4F, false
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<ShroomieEntity>> SHROOMIE_ENTITY =
+            ModRegistries.ENTITY_TYPES.register(
+                    "shroomie",
+                    () -> EntityType.Builder.of(ShroomieEntity::new, MobCategory.CREATURE)
+                            .sized(0.5F, 1.2F)
+                            .build("shroomie")
+            );
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>> SHROOMLING_ENTITY = creature(
+            "shroomling", PortedCreature::shroomling, 1.5F, 0.6F, false
+    );
 
-    public static final EntityType<ShroombombEntity> SHROOMBOMB_TYPE =
-            EntityType.Builder.<ShroombombEntity>of(ShroombombEntity::new, EntityClassification.MISC)
-                    .sized(0.25F, 0.25F)
-                    .updateInterval(10)
-                    .setTrackingRange(4)
-                    .build("shroombomb");
-    public static final RegistryObject<EntityType<ShroombombEntity>> SHROOMBOMB =
-            ENTITIES.register("shroombomb", () -> SHROOMBOMB_TYPE);
-
-    public static final EntityType<CorruptedPearlEntity> CORRUPTED_PEARL_TYPE =
-            EntityType.Builder.<CorruptedPearlEntity>of(CorruptedPearlEntity::new, EntityClassification.MISC)
-                    .sized(0.25F, 0.25F)
-                    .updateInterval(10)
-                    .setTrackingRange(4)
-                    .build("corrupted_pearl");
-    public static final RegistryObject<EntityType<CorruptedPearlEntity>> CORRUPTED_PEARL =
-            ENTITIES.register("corrupted_pearl", () -> CORRUPTED_PEARL_TYPE);
-
-
-    public static final RegistryObject<EntityType<ScorchlingEntity>> SCORCHLING_ENTITY = buildEntity(ScorchlingEntity::new,
-            0.6f, 0.4F, "scorchling", EntityClassification.MONSTER, true);
-
-    public static final RegistryObject<EntityType<MoltenerEntity>> MOLTENER_ENTITY = buildEntity(MoltenerEntity::new,
-            0.7f, 0.9F, "moltener", EntityClassification.CREATURE, true);
-
-    public static final RegistryObject<EntityType<CamorockEntity>> CAMOROCK_ENTITY = buildEntity(CamorockEntity::new,
-            0.9f, 0.6F, "camorock", EntityClassification.CREATURE, false);
-
-    public static final RegistryObject<EntityType<ScorchhoundEntity>> SCORCHHOUND_ENTITY = buildEntity(ScorchhoundEntity::new,
-            1.5f, 1F, "scorchhound", EntityClassification.MONSTER, true);
-
-    public static final RegistryObject<EntityType<LuminiteGolemEntity>> LUMINITE_GOLEM_ENTITY = buildEntity(LuminiteGolemEntity::new,
-            1.3f, 2F, "luminite_golem", EntityClassification.MONSTER, false);
-
-    public static final RegistryObject<EntityType<LuminiteFoxEntity>> LUMINITE_FOX_ENTITY = buildEntity(LuminiteFoxEntity::new,
-            0.7f, 0.4F, "luminite_fox", EntityClassification.CREATURE, false);
-
-    public static final RegistryObject<EntityType<ShroomieEntity>> SHROOMIE_ENTITY = buildEntity(ShroomieEntity::new,
-            0.5f, 1.2F, "shroomie", EntityClassification.CREATURE, false);
-
-    public static final RegistryObject<EntityType<ShroomlingEntity>> SHROOMLING_ENTITY = buildEntity(ShroomlingEntity::new,
-            1.5f, 0.6F, "shroomling", EntityClassification.CREATURE, false);
-
-    public static <T extends Entity> RegistryObject<EntityType<T>> buildEntity(EntityType.IFactory<T> entity, float width, float height, String name, EntityClassification classification, boolean isFireImmune) {
-        return isFireImmune ? ENTITIES.register(name, () -> EntityType.Builder.of(entity, classification).sized(width, height).fireImmune().build(name))
-                : ENTITIES.register(name, () -> EntityType.Builder.of(entity, classification).sized(width, height).build(name));
+    private CustomEntityTypes() {
     }
 
-    public static void registerSpawnPlacements(){
-        EntitySpawnPlacementRegistry.register(SCORCHLING_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ScorchlingEntity::canScorchlingSpawn);
+    public static void bootstrap() {
+        // Forces class initialization before the deferred register attaches to the event bus.
+    }
 
-        EntitySpawnPlacementRegistry.register(SCORCHHOUND_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ScorchhoundEntity::canScorchhoundSpawn);
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(SCORCHLING_ENTITY.get(), PortedMonster.scorchlingAttributes().build());
+        event.put(SCORCHHOUND_ENTITY.get(), PortedMonster.scorchhoundAttributes().build());
+        event.put(LUMINITE_GOLEM_ENTITY.get(), PortedMonster.luminiteGolemAttributes().build());
+        event.put(MOLTENER_ENTITY.get(), PortedCreature.moltenerAttributes().build());
+        event.put(CAMOROCK_ENTITY.get(), PortedCreature.camorockAttributes().build());
+        event.put(LUMINITE_FOX_ENTITY.get(), PortedCreature.luminiteFoxAttributes().build());
+        event.put(SHROOMIE_ENTITY.get(), ShroomieEntity.createAttributes().build());
+        event.put(SHROOMLING_ENTITY.get(), PortedCreature.shroomlingAttributes().build());
+    }
 
-        EntitySpawnPlacementRegistry.register(MOLTENER_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MoltenerEntity::canMoltenerSpawn);
+    public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+        registerSpawn(event, SCORCHLING_ENTITY.get(), PortedMonster::canScorchlingSpawn);
+        registerSpawn(event, SCORCHHOUND_ENTITY.get(), PortedMonster::canScorchhoundSpawn);
+        registerSpawn(event, LUMINITE_GOLEM_ENTITY.get(), PortedMonster::canLuminiteGolemSpawn);
+        registerSpawn(event, MOLTENER_ENTITY.get(), PortedCreature::canMoltenerSpawn);
+        registerSpawn(event, CAMOROCK_ENTITY.get(), PortedCreature::canCamorockSpawn);
+        registerSpawn(event, LUMINITE_FOX_ENTITY.get(), PortedCreature::canLuminiteFoxSpawn);
+        registerSpawn(event, SHROOMIE_ENTITY.get(), ShroomieEntity::canSpawn);
+        registerSpawn(event, SHROOMLING_ENTITY.get(), PortedCreature::canShroomlingSpawn);
+    }
 
-        EntitySpawnPlacementRegistry.register(CAMOROCK_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CamorockEntity::canCamorockSpawn);
+    private static <T extends net.minecraft.world.entity.Mob> void registerSpawn(
+            RegisterSpawnPlacementsEvent event,
+            EntityType<T> type,
+            SpawnPlacements.SpawnPredicate<T> predicate
+    ) {
+        event.register(
+                type,
+                SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                predicate,
+                RegisterSpawnPlacementsEvent.Operation.REPLACE
+        );
+    }
 
-        EntitySpawnPlacementRegistry.register(LUMINITE_GOLEM_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, LuminiteGolemEntity::canLuminiteGolemSpawn);
+    private static <T extends net.minecraft.world.entity.Entity> DeferredHolder<EntityType<?>, EntityType<T>> projectile(
+            String name,
+            EntityType.EntityFactory<T> factory
+    ) {
+        return ModRegistries.ENTITY_TYPES.register(name, () -> EntityType.Builder.of(factory, MobCategory.MISC)
+                .sized(0.25F, 0.25F)
+                .clientTrackingRange(4)
+                .updateInterval(10)
+                .build(name));
+    }
 
-        EntitySpawnPlacementRegistry.register(LUMINITE_FOX_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, LuminiteFoxEntity::canLuminiteFoxSpawn);
+    private static DeferredHolder<EntityType<?>, EntityType<PortedMonster>> monster(
+            String name,
+            EntityType.EntityFactory<PortedMonster> factory,
+            float width,
+            float height,
+            boolean fireImmune
+    ) {
+        EntityType.Builder<PortedMonster> builder = EntityType.Builder.of(factory, MobCategory.MONSTER).sized(width, height);
+        if (fireImmune) {
+            builder.fireImmune();
+        }
+        return ModRegistries.ENTITY_TYPES.register(name, () -> builder.build(name));
+    }
 
-        EntitySpawnPlacementRegistry.register(SHROOMIE_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ShroomieEntity::canShroomieSpawn);
-
-        EntitySpawnPlacementRegistry.register(SHROOMLING_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ShroomlingEntity::canShroomlingSpawn);
+    private static DeferredHolder<EntityType<?>, EntityType<PortedCreature>> creature(
+            String name,
+            EntityType.EntityFactory<PortedCreature> factory,
+            float width,
+            float height,
+            boolean fireImmune
+    ) {
+        EntityType.Builder<PortedCreature> builder = EntityType.Builder.of(factory, MobCategory.CREATURE).sized(width, height);
+        if (fireImmune) {
+            builder.fireImmune();
+        }
+        return ModRegistries.ENTITY_TYPES.register(name, () -> builder.build(name));
     }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "dark_caverns:luminite_helmet"
+  },
+  "result": {
+    "id": "dark_caverns:luminite_dust"
+  },
+  "experience": 0.9,
+  "cookingtime": 100
+}
