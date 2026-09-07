@@ -17,7 +17,8 @@ public final class CustomPlantBlock extends BushBlock {
 
     private final Supplier<? extends Block> baseBlock;
 
-    public CustomPlantBlock(BlockBehaviour.Properties properties, Supplier<? extends Block> baseBlock) {
+    public CustomPlantBlock(
+            BlockBehaviour.Properties properties, Supplier<? extends Block> baseBlock) {
         super(properties);
         this.baseBlock = baseBlock;
     }
@@ -33,7 +34,8 @@ public final class CustomPlantBlock extends BushBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getShape(
+            BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
@@ -43,7 +45,8 @@ public final class CustomPlantBlock extends BushBlock {
     }
 
     @Override
-    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+    public int getFireSpreadSpeed(
+            BlockState state, BlockGetter level, BlockPos pos, Direction face) {
         return 60;
     }
 }

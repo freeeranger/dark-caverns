@@ -15,7 +15,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
 public final class ThrowableLuminiteTorchEntity extends DarkCavernsThrowableItemProjectile {
-    public ThrowableLuminiteTorchEntity(EntityType<? extends ThrowableLuminiteTorchEntity> type, Level level) {
+    public ThrowableLuminiteTorchEntity(
+            EntityType<? extends ThrowableLuminiteTorchEntity> type, Level level) {
         super(type, level);
     }
 
@@ -48,9 +49,11 @@ public final class ThrowableLuminiteTorchEntity extends DarkCavernsThrowableItem
                 if (face == Direction.UP) {
                     placed = CustomBlocks.LUMINITE_TORCH.get().defaultBlockState();
                 } else if (face.getAxis().isHorizontal()) {
-                    placed = CustomBlocks.LUMINITE_WALL_TORCH.get()
-                            .defaultBlockState()
-                            .setValue(WallTorchBlock.FACING, face);
+                    placed =
+                            CustomBlocks.LUMINITE_WALL_TORCH
+                                    .get()
+                                    .defaultBlockState()
+                                    .setValue(WallTorchBlock.FACING, face);
                 }
             }
 

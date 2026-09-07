@@ -16,14 +16,14 @@ import net.minecraft.world.level.Level;
 public final class ThrowableItem extends Item {
     private final SoundEvent throwSound;
     private final int cooldownTicks;
-    private final BiFunction<Level, LivingEntity, ? extends ThrowableItemProjectile> projectileFactory;
+    private final BiFunction<Level, LivingEntity, ? extends ThrowableItemProjectile>
+            projectileFactory;
 
     public ThrowableItem(
             Properties properties,
             SoundEvent throwSound,
             int cooldownTicks,
-            BiFunction<Level, LivingEntity, ? extends ThrowableItemProjectile> projectileFactory
-    ) {
+            BiFunction<Level, LivingEntity, ? extends ThrowableItemProjectile> projectileFactory) {
         super(properties);
         this.throwSound = throwSound;
         this.cooldownTicks = cooldownTicks;
@@ -31,7 +31,8 @@ public final class ThrowableItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(
+            Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         level.playSound(
                 null,
@@ -41,15 +42,15 @@ public final class ThrowableItem extends Item {
                 throwSound,
                 SoundSource.NEUTRAL,
                 0.5F,
-                0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F)
-        );
+                0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         if (cooldownTicks > 0) {
             player.getCooldowns().addCooldown(this, cooldownTicks);
         }
         if (!level.isClientSide) {
             ThrowableItemProjectile projectile = projectileFactory.apply(level, player);
             projectile.setItem(stack);
-            projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
+            projectile.shootFromRotation(
+                    player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
             level.addFreshEntity(projectile);
         }
 

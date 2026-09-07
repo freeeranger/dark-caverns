@@ -23,7 +23,8 @@ public final class GlimmershroomBlock extends HugeMushroomBlock {
     }
 
     @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+    public void fallOn(
+            Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (entity.isSuppressingBounce()) {
             super.fallOn(level, state, pos, entity, fallDistance);
         } else {
@@ -50,7 +51,9 @@ public final class GlimmershroomBlock extends HugeMushroomBlock {
         double verticalSpeed = Math.abs(entity.getDeltaMovement().y);
         if (verticalSpeed < 0.1 && !entity.isSteppingCarefully()) {
             double horizontalMultiplier = 0.4 + verticalSpeed * 0.2;
-            entity.setDeltaMovement(entity.getDeltaMovement().multiply(horizontalMultiplier, 1.0, horizontalMultiplier));
+            entity.setDeltaMovement(
+                    entity.getDeltaMovement()
+                            .multiply(horizontalMultiplier, 1.0, horizontalMultiplier));
         }
         super.stepOn(level, pos, state, entity);
     }
@@ -61,7 +64,8 @@ public final class GlimmershroomBlock extends HugeMushroomBlock {
     }
 
     @Override
-    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+    public int getFireSpreadSpeed(
+            BlockState state, BlockGetter level, BlockPos pos, Direction face) {
         return 30;
     }
 }

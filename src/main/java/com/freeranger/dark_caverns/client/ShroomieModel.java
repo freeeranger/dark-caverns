@@ -5,6 +5,7 @@ import com.freeranger.dark_caverns.entities.ShroomieEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
+@SuppressWarnings("deprecation") // GeckoLib 4.9.2 requires these deprecated abstract overrides.
 public final class ShroomieModel extends GeoModel<ShroomieEntity> {
     @Override
     public ResourceLocation getModelResource(ShroomieEntity entity) {

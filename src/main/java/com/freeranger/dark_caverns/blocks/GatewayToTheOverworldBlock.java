@@ -16,7 +16,9 @@ public final class GatewayToTheOverworldBlock extends Block {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (level instanceof ServerLevel serverLevel && entity.getVehicle() == null && !entity.isVehicle()) {
+        if (level instanceof ServerLevel serverLevel
+                && entity.getVehicle() == null
+                && !entity.isVehicle()) {
             GatewayTeleports.toOverworld(serverLevel, entity);
         }
         super.entityInside(state, level, pos, entity);

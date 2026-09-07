@@ -21,24 +21,45 @@ import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasLookup;
 import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 
 /**
- * Jigsaw structure placement shared by the four legacy structures. Surface
- * structures follow the world surface; cavern structures scan down for a
- * solid shelf with open space above it, matching the old generator's intent.
+ * Jigsaw structure placement shared by the four legacy structures. Surface structures follow the
+ * world surface; cavern structures scan down for a solid shelf with open space above it, matching
+ * the old generator's intent.
  */
 public final class PortedJigsawStructure extends Structure {
-    public static final MapCodec<PortedJigsawStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            settingsCodec(instance),
-            StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
-            Codec.intRange(0, 20).optionalFieldOf("size", 10).forGetter(structure -> structure.maxDepth),
-            Codec.intRange(1, 128).optionalFieldOf("max_distance_from_center", 80)
-                    .forGetter(structure -> structure.maxDistanceFromCenter),
-            Codec.BOOL.optionalFieldOf("use_expansion_hack", false)
-                    .forGetter(structure -> structure.useExpansionHack),
-            Codec.BOOL.optionalFieldOf("cavern_placement", false)
-                    .forGetter(structure -> structure.cavernPlacement),
-            Codec.BOOL.optionalFieldOf("honor_forgotten_tower_config", false)
-                    .forGetter(structure -> structure.honorForgottenTowerConfig)
-    ).apply(instance, PortedJigsawStructure::new));
+    public static final MapCodec<PortedJigsawStructure> CODEC =
+            RecordCodecBuilder.mapCodec(
+                    instance ->
+                            instance.group(
+                                            settingsCodec(instance),
+                                            StructureTemplatePool.CODEC
+                                                    .fieldOf("start_pool")
+                                                    .forGetter(structure -> structure.startPool),
+                                            Codec.intRange(0, 20)
+                                                    .optionalFieldOf("size", 10)
+                                                    .forGetter(structure -> structure.maxDepth),
+                                            Codec.intRange(1, 128)
+                                                    .optionalFieldOf("max_distance_from_center", 80)
+                                                    .forGetter(
+                                                            structure ->
+                                                                    structure
+                                                                            .maxDistanceFromCenter),
+                                            Codec.BOOL
+                                                    .optionalFieldOf("use_expansion_hack", false)
+                                                    .forGetter(
+                                                            structure ->
+                                                                    structure.useExpansionHack),
+                                            Codec.BOOL
+                                                    .optionalFieldOf("cavern_placement", false)
+                                                    .forGetter(
+                                                            structure -> structure.cavernPlacement),
+                                            Codec.BOOL
+                                                    .optionalFieldOf(
+                                                            "honor_forgotten_tower_config", false)
+                                                    .forGetter(
+                                                            structure ->
+                                                                    structure
+                                                                            .honorForgottenTowerConfig))
+                                    .apply(instance, PortedJigsawStructure::new));
 
     private final Holder<StructureTemplatePool> startPool;
     private final int maxDepth;
@@ -54,8 +75,7 @@ public final class PortedJigsawStructure extends Structure {
             int maxDistanceFromCenter,
             boolean useExpansionHack,
             boolean cavernPlacement,
-            boolean honorForgottenTowerConfig
-    ) {
+            boolean honorForgottenTowerConfig) {
         super(settings);
         this.startPool = startPool;
         this.maxDepth = maxDepth;
@@ -83,19 +103,17 @@ public final class PortedJigsawStructure extends Structure {
             start = new BlockPos(x, Math.max(minimum, floorY - 15), z);
             projection = Optional.empty();
         } else {
-            int surfaceY = context.chunkGenerator().getFirstOccupiedHeight(
-                    x,
-                    z,
-                    Heightmap.Types.WORLD_SURFACE_WG,
-                    context.heightAccessor(),
-                    context.randomState()
-            );
-            NoiseColumn column = context.chunkGenerator().getBaseColumn(
-                    x,
-                    z,
-                    context.heightAccessor(),
-                    context.randomState()
-            );
+            int surfaceY =
+                    context.chunkGenerator()
+                            .getFirstOccupiedHeight(
+                                    x,
+                                    z,
+                                    Heightmap.Types.WORLD_SURFACE_WG,
+                                    context.heightAccessor(),
+                                    context.randomState());
+            NoiseColumn column =
+                    context.chunkGenerator()
+                            .getBaseColumn(x, z, context.heightAccessor(), context.randomState());
             if (!column.getBlock(surfaceY).getFluidState().isEmpty()) {
                 return Optional.empty();
             }
@@ -114,23 +132,21 @@ public final class PortedJigsawStructure extends Structure {
                 maxDistanceFromCenter,
                 PoolAliasLookup.EMPTY,
                 DimensionPadding.ZERO,
-                LiquidSettings.APPLY_WATERLOGGING
-        );
+                LiquidSettings.APPLY_WATERLOGGING);
     }
 
     private static int findCavernShelf(GenerationContext context, int x, int z) {
         int maximum = context.heightAccessor().getMaxBuildHeight() - 20;
         int minimum = context.chunkGenerator().getSeaLevel() - 2;
-        NoiseColumn column = context.chunkGenerator().getBaseColumn(
-                x,
-                z,
-                context.heightAccessor(),
-                context.randomState()
-        );
+        NoiseColumn column =
+                context.chunkGenerator()
+                        .getBaseColumn(x, z, context.heightAccessor(), context.randomState());
 
         for (int y = maximum; y > minimum; y--) {
             BlockState floor = column.getBlock(y);
-            BlockState clearance = column.getBlock(Math.min(y + 3, context.heightAccessor().getMaxBuildHeight() - 1));
+            BlockState clearance =
+                    column.getBlock(
+                            Math.min(y + 3, context.heightAccessor().getMaxBuildHeight() - 1));
             if (!floor.isAir() && floor.getFluidState().isEmpty() && clearance.isAir()) {
                 return y;
             }

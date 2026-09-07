@@ -42,33 +42,45 @@ public final class DarkCavernsConfig {
 
         private Common(ModConfigSpec.Builder builder) {
             builder.push("worldgen");
-            generateForgottenTower = builder
-                    .comment("Whether the Forgotten Tower structure generates in Overworld forests.")
-                    .define("generateForgottenTower", true);
-            crackedBedrockVeinCount = builder
-                    .comment("Number of Cracked Bedrock veins attempted per chunk in the Overworld bedrock layer.")
-                    .defineInRange("crackedBedrockVeinCount", 4, 1, 32);
-            crackedBedrockVeinSize = builder
-                    .comment("Maximum size of Cracked Bedrock veins.")
-                    .defineInRange("crackedBedrockVeinSize", 4, 1, 16);
+            generateForgottenTower =
+                    builder.comment(
+                                    "Whether the Forgotten Tower structure generates in Overworld"
+                                            + " forests.")
+                            .define("generateForgottenTower", true);
+            crackedBedrockVeinCount =
+                    builder.comment(
+                                    "Number of Cracked Bedrock veins attempted per chunk in the"
+                                            + " Overworld bedrock layer.")
+                            .defineInRange("crackedBedrockVeinCount", 4, 1, 32);
+            crackedBedrockVeinSize =
+                    builder.comment("Maximum size of Cracked Bedrock veins.")
+                            .defineInRange("crackedBedrockVeinSize", 4, 1, 16);
             builder.pop();
 
             builder.push("gameplay");
-            gatewayCooldownTicks = builder
-                    .comment("Cooldown in ticks before a player can use a gateway again after teleporting (20 ticks = 1s).")
-                    .defineInRange("gatewayCooldownTicks", 175, 0, 1200);
-            scorchsteelStealthStandstillTicks = builder
-                    .comment("Ticks of standing still required to trigger Scorchsteel invisibility (20 ticks = 1s).")
-                    .defineInRange("scorchsteelStealthStandstillTicks", 20, 0, 200);
-            corruptedPearlScanRadius = builder
-                    .comment("Radius around the player used to find a Corrupted Pearl target.")
-                    .defineInRange("corruptedPearlScanRadius", 5.0, 1.0, 32.0);
-            shroombombExplosionPower = builder
-                    .comment("Explosion power of thrown Shroombombs (TNT is 4.0).")
-                    .defineInRange("shroombombExplosionPower", 4.0, 0.5, 20.0);
-            scorchhoundBypassShields = builder
-                    .comment("Whether Scorchhounds fling players even when an attack is blocked by a shield.")
-                    .define("scorchhoundBypassShields", true);
+            gatewayCooldownTicks =
+                    builder.comment(
+                                    "Cooldown in ticks before a player can use a gateway again"
+                                            + " after teleporting (20 ticks = 1s).")
+                            .defineInRange("gatewayCooldownTicks", 175, 0, 1200);
+            scorchsteelStealthStandstillTicks =
+                    builder.comment(
+                                    "Ticks of standing still required to trigger Scorchsteel"
+                                            + " invisibility (20 ticks = 1s).")
+                            .defineInRange("scorchsteelStealthStandstillTicks", 20, 0, 200);
+            corruptedPearlScanRadius =
+                    builder.comment(
+                                    "Radius around the player used to find a Corrupted Pearl"
+                                            + " target.")
+                            .defineInRange("corruptedPearlScanRadius", 5.0, 1.0, 32.0);
+            shroombombExplosionPower =
+                    builder.comment("Explosion power of thrown Shroombombs (TNT is 4.0).")
+                            .defineInRange("shroombombExplosionPower", 4.0, 0.5, 20.0);
+            scorchhoundBypassShields =
+                    builder.comment(
+                                    "Whether Scorchhounds fling players even when an attack is"
+                                            + " blocked by a shield.")
+                            .define("scorchhoundBypassShields", true);
             builder.pop();
 
             builder.push("entities");
@@ -85,12 +97,9 @@ public final class DarkCavernsConfig {
         }
 
         private static ModConfigSpec.IntValue spawnChance(
-                ModConfigSpec.Builder builder,
-                String name,
-                int defaultValue
-        ) {
-            return builder
-                    .comment("Spawn rarity expressed as a 1-in-N chance. Lower is more common.")
+                ModConfigSpec.Builder builder, String name, int defaultValue) {
+            return builder.comment(
+                            "Spawn rarity expressed as a 1-in-N chance. Lower is more common.")
                     .defineInRange(name, defaultValue, 1, 100);
         }
     }
@@ -101,12 +110,16 @@ public final class DarkCavernsConfig {
 
         private Client(ModConfigSpec.Builder builder) {
             builder.push("rendering");
-            enableDynamicLighting = builder
-                    .comment("Enable dynamic headlamp lighting for the Luminite Helmet on the client.")
-                    .define("enableDynamicLighting", true);
-            maxDynamicLightDistance = builder
-                    .comment("Maximum distance for rendering dynamic light from glowing entities.")
-                    .defineInRange("maxDynamicLightDistance", 64, 16, 256);
+            enableDynamicLighting =
+                    builder.comment(
+                                    "Enable dynamic headlamp lighting for the Luminite Helmet on"
+                                            + " the client.")
+                            .define("enableDynamicLighting", true);
+            maxDynamicLightDistance =
+                    builder.comment(
+                                    "Maximum distance for rendering dynamic light from glowing"
+                                            + " entities.")
+                            .defineInRange("maxDynamicLightDistance", 64, 16, 256);
             builder.pop();
         }
     }

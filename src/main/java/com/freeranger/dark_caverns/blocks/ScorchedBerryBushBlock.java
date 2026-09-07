@@ -23,7 +23,8 @@ import net.minecraft.world.phys.Vec3;
 public final class ScorchedBerryBushBlock extends SweetBerryBushBlock {
     private final Supplier<? extends Block> baseBlock;
 
-    public ScorchedBerryBushBlock(BlockBehaviour.Properties properties, Supplier<? extends Block> baseBlock) {
+    public ScorchedBerryBushBlock(
+            BlockBehaviour.Properties properties, Supplier<? extends Block> baseBlock) {
         super(properties);
         this.baseBlock = baseBlock;
     }
@@ -45,7 +46,9 @@ public final class ScorchedBerryBushBlock extends SweetBerryBushBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (entity instanceof LivingEntity && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
+        if (entity instanceof LivingEntity
+                && entity.getType() != EntityType.FOX
+                && entity.getType() != EntityType.BEE) {
             entity.makeStuckInBlock(state, new Vec3(0.8F, 0.75, 0.8F));
             if (!level.isClientSide && state.getValue(AGE) > 0 && hasMoved(entity)) {
                 entity.setRemainingFireTicks(Math.max(entity.getRemainingFireTicks(), 200));
@@ -60,12 +63,7 @@ public final class ScorchedBerryBushBlock extends SweetBerryBushBlock {
 
     @Override
     protected InteractionResult useWithoutItem(
-            BlockState state,
-            Level level,
-            BlockPos pos,
-            Player player,
-            BlockHitResult hitResult
-    ) {
+            BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         int age = state.getValue(AGE);
         if (age <= 1) {
             return super.useWithoutItem(state, level, pos, player, hitResult);

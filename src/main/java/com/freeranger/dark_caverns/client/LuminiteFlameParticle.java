@@ -17,8 +17,7 @@ public final class LuminiteFlameParticle extends RisingParticle {
             double z,
             double xSpeed,
             double ySpeed,
-            double zSpeed
-    ) {
+            double zSpeed) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed);
     }
 
@@ -64,11 +63,9 @@ public final class LuminiteFlameParticle extends RisingParticle {
                 double z,
                 double xSpeed,
                 double ySpeed,
-                double zSpeed
-        ) {
-            LuminiteFlameParticle particle = new LuminiteFlameParticle(
-                    level, x, y, z, xSpeed, ySpeed, zSpeed
-            );
+                double zSpeed) {
+            LuminiteFlameParticle particle =
+                    new LuminiteFlameParticle(level, x, y, z, xSpeed, ySpeed, zSpeed);
             particle.pickSprite(sprites);
             return particle;
         }

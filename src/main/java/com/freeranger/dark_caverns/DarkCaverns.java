@@ -18,15 +18,9 @@ public final class DarkCaverns {
         ModRegistries.register(modBus);
 
         modContainer.registerConfig(
-                ModConfig.Type.COMMON,
-                DarkCavernsConfig.COMMON_SPEC,
-                MOD_ID + "-common.toml"
-        );
+                ModConfig.Type.COMMON, DarkCavernsConfig.COMMON_SPEC, MOD_ID + "-common.toml");
         modContainer.registerConfig(
-                ModConfig.Type.CLIENT,
-                DarkCavernsConfig.CLIENT_SPEC,
-                MOD_ID + "-client.toml"
-        );
+                ModConfig.Type.CLIENT, DarkCavernsConfig.CLIENT_SPEC, MOD_ID + "-client.toml");
 
         LOGGER.info("Initializing Dark Caverns for NeoForge 1.21.1");
     }

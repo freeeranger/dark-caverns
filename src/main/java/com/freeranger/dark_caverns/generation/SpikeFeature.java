@@ -16,7 +16,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 public final class SpikeFeature extends Feature<NoneFeatureConfiguration> {
     private final Supplier<? extends Block> sourceBlock;
 
-    public SpikeFeature(Codec<NoneFeatureConfiguration> codec, Supplier<? extends Block> sourceBlock) {
+    public SpikeFeature(
+            Codec<NoneFeatureConfiguration> codec, Supplier<? extends Block> sourceBlock) {
         super(codec);
         this.sourceBlock = sourceBlock;
     }
@@ -41,18 +42,23 @@ public final class SpikeFeature extends Feature<NoneFeatureConfiguration> {
         int radius = height / 4 + random.nextInt(2);
 
         for (int yOffset = 0; yOffset < height; yOffset++) {
-            float scaledRadius = (1.0F - (float)yOffset / (float)height) * (float)radius;
+            float scaledRadius = (1.0F - (float) yOffset / (float) height) * (float) radius;
             int extent = Mth.ceil(scaledRadius);
 
             for (int xOffset = -extent; xOffset <= extent; xOffset++) {
-                float xDistance = (float)Mth.abs(xOffset) - 0.25F;
+                float xDistance = (float) Mth.abs(xOffset) - 0.25F;
                 for (int zOffset = -extent; zOffset <= extent; zOffset++) {
-                    float zDistance = (float)Mth.abs(zOffset) - 0.25F;
-                    boolean insideRadius = xOffset == 0 && zOffset == 0
-                            || xDistance * xDistance + zDistance * zDistance <= scaledRadius * scaledRadius;
-                    boolean keepEdge = xOffset != -extent && xOffset != extent
-                            && zOffset != -extent && zOffset != extent
-                            || random.nextFloat() <= 0.999F;
+                    float zDistance = (float) Mth.abs(zOffset) - 0.25F;
+                    boolean insideRadius =
+                            xOffset == 0 && zOffset == 0
+                                    || xDistance * xDistance + zDistance * zDistance
+                                            <= scaledRadius * scaledRadius;
+                    boolean keepEdge =
+                            xOffset != -extent
+                                            && xOffset != extent
+                                            && zOffset != -extent
+                                            && zOffset != extent
+                                    || random.nextFloat() <= 0.999F;
                     if (!insideRadius || !keepEdge) {
                         continue;
                     }
@@ -69,7 +75,8 @@ public final class SpikeFeature extends Feature<NoneFeatureConfiguration> {
         for (int xOffset = -foundationRadius; xOffset <= foundationRadius; xOffset++) {
             for (int zOffset = -foundationRadius; zOffset <= foundationRadius; zOffset++) {
                 BlockPos foundation = origin.offset(xOffset, -1, zOffset);
-                int remaining = Math.abs(xOffset) == 1 && Math.abs(zOffset) == 1 ? random.nextInt(5) : 50;
+                int remaining =
+                        Math.abs(xOffset) == 1 && Math.abs(zOffset) == 1 ? random.nextInt(5) : 50;
 
                 while (foundation.getY() > level.getMinBuildHeight() + 50) {
                     BlockState state = level.getBlockState(foundation);

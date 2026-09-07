@@ -28,13 +28,12 @@ public final class ShroombombEntity extends DarkCavernsThrowableItemProjectile {
         super.onHit(result);
         if (!level().isClientSide) {
             level().explode(
-                    this,
-                    getX(),
-                    getY(),
-                    getZ(),
-                    DarkCavernsConfig.COMMON.shroombombExplosionPower.get().floatValue(),
-                    Level.ExplosionInteraction.BLOCK
-            );
+                            this,
+                            getX(),
+                            getY(),
+                            getZ(),
+                            DarkCavernsConfig.COMMON.shroombombExplosionPower.get().floatValue(),
+                            Level.ExplosionInteraction.BLOCK);
         }
         finishImpact();
     }

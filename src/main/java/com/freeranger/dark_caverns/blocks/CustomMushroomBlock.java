@@ -21,8 +21,7 @@ public final class CustomMushroomBlock extends MushroomBlock {
     public CustomMushroomBlock(
             ResourceKey<ConfiguredFeature<?, ?>> feature,
             ResourceKey<ConfiguredFeature<?, ?>> alternateFeature,
-            BlockBehaviour.Properties properties
-    ) {
+            BlockBehaviour.Properties properties) {
         super(feature, properties);
         this.primaryFeature = feature;
         this.alternateFeature = alternateFeature;
@@ -34,19 +33,24 @@ public final class CustomMushroomBlock extends MushroomBlock {
     }
 
     @Override
-    public boolean growMushroom(ServerLevel level, BlockPos pos, BlockState state, RandomSource random) {
-        ResourceKey<ConfiguredFeature<?, ?>> selected = random.nextBoolean() ? primaryFeature : alternateFeature;
-        Holder<ConfiguredFeature<?, ?>> feature = level.registryAccess()
-                .registryOrThrow(Registries.CONFIGURED_FEATURE)
-                .getHolder(selected)
-                .orElse(null);
+    public boolean growMushroom(
+            ServerLevel level, BlockPos pos, BlockState state, RandomSource random) {
+        ResourceKey<ConfiguredFeature<?, ?>> selected =
+                random.nextBoolean() ? primaryFeature : alternateFeature;
+        Holder<ConfiguredFeature<?, ?>> feature =
+                level.registryAccess()
+                        .registryOrThrow(Registries.CONFIGURED_FEATURE)
+                        .getHolder(selected)
+                        .orElse(null);
         var event = EventHooks.fireBlockGrowFeature(level, random, pos, feature);
         if (event.isCanceled() || event.getFeature() == null) {
             return false;
         }
 
         level.removeBlock(pos, false);
-        if (event.getFeature().value().place(level, level.getChunkSource().getGenerator(), random, pos)) {
+        if (event.getFeature()
+                .value()
+                .place(level, level.getChunkSource().getGenerator(), random, pos)) {
             return true;
         }
 

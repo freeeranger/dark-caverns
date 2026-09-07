@@ -13,9 +13,9 @@ import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -46,6 +46,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 /** Shared server-side behavior for the five non-hostile legacy mobs. */
 public final class PortedCreature extends PathfinderMob implements GeoEntity, NeutralMob {
     private static final UniformInt SHROOMLING_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
+
     public enum Variant {
         MOLTENER,
         CAMOROCK,
@@ -56,10 +57,10 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
     private final Variant variant;
     private final AnimatableInstanceCache animationCache = GeckoLibUtil.createInstanceCache(this);
     private int remainingPersistentAngerTime;
-    @Nullable
-    private UUID persistentAngerTarget;
+    @Nullable private UUID persistentAngerTarget;
 
-    private PortedCreature(EntityType<? extends PortedCreature> type, Level level, Variant variant) {
+    private PortedCreature(
+            EntityType<? extends PortedCreature> type, Level level, Variant variant) {
         super(type, level);
         this.variant = variant;
         if (!level.isClientSide) {
@@ -93,18 +94,21 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
     }
 
     private PlayState animationState(AnimationState<PortedCreature> state) {
-        String entityName = switch (variant) {
-            case MOLTENER -> "moltener";
-            case CAMOROCK -> "camorock";
-            case LUMINITE_FOX -> "luminite_fox";
-            case SHROOMLING -> "shroomling";
-        };
-        String movingAnimation = switch (variant) {
-            case LUMINITE_FOX, SHROOMLING -> "run";
-            default -> "walk";
-        };
+        String entityName =
+                switch (variant) {
+                    case MOLTENER -> "moltener";
+                    case CAMOROCK -> "camorock";
+                    case LUMINITE_FOX -> "luminite_fox";
+                    case SHROOMLING -> "shroomling";
+                };
+        String movingAnimation =
+                switch (variant) {
+                    case LUMINITE_FOX, SHROOMLING -> "run";
+                    default -> "walk";
+                };
         String action = state.isMoving() ? movingAnimation : "idle";
-        return state.setAndContinue(RawAnimation.begin().thenLoop("animation." + entityName + "." + action));
+        return state.setAndContinue(
+                RawAnimation.begin().thenLoop("animation." + entityName + "." + action));
     }
 
     @Override
@@ -154,7 +158,13 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
             case CAMOROCK -> goalSelector.addGoal(1, new PanicGoal(this, 2.0));
             case LUMINITE_FOX -> {
                 goalSelector.addGoal(1, new PanicGoal(this, 1.6));
-                goalSelector.addGoal(2, new TemptGoal(this, 1.5, Ingredient.of(CustomBlocks.LUMINITE_BLOCK.get()), false));
+                goalSelector.addGoal(
+                        2,
+                        new TemptGoal(
+                                this,
+                                1.5,
+                                Ingredient.of(CustomBlocks.LUMINITE_BLOCK.get()),
+                                false));
                 goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0));
                 goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
                 goalSelector.addGoal(5, new RandomLookAroundGoal(this));
@@ -166,7 +176,10 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
                 goalSelector.addGoal(5, new RandomLookAroundGoal(this));
                 goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
                 targetSelector.addGoal(1, new HurtByTargetGoal(this));
-                targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
+                targetSelector.addGoal(
+                        2,
+                        new NearestAttackableTargetGoal<>(
+                                this, Player.class, 10, true, false, this::isAngryAt));
                 targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(this, false));
             }
         }
@@ -211,8 +224,7 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
         remainingPersistentAngerTime = ticks;
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public UUID getPersistentAngerTarget() {
         return persistentAngerTarget;
     }
@@ -242,8 +254,7 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
         };
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     protected SoundEvent getAmbientSound() {
         return switch (variant) {
             case MOLTENER -> CustomSoundEvents.MOLTENER_AMBIENT.get();
@@ -254,27 +265,63 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
     }
 
     public static boolean canMoltenerSpawn(
-            EntityType<PortedCreature> type, ServerLevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random
-    ) {
-        return canSpawn(type, level, reason, pos, random, DarkCavernsConfig.COMMON.moltenerSpawnChance.get());
+            EntityType<PortedCreature> type,
+            ServerLevelAccessor level,
+            MobSpawnType reason,
+            BlockPos pos,
+            RandomSource random) {
+        return canSpawn(
+                type,
+                level,
+                reason,
+                pos,
+                random,
+                DarkCavernsConfig.COMMON.moltenerSpawnChance.get());
     }
 
     public static boolean canCamorockSpawn(
-            EntityType<PortedCreature> type, ServerLevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random
-    ) {
-        return canSpawn(type, level, reason, pos, random, DarkCavernsConfig.COMMON.camorockSpawnChance.get());
+            EntityType<PortedCreature> type,
+            ServerLevelAccessor level,
+            MobSpawnType reason,
+            BlockPos pos,
+            RandomSource random) {
+        return canSpawn(
+                type,
+                level,
+                reason,
+                pos,
+                random,
+                DarkCavernsConfig.COMMON.camorockSpawnChance.get());
     }
 
     public static boolean canLuminiteFoxSpawn(
-            EntityType<PortedCreature> type, ServerLevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random
-    ) {
-        return canSpawn(type, level, reason, pos, random, DarkCavernsConfig.COMMON.luminiteFoxSpawnChance.get());
+            EntityType<PortedCreature> type,
+            ServerLevelAccessor level,
+            MobSpawnType reason,
+            BlockPos pos,
+            RandomSource random) {
+        return canSpawn(
+                type,
+                level,
+                reason,
+                pos,
+                random,
+                DarkCavernsConfig.COMMON.luminiteFoxSpawnChance.get());
     }
 
     public static boolean canShroomlingSpawn(
-            EntityType<PortedCreature> type, ServerLevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random
-    ) {
-        return canSpawn(type, level, reason, pos, random, DarkCavernsConfig.COMMON.shroomlingSpawnChance.get());
+            EntityType<PortedCreature> type,
+            ServerLevelAccessor level,
+            MobSpawnType reason,
+            BlockPos pos,
+            RandomSource random) {
+        return canSpawn(
+                type,
+                level,
+                reason,
+                pos,
+                random,
+                DarkCavernsConfig.COMMON.shroomlingSpawnChance.get());
     }
 
     private static boolean canSpawn(
@@ -283,8 +330,7 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random,
-            int chance
-    ) {
+            int chance) {
         return random.nextInt(chance) == 0;
     }
 }

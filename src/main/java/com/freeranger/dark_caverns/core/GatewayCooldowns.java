@@ -8,8 +8,7 @@ import net.minecraft.world.entity.Entity;
 public final class GatewayCooldowns {
     private static final String COOLDOWN_UNTIL = DarkCaverns.MOD_ID + ":gateway_cooldown_until";
 
-    private GatewayCooldowns() {
-    }
+    private GatewayCooldowns() {}
 
     public static boolean isReady(Entity entity, ServerLevel level) {
         return entity.getPersistentData().getLong(COOLDOWN_UNTIL) <= level.getGameTime();

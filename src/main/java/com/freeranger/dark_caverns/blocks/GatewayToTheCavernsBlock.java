@@ -16,7 +16,9 @@ public final class GatewayToTheCavernsBlock extends Block {
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        if (level instanceof ServerLevel serverLevel && entity.getVehicle() == null && !entity.isVehicle()) {
+        if (level instanceof ServerLevel serverLevel
+                && entity.getVehicle() == null
+                && !entity.isVehicle()) {
             GatewayTeleports.toDarkCaverns(serverLevel, entity);
         }
         super.stepOn(level, pos, state, entity);

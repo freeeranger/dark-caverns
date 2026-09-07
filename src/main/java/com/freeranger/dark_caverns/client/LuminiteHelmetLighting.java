@@ -24,14 +24,15 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 public final class LuminiteHelmetLighting {
     private static Set<BlockPos> sources = Set.of();
 
-    private LuminiteHelmetLighting() {
-    }
+    private LuminiteHelmetLighting() {}
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
         ClientLevel level = minecraft.level;
-        if (level == null || minecraft.player == null || !DarkCavernsConfig.CLIENT.enableDynamicLighting.get()) {
+        if (level == null
+                || minecraft.player == null
+                || !DarkCavernsConfig.CLIENT.enableDynamicLighting.get()) {
             clear(minecraft.level);
             return;
         }
@@ -39,7 +40,8 @@ public final class LuminiteHelmetLighting {
         Set<BlockPos> nextSources = new HashSet<>();
         for (Entity entity : level.entitiesForRendering()) {
             if (entity instanceof LivingEntity living && shouldGlow(minecraft, living)) {
-                nextSources.add(BlockPos.containing(living.getX(), living.getEyeY(), living.getZ()));
+                nextSources.add(
+                        BlockPos.containing(living.getX(), living.getEyeY(), living.getZ()));
             }
         }
         update(level, nextSources);
@@ -70,13 +72,17 @@ public final class LuminiteHelmetLighting {
 
         Vec3 playerEye = minecraft.player.getEyePosition();
         Vec3 entityEye = entity.getEyePosition();
-        return minecraft.level.clip(new ClipContext(
-                playerEye,
-                entityEye,
-                ClipContext.Block.VISUAL,
-                ClipContext.Fluid.NONE,
-                entity
-        )).getType() == HitResult.Type.MISS;
+        return minecraft
+                        .level
+                        .clip(
+                                new ClipContext(
+                                        playerEye,
+                                        entityEye,
+                                        ClipContext.Block.VISUAL,
+                                        ClipContext.Fluid.NONE,
+                                        entity))
+                        .getType()
+                == HitResult.Type.MISS;
     }
 
     private static void update(ClientLevel level, Set<BlockPos> nextSources) {

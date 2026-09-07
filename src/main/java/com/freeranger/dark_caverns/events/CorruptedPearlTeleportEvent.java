@@ -16,8 +16,7 @@ public final class CorruptedPearlTeleportEvent extends EntityTeleportEvent {
             double targetY,
             double targetZ,
             CorruptedPearlEntity pearlEntity,
-            float attackDamage
-    ) {
+            float attackDamage) {
         super(player, targetX, targetY, targetZ);
         this.player = player;
         this.pearlEntity = pearlEntity;

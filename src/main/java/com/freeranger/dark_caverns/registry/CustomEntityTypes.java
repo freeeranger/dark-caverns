@@ -16,44 +16,41 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class CustomEntityTypes {
-    public static final DeferredHolder<EntityType<?>, EntityType<ThrowableLuminiteTorchEntity>> THROWABLE_LUMINITE_TORCH =
-            projectile("throwable_luminite_torch", ThrowableLuminiteTorchEntity::new);
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrowableLuminiteTorchEntity>>
+            THROWABLE_LUMINITE_TORCH =
+                    projectile("throwable_luminite_torch", ThrowableLuminiteTorchEntity::new);
     public static final DeferredHolder<EntityType<?>, EntityType<ShroombombEntity>> SHROOMBOMB =
             projectile("shroombomb", ShroombombEntity::new);
-    public static final DeferredHolder<EntityType<?>, EntityType<CorruptedPearlEntity>> CORRUPTED_PEARL =
-            projectile("corrupted_pearl", CorruptedPearlEntity::new);
+    public static final DeferredHolder<EntityType<?>, EntityType<CorruptedPearlEntity>>
+            CORRUPTED_PEARL = projectile("corrupted_pearl", CorruptedPearlEntity::new);
 
-    public static final DeferredHolder<EntityType<?>, EntityType<PortedMonster>> SCORCHLING_ENTITY = monster(
-            "scorchling", PortedMonster::scorchling, 0.6F, 0.4F, true
-    );
-    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>> MOLTENER_ENTITY = creature(
-            "moltener", PortedCreature::moltener, 0.7F, 0.9F, true
-    );
-    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>> CAMOROCK_ENTITY = creature(
-            "camorock", PortedCreature::camorock, 0.9F, 0.6F, false
-    );
-    public static final DeferredHolder<EntityType<?>, EntityType<PortedMonster>> SCORCHHOUND_ENTITY = monster(
-            "scorchhound", PortedMonster::scorchhound, 1.5F, 1.0F, true
-    );
-    public static final DeferredHolder<EntityType<?>, EntityType<PortedMonster>> LUMINITE_GOLEM_ENTITY = monster(
-            "luminite_golem", PortedMonster::luminiteGolem, 1.3F, 2.0F, false
-    );
-    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>> LUMINITE_FOX_ENTITY = creature(
-            "luminite_fox", PortedCreature::luminiteFox, 0.7F, 0.4F, false
-    );
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedMonster>> SCORCHLING_ENTITY =
+            monster("scorchling", PortedMonster::scorchling, 0.6F, 0.4F, true);
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>> MOLTENER_ENTITY =
+            creature("moltener", PortedCreature::moltener, 0.7F, 0.9F, true);
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>> CAMOROCK_ENTITY =
+            creature("camorock", PortedCreature::camorock, 0.9F, 0.6F, false);
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedMonster>>
+            SCORCHHOUND_ENTITY =
+                    monster("scorchhound", PortedMonster::scorchhound, 1.5F, 1.0F, true);
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedMonster>>
+            LUMINITE_GOLEM_ENTITY =
+                    monster("luminite_golem", PortedMonster::luminiteGolem, 1.3F, 2.0F, false);
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>>
+            LUMINITE_FOX_ENTITY =
+                    creature("luminite_fox", PortedCreature::luminiteFox, 0.7F, 0.4F, false);
     public static final DeferredHolder<EntityType<?>, EntityType<ShroomieEntity>> SHROOMIE_ENTITY =
             ModRegistries.ENTITY_TYPES.register(
                     "shroomie",
-                    () -> EntityType.Builder.of(ShroomieEntity::new, MobCategory.CREATURE)
-                            .sized(0.5F, 1.2F)
-                            .build("shroomie")
-            );
-    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>> SHROOMLING_ENTITY = creature(
-            "shroomling", PortedCreature::shroomling, 1.5F, 0.6F, false
-    );
+                    () ->
+                            EntityType.Builder.of(ShroomieEntity::new, MobCategory.CREATURE)
+                                    .sized(0.5F, 1.2F)
+                                    .build("shroomie"));
+    public static final DeferredHolder<EntityType<?>, EntityType<PortedCreature>>
+            SHROOMLING_ENTITY =
+                    creature("shroomling", PortedCreature::shroomling, 1.5F, 0.6F, false);
 
-    private CustomEntityTypes() {
-    }
+    private CustomEntityTypes() {}
 
     public static void bootstrap() {
         // Forces class initialization before the deferred register attaches to the event bus.
@@ -84,26 +81,26 @@ public final class CustomEntityTypes {
     private static <T extends net.minecraft.world.entity.Mob> void registerSpawn(
             RegisterSpawnPlacementsEvent event,
             EntityType<T> type,
-            SpawnPlacements.SpawnPredicate<T> predicate
-    ) {
+            SpawnPlacements.SpawnPredicate<T> predicate) {
         event.register(
                 type,
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 predicate,
-                RegisterSpawnPlacementsEvent.Operation.REPLACE
-        );
+                RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
-    private static <T extends net.minecraft.world.entity.Entity> DeferredHolder<EntityType<?>, EntityType<T>> projectile(
-            String name,
-            EntityType.EntityFactory<T> factory
-    ) {
-        return ModRegistries.ENTITY_TYPES.register(name, () -> EntityType.Builder.of(factory, MobCategory.MISC)
-                .sized(0.25F, 0.25F)
-                .clientTrackingRange(4)
-                .updateInterval(10)
-                .build(name));
+    private static <T extends net.minecraft.world.entity.Entity>
+            DeferredHolder<EntityType<?>, EntityType<T>> projectile(
+                    String name, EntityType.EntityFactory<T> factory) {
+        return ModRegistries.ENTITY_TYPES.register(
+                name,
+                () ->
+                        EntityType.Builder.of(factory, MobCategory.MISC)
+                                .sized(0.25F, 0.25F)
+                                .clientTrackingRange(4)
+                                .updateInterval(10)
+                                .build(name));
     }
 
     private static DeferredHolder<EntityType<?>, EntityType<PortedMonster>> monster(
@@ -111,9 +108,9 @@ public final class CustomEntityTypes {
             EntityType.EntityFactory<PortedMonster> factory,
             float width,
             float height,
-            boolean fireImmune
-    ) {
-        EntityType.Builder<PortedMonster> builder = EntityType.Builder.of(factory, MobCategory.MONSTER).sized(width, height);
+            boolean fireImmune) {
+        EntityType.Builder<PortedMonster> builder =
+                EntityType.Builder.of(factory, MobCategory.MONSTER).sized(width, height);
         if (fireImmune) {
             builder.fireImmune();
         }
@@ -125,9 +122,9 @@ public final class CustomEntityTypes {
             EntityType.EntityFactory<PortedCreature> factory,
             float width,
             float height,
-            boolean fireImmune
-    ) {
-        EntityType.Builder<PortedCreature> builder = EntityType.Builder.of(factory, MobCategory.CREATURE).sized(width, height);
+            boolean fireImmune) {
+        EntityType.Builder<PortedCreature> builder =
+                EntityType.Builder.of(factory, MobCategory.CREATURE).sized(width, height);
         if (fireImmune) {
             builder.fireImmune();
         }

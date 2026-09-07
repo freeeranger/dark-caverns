@@ -11,7 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BlockGetter.class)
 public interface BlockGetterMixin {
     @Inject(method = "getLightEmission", at = @At("HEAD"), cancellable = true)
-    private void darkCaverns$dynamicHelmetLight(BlockPos pos, CallbackInfoReturnable<Integer> callback) {
+    private void darkCaverns$dynamicHelmetLight(
+            BlockPos pos, CallbackInfoReturnable<Integer> callback) {
         if (LuminiteHelmetLighting.isSource(pos)) {
             callback.setReturnValue(15);
         }

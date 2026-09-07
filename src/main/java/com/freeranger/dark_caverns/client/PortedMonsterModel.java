@@ -5,6 +5,7 @@ import com.freeranger.dark_caverns.entities.PortedMonster;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
+@SuppressWarnings("deprecation") // GeckoLib 4.9.2 requires these deprecated abstract overrides.
 public final class PortedMonsterModel extends GeoModel<PortedMonster> {
     @Override
     public ResourceLocation getModelResource(PortedMonster entity) {

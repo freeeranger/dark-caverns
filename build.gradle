@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.146'
+    id 'com.diffplug.spotless' version '8.10.2'
     id 'idea'
 }
 
@@ -20,12 +21,6 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
-
-    // Keep the 1.16.5 files in the tree as migration references without
-    // loading them in the NeoForge runtime.
-    exclude 'META-INF/mods.toml'
-    exclude 'META-INF/accesstransformer.cfg'
-    exclude 'pack.mcmeta'
     exclude '**/.cache/**'
 }
 
@@ -126,6 +121,21 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    options.compilerArgs.addAll '-Xlint:deprecation', '-Xlint:unchecked', '-Xlint:cast'
+}
+
+spotless {
+    java {
+        googleJavaFormat('1.36.0').aosp().reflowLongStrings()
+        formatAnnotations()
+        forbidWildcardImports()
+    }
+
+    format 'misc', {
+        target '*.gradle', '*.md', '.editorconfig', '.gitignore', '.github/**/*.yml'
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
 
 idea {

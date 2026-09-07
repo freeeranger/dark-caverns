@@ -16,13 +16,12 @@ import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 
 public final class GatewayTeleports {
-    public static final ResourceKey<Level> DARK_CAVERNS = ResourceKey.create(
-            Registries.DIMENSION,
-            ResourceLocation.fromNamespaceAndPath(DarkCaverns.MOD_ID, DarkCaverns.MOD_ID)
-    );
+    public static final ResourceKey<Level> DARK_CAVERNS =
+            ResourceKey.create(
+                    Registries.DIMENSION,
+                    ResourceLocation.fromNamespaceAndPath(DarkCaverns.MOD_ID, DarkCaverns.MOD_ID));
 
-    private GatewayTeleports() {
-    }
+    private GatewayTeleports() {}
 
     public static void toDarkCaverns(ServerLevel source, Entity entity) {
         ServerLevel destination = source.getServer().getLevel(DARK_CAVERNS);
@@ -32,7 +31,10 @@ public final class GatewayTeleports {
 
         BlockPos column = BlockPos.containing(entity.getX(), 248, entity.getZ());
         BlockPos gateway = findRoofGateway(destination, column);
-        destination.setBlock(gateway, CustomBlocks.GATEWAY_TO_THE_OVERWORLD.get().defaultBlockState(), Block.UPDATE_ALL);
+        destination.setBlock(
+                gateway,
+                CustomBlocks.GATEWAY_TO_THE_OVERWORLD.get().defaultBlockState(),
+                Block.UPDATE_ALL);
         destination.setBlock(gateway.below(), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
         destination.setBlock(gateway.below(2), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
 
@@ -49,13 +51,14 @@ public final class GatewayTeleports {
             return;
         }
 
-        BlockPos column = BlockPos.containing(
-                entity.getX(),
-                destination.getMinBuildHeight() + 4,
-                entity.getZ()
-        );
+        BlockPos column =
+                BlockPos.containing(
+                        entity.getX(), destination.getMinBuildHeight() + 4, entity.getZ());
         BlockPos gateway = findBottomGateway(destination, column);
-        destination.setBlock(gateway, CustomBlocks.GATEWAY_TO_THE_CAVERNS.get().defaultBlockState(), Block.UPDATE_ALL);
+        destination.setBlock(
+                gateway,
+                CustomBlocks.GATEWAY_TO_THE_CAVERNS.get().defaultBlockState(),
+                Block.UPDATE_ALL);
         destination.setBlock(gateway.above(), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
         destination.setBlock(gateway.above(2), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
 
@@ -66,15 +69,15 @@ public final class GatewayTeleports {
         }
     }
 
-    private static DimensionTransition transition(ServerLevel destination, Entity entity, BlockPos target) {
+    private static DimensionTransition transition(
+            ServerLevel destination, Entity entity, BlockPos target) {
         return new DimensionTransition(
                 destination,
                 Vec3.atBottomCenterOf(target),
                 entity.getDeltaMovement(),
                 entity.getYRot(),
                 entity.getXRot(),
-                DimensionTransition.DO_NOTHING
-        );
+                DimensionTransition.DO_NOTHING);
     }
 
     private static BlockPos findRoofGateway(ServerLevel level, BlockPos column) {

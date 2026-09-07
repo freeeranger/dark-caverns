@@ -20,11 +20,11 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtTradingPlayerGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.TradeWithPlayerGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.LookAtTradingPlayerGoal;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
@@ -103,7 +103,9 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
 
     @Override
     protected SoundEvent getTradeUpdatedSound(boolean accepted) {
-        return accepted ? CustomSoundEvents.SHROOMIE_TRADE_YES.get() : CustomSoundEvents.SHROOMIE_TRADE_NO.get();
+        return accepted
+                ? CustomSoundEvents.SHROOMIE_TRADE_YES.get()
+                : CustomSoundEvents.SHROOMIE_TRADE_NO.get();
     }
 
     @Override
@@ -114,7 +116,10 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!stack.is(CustomItems.SHROOMIE_SPAWN_EGG.get()) && isAlive() && !isTrading() && !isBaby()) {
+        if (!stack.is(CustomItems.SHROOMIE_SPAWN_EGG.get())
+                && isAlive()
+                && !isTrading()
+                && !isBaby()) {
             if (hand == InteractionHand.MAIN_HAND) {
                 player.awardStat(Stats.TALKED_TO_VILLAGER);
             }
@@ -133,7 +138,9 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
     @Override
     protected void rewardTradeXp(MerchantOffer offer) {
         if (offer.shouldRewardExp()) {
-            level().addFreshEntity(new ExperienceOrb(level(), getX(), getY() + 0.5, getZ(), 3 + random.nextInt(4)));
+            level().addFreshEntity(
+                            new ExperienceOrb(
+                                    level(), getX(), getY() + 0.5, getZ(), 3 + random.nextInt(4)));
         }
     }
 
@@ -149,8 +156,7 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
         }
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
         return null;
     }
@@ -165,8 +171,7 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
             ServerLevelAccessor level,
             MobSpawnType reason,
             BlockPos pos,
-            RandomSource random
-    ) {
+            RandomSource random) {
         return random.nextInt(DarkCavernsConfig.COMMON.shroomieSpawnChance.get()) == 0
                 && level.getBlockState(pos.below()).is(CustomBlocks.GLIMMERGRASS_BLOCK.get());
     }

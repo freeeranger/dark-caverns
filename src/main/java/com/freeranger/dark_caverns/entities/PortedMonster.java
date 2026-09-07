@@ -38,8 +38,8 @@ import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 /**
- * Shared behavior for the three hostile legacy mobs.
- * Keeping the variants explicit preserves their original attributes, AI, sounds, and combat behavior.
+ * Shared behavior for the three hostile legacy mobs. Keeping the variants explicit preserves their
+ * original attributes, AI, sounds, and combat behavior.
  */
 public final class PortedMonster extends Monster implements GeoEntity {
     public enum Variant {
@@ -86,23 +86,26 @@ public final class PortedMonster extends Monster implements GeoEntity {
     }
 
     private PlayState animationState(AnimationState<PortedMonster> state) {
-        String entityName = switch (variant) {
-            case SCORCHLING -> "scorchling";
-            case SCORCHHOUND -> "scorchhound";
-            case LUMINITE_GOLEM -> "luminite_golem";
-        };
+        String entityName =
+                switch (variant) {
+                    case SCORCHLING -> "scorchling";
+                    case SCORCHHOUND -> "scorchhound";
+                    case LUMINITE_GOLEM -> "luminite_golem";
+                };
         String action;
         if (variant == Variant.LUMINITE_GOLEM && attackAnimationTick > 0) {
             action = "attack";
         } else if (state.isMoving()) {
-            action = switch (variant) {
-                case SCORCHLING, SCORCHHOUND -> "run";
-                case LUMINITE_GOLEM -> "walk";
-            };
+            action =
+                    switch (variant) {
+                        case SCORCHLING, SCORCHHOUND -> "run";
+                        case LUMINITE_GOLEM -> "walk";
+                    };
         } else {
             action = "idle";
         }
-        return state.setAndContinue(RawAnimation.begin().thenLoop("animation." + entityName + "." + action));
+        return state.setAndContinue(
+                RawAnimation.begin().thenLoop("animation." + entityName + "." + action));
     }
 
     @Override
@@ -179,14 +182,16 @@ public final class PortedMonster extends Monster implements GeoEntity {
             level().broadcastEntityEvent(this, (byte) 4);
 
             float attackDamage = (float) getAttributeValue(Attributes.ATTACK_DAMAGE);
-            float randomizedDamage = (int) attackDamage > 0
-                    ? attackDamage / 2.0F + random.nextInt((int) attackDamage)
-                    : attackDamage;
+            float randomizedDamage =
+                    (int) attackDamage > 0
+                            ? attackDamage / 2.0F + random.nextInt((int) attackDamage)
+                            : attackDamage;
             DamageSource damageSource = damageSources().mobAttack(this);
             boolean hurt = target.hurt(damageSource, randomizedDamage);
             if (hurt) {
                 if (target instanceof LivingEntity livingTarget) {
-                    livingTarget.setDeltaMovement(livingTarget.getDeltaMovement().add(0.0, 0.5, 0.0));
+                    livingTarget.setDeltaMovement(
+                            livingTarget.getDeltaMovement().add(0.0, 0.5, 0.0));
                 }
                 if (level() instanceof ServerLevel serverLevel) {
                     EnchantmentHelper.doPostAttackEffects(serverLevel, target, damageSource);
@@ -257,8 +262,7 @@ public final class PortedMonster extends Monster implements GeoEntity {
         };
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     protected SoundEvent getAmbientSound() {
         return switch (variant) {
             case SCORCHLING -> CustomSoundEvents.SCORCHLING_AMBIENT.get();
@@ -268,22 +272,31 @@ public final class PortedMonster extends Monster implements GeoEntity {
     }
 
     public static boolean canScorchlingSpawn(
-            EntityType<PortedMonster> type, ServerLevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random
-    ) {
+            EntityType<PortedMonster> type,
+            ServerLevelAccessor level,
+            MobSpawnType reason,
+            BlockPos pos,
+            RandomSource random) {
         return oneIn(DarkCavernsConfig.COMMON.scorchlingSpawnChance.get(), random)
                 && Monster.checkMonsterSpawnRules(type, level, reason, pos, random);
     }
 
     public static boolean canScorchhoundSpawn(
-            EntityType<PortedMonster> type, ServerLevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random
-    ) {
+            EntityType<PortedMonster> type,
+            ServerLevelAccessor level,
+            MobSpawnType reason,
+            BlockPos pos,
+            RandomSource random) {
         return oneIn(DarkCavernsConfig.COMMON.scorchhoundSpawnChance.get(), random)
                 && Monster.checkMonsterSpawnRules(type, level, reason, pos, random);
     }
 
     public static boolean canLuminiteGolemSpawn(
-            EntityType<PortedMonster> type, ServerLevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random
-    ) {
+            EntityType<PortedMonster> type,
+            ServerLevelAccessor level,
+            MobSpawnType reason,
+            BlockPos pos,
+            RandomSource random) {
         return oneIn(DarkCavernsConfig.COMMON.luminiteGolemSpawnChance.get(), random)
                 && Monster.checkMonsterSpawnRules(type, level, reason, pos, random);
     }

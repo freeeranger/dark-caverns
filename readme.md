@@ -1,8 +1,8 @@
 [![Dark Caverns Mod Trailer](https://img.youtube.com/vi/Z3q_B4iXvOw/maxresdefault.jpg)](https://www.youtube.com/watch?v=Z3q_B4iXvOw)
 
-[![CurseForge](https://img.shields.io/badge/CurseForge-Dark%20Caverns-f16436?logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![Wiki](https://img.shields.io/badge/Documentation-Official%20Wiki-blue?logo=github)](https://github.com/freeeranger/dark-caverns/wiki) [![YouTube Trailer](https://img.shields.io/badge/YouTube-Mod%20Trailer-red?logo=youtube)](https://www.youtube.com/watch?v=Z3q_B4iXvOw) [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.16.5-brightgreen)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![Forge](https://img.shields.io/badge/Modloader-Forge-blue)](https://files.minecraftforge.net/)
+[![CurseForge](https://img.shields.io/badge/CurseForge-Dark%20Caverns-f16436?logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![Wiki](https://img.shields.io/badge/Documentation-Official%20Wiki-blue?logo=github)](https://github.com/freeeranger/dark-caverns/wiki) [![YouTube Trailer](https://img.shields.io/badge/YouTube-Mod%20Trailer-red?logo=youtube)](https://www.youtube.com/watch?v=Z3q_B4iXvOw) [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.1-brightgreen)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![NeoForge](https://img.shields.io/badge/Modloader-NeoForge-orange)](https://neoforged.net/)
 
-Dark Caverns is a Minecraft Forge mod for 1.16.5 that adds a cave dimension below bedrock. The dimension has huge open caverns at the top and deep cave systems underneath, with three biomes, custom mobs, and upgradeable gear tiers.
+Dark Caverns is a Minecraft NeoForge mod for 1.21.1 that adds a cave dimension below bedrock. The dimension has huge open caverns at the top and deep cave systems underneath, with three biomes, custom mobs, and upgradeable gear tiers.
 
 ---
 
@@ -56,3 +56,26 @@ You can upgrade platinum gear further at a smithing table:
 - [CurseForge page](https://www.curseforge.com/minecraft/mc-mods/dark-caverns), downloads and changelogs
 - [YouTube mod trailer](https://www.youtube.com/watch?v=Z3q_B4iXvOw), gameplay preview
 - [Issue tracker](https://github.com/freeeranger/dark-caverns/issues), bug reports and feedback
+
+---
+
+## Development
+
+Building Dark Caverns requires a Java 21 JDK. The Gradle wrapper downloads the remaining build dependencies.
+
+```shell
+./gradlew build
+```
+
+Run the automated in-game regression suite with:
+
+```shell
+./gradlew runGameTestServer
+```
+
+Check or apply the repository's formatting rules with:
+
+```shell
+./gradlew spotlessCheck
+./gradlew spotlessApply
+```

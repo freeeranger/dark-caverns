@@ -24,11 +24,15 @@ public final class KeyToTheCavernsItem extends Item {
         }
 
         if (context.getLevel() instanceof ServerLevel level) {
-            level.setBlock(pos, CustomBlocks.GATEWAY_TO_THE_CAVERNS.get().defaultBlockState(), Block.UPDATE_ALL);
+            level.setBlock(
+                    pos,
+                    CustomBlocks.GATEWAY_TO_THE_CAVERNS.get().defaultBlockState(),
+                    Block.UPDATE_ALL);
             if (context.getPlayer() == null || !context.getPlayer().getAbilities().instabuild) {
                 context.getItemInHand().shrink(1);
             }
-            level.playSound(null, pos, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(
+                    null, pos, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
             level.sendParticles(
                     ParticleTypes.CLOUD,
                     pos.getX() + 0.5,
@@ -38,8 +42,7 @@ public final class KeyToTheCavernsItem extends Item {
                     0.2,
                     0.2,
                     0.2,
-                    0.05
-            );
+                    0.05);
         }
         return InteractionResult.sidedSuccess(context.getLevel().isClientSide());
     }
