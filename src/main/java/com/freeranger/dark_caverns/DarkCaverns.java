@@ -1,6 +1,5 @@
 package com.freeranger.dark_caverns;
 
-import com.freeranger.dark_caverns.config.ClientConfig;
 import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.core.ArmorEffects;
 import com.freeranger.dark_caverns.core.ExplorationTrades;
@@ -53,9 +52,6 @@ public final class DarkCaverns {
 
         modContainer.registerConfig(
                 ModConfig.Type.SERVER, ServerConfig.SPEC, MOD_ID + "-server.toml");
-        modContainer.registerConfig(
-                ModConfig.Type.CLIENT, ClientConfig.SPEC, MOD_ID + "-client.toml");
-
         LOGGER.info("Initializing Dark Caverns for NeoForge 1.21.1");
     }
 }

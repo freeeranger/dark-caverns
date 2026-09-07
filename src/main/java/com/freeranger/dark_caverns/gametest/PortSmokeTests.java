@@ -5,9 +5,14 @@ import com.freeranger.dark_caverns.blocks.GatewayToTheCavernsBlock;
 import com.freeranger.dark_caverns.blocks.GatewayToTheOverworldBlock;
 import com.freeranger.dark_caverns.core.ExplorationTrades;
 import com.freeranger.dark_caverns.core.GatewayCooldowns;
+import com.freeranger.dark_caverns.entities.CamorockEntity;
+import com.freeranger.dark_caverns.entities.LuminiteFoxEntity;
+import com.freeranger.dark_caverns.entities.LuminiteGolemEntity;
+import com.freeranger.dark_caverns.entities.MoltenerEntity;
+import com.freeranger.dark_caverns.entities.ScorchhoundEntity;
+import com.freeranger.dark_caverns.entities.ScorchlingEntity;
 import com.freeranger.dark_caverns.entities.ShroomieEntity;
-import com.freeranger.dark_caverns.entities.VariantCreatureEntity;
-import com.freeranger.dark_caverns.entities.VariantMonsterEntity;
+import com.freeranger.dark_caverns.entities.ShroomlingEntity;
 import com.freeranger.dark_caverns.events.CorruptedPearlTeleportEvent;
 import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
 import com.freeranger.dark_caverns.registry.CustomAttachments;
@@ -28,6 +33,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerPlayer;
@@ -119,9 +125,22 @@ public final class PortSmokeTests {
         helper.assertTrue(
                 shroomie.getOffers().size() == 6,
                 "Shroomie should generate five common and one rare offer");
+        ShroomlingEntity shroomling =
+                CustomEntityTypes.SHROOMLING_ENTITY.get().create(helper.getLevel());
+        helper.assertTrue(shroomling != null, "Shroomling factory failed");
+        UUID angerTarget = UUID.randomUUID();
+        shroomling.setRemainingPersistentAngerTime(200);
+        shroomling.setPersistentAngerTarget(angerTarget);
+        CompoundTag shroomlingData = new CompoundTag();
+        shroomling.addAdditionalSaveData(shroomlingData);
+        ShroomlingEntity restoredShroomling =
+                CustomEntityTypes.SHROOMLING_ENTITY.get().create(helper.getLevel());
+        helper.assertTrue(restoredShroomling != null, "Second Shroomling factory failed");
+        restoredShroomling.readAdditionalSaveData(shroomlingData);
         helper.assertTrue(
-                CustomEntityTypes.SHROOMLING_ENTITY.get().create(helper.getLevel()) != null,
-                "Shroomling factory failed");
+                restoredShroomling.getRemainingPersistentAngerTime() == 200
+                        && angerTarget.equals(restoredShroomling.getPersistentAngerTarget()),
+                "Shroomling persistent anger state did not survive serialization");
         helper.assertTrue(
                 CustomEntityTypes.THROWABLE_LUMINITE_TORCH.get().create(helper.getLevel()) != null,
                 "Torch projectile factory failed");
@@ -614,20 +633,18 @@ public final class PortSmokeTests {
 
     @GameTest(template = "sacret_torch")
     public static void entityCombatBehavior(GameTestHelper helper) {
-        VariantCreatureEntity camorock =
-                CustomEntityTypes.CAMOROCK_ENTITY.get().create(helper.getLevel());
-        VariantCreatureEntity moltener =
-                CustomEntityTypes.MOLTENER_ENTITY.get().create(helper.getLevel());
-        VariantCreatureEntity fox =
+        CamorockEntity camorock = CustomEntityTypes.CAMOROCK_ENTITY.get().create(helper.getLevel());
+        MoltenerEntity moltener = CustomEntityTypes.MOLTENER_ENTITY.get().create(helper.getLevel());
+        LuminiteFoxEntity fox =
                 CustomEntityTypes.LUMINITE_FOX_ENTITY.get().create(helper.getLevel());
-        VariantCreatureEntity shroomling =
+        ShroomlingEntity shroomling =
                 CustomEntityTypes.SHROOMLING_ENTITY.get().create(helper.getLevel());
         ShroomieEntity shroomie = CustomEntityTypes.SHROOMIE_ENTITY.get().create(helper.getLevel());
-        VariantMonsterEntity scorchling =
+        ScorchlingEntity scorchling =
                 CustomEntityTypes.SCORCHLING_ENTITY.get().create(helper.getLevel());
-        VariantMonsterEntity scorchhound =
+        ScorchhoundEntity scorchhound =
                 CustomEntityTypes.SCORCHHOUND_ENTITY.get().create(helper.getLevel());
-        VariantMonsterEntity golem =
+        LuminiteGolemEntity golem =
                 CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get().create(helper.getLevel());
 
         verifyMob(
@@ -754,7 +771,7 @@ public final class PortSmokeTests {
                 golem.getAttributeBaseValue(Attributes.KNOCKBACK_RESISTANCE) == 2.0,
                 "Luminite golem declared knockback resistance changed");
 
-        VariantMonsterEntity attackingHound =
+        ScorchhoundEntity attackingHound =
                 helper.spawn(CustomEntityTypes.SCORCHHOUND_ENTITY.get(), new BlockPos(2, 2, 2));
         var flingTarget = helper.makeMockPlayer(GameType.SURVIVAL);
         flingTarget.setPos(Vec3.atCenterOf(helper.absolutePos(new BlockPos(4, 2, 2))));
@@ -768,7 +785,7 @@ public final class PortSmokeTests {
                 flingTarget.getDeltaMovement().lengthSqr() > 0.0,
                 "Scorchhound attack should use Hoglin-style fling motion");
 
-        VariantMonsterEntity attackingGolem =
+        LuminiteGolemEntity attackingGolem =
                 helper.spawn(CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(), new BlockPos(2, 2, 4));
         var golemTarget = helper.makeMockPlayer(GameType.SURVIVAL);
         golemTarget.setPos(Vec3.atCenterOf(helper.absolutePos(new BlockPos(4, 2, 4))));

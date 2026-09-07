@@ -1,6 +1,5 @@
 package com.freeranger.dark_caverns.client;
 
-import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.config.ClientConfig;
 import com.freeranger.dark_caverns.registry.CustomEquipment;
 import java.util.HashSet;
@@ -14,20 +13,30 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 
-@EventBusSubscriber(modid = DarkCaverns.MOD_ID, value = Dist.CLIENT)
 public final class LuminiteHelmetLighting {
-    private static Set<BlockPos> sources = Set.of();
+    public static final int LIGHT_LEVEL = 15;
+
+    private static final int NEARBY_VISIBILITY_DISTANCE = 24;
+    private static final LuminiteHelmetLighting INSTANCE = new LuminiteHelmetLighting();
+
+    private volatile Set<Long> sources = Set.of();
 
     private LuminiteHelmetLighting() {}
 
-    @SubscribeEvent
-    public static void onClientTick(ClientTickEvent.Post event) {
+    public static void register(IEventBus gameBus) {
+        gameBus.addListener(INSTANCE::onClientTick);
+        gameBus.addListener(INSTANCE::onLogout);
+    }
+
+    public static boolean isSource(long packedPos) {
+        return INSTANCE.sources.contains(packedPos);
+    }
+
+    private void onClientTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
         ClientLevel level = minecraft.level;
         if (level == null || minecraft.player == null || !ClientConfig.enableDynamicLighting()) {
@@ -35,23 +44,19 @@ public final class LuminiteHelmetLighting {
             return;
         }
 
-        Set<BlockPos> nextSources = new HashSet<>();
+        Set<Long> nextSources = new HashSet<>();
         for (Entity entity : level.entitiesForRendering()) {
             if (entity instanceof LivingEntity living && shouldGlow(minecraft, living)) {
                 nextSources.add(
-                        BlockPos.containing(living.getX(), living.getEyeY(), living.getZ()));
+                        BlockPos.containing(living.getX(), living.getEyeY(), living.getZ())
+                                .asLong());
             }
         }
         update(level, nextSources);
     }
 
-    @SubscribeEvent
-    public static void onLogout(ClientPlayerNetworkEvent.LoggingOut event) {
+    private void onLogout(ClientPlayerNetworkEvent.LoggingOut event) {
         clear(Minecraft.getInstance().level);
-    }
-
-    public static boolean isSource(BlockPos pos) {
-        return sources.contains(pos);
     }
 
     private static boolean shouldGlow(Minecraft minecraft, LivingEntity entity) {
@@ -64,7 +69,7 @@ public final class LuminiteHelmetLighting {
         if (distanceSquared > maximumDistance * maximumDistance) {
             return false;
         }
-        if (distanceSquared < 24 * 24) {
+        if (distanceSquared < NEARBY_VISIBILITY_DISTANCE * NEARBY_VISIBILITY_DISTANCE) {
             return true;
         }
 
@@ -83,25 +88,29 @@ public final class LuminiteHelmetLighting {
                 == HitResult.Type.MISS;
     }
 
-    private static void update(ClientLevel level, Set<BlockPos> nextSources) {
-        Set<BlockPos> changed = new HashSet<>(sources);
+    private void update(ClientLevel level, Set<Long> nextSources) {
+        Set<Long> changed = new HashSet<>(sources);
         changed.addAll(nextSources);
-        Set<BlockPos> unchanged = new HashSet<>(sources);
+        Set<Long> unchanged = new HashSet<>(sources);
         unchanged.retainAll(nextSources);
         changed.removeAll(unchanged);
 
         sources = Set.copyOf(nextSources);
-        changed.forEach(level.getChunkSource().getLightEngine()::checkBlock);
+        changed.stream()
+                .map(BlockPos::of)
+                .forEach(level.getChunkSource().getLightEngine()::checkBlock);
     }
 
-    private static void clear(ClientLevel level) {
+    private void clear(ClientLevel level) {
         if (sources.isEmpty()) {
             return;
         }
-        Set<BlockPos> previous = sources;
+        Set<Long> previous = sources;
         sources = Set.of();
         if (level != null) {
-            previous.forEach(level.getChunkSource().getLightEngine()::checkBlock);
+            previous.stream()
+                    .map(BlockPos::of)
+                    .forEach(level.getChunkSource().getLightEngine()::checkBlock);
         }
     }
 }

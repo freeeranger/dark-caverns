@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "client.BlockGetterMixin"
+    "client.BlockLightEngineMixin"
   ],
   "injectors": {
     "defaultRequire": 1
