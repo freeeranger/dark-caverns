@@ -21,6 +21,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -62,6 +63,18 @@ public final class PortSmokeTests {
         helper.assertTrue(ModRegistries.ITEMS.getEntries().size() == 102, "Expected 46 block items plus 56 standalone item IDs");
         helper.assertTrue(ModRegistries.SOUNDS.getEntries().size() == 27, "Expected all 27 legacy sound IDs");
         helper.assertTrue(ModRegistries.ENTITY_TYPES.getEntries().size() == 11, "Expected eight mobs plus three projectile entity IDs");
+        long darkCavernsAdvancements = helper.getLevel().getServer().getAdvancements().getAllAdvancements().stream()
+                .filter(advancement -> advancement.id().getNamespace().equals(DarkCaverns.MOD_ID))
+                .count();
+        helper.assertTrue(darkCavernsAdvancements == 162,
+                "Expected 20 progression advancements and 142 recipe unlock advancements");
+        helper.assertTrue(
+                helper.getLevel().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(
+                        DarkCaverns.MOD_ID,
+                        "recipes/platinum_sword"
+                )) != null,
+                "Platinum sword recipe unlock advancement did not load"
+        );
 
         helper.assertTrue(CustomEntityTypes.SCORCHLING_ENTITY.get().create(helper.getLevel()) != null, "Scorchling factory failed");
         helper.assertTrue(CustomEntityTypes.SCORCHHOUND_ENTITY.get().create(helper.getLevel()) != null, "Scorchhound factory failed");
@@ -173,6 +186,16 @@ public final class PortSmokeTests {
                 "Luminite wall torch should emit light level 15");
         helper.assertTrue(CustomBlocks.LUMINITE_LANTERN.get().defaultBlockState().getLightEmission() == 15,
                 "Luminite lantern should emit light level 15");
+        helper.assertTrue(CustomBlocks.CARFSTONE.get().defaultBlockState().is(BlockTags.MINEABLE_WITH_PICKAXE),
+                "Carfstone should be mineable with a pickaxe");
+        helper.assertTrue(CustomBlocks.CARFSTONE_IRON_ORE.get().defaultBlockState().is(BlockTags.NEEDS_STONE_TOOL),
+                "Carfstone iron ore should require a stone-tier tool");
+        helper.assertTrue(CustomBlocks.LUMINITE_ORE.get().defaultBlockState().is(BlockTags.NEEDS_IRON_TOOL),
+                "Luminite ore should require an iron-tier tool");
+        helper.assertTrue(CustomBlocks.PLATINUM_ORE.get().defaultBlockState().is(BlockTags.NEEDS_DIAMOND_TOOL),
+                "Platinum ore should require a diamond-tier tool");
+        helper.assertTrue(CustomBlocks.GLIMMERSHROOM_BLOCK.get().defaultBlockState().is(BlockTags.MINEABLE_WITH_AXE),
+                "Glimmershroom blocks should retain their axe mining behavior");
 
         BlockPos plantPos = new BlockPos(2, 2, 2);
         helper.setBlock(plantPos.below(), CustomBlocks.GLIMMERGRASS_BLOCK.get());
@@ -398,7 +421,12 @@ public final class PortSmokeTests {
         PortedMonster attackingGolem = helper.spawn(CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(), new BlockPos(2, 2, 4));
         var golemTarget = helper.makeMockPlayer(GameType.SURVIVAL);
         golemTarget.setPos(Vec3.atCenterOf(helper.absolutePos(new BlockPos(4, 2, 4))));
+        golemTarget.getAttribute(Attributes.MAX_HEALTH).setBaseValue(100.0);
+        golemTarget.setHealth(100.0F);
         helper.assertTrue(attackingGolem.doHurtTarget(golemTarget), "Luminite golem attack should damage its target");
+        float golemDamage = 100.0F - golemTarget.getHealth();
+        helper.assertTrue(golemDamage >= 10.0F && golemDamage < 30.0F,
+                "Luminite golem attack should retain its randomized 10-29 damage range");
         helper.assertTrue(golemTarget.getDeltaMovement().y >= 0.5,
                 "Luminite golem attack should launch its target upward");
         helper.assertTrue(attackingGolem.attackAnimationTick() == 10,

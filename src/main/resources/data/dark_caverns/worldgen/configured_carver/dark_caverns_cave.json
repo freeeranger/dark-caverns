@@ -10,13 +10,13 @@
     "replaceable": "#dark_caverns:dark_caverns_base_carveable",
     "vertical_radius_multiplier": 1.0,
     "y": {
-      "type": "minecraft:very_biased_to_bottom",
-      "inner": 8,
+      "type": "minecraft:biased_to_bottom",
+      "inner": 6,
       "max_inclusive": {
-        "absolute": 250
+        "absolute": 255
       },
       "min_inclusive": {
-        "absolute": 6
+        "absolute": 0
       }
     },
     "yScale": 1.0

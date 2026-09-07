@@ -83,6 +83,22 @@ public final class PortedJigsawStructure extends Structure {
             start = new BlockPos(x, Math.max(minimum, floorY - 15), z);
             projection = Optional.empty();
         } else {
+            int surfaceY = context.chunkGenerator().getFirstOccupiedHeight(
+                    x,
+                    z,
+                    Heightmap.Types.WORLD_SURFACE_WG,
+                    context.heightAccessor(),
+                    context.randomState()
+            );
+            NoiseColumn column = context.chunkGenerator().getBaseColumn(
+                    x,
+                    z,
+                    context.heightAccessor(),
+                    context.randomState()
+            );
+            if (!column.getBlock(surfaceY).getFluidState().isEmpty()) {
+                return Optional.empty();
+            }
             start = new BlockPos(x, 0, z);
             projection = Optional.of(Heightmap.Types.WORLD_SURFACE_WG);
         }

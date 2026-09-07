@@ -2,7 +2,7 @@
   "parent": "dark_caverns:enter_dark_caverns",
   "display": {
     "icon": {
-      "item": "minecraft:skeleton_skull"
+      "id": "minecraft:skeleton_skull"
     },
     "title": {
       "translate": "advancements.dark_caverns.find_territory_marker.title"
@@ -19,9 +19,17 @@
     "find_territory_marker": {
       "trigger": "minecraft:location",
       "conditions": {
-        "location": {
-          "feature": "dark_caverns:territory_marker"
-        }
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "dark_caverns:territory_marker"
+              }
+            }
+          }
+        ]
       }
     }
   },

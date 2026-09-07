@@ -285,6 +285,6 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
             RandomSource random,
             int chance
     ) {
-        return random.nextInt(chance) == 0 && Mob.checkMobSpawnRules(type, level, reason, pos, random);
+        return random.nextInt(chance) == 0;
     }
 }

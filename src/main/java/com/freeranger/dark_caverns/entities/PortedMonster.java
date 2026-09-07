@@ -3,6 +3,7 @@ package com.freeranger.dark_caverns.entities;
 import com.freeranger.dark_caverns.core.DarkCavernsConfig;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.hoglin.HoglinBase;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +38,7 @@ import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 /**
- * Server-side behavior shared by the three hostile legacy mobs while their GeckoLib render layer is ported.
+ * Shared behavior for the three hostile legacy mobs.
  * Keeping the variants explicit preserves their original attributes, AI, sounds, and combat behavior.
  */
 public final class PortedMonster extends Monster implements GeoEntity {
@@ -172,18 +174,30 @@ public final class PortedMonster extends Monster implements GeoEntity {
             return HoglinBase.hurtAndThrowTarget(this, livingTarget);
         }
 
-        boolean hurt = super.doHurtTarget(target);
-        if (!hurt || !(target instanceof LivingEntity livingTarget)) {
-            return hurt;
-        }
-
         if (variant == Variant.LUMINITE_GOLEM) {
             attackAnimationTick = 10;
             level().broadcastEntityEvent(this, (byte) 4);
-            livingTarget.setDeltaMovement(livingTarget.getDeltaMovement().add(0.0, 0.5, 0.0));
+
+            float attackDamage = (float) getAttributeValue(Attributes.ATTACK_DAMAGE);
+            float randomizedDamage = (int) attackDamage > 0
+                    ? attackDamage / 2.0F + random.nextInt((int) attackDamage)
+                    : attackDamage;
+            DamageSource damageSource = damageSources().mobAttack(this);
+            boolean hurt = target.hurt(damageSource, randomizedDamage);
+            if (hurt) {
+                if (target instanceof LivingEntity livingTarget) {
+                    livingTarget.setDeltaMovement(livingTarget.getDeltaMovement().add(0.0, 0.5, 0.0));
+                }
+                if (level() instanceof ServerLevel serverLevel) {
+                    EnchantmentHelper.doPostAttackEffects(serverLevel, target, damageSource);
+                }
+                setLastHurtMob(target);
+            }
             playSound(CustomSoundEvents.LUMINITE_GOLEM_ATTACK.get(), 1.0F, 1.0F);
+            return hurt;
         }
-        return true;
+
+        return super.doHurtTarget(target);
     }
 
     @Override

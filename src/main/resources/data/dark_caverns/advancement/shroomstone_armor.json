@@ -1,44 +1,44 @@
 {
-    "parent": "dark_caverns:obtain_shroomstone_piece",
-    "display": {
-      "icon": {
-        "item": "dark_caverns:shroomstone_chestplate"
-      },
-      "title": {
-        "translate": "advancements.dark_caverns.shroomstone_armor_set.title"
-      },
-      "description": {
-        "translate": "advancements.dark_caverns.shroomstone_armor_set.description"
-      },
-      "frame": "task",
-      "show_toast": true,
-      "announce_to_chat": true,
-      "hidden": false
+  "parent": "dark_caverns:obtain_shroomstone_piece",
+  "display": {
+    "icon": {
+      "id": "dark_caverns:shroomstone_chestplate"
     },
-    "criteria": {
-      "shroomstone_armor": {
-        "trigger": "minecraft:inventory_changed",
-        "conditions": {
-          "items": [
-            {
-              "item": "dark_caverns:shroomstone_helmet"
-            },
-            {
-              "item": "dark_caverns:shroomstone_chestplate"
-            },
-            {
-              "item": "dark_caverns:shroomstone_leggings"
-            },
-            {
-              "item": "dark_caverns:shroomstone_boots"
-            }
-          ]
-        }
+    "title": {
+      "translate": "advancements.dark_caverns.shroomstone_armor_set.title"
+    },
+    "description": {
+      "translate": "advancements.dark_caverns.shroomstone_armor_set.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shroomstone_armor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "dark_caverns:shroomstone_helmet"
+          },
+          {
+            "items": "dark_caverns:shroomstone_chestplate"
+          },
+          {
+            "items": "dark_caverns:shroomstone_leggings"
+          },
+          {
+            "items": "dark_caverns:shroomstone_boots"
+          }
+        ]
       }
-    },
-    "requirements": [
-      [
-        "shroomstone_armor"
-      ]
+    }
+  },
+  "requirements": [
+    [
+      "shroomstone_armor"
     ]
-  }
+  ]
+}

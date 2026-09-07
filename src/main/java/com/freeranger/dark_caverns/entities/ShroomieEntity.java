@@ -168,7 +168,6 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
             RandomSource random
     ) {
         return random.nextInt(DarkCavernsConfig.COMMON.shroomieSpawnChance.get()) == 0
-                && level.getBlockState(pos.below()).is(CustomBlocks.GLIMMERGRASS_BLOCK.get())
-                && Mob.checkMobSpawnRules(type, level, reason, pos, random);
+                && level.getBlockState(pos.below()).is(CustomBlocks.GLIMMERGRASS_BLOCK.get());
     }
 }

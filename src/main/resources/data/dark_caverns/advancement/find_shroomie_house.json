@@ -2,7 +2,7 @@
   "parent": "dark_caverns:enter_dark_caverns",
   "display": {
     "icon": {
-      "item": "dark_caverns:glimmershroom_block"
+      "id": "dark_caverns:glimmershroom_block"
     },
     "title": {
       "translate": "advancements.dark_caverns.find_shroomie_house.title"
@@ -19,9 +19,17 @@
     "find_shroomie_house": {
       "trigger": "minecraft:location",
       "conditions": {
-        "location": {
-          "feature": "dark_caverns:shroomie_house"
-        }
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "dark_caverns:shroomie_house"
+              }
+            }
+          }
+        ]
       }
     }
   },
