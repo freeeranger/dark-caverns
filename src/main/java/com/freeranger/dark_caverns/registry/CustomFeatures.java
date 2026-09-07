@@ -1,23 +1,30 @@
 package com.freeranger.dark_caverns.registry;
 
+import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.generation.CrackedBedrockFeature;
 import com.freeranger.dark_caverns.generation.SpikeFeature;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CustomFeatures {
+    private static final DeferredRegister<Feature<?>> FEATURES =
+            DeferredRegister.create(Registries.FEATURE, DarkCaverns.MOD_ID);
+
     public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>>
             CRACKED_BEDROCK =
-                    ModRegistries.FEATURES.register(
+                    FEATURES.register(
                             "cracked_bedrock",
                             () -> new CrackedBedrockFeature(NoneFeatureConfiguration.CODEC));
     public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>> SPIKE =
-            ModRegistries.FEATURES.register(
+            FEATURES.register(
                     "spike_feature",
                     () -> new SpikeFeature(NoneFeatureConfiguration.CODEC, CustomBlocks.CARFSTONE));
     public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>> MOLTEN_SPIKE =
-            ModRegistries.FEATURES.register(
+            FEATURES.register(
                     "molten_spike_feature",
                     () ->
                             new SpikeFeature(
@@ -25,7 +32,7 @@ public final class CustomFeatures {
 
     private CustomFeatures() {}
 
-    public static void bootstrap() {
-        // Forces class initialization before the deferred register attaches to the mod event bus.
+    public static void register(IEventBus modBus) {
+        FEATURES.register(modBus);
     }
 }

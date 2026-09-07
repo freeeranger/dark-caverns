@@ -23,6 +23,6 @@ public final class ShroomieModel extends GeoModel<ShroomieEntity> {
     }
 
     private static ResourceLocation resource(String path) {
-        return ResourceLocation.fromNamespaceAndPath(DarkCaverns.MOD_ID, path);
+        return DarkCaverns.id(path);
     }
 }

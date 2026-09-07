@@ -1,18 +1,24 @@
 package com.freeranger.dark_caverns.registry;
 
+import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.entities.CorruptedPearlEntity;
 import com.freeranger.dark_caverns.entities.ShroombombEntity;
 import com.freeranger.dark_caverns.entities.ThrowableLuminiteTorchEntity;
 import com.freeranger.dark_caverns.items.KeyToTheCavernsItem;
 import com.freeranger.dark_caverns.items.ThrowableItem;
+import java.util.function.Supplier;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HoeItem;
@@ -22,11 +28,17 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CustomItems {
+    private static final DeferredRegister.Items ITEMS =
+            DeferredRegister.createItems(DarkCaverns.MOD_ID);
+
     private static final FoodProperties SCORCHED_BERRIES_FOOD =
             new FoodProperties.Builder()
                     .nutrition(3)
@@ -44,14 +56,14 @@ public final class CustomItems {
                     .build();
 
     public static final DeferredItem<BlockItem> SCORCHED_BERRIES =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "scorched_berries",
                     () ->
                             new BlockItem(
                                     CustomBlocks.SCORCHED_BERRY_BUSH.get(),
                                     new Item.Properties().food(SCORCHED_BERRIES_FOOD)));
     public static final DeferredItem<KeyToTheCavernsItem> KEY_TO_THE_CAVERNS =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "key_to_the_caverns",
                     () -> new KeyToTheCavernsItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> SCORCHLING_TAIL = item("scorchling_tail");
@@ -99,7 +111,7 @@ public final class CustomItems {
     public static final DeferredItem<Item> PLATINUM_INGOT = item("platinum_ingot");
 
     public static final DeferredItem<ThrowableItem> THROWABLE_LUMINITE_TORCH =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "throwable_luminite_torch",
                     () ->
                             new ThrowableItem(
@@ -108,7 +120,7 @@ public final class CustomItems {
                                     0,
                                     ThrowableLuminiteTorchEntity::new));
     public static final DeferredItem<ThrowableItem> SHROOMBOMB =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "shroombomb",
                     () ->
                             new ThrowableItem(
@@ -117,7 +129,7 @@ public final class CustomItems {
                                     0,
                                     ShroombombEntity::new));
     public static final DeferredItem<ThrowableItem> CORRUPTED_PEARL =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "corrupted_pearl",
                     () ->
                             new ThrowableItem(
@@ -126,7 +138,6 @@ public final class CustomItems {
                                     20,
                                     CorruptedPearlEntity::new));
 
-    // Tool and armor mechanics require the 1.21 data-component/material migration.
     public static final DeferredItem<Item> LUMINITE_HELMET =
             armor(
                     "luminite_helmet",
@@ -135,50 +146,41 @@ public final class CustomItems {
                     15,
                     false);
     public static final DeferredItem<Item> PLATINUM_SWORD =
-            ModRegistries.ITEMS.register(
-                    "platinum_sword", () -> sword(CustomItemTiers.PLATINUM, false, false));
+            ITEMS.register("platinum_sword", () -> sword(CustomItemTiers.PLATINUM, false, false));
     public static final DeferredItem<Item> PLATINUM_AXE =
-            ModRegistries.ITEMS.register(
-                    "platinum_axe", () -> axe(CustomItemTiers.PLATINUM, false, false));
+            ITEMS.register("platinum_axe", () -> axe(CustomItemTiers.PLATINUM, false, false));
     public static final DeferredItem<Item> PLATINUM_PICKAXE =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "platinum_pickaxe", () -> pickaxe(CustomItemTiers.PLATINUM, false, false));
     public static final DeferredItem<Item> PLATINUM_SHOVEL =
-            ModRegistries.ITEMS.register(
-                    "platinum_shovel", () -> shovel(CustomItemTiers.PLATINUM, false, false));
+            ITEMS.register("platinum_shovel", () -> shovel(CustomItemTiers.PLATINUM, false, false));
     public static final DeferredItem<Item> PLATINUM_HOE =
-            ModRegistries.ITEMS.register(
-                    "platinum_hoe", () -> hoe(CustomItemTiers.PLATINUM, false, false));
+            ITEMS.register("platinum_hoe", () -> hoe(CustomItemTiers.PLATINUM, false, false));
     public static final DeferredItem<Item> HELLSTONE_SWORD =
-            ModRegistries.ITEMS.register(
-                    "hellstone_sword", () -> sword(CustomItemTiers.HELLSTONE, true, false));
+            ITEMS.register("hellstone_sword", () -> sword(CustomItemTiers.HELLSTONE, true, false));
     public static final DeferredItem<Item> HELLSTONE_AXE =
-            ModRegistries.ITEMS.register(
-                    "hellstone_axe", () -> axe(CustomItemTiers.HELLSTONE, true, false));
+            ITEMS.register("hellstone_axe", () -> axe(CustomItemTiers.HELLSTONE, true, false));
     public static final DeferredItem<Item> HELLSTONE_PICKAXE =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "hellstone_pickaxe", () -> pickaxe(CustomItemTiers.HELLSTONE, true, false));
     public static final DeferredItem<Item> HELLSTONE_SHOVEL =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "hellstone_shovel", () -> shovel(CustomItemTiers.HELLSTONE, true, false));
     public static final DeferredItem<Item> HELLSTONE_HOE =
-            ModRegistries.ITEMS.register(
-                    "hellstone_hoe", () -> hoe(CustomItemTiers.HELLSTONE, true, false));
+            ITEMS.register("hellstone_hoe", () -> hoe(CustomItemTiers.HELLSTONE, true, false));
     public static final DeferredItem<Item> SHROOMSTONE_SWORD =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "shroomstone_sword", () -> sword(CustomItemTiers.SHROOMSTONE, false, true));
     public static final DeferredItem<Item> SHROOMSTONE_AXE =
-            ModRegistries.ITEMS.register(
-                    "shroomstone_axe", () -> axe(CustomItemTiers.SHROOMSTONE, false, true));
+            ITEMS.register("shroomstone_axe", () -> axe(CustomItemTiers.SHROOMSTONE, false, true));
     public static final DeferredItem<Item> SHROOMSTONE_PICKAXE =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "shroomstone_pickaxe", () -> pickaxe(CustomItemTiers.SHROOMSTONE, false, true));
     public static final DeferredItem<Item> SHROOMSTONE_SHOVEL =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "shroomstone_shovel", () -> shovel(CustomItemTiers.SHROOMSTONE, false, true));
     public static final DeferredItem<Item> SHROOMSTONE_HOE =
-            ModRegistries.ITEMS.register(
-                    "shroomstone_hoe", () -> hoe(CustomItemTiers.SHROOMSTONE, false, true));
+            ITEMS.register("shroomstone_hoe", () -> hoe(CustomItemTiers.SHROOMSTONE, false, true));
     public static final DeferredItem<Item> PLATINUM_HELMET =
             armor(
                     "platinum_helmet",
@@ -288,7 +290,7 @@ public final class CustomItems {
                     true);
 
     public static final DeferredItem<StandingAndWallBlockItem> LUMINITE_TORCH =
-            ModRegistries.ITEMS.register(
+            ITEMS.register(
                     "luminite_torch",
                     () ->
                             new StandingAndWallBlockItem(
@@ -299,8 +301,9 @@ public final class CustomItems {
 
     private CustomItems() {}
 
-    public static void bootstrap() {
-        // Forces class initialization before the deferred registers attach to the event bus.
+    public static void register(IEventBus modBus) {
+        CustomBlocks.registerBlockItems(ITEMS);
+        ITEMS.register(modBus);
     }
 
     private static DeferredItem<Item> item(String name) {
@@ -308,7 +311,7 @@ public final class CustomItems {
     }
 
     private static DeferredItem<Item> item(String name, Item.Properties properties) {
-        return ModRegistries.ITEMS.registerSimpleItem(name, properties);
+        return ITEMS.registerSimpleItem(name, properties);
     }
 
     private static DeferredItem<Item> fireResistantItem(String name) {
@@ -317,14 +320,10 @@ public final class CustomItems {
 
     private static DeferredItem<DeferredSpawnEggItem> spawnEgg(
             String name,
-            java.util.function.Supplier<
-                            ? extends
-                                    net.minecraft.world.entity.EntityType<
-                                            ? extends net.minecraft.world.entity.Mob>>
-                    type,
+            Supplier<? extends EntityType<? extends Mob>> type,
             int backgroundColor,
             int highlightColor) {
-        return ModRegistries.ITEMS.register(
+        return ITEMS.register(
                 name,
                 () ->
                         new DeferredSpawnEggItem(
@@ -333,7 +332,7 @@ public final class CustomItems {
 
     private static DeferredItem<Item> armor(
             String name,
-            net.minecraft.core.Holder<net.minecraft.world.item.ArmorMaterial> material,
+            Holder<ArmorMaterial> material,
             ArmorItem.Type type,
             int durabilityMultiplier,
             boolean fireResistant) {
@@ -342,11 +341,10 @@ public final class CustomItems {
         if (fireResistant) {
             properties.fireResistant();
         }
-        return ModRegistries.ITEMS.register(name, () -> new ArmorItem(material, type, properties));
+        return ITEMS.register(name, () -> new ArmorItem(material, type, properties));
     }
 
-    private static Item sword(
-            net.minecraft.world.item.Tier tier, boolean ignites, boolean launches) {
+    private static Item sword(Tier tier, boolean ignites, boolean launches) {
         Item.Properties properties =
                 toolProperties(ignites).attributes(SwordItem.createAttributes(tier, 3, -2.4F));
         return new SwordItem(tier, properties) {
@@ -358,7 +356,7 @@ public final class CustomItems {
         };
     }
 
-    private static Item axe(net.minecraft.world.item.Tier tier, boolean ignites, boolean launches) {
+    private static Item axe(Tier tier, boolean ignites, boolean launches) {
         Item.Properties properties =
                 toolProperties(ignites).attributes(AxeItem.createAttributes(tier, 5.0F, -3.0F));
         return new AxeItem(tier, properties) {
@@ -370,8 +368,7 @@ public final class CustomItems {
         };
     }
 
-    private static Item pickaxe(
-            net.minecraft.world.item.Tier tier, boolean ignites, boolean launches) {
+    private static Item pickaxe(Tier tier, boolean ignites, boolean launches) {
         Item.Properties properties =
                 toolProperties(ignites).attributes(PickaxeItem.createAttributes(tier, 1.0F, -2.8F));
         return new PickaxeItem(tier, properties) {
@@ -383,8 +380,7 @@ public final class CustomItems {
         };
     }
 
-    private static Item shovel(
-            net.minecraft.world.item.Tier tier, boolean ignites, boolean launches) {
+    private static Item shovel(Tier tier, boolean ignites, boolean launches) {
         Item.Properties properties =
                 toolProperties(ignites).attributes(ShovelItem.createAttributes(tier, 1.5F, -3.0F));
         return new ShovelItem(tier, properties) {
@@ -396,7 +392,7 @@ public final class CustomItems {
         };
     }
 
-    private static Item hoe(net.minecraft.world.item.Tier tier, boolean ignites, boolean launches) {
+    private static Item hoe(Tier tier, boolean ignites, boolean launches) {
         Item.Properties properties =
                 toolProperties(ignites).attributes(HoeItem.createAttributes(tier, -4.0F, 0.0F));
         return new HoeItem(tier, properties) {

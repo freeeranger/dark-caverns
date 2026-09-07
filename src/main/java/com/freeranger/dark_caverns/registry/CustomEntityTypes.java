@@ -1,21 +1,30 @@
 package com.freeranger.dark_caverns.registry;
 
+import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.entities.CorruptedPearlEntity;
 import com.freeranger.dark_caverns.entities.PortedCreature;
 import com.freeranger.dark_caverns.entities.PortedMonster;
 import com.freeranger.dark_caverns.entities.ShroombombEntity;
 import com.freeranger.dark_caverns.entities.ShroomieEntity;
 import com.freeranger.dark_caverns.entities.ThrowableLuminiteTorchEntity;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CustomEntityTypes {
+    private static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
+            DeferredRegister.create(Registries.ENTITY_TYPE, DarkCaverns.MOD_ID);
+
     public static final DeferredHolder<EntityType<?>, EntityType<ThrowableLuminiteTorchEntity>>
             THROWABLE_LUMINITE_TORCH =
                     projectile("throwable_luminite_torch", ThrowableLuminiteTorchEntity::new);
@@ -40,7 +49,7 @@ public final class CustomEntityTypes {
             LUMINITE_FOX_ENTITY =
                     creature("luminite_fox", PortedCreature::luminiteFox, 0.7F, 0.4F, false);
     public static final DeferredHolder<EntityType<?>, EntityType<ShroomieEntity>> SHROOMIE_ENTITY =
-            ModRegistries.ENTITY_TYPES.register(
+            ENTITY_TYPES.register(
                     "shroomie",
                     () ->
                             EntityType.Builder.of(ShroomieEntity::new, MobCategory.CREATURE)
@@ -52,8 +61,10 @@ public final class CustomEntityTypes {
 
     private CustomEntityTypes() {}
 
-    public static void bootstrap() {
-        // Forces class initialization before the deferred register attaches to the event bus.
+    public static void register(IEventBus modBus) {
+        ENTITY_TYPES.register(modBus);
+        modBus.addListener(CustomEntityTypes::registerAttributes);
+        modBus.addListener(CustomEntityTypes::registerSpawnPlacements);
     }
 
     public static void registerAttributes(EntityAttributeCreationEvent event) {
@@ -78,7 +89,7 @@ public final class CustomEntityTypes {
         registerSpawn(event, SHROOMLING_ENTITY.get(), PortedCreature::canShroomlingSpawn);
     }
 
-    private static <T extends net.minecraft.world.entity.Mob> void registerSpawn(
+    private static <T extends Mob> void registerSpawn(
             RegisterSpawnPlacementsEvent event,
             EntityType<T> type,
             SpawnPlacements.SpawnPredicate<T> predicate) {
@@ -90,10 +101,9 @@ public final class CustomEntityTypes {
                 RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
-    private static <T extends net.minecraft.world.entity.Entity>
-            DeferredHolder<EntityType<?>, EntityType<T>> projectile(
-                    String name, EntityType.EntityFactory<T> factory) {
-        return ModRegistries.ENTITY_TYPES.register(
+    private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> projectile(
+            String name, EntityType.EntityFactory<T> factory) {
+        return ENTITY_TYPES.register(
                 name,
                 () ->
                         EntityType.Builder.of(factory, MobCategory.MISC)
@@ -114,7 +124,7 @@ public final class CustomEntityTypes {
         if (fireImmune) {
             builder.fireImmune();
         }
-        return ModRegistries.ENTITY_TYPES.register(name, () -> builder.build(name));
+        return ENTITY_TYPES.register(name, () -> builder.build(name));
     }
 
     private static DeferredHolder<EntityType<?>, EntityType<PortedCreature>> creature(
@@ -128,6 +138,6 @@ public final class CustomEntityTypes {
         if (fireImmune) {
             builder.fireImmune();
         }
-        return ModRegistries.ENTITY_TYPES.register(name, () -> builder.build(name));
+        return ENTITY_TYPES.register(name, () -> builder.build(name));
     }
 }

@@ -27,6 +27,6 @@ public final class PortedCreatureModel extends GeoModel<PortedCreature> {
     }
 
     private static ResourceLocation resource(String path) {
-        return ResourceLocation.fromNamespaceAndPath(DarkCaverns.MOD_ID, path);
+        return DarkCaverns.id(path);
     }
 }

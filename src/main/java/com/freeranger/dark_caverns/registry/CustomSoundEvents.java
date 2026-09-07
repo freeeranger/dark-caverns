@@ -1,10 +1,16 @@
 package com.freeranger.dark_caverns.registry;
 
-import net.minecraft.resources.ResourceLocation;
+import com.freeranger.dark_caverns.DarkCaverns;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CustomSoundEvents {
+    private static final DeferredRegister<SoundEvent> SOUNDS =
+            DeferredRegister.create(Registries.SOUND_EVENT, DarkCaverns.MOD_ID);
+
     public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHLING_AMBIENT =
             register("entity.scorchling.ambient");
     public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHLING_HURT =
@@ -62,16 +68,11 @@ public final class CustomSoundEvents {
 
     private CustomSoundEvents() {}
 
-    public static void bootstrap() {
-        // Forces class initialization before the deferred register attaches to the event bus.
+    public static void register(IEventBus modBus) {
+        SOUNDS.register(modBus);
     }
 
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
-        return ModRegistries.SOUNDS.register(
-                name,
-                location ->
-                        SoundEvent.createVariableRangeEvent(
-                                ResourceLocation.fromNamespaceAndPath(
-                                        location.getNamespace(), location.getPath())));
+        return SOUNDS.register(name, SoundEvent::createVariableRangeEvent);
     }
 }

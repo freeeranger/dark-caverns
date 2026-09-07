@@ -1,8 +1,17 @@
 package com.freeranger.dark_caverns;
 
 import com.freeranger.dark_caverns.core.DarkCavernsConfig;
-import com.freeranger.dark_caverns.registry.ModRegistries;
+import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
+import com.freeranger.dark_caverns.registry.CustomBlocks;
+import com.freeranger.dark_caverns.registry.CustomCreativeTabs;
+import com.freeranger.dark_caverns.registry.CustomEntityTypes;
+import com.freeranger.dark_caverns.registry.CustomFeatures;
+import com.freeranger.dark_caverns.registry.CustomItems;
+import com.freeranger.dark_caverns.registry.CustomParticles;
+import com.freeranger.dark_caverns.registry.CustomSoundEvents;
+import com.freeranger.dark_caverns.registry.CustomStructureTypes;
 import com.mojang.logging.LogUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -14,8 +23,20 @@ public final class DarkCaverns {
     public static final String MOD_ID = "dark_caverns";
     public static final Logger LOGGER = LogUtils.getLogger();
 
+    public static ResourceLocation id(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+    }
+
     public DarkCaverns(IEventBus modBus, ModContainer modContainer) {
-        ModRegistries.register(modBus);
+        CustomBlocks.register(modBus);
+        CustomItems.register(modBus);
+        CustomCreativeTabs.register(modBus);
+        CustomSoundEvents.register(modBus);
+        CustomParticles.register(modBus);
+        CustomArmorMaterials.register(modBus);
+        CustomEntityTypes.register(modBus);
+        CustomFeatures.register(modBus);
+        CustomStructureTypes.register(modBus);
 
         modContainer.registerConfig(
                 ModConfig.Type.COMMON, DarkCavernsConfig.COMMON_SPEC, MOD_ID + "-common.toml");

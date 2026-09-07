@@ -6,7 +6,6 @@ import com.freeranger.dark_caverns.registry.CustomBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -17,9 +16,7 @@ import net.minecraft.world.phys.Vec3;
 
 public final class GatewayTeleports {
     public static final ResourceKey<Level> DARK_CAVERNS =
-            ResourceKey.create(
-                    Registries.DIMENSION,
-                    ResourceLocation.fromNamespaceAndPath(DarkCaverns.MOD_ID, DarkCaverns.MOD_ID));
+            ResourceKey.create(Registries.DIMENSION, DarkCaverns.id(DarkCaverns.MOD_ID));
 
     private GatewayTeleports() {}
 

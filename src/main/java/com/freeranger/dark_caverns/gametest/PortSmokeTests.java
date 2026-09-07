@@ -14,7 +14,6 @@ import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomItems;
-import com.freeranger.dark_caverns.registry.ModRegistries;
 import com.mojang.authlib.GameProfile;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
@@ -64,14 +64,15 @@ public final class PortSmokeTests {
     @GameTest(template = "sacret_torch")
     public static void registriesLoad(GameTestHelper helper) {
         helper.assertTrue(
-                ModRegistries.BLOCKS.getEntries().size() == 49, "Expected all 49 legacy block IDs");
+                countModEntries(BuiltInRegistries.BLOCK) == 49, "Expected all 49 legacy block IDs");
         helper.assertTrue(
-                ModRegistries.ITEMS.getEntries().size() == 102,
+                countModEntries(BuiltInRegistries.ITEM) == 102,
                 "Expected 46 block items plus 56 standalone item IDs");
         helper.assertTrue(
-                ModRegistries.SOUNDS.getEntries().size() == 27, "Expected all 27 legacy sound IDs");
+                countModEntries(BuiltInRegistries.SOUND_EVENT) == 27,
+                "Expected all 27 legacy sound IDs");
         helper.assertTrue(
-                ModRegistries.ENTITY_TYPES.getEntries().size() == 11,
+                countModEntries(BuiltInRegistries.ENTITY_TYPE) == 11,
                 "Expected eight mobs plus three projectile entity IDs");
         long darkCavernsAdvancements =
                 helper.getLevel().getServer().getAdvancements().getAllAdvancements().stream()
@@ -86,9 +87,7 @@ public final class PortSmokeTests {
                 helper.getLevel()
                                 .getServer()
                                 .getAdvancements()
-                                .get(
-                                        ResourceLocation.fromNamespaceAndPath(
-                                                DarkCaverns.MOD_ID, "recipes/platinum_sword"))
+                                .get(DarkCaverns.id("recipes/platinum_sword"))
                         != null,
                 "Platinum sword recipe unlock advancement did not load");
 
@@ -738,6 +737,12 @@ public final class PortSmokeTests {
         helper.assertTrue(
                 compostable != null && compostable.chance() == expected,
                 "Incorrect compost chance for " + item);
+    }
+
+    private static long countModEntries(Registry<?> registry) {
+        return registry.keySet().stream()
+                .filter(id -> id.getNamespace().equals(DarkCaverns.MOD_ID))
+                .count();
     }
 
     private static void verifyMob(

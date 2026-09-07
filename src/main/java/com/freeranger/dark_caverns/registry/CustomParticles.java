@@ -1,18 +1,23 @@
 package com.freeranger.dark_caverns.registry;
 
+import com.freeranger.dark_caverns.DarkCaverns;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.Registries;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CustomParticles {
-    public static final DeferredHolder<
-                    net.minecraft.core.particles.ParticleType<?>, SimpleParticleType>
-            LUMINITE_FLAME =
-                    ModRegistries.PARTICLES.register(
-                            "luminite_flame", () -> new SimpleParticleType(false));
+    private static final DeferredRegister<ParticleType<?>> PARTICLES =
+            DeferredRegister.create(Registries.PARTICLE_TYPE, DarkCaverns.MOD_ID);
+
+    public static final DeferredHolder<ParticleType<?>, SimpleParticleType> LUMINITE_FLAME =
+            PARTICLES.register("luminite_flame", () -> new SimpleParticleType(false));
 
     private CustomParticles() {}
 
-    public static void bootstrap() {
-        // Forces class initialization before the deferred register attaches to the event bus.
+    public static void register(IEventBus modBus) {
+        PARTICLES.register(modBus);
     }
 }

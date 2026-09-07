@@ -9,12 +9,11 @@ import com.freeranger.dark_caverns.blocks.GlimmershroomBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
 import com.freeranger.dark_caverns.blocks.ScorchedBerryBushBlock;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LanternBlock;
@@ -23,9 +22,15 @@ import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CustomBlocks {
+    private static final DeferredRegister.Blocks BLOCKS =
+            DeferredRegister.createBlocks(DarkCaverns.MOD_ID);
+    private static final List<DeferredBlock<? extends Block>> BLOCKS_WITH_ITEMS = new ArrayList<>();
+
     private static final ResourceKey<ConfiguredFeature<?, ?>> HUGE_GLIMMERSHROOM =
             featureKey("huge_mushroom_feature");
     private static final ResourceKey<ConfiguredFeature<?, ?>> HUGE_HIGH_GLIMMERSHROOM =
@@ -96,7 +101,7 @@ public final class CustomBlocks {
             wall("molten_carfstone_brick_wall", MOLTEN_CARFSTONE_BRICKS);
 
     public static final DeferredBlock<ScorchedBerryBushBlock> SCORCHED_BERRY_BUSH =
-            ModRegistries.BLOCKS.register(
+            registerWithoutItem(
                     "scorched_berry_bush",
                     () ->
                             new ScorchedBerryBushBlock(
@@ -151,14 +156,14 @@ public final class CustomBlocks {
             register("shroomstone_block", () -> new Block(stone(9.0F)));
 
     public static final DeferredBlock<LuminiteTorchBlock> LUMINITE_TORCH =
-            ModRegistries.BLOCKS.register(
+            registerWithoutItem(
                     "luminite_torch",
                     () ->
                             new LuminiteTorchBlock(
                                     BlockBehaviour.Properties.ofFullCopy(Blocks.TORCH)
                                             .lightLevel(state -> 15)));
     public static final DeferredBlock<LuminiteWallTorchBlock> LUMINITE_WALL_TORCH =
-            ModRegistries.BLOCKS.register(
+            registerWithoutItem(
                     "luminite_wall_torch",
                     () ->
                             new LuminiteWallTorchBlock(
@@ -188,8 +193,12 @@ public final class CustomBlocks {
 
     private CustomBlocks() {}
 
-    public static void bootstrap() {
-        // Forces class initialization before the deferred registers attach to the event bus.
+    public static void register(IEventBus modBus) {
+        BLOCKS.register(modBus);
+    }
+
+    static void registerBlockItems(DeferredRegister.Items items) {
+        BLOCKS_WITH_ITEMS.forEach(items::registerSimpleBlockItem);
     }
 
     private static BlockBehaviour.Properties stone(float strength) {
@@ -223,14 +232,17 @@ public final class CustomBlocks {
 
     private static <T extends Block> DeferredBlock<T> register(
             String name, Supplier<? extends T> factory) {
-        DeferredBlock<T> block = ModRegistries.BLOCKS.register(name, factory);
-        ModRegistries.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        DeferredBlock<T> block = BLOCKS.register(name, factory);
+        BLOCKS_WITH_ITEMS.add(block);
         return block;
     }
 
+    private static <T extends Block> DeferredBlock<T> registerWithoutItem(
+            String name, Supplier<? extends T> factory) {
+        return BLOCKS.register(name, factory);
+    }
+
     private static ResourceKey<ConfiguredFeature<?, ?>> featureKey(String path) {
-        return ResourceKey.create(
-                Registries.CONFIGURED_FEATURE,
-                ResourceLocation.fromNamespaceAndPath(DarkCaverns.MOD_ID, path));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, DarkCaverns.id(path));
     }
 }

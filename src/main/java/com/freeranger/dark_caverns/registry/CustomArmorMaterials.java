@@ -1,18 +1,25 @@
 package com.freeranger.dark_caverns.registry;
 
+import com.freeranger.dark_caverns.DarkCaverns;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CustomArmorMaterials {
+    private static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS =
+            DeferredRegister.create(Registries.ARMOR_MATERIAL, DarkCaverns.MOD_ID);
+
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> LUMINITE =
             register(
                     "luminite",
@@ -76,8 +83,8 @@ public final class CustomArmorMaterials {
 
     private CustomArmorMaterials() {}
 
-    public static void bootstrap() {
-        // Forces class initialization before the deferred register attaches to the event bus.
+    public static void register(IEventBus modBus) {
+        ARMOR_MATERIALS.register(modBus);
     }
 
     private static DeferredHolder<ArmorMaterial, ArmorMaterial> register(
@@ -87,7 +94,7 @@ public final class CustomArmorMaterials {
             int leggings,
             int boots,
             int enchantmentValue,
-            net.minecraft.core.Holder<SoundEvent> equipSound,
+            Holder<SoundEvent> equipSound,
             float toughness,
             float knockbackResistance,
             Supplier<Ingredient> repairIngredient) {
@@ -98,7 +105,7 @@ public final class CustomArmorMaterials {
         defense.put(ArmorItem.Type.BOOTS, boots);
         defense.put(ArmorItem.Type.BODY, chestplate);
 
-        return ModRegistries.ARMOR_MATERIALS.register(
+        return ARMOR_MATERIALS.register(
                 name,
                 () ->
                         new ArmorMaterial(

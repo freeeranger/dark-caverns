@@ -2,7 +2,6 @@ package com.freeranger.dark_caverns.core;
 
 import com.freeranger.dark_caverns.DarkCaverns;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -15,10 +14,7 @@ import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 @EventBusSubscriber(modid = DarkCaverns.MOD_ID)
 public final class ExplorationTrades {
     public static final TagKey<Structure> FORGOTTEN_TOWER_MAP_DESTINATIONS =
-            TagKey.create(
-                    Registries.STRUCTURE,
-                    ResourceLocation.fromNamespaceAndPath(
-                            DarkCaverns.MOD_ID, "on_forgotten_tower_maps"));
+            TagKey.create(Registries.STRUCTURE, DarkCaverns.id("on_forgotten_tower_maps"));
 
     private ExplorationTrades() {}
 

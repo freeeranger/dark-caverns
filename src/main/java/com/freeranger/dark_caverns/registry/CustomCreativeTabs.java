@@ -1,13 +1,20 @@
 package com.freeranger.dark_caverns.registry;
 
+import com.freeranger.dark_caverns.DarkCaverns;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CustomCreativeTabs {
+    private static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, DarkCaverns.MOD_ID);
+
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DARK_CAVERNS =
-            ModRegistries.CREATIVE_TABS.register(
+            CREATIVE_TABS.register(
                     "dark_caverns",
                     () ->
                             CreativeModeTab.builder()
@@ -179,7 +186,7 @@ public final class CustomCreativeTabs {
 
     private CustomCreativeTabs() {}
 
-    public static void bootstrap() {
-        // Forces class initialization before the deferred registers attach to the event bus.
+    public static void register(IEventBus modBus) {
+        CREATIVE_TABS.register(modBus);
     }
 }
