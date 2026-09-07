@@ -113,8 +113,7 @@ public final class CustomArmorMaterials {
                                 enchantmentValue,
                                 equipSound,
                                 repairIngredient,
-                                // The original 1.16.5 assets intentionally live under
-                                // assets/minecraft/textures/models/armor.
+                                // These textures currently use the Minecraft namespace.
                                 List.of(
                                         new ArmorMaterial.Layer(
                                                 ResourceLocation.withDefaultNamespace(name))),

@@ -9,8 +9,6 @@ import com.freeranger.dark_caverns.blocks.GlimmershroomBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
 import com.freeranger.dark_caverns.blocks.ScorchedBerryBushBlock;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -29,7 +27,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class CustomBlocks {
     private static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(DarkCaverns.MOD_ID);
-    private static final List<DeferredBlock<? extends Block>> BLOCKS_WITH_ITEMS = new ArrayList<>();
+    private static final DeferredRegister.Items BLOCK_ITEMS =
+            DeferredRegister.createItems(DarkCaverns.MOD_ID);
 
     private static final ResourceKey<ConfiguredFeature<?, ?>> HUGE_GLIMMERSHROOM =
             featureKey("huge_mushroom_feature");
@@ -195,10 +194,7 @@ public final class CustomBlocks {
 
     public static void register(IEventBus modBus) {
         BLOCKS.register(modBus);
-    }
-
-    static void registerBlockItems(DeferredRegister.Items items) {
-        BLOCKS_WITH_ITEMS.forEach(items::registerSimpleBlockItem);
+        BLOCK_ITEMS.register(modBus);
     }
 
     private static BlockBehaviour.Properties stone(float strength) {
@@ -233,7 +229,7 @@ public final class CustomBlocks {
     private static <T extends Block> DeferredBlock<T> register(
             String name, Supplier<? extends T> factory) {
         DeferredBlock<T> block = BLOCKS.register(name, factory);
-        BLOCKS_WITH_ITEMS.add(block);
+        BLOCK_ITEMS.registerSimpleBlockItem(block);
         return block;
     }
 

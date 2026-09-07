@@ -1,5 +1,5 @@
 {
-  "type": "dark_caverns:ported_jigsaw",
+  "type": "dark_caverns:caverns_jigsaw",
   "biomes": "#dark_caverns:has_structure/forgotten_tower",
   "cavern_placement": false,
   "honor_forgotten_tower_config": true,

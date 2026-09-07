@@ -24,7 +24,7 @@ public final class ShroomieTrades {
             trade(CustomItems.THROWABLE_LUMINITE_TORCH, 3, () -> Items.IRON_INGOT, 1, 4, 1),
             trade(CustomBlocks.SMOOTH_CARFSTONE, 12, () -> Items.IRON_INGOT, 2, 8, 1),
             trade(CustomBlocks.CARFSTONE_BRICKS, 12, () -> Items.IRON_INGOT, 2, 7, 1),
-            trade(CustomItems.LUMINITE_HELMET, 1, () -> Items.IRON_INGOT, 13, 1, 1),
+            trade(CustomEquipment.LUMINITE_HELMET, 1, () -> Items.IRON_INGOT, 13, 1, 1),
             trade(CustomBlocks.MOLTEN_CARFSTONE_BRICKS, 5, () -> Items.IRON_INGOT, 1, 10, 1),
             trade(CustomItems.SCORCHED_BERRIES, 2, () -> Items.GOLD_INGOT, 3, 4, 1),
             trade(() -> Items.IRON_INGOT, 3, () -> Items.GOLD_INGOT, 2, 6, 1),

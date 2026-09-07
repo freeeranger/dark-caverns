@@ -2,7 +2,7 @@ package com.freeranger.dark_caverns.client;
 
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.core.DarkCavernsConfig;
-import com.freeranger.dark_caverns.registry.CustomItems;
+import com.freeranger.dark_caverns.registry.CustomEquipment;
 import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.client.Minecraft;
@@ -57,7 +57,7 @@ public final class LuminiteHelmetLighting {
     }
 
     private static boolean shouldGlow(Minecraft minecraft, LivingEntity entity) {
-        if (!entity.getItemBySlot(EquipmentSlot.HEAD).is(CustomItems.LUMINITE_HELMET.get())) {
+        if (!entity.getItemBySlot(EquipmentSlot.HEAD).is(CustomEquipment.LUMINITE_HELMET.get())) {
             return false;
         }
 

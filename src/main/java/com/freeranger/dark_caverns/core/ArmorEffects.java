@@ -1,7 +1,7 @@
 package com.freeranger.dark_caverns.core;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.registry.CustomItems;
+import com.freeranger.dark_caverns.registry.CustomEquipment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -47,19 +47,19 @@ public final class ArmorEffects {
             int pieces =
                     countArmor(
                             player,
-                            CustomItems.SHROOMSTONE_HELMET.get(),
-                            CustomItems.SHROOMSTONE_CHESTPLATE.get(),
-                            CustomItems.SHROOMSTONE_LEGGINGS.get(),
-                            CustomItems.SHROOMSTONE_BOOTS.get());
+                            CustomEquipment.SHROOMSTONE_HELMET.get(),
+                            CustomEquipment.SHROOMSTONE_CHESTPLATE.get(),
+                            CustomEquipment.SHROOMSTONE_LEGGINGS.get(),
+                            CustomEquipment.SHROOMSTONE_BOOTS.get());
             event.setNewDamage(event.getNewDamage() * Math.max(0.0F, 1.0F - pieces * 0.25F));
         } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
             int pieces =
                     countArmor(
                             player,
-                            CustomItems.HELLSTONE_HELMET.get(),
-                            CustomItems.HELLSTONE_CHESTPLATE.get(),
-                            CustomItems.HELLSTONE_LEGGINGS.get(),
-                            CustomItems.HELLSTONE_BOOTS.get());
+                            CustomEquipment.HELLSTONE_HELMET.get(),
+                            CustomEquipment.HELLSTONE_CHESTPLATE.get(),
+                            CustomEquipment.HELLSTONE_LEGGINGS.get(),
+                            CustomEquipment.HELLSTONE_BOOTS.get());
             event.setNewDamage(event.getNewDamage() * Math.max(0.0F, 1.0F - pieces * 0.25F));
         }
     }
@@ -73,20 +73,20 @@ public final class ArmorEffects {
         }
         if (countArmor(
                         player,
-                        CustomItems.SCORCHSTEEL_HELMET.get(),
-                        CustomItems.SCORCHSTEEL_CHESTPLATE.get(),
-                        CustomItems.SCORCHSTEEL_LEGGINGS.get(),
-                        CustomItems.SCORCHSTEEL_BOOTS.get())
+                        CustomEquipment.SCORCHSTEEL_HELMET.get(),
+                        CustomEquipment.SCORCHSTEEL_CHESTPLATE.get(),
+                        CustomEquipment.SCORCHSTEEL_LEGGINGS.get(),
+                        CustomEquipment.SCORCHSTEEL_BOOTS.get())
                 > 0) {
             monster.setTarget(null);
         }
     }
 
     private static void applyHellstoneSetBonus(Player player) {
-        if (wearing(player, EquipmentSlot.HEAD, CustomItems.HELLSTONE_HELMET.get())
-                && wearing(player, EquipmentSlot.CHEST, CustomItems.HELLSTONE_CHESTPLATE.get())
-                && wearing(player, EquipmentSlot.LEGS, CustomItems.HELLSTONE_LEGGINGS.get())
-                && wearing(player, EquipmentSlot.FEET, CustomItems.HELLSTONE_BOOTS.get())) {
+        if (wearing(player, EquipmentSlot.HEAD, CustomEquipment.HELLSTONE_HELMET.get())
+                && wearing(player, EquipmentSlot.CHEST, CustomEquipment.HELLSTONE_CHESTPLATE.get())
+                && wearing(player, EquipmentSlot.LEGS, CustomEquipment.HELLSTONE_LEGGINGS.get())
+                && wearing(player, EquipmentSlot.FEET, CustomEquipment.HELLSTONE_BOOTS.get())) {
             player.addEffect(
                     new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20, 0, false, false, false));
         }
@@ -96,10 +96,10 @@ public final class ArmorEffects {
         int pieces =
                 countArmor(
                         player,
-                        CustomItems.SHROOMSTONE_HELMET.get(),
-                        CustomItems.SHROOMSTONE_CHESTPLATE.get(),
-                        CustomItems.SHROOMSTONE_LEGGINGS.get(),
-                        CustomItems.SHROOMSTONE_BOOTS.get());
+                        CustomEquipment.SHROOMSTONE_HELMET.get(),
+                        CustomEquipment.SHROOMSTONE_CHESTPLATE.get(),
+                        CustomEquipment.SHROOMSTONE_LEGGINGS.get(),
+                        CustomEquipment.SHROOMSTONE_BOOTS.get());
         if (pieces > 0) {
             player.addEffect(
                     new MobEffectInstance(MobEffects.JUMP, 20, pieces - 1, false, false, false));
@@ -110,10 +110,10 @@ public final class ArmorEffects {
         int pieces =
                 countArmor(
                         player,
-                        CustomItems.SCORCHSTEEL_HELMET.get(),
-                        CustomItems.SCORCHSTEEL_CHESTPLATE.get(),
-                        CustomItems.SCORCHSTEEL_LEGGINGS.get(),
-                        CustomItems.SCORCHSTEEL_BOOTS.get());
+                        CustomEquipment.SCORCHSTEEL_HELMET.get(),
+                        CustomEquipment.SCORCHSTEEL_CHESTPLATE.get(),
+                        CustomEquipment.SCORCHSTEEL_LEGGINGS.get(),
+                        CustomEquipment.SCORCHSTEEL_BOOTS.get());
         CompoundTag data = player.getPersistentData();
         if (pieces == 0) {
             data.putInt(STILL_TICKS, 0);

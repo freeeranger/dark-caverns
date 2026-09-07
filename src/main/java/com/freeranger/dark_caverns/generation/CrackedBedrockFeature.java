@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 
-/** Config-driven equivalent of the legacy bedrock ore feature. */
+/** Generates cracked bedrock using the configured vein count and size. */
 public final class CrackedBedrockFeature extends Feature<NoneFeatureConfiguration> {
     public CrackedBedrockFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);

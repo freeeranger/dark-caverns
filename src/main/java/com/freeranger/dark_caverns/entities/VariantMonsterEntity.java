@@ -37,11 +37,8 @@ import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-/**
- * Shared behavior for the three hostile legacy mobs. Keeping the variants explicit preserves their
- * original attributes, AI, sounds, and combat behavior.
- */
-public final class PortedMonster extends Monster implements GeoEntity {
+/** Shared behavior for monster entity types whose differences are represented by a variant. */
+public final class VariantMonsterEntity extends Monster implements GeoEntity {
     public enum Variant {
         SCORCHLING,
         SCORCHHOUND,
@@ -52,7 +49,8 @@ public final class PortedMonster extends Monster implements GeoEntity {
     private final AnimatableInstanceCache animationCache = GeckoLibUtil.createInstanceCache(this);
     private int attackAnimationTick;
 
-    private PortedMonster(EntityType<? extends PortedMonster> type, Level level, Variant variant) {
+    private VariantMonsterEntity(
+            EntityType<? extends VariantMonsterEntity> type, Level level, Variant variant) {
         super(type, level);
         this.variant = variant;
         if (!level.isClientSide) {
@@ -60,16 +58,19 @@ public final class PortedMonster extends Monster implements GeoEntity {
         }
     }
 
-    public static PortedMonster scorchling(EntityType<PortedMonster> type, Level level) {
-        return new PortedMonster(type, level, Variant.SCORCHLING);
+    public static VariantMonsterEntity scorchling(
+            EntityType<VariantMonsterEntity> type, Level level) {
+        return new VariantMonsterEntity(type, level, Variant.SCORCHLING);
     }
 
-    public static PortedMonster scorchhound(EntityType<PortedMonster> type, Level level) {
-        return new PortedMonster(type, level, Variant.SCORCHHOUND);
+    public static VariantMonsterEntity scorchhound(
+            EntityType<VariantMonsterEntity> type, Level level) {
+        return new VariantMonsterEntity(type, level, Variant.SCORCHHOUND);
     }
 
-    public static PortedMonster luminiteGolem(EntityType<PortedMonster> type, Level level) {
-        return new PortedMonster(type, level, Variant.LUMINITE_GOLEM);
+    public static VariantMonsterEntity luminiteGolem(
+            EntityType<VariantMonsterEntity> type, Level level) {
+        return new VariantMonsterEntity(type, level, Variant.LUMINITE_GOLEM);
     }
 
     public Variant variant() {
@@ -85,7 +86,7 @@ public final class PortedMonster extends Monster implements GeoEntity {
         controllers.add(new AnimationController<>(this, "controller", 0, this::animationState));
     }
 
-    private PlayState animationState(AnimationState<PortedMonster> state) {
+    private PlayState animationState(AnimationState<VariantMonsterEntity> state) {
         String entityName =
                 switch (variant) {
                     case SCORCHLING -> "scorchling";
@@ -272,7 +273,7 @@ public final class PortedMonster extends Monster implements GeoEntity {
     }
 
     public static boolean canScorchlingSpawn(
-            EntityType<PortedMonster> type,
+            EntityType<VariantMonsterEntity> type,
             ServerLevelAccessor level,
             MobSpawnType reason,
             BlockPos pos,
@@ -282,7 +283,7 @@ public final class PortedMonster extends Monster implements GeoEntity {
     }
 
     public static boolean canScorchhoundSpawn(
-            EntityType<PortedMonster> type,
+            EntityType<VariantMonsterEntity> type,
             ServerLevelAccessor level,
             MobSpawnType reason,
             BlockPos pos,
@@ -292,7 +293,7 @@ public final class PortedMonster extends Monster implements GeoEntity {
     }
 
     public static boolean canLuminiteGolemSpawn(
-            EntityType<PortedMonster> type,
+            EntityType<VariantMonsterEntity> type,
             ServerLevelAccessor level,
             MobSpawnType reason,
             BlockPos pos,

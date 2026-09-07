@@ -5,10 +5,12 @@ import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomCreativeTabs;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
+import com.freeranger.dark_caverns.registry.CustomEquipment;
 import com.freeranger.dark_caverns.registry.CustomFeatures;
 import com.freeranger.dark_caverns.registry.CustomItems;
 import com.freeranger.dark_caverns.registry.CustomParticles;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
+import com.freeranger.dark_caverns.registry.CustomSpawnEggs;
 import com.freeranger.dark_caverns.registry.CustomStructureTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -29,12 +31,14 @@ public final class DarkCaverns {
 
     public DarkCaverns(IEventBus modBus, ModContainer modContainer) {
         CustomBlocks.register(modBus);
+        CustomArmorMaterials.register(modBus);
+        CustomEntityTypes.register(modBus);
         CustomItems.register(modBus);
+        CustomEquipment.register(modBus);
+        CustomSpawnEggs.register(modBus);
         CustomCreativeTabs.register(modBus);
         CustomSoundEvents.register(modBus);
         CustomParticles.register(modBus);
-        CustomArmorMaterials.register(modBus);
-        CustomEntityTypes.register(modBus);
         CustomFeatures.register(modBus);
         CustomStructureTypes.register(modBus);
 

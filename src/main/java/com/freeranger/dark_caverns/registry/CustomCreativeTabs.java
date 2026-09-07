@@ -119,46 +119,67 @@ public final class CustomCreativeTabs {
                                                 output.accept(CustomItems.SCORCHLING_TAIL.get());
                                                 output.accept(CustomItems.SCORCHSTEEL_INGOT.get());
 
-                                                output.accept(CustomItems.PLATINUM_SWORD.get());
-                                                output.accept(CustomItems.PLATINUM_PICKAXE.get());
-                                                output.accept(CustomItems.PLATINUM_AXE.get());
-                                                output.accept(CustomItems.PLATINUM_SHOVEL.get());
-                                                output.accept(CustomItems.PLATINUM_HOE.get());
-                                                output.accept(CustomItems.HELLSTONE_SWORD.get());
-                                                output.accept(CustomItems.HELLSTONE_PICKAXE.get());
-                                                output.accept(CustomItems.HELLSTONE_AXE.get());
-                                                output.accept(CustomItems.HELLSTONE_SHOVEL.get());
-                                                output.accept(CustomItems.HELLSTONE_HOE.get());
-                                                output.accept(CustomItems.SHROOMSTONE_SWORD.get());
+                                                output.accept(CustomEquipment.PLATINUM_SWORD.get());
                                                 output.accept(
-                                                        CustomItems.SHROOMSTONE_PICKAXE.get());
-                                                output.accept(CustomItems.SHROOMSTONE_AXE.get());
-                                                output.accept(CustomItems.SHROOMSTONE_SHOVEL.get());
-                                                output.accept(CustomItems.SHROOMSTONE_HOE.get());
+                                                        CustomEquipment.PLATINUM_PICKAXE.get());
+                                                output.accept(CustomEquipment.PLATINUM_AXE.get());
+                                                output.accept(
+                                                        CustomEquipment.PLATINUM_SHOVEL.get());
+                                                output.accept(CustomEquipment.PLATINUM_HOE.get());
+                                                output.accept(
+                                                        CustomEquipment.HELLSTONE_SWORD.get());
+                                                output.accept(
+                                                        CustomEquipment.HELLSTONE_PICKAXE.get());
+                                                output.accept(CustomEquipment.HELLSTONE_AXE.get());
+                                                output.accept(
+                                                        CustomEquipment.HELLSTONE_SHOVEL.get());
+                                                output.accept(CustomEquipment.HELLSTONE_HOE.get());
+                                                output.accept(
+                                                        CustomEquipment.SHROOMSTONE_SWORD.get());
+                                                output.accept(
+                                                        CustomEquipment.SHROOMSTONE_PICKAXE.get());
+                                                output.accept(
+                                                        CustomEquipment.SHROOMSTONE_AXE.get());
+                                                output.accept(
+                                                        CustomEquipment.SHROOMSTONE_SHOVEL.get());
+                                                output.accept(
+                                                        CustomEquipment.SHROOMSTONE_HOE.get());
 
-                                                output.accept(CustomItems.LUMINITE_HELMET.get());
-                                                output.accept(CustomItems.PLATINUM_HELMET.get());
                                                 output.accept(
-                                                        CustomItems.PLATINUM_CHESTPLATE.get());
-                                                output.accept(CustomItems.PLATINUM_LEGGINGS.get());
-                                                output.accept(CustomItems.PLATINUM_BOOTS.get());
-                                                output.accept(CustomItems.HELLSTONE_HELMET.get());
+                                                        CustomEquipment.LUMINITE_HELMET.get());
                                                 output.accept(
-                                                        CustomItems.HELLSTONE_CHESTPLATE.get());
-                                                output.accept(CustomItems.HELLSTONE_LEGGINGS.get());
-                                                output.accept(CustomItems.HELLSTONE_BOOTS.get());
-                                                output.accept(CustomItems.SHROOMSTONE_HELMET.get());
+                                                        CustomEquipment.PLATINUM_HELMET.get());
                                                 output.accept(
-                                                        CustomItems.SHROOMSTONE_CHESTPLATE.get());
+                                                        CustomEquipment.PLATINUM_CHESTPLATE.get());
                                                 output.accept(
-                                                        CustomItems.SHROOMSTONE_LEGGINGS.get());
-                                                output.accept(CustomItems.SHROOMSTONE_BOOTS.get());
-                                                output.accept(CustomItems.SCORCHSTEEL_HELMET.get());
+                                                        CustomEquipment.PLATINUM_LEGGINGS.get());
+                                                output.accept(CustomEquipment.PLATINUM_BOOTS.get());
                                                 output.accept(
-                                                        CustomItems.SCORCHSTEEL_CHESTPLATE.get());
+                                                        CustomEquipment.HELLSTONE_HELMET.get());
                                                 output.accept(
-                                                        CustomItems.SCORCHSTEEL_LEGGINGS.get());
-                                                output.accept(CustomItems.SCORCHSTEEL_BOOTS.get());
+                                                        CustomEquipment.HELLSTONE_CHESTPLATE.get());
+                                                output.accept(
+                                                        CustomEquipment.HELLSTONE_LEGGINGS.get());
+                                                output.accept(
+                                                        CustomEquipment.HELLSTONE_BOOTS.get());
+                                                output.accept(
+                                                        CustomEquipment.SHROOMSTONE_HELMET.get());
+                                                output.accept(
+                                                        CustomEquipment.SHROOMSTONE_CHESTPLATE
+                                                                .get());
+                                                output.accept(
+                                                        CustomEquipment.SHROOMSTONE_LEGGINGS.get());
+                                                output.accept(
+                                                        CustomEquipment.SHROOMSTONE_BOOTS.get());
+                                                output.accept(
+                                                        CustomEquipment.SCORCHSTEEL_HELMET.get());
+                                                output.accept(
+                                                        CustomEquipment.SCORCHSTEEL_CHESTPLATE
+                                                                .get());
+                                                output.accept(
+                                                        CustomEquipment.SCORCHSTEEL_LEGGINGS.get());
+                                                output.accept(
+                                                        CustomEquipment.SCORCHSTEEL_BOOTS.get());
 
                                                 output.accept(CustomItems.KEY_TO_THE_CAVERNS.get());
                                                 output.accept(CustomItems.LUMINITE_TORCH.get());
@@ -169,18 +190,24 @@ public final class CustomCreativeTabs {
                                                 output.accept(CustomItems.CORRUPTED_PEARL.get());
 
                                                 output.accept(
-                                                        CustomItems.SCORCHLING_SPAWN_EGG.get());
+                                                        CustomSpawnEggs.SCORCHLING_SPAWN_EGG.get());
                                                 output.accept(
-                                                        CustomItems.SCORCHHOUND_SPAWN_EGG.get());
-                                                output.accept(CustomItems.MOLTENER_SPAWN_EGG.get());
-                                                output.accept(CustomItems.CAMOROCK_SPAWN_EGG.get());
+                                                        CustomSpawnEggs.SCORCHHOUND_SPAWN_EGG
+                                                                .get());
                                                 output.accept(
-                                                        CustomItems.LUMINITE_GOLEM_SPAWN_EGG.get());
+                                                        CustomSpawnEggs.MOLTENER_SPAWN_EGG.get());
                                                 output.accept(
-                                                        CustomItems.LUMINITE_FOX_SPAWN_EGG.get());
-                                                output.accept(CustomItems.SHROOMIE_SPAWN_EGG.get());
+                                                        CustomSpawnEggs.CAMOROCK_SPAWN_EGG.get());
                                                 output.accept(
-                                                        CustomItems.SHROOMLING_SPAWN_EGG.get());
+                                                        CustomSpawnEggs.LUMINITE_GOLEM_SPAWN_EGG
+                                                                .get());
+                                                output.accept(
+                                                        CustomSpawnEggs.LUMINITE_FOX_SPAWN_EGG
+                                                                .get());
+                                                output.accept(
+                                                        CustomSpawnEggs.SHROOMIE_SPAWN_EGG.get());
+                                                output.accept(
+                                                        CustomSpawnEggs.SHROOMLING_SPAWN_EGG.get());
                                             })
                                     .build());
 

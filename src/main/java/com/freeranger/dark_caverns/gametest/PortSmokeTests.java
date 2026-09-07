@@ -6,14 +6,16 @@ import com.freeranger.dark_caverns.blocks.GatewayToTheOverworldBlock;
 import com.freeranger.dark_caverns.core.ArmorEffects;
 import com.freeranger.dark_caverns.core.ExplorationTrades;
 import com.freeranger.dark_caverns.core.GatewayCooldowns;
-import com.freeranger.dark_caverns.entities.PortedCreature;
-import com.freeranger.dark_caverns.entities.PortedMonster;
 import com.freeranger.dark_caverns.entities.ShroomieEntity;
+import com.freeranger.dark_caverns.entities.VariantCreatureEntity;
+import com.freeranger.dark_caverns.entities.VariantMonsterEntity;
 import com.freeranger.dark_caverns.events.CorruptedPearlTeleportEvent;
 import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
+import com.freeranger.dark_caverns.registry.CustomEquipment;
 import com.freeranger.dark_caverns.registry.CustomItems;
+import com.freeranger.dark_caverns.registry.CustomSpawnEggs;
 import com.mojang.authlib.GameProfile;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import java.util.ArrayList;
@@ -64,13 +66,12 @@ public final class PortSmokeTests {
     @GameTest(template = "sacret_torch")
     public static void registriesLoad(GameTestHelper helper) {
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.BLOCK) == 49, "Expected all 49 legacy block IDs");
+                countModEntries(BuiltInRegistries.BLOCK) == 49, "Expected all 49 block IDs");
         helper.assertTrue(
                 countModEntries(BuiltInRegistries.ITEM) == 102,
                 "Expected 46 block items plus 56 standalone item IDs");
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.SOUND_EVENT) == 27,
-                "Expected all 27 legacy sound IDs");
+                countModEntries(BuiltInRegistries.SOUND_EVENT) == 27, "Expected all 27 sound IDs");
         helper.assertTrue(
                 countModEntries(BuiltInRegistries.ENTITY_TYPE) == 11,
                 "Expected eight mobs plus three projectile entity IDs");
@@ -128,15 +129,15 @@ public final class PortSmokeTests {
                 "Corrupted pearl factory failed");
 
         helper.assertTrue(
-                CustomItems.SCORCHHOUND_SPAWN_EGG
+                CustomSpawnEggs.SCORCHHOUND_SPAWN_EGG
                                 .get()
-                                .getType(new ItemStack(CustomItems.SCORCHHOUND_SPAWN_EGG.get()))
+                                .getType(new ItemStack(CustomSpawnEggs.SCORCHHOUND_SPAWN_EGG.get()))
                         == CustomEntityTypes.SCORCHHOUND_ENTITY.get(),
                 "Scorchhound egg resolves to the wrong entity type");
         helper.assertTrue(
-                CustomItems.SHROOMIE_SPAWN_EGG
+                CustomSpawnEggs.SHROOMIE_SPAWN_EGG
                                 .get()
-                                .getType(new ItemStack(CustomItems.SHROOMIE_SPAWN_EGG.get()))
+                                .getType(new ItemStack(CustomSpawnEggs.SHROOMIE_SPAWN_EGG.get()))
                         == CustomEntityTypes.SHROOMIE_ENTITY.get(),
                 "Shroomie egg resolves to the wrong entity type");
         helper.assertTrue(
@@ -478,26 +479,53 @@ public final class PortSmokeTests {
                 CustomItems.SCORCHSTEEL_INGOT.get());
 
         helper.assertTrue(
-                new ItemStack(CustomItems.LUMINITE_HELMET.get()).getMaxDamage() == 165,
+                new ItemStack(CustomEquipment.LUMINITE_HELMET.get()).getMaxDamage() == 165,
                 "Luminite helmet durability multiplier changed");
         helper.assertTrue(
-                new ItemStack(CustomItems.PLATINUM_HELMET.get()).getMaxDamage() == 396,
+                new ItemStack(CustomEquipment.PLATINUM_HELMET.get()).getMaxDamage() == 396,
                 "Platinum helmet durability multiplier changed");
         helper.assertTrue(
-                new ItemStack(CustomItems.PLATINUM_CHESTPLATE.get()).getMaxDamage() == 576,
+                new ItemStack(CustomEquipment.PLATINUM_CHESTPLATE.get()).getMaxDamage() == 576,
                 "Platinum chestplate durability multiplier changed");
         helper.assertTrue(
-                new ItemStack(CustomItems.PLATINUM_LEGGINGS.get()).getMaxDamage() == 540,
+                new ItemStack(CustomEquipment.PLATINUM_LEGGINGS.get()).getMaxDamage() == 540,
                 "Platinum leggings durability multiplier changed");
         helper.assertTrue(
-                new ItemStack(CustomItems.PLATINUM_BOOTS.get()).getMaxDamage() == 468,
+                new ItemStack(CustomEquipment.PLATINUM_BOOTS.get()).getMaxDamage() == 468,
                 "Platinum boots durability multiplier changed");
+
+        var toolUser = helper.makeMockPlayer(GameType.SURVIVAL);
+        var toolTarget = helper.spawn(EntityType.ZOMBIE, new BlockPos(1, 3, 1));
+        ItemStack hellstoneSword = new ItemStack(CustomEquipment.HELLSTONE_SWORD.get());
+        toolUser.setItemInHand(InteractionHand.MAIN_HAND, hellstoneSword);
+        CustomEquipment.HELLSTONE_SWORD.get().hurtEnemy(hellstoneSword, toolTarget, toolUser);
+        helper.assertTrue(
+                toolTarget.getRemainingFireTicks() >= 160,
+                "Hellstone tools should ignite targets for at least eight seconds");
+
+        toolTarget.clearFire();
+        toolTarget.setDeltaMovement(Vec3.ZERO);
+        ItemStack shroomstoneSword = new ItemStack(CustomEquipment.SHROOMSTONE_SWORD.get());
+        toolUser.setItemInHand(InteractionHand.MAIN_HAND, shroomstoneSword);
+        CustomEquipment.SHROOMSTONE_SWORD.get().hurtEnemy(shroomstoneSword, toolTarget, toolUser);
+        helper.assertTrue(
+                Math.abs(toolTarget.getDeltaMovement().y - 0.6) < 0.0001,
+                "Shroomstone tools should launch targets upward");
+
+        toolTarget.setDeltaMovement(Vec3.ZERO);
+        ItemStack platinumSword = new ItemStack(CustomEquipment.PLATINUM_SWORD.get());
+        toolUser.setItemInHand(InteractionHand.MAIN_HAND, platinumSword);
+        CustomEquipment.PLATINUM_SWORD.get().hurtEnemy(platinumSword, toolTarget, toolUser);
+        helper.assertTrue(
+                toolTarget.getRemainingFireTicks() == 0
+                        && toolTarget.getDeltaMovement().equals(Vec3.ZERO),
+                "Platinum tools should not apply an additional on-hit ability");
 
         var shroomPlayer = helper.makeMockPlayer(GameType.SURVIVAL);
         shroomPlayer.setItemSlot(
-                EquipmentSlot.HEAD, new ItemStack(CustomItems.SHROOMSTONE_HELMET.get()));
+                EquipmentSlot.HEAD, new ItemStack(CustomEquipment.SHROOMSTONE_HELMET.get()));
         shroomPlayer.setItemSlot(
-                EquipmentSlot.CHEST, new ItemStack(CustomItems.SHROOMSTONE_CHESTPLATE.get()));
+                EquipmentSlot.CHEST, new ItemStack(CustomEquipment.SHROOMSTONE_CHESTPLATE.get()));
         ArmorEffects.onPlayerTick(new PlayerTickEvent.Post(shroomPlayer));
         helper.assertTrue(
                 shroomPlayer.hasEffect(MobEffects.JUMP)
@@ -514,13 +542,13 @@ public final class PortSmokeTests {
 
         var hellstonePlayer = helper.makeMockPlayer(GameType.SURVIVAL);
         hellstonePlayer.setItemSlot(
-                EquipmentSlot.HEAD, new ItemStack(CustomItems.HELLSTONE_HELMET.get()));
+                EquipmentSlot.HEAD, new ItemStack(CustomEquipment.HELLSTONE_HELMET.get()));
         hellstonePlayer.setItemSlot(
-                EquipmentSlot.CHEST, new ItemStack(CustomItems.HELLSTONE_CHESTPLATE.get()));
+                EquipmentSlot.CHEST, new ItemStack(CustomEquipment.HELLSTONE_CHESTPLATE.get()));
         hellstonePlayer.setItemSlot(
-                EquipmentSlot.LEGS, new ItemStack(CustomItems.HELLSTONE_LEGGINGS.get()));
+                EquipmentSlot.LEGS, new ItemStack(CustomEquipment.HELLSTONE_LEGGINGS.get()));
         hellstonePlayer.setItemSlot(
-                EquipmentSlot.FEET, new ItemStack(CustomItems.HELLSTONE_BOOTS.get()));
+                EquipmentSlot.FEET, new ItemStack(CustomEquipment.HELLSTONE_BOOTS.get()));
         ArmorEffects.onPlayerTick(new PlayerTickEvent.Post(hellstonePlayer));
         helper.assertTrue(
                 hellstonePlayer.hasEffect(MobEffects.FIRE_RESISTANCE),
@@ -536,7 +564,7 @@ public final class PortSmokeTests {
 
         var scorchsteelPlayer = helper.makeMockPlayer(GameType.SURVIVAL);
         scorchsteelPlayer.setItemSlot(
-                EquipmentSlot.HEAD, new ItemStack(CustomItems.SCORCHSTEEL_HELMET.get()));
+                EquipmentSlot.HEAD, new ItemStack(CustomEquipment.SCORCHSTEEL_HELMET.get()));
         for (int tick = 0; tick <= 20; tick++) {
             ArmorEffects.onPlayerTick(new PlayerTickEvent.Post(scorchsteelPlayer));
         }
@@ -556,17 +584,20 @@ public final class PortSmokeTests {
 
     @GameTest(template = "sacret_torch")
     public static void entityCombatBehavior(GameTestHelper helper) {
-        PortedCreature camorock = CustomEntityTypes.CAMOROCK_ENTITY.get().create(helper.getLevel());
-        PortedCreature moltener = CustomEntityTypes.MOLTENER_ENTITY.get().create(helper.getLevel());
-        PortedCreature fox = CustomEntityTypes.LUMINITE_FOX_ENTITY.get().create(helper.getLevel());
-        PortedCreature shroomling =
+        VariantCreatureEntity camorock =
+                CustomEntityTypes.CAMOROCK_ENTITY.get().create(helper.getLevel());
+        VariantCreatureEntity moltener =
+                CustomEntityTypes.MOLTENER_ENTITY.get().create(helper.getLevel());
+        VariantCreatureEntity fox =
+                CustomEntityTypes.LUMINITE_FOX_ENTITY.get().create(helper.getLevel());
+        VariantCreatureEntity shroomling =
                 CustomEntityTypes.SHROOMLING_ENTITY.get().create(helper.getLevel());
         ShroomieEntity shroomie = CustomEntityTypes.SHROOMIE_ENTITY.get().create(helper.getLevel());
-        PortedMonster scorchling =
+        VariantMonsterEntity scorchling =
                 CustomEntityTypes.SCORCHLING_ENTITY.get().create(helper.getLevel());
-        PortedMonster scorchhound =
+        VariantMonsterEntity scorchhound =
                 CustomEntityTypes.SCORCHHOUND_ENTITY.get().create(helper.getLevel());
-        PortedMonster golem =
+        VariantMonsterEntity golem =
                 CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get().create(helper.getLevel());
 
         verifyMob(
@@ -693,7 +724,7 @@ public final class PortSmokeTests {
                 golem.getAttributeBaseValue(Attributes.KNOCKBACK_RESISTANCE) == 2.0,
                 "Luminite golem declared knockback resistance changed");
 
-        PortedMonster attackingHound =
+        VariantMonsterEntity attackingHound =
                 helper.spawn(CustomEntityTypes.SCORCHHOUND_ENTITY.get(), new BlockPos(2, 2, 2));
         var flingTarget = helper.makeMockPlayer(GameType.SURVIVAL);
         flingTarget.setPos(Vec3.atCenterOf(helper.absolutePos(new BlockPos(4, 2, 2))));
@@ -707,7 +738,7 @@ public final class PortSmokeTests {
                 flingTarget.getDeltaMovement().lengthSqr() > 0.0,
                 "Scorchhound attack should use Hoglin-style fling motion");
 
-        PortedMonster attackingGolem =
+        VariantMonsterEntity attackingGolem =
                 helper.spawn(CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(), new BlockPos(2, 2, 4));
         var golemTarget = helper.makeMockPlayer(GameType.SURVIVAL);
         golemTarget.setPos(Vec3.atCenterOf(helper.absolutePos(new BlockPos(4, 2, 4))));
@@ -811,7 +842,7 @@ public final class PortSmokeTests {
                         .equals(
                                 ResourceLocation.withDefaultNamespace(
                                         "textures/models/armor/" + textureName + "_layer_1.png")),
-                textureName + " outer armor texture does not resolve to the legacy asset");
+                textureName + " outer armor texture does not resolve to the existing asset");
         helper.assertTrue(
                 material.layers()
                         .getFirst()
@@ -819,6 +850,6 @@ public final class PortSmokeTests {
                         .equals(
                                 ResourceLocation.withDefaultNamespace(
                                         "textures/models/armor/" + textureName + "_layer_2.png")),
-                textureName + " inner armor texture does not resolve to the legacy asset");
+                textureName + " inner armor texture does not resolve to the existing asset");
     }
 }

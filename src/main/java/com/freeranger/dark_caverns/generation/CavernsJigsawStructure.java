@@ -21,12 +21,11 @@ import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasLookup;
 import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 
 /**
- * Jigsaw structure placement shared by the four legacy structures. Surface structures follow the
- * world surface; cavern structures scan down for a solid shelf with open space above it, matching
- * the old generator's intent.
+ * Jigsaw placement shared by the four Dark Caverns structures. Surface structures follow the world
+ * surface; cavern structures scan down for a solid shelf with open space above it.
  */
-public final class PortedJigsawStructure extends Structure {
-    public static final MapCodec<PortedJigsawStructure> CODEC =
+public final class CavernsJigsawStructure extends Structure {
+    public static final MapCodec<CavernsJigsawStructure> CODEC =
             RecordCodecBuilder.mapCodec(
                     instance ->
                             instance.group(
@@ -59,7 +58,7 @@ public final class PortedJigsawStructure extends Structure {
                                                             structure ->
                                                                     structure
                                                                             .honorForgottenTowerConfig))
-                                    .apply(instance, PortedJigsawStructure::new));
+                                    .apply(instance, CavernsJigsawStructure::new));
 
     private final Holder<StructureTemplatePool> startPool;
     private final int maxDepth;
@@ -68,7 +67,7 @@ public final class PortedJigsawStructure extends Structure {
     private final boolean cavernPlacement;
     private final boolean honorForgottenTowerConfig;
 
-    public PortedJigsawStructure(
+    public CavernsJigsawStructure(
             StructureSettings settings,
             Holder<StructureTemplatePool> startPool,
             int maxDepth,
@@ -157,6 +156,6 @@ public final class PortedJigsawStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return CustomStructureTypes.PORTED_JIGSAW.get();
+        return CustomStructureTypes.CAVERNS_JIGSAW.get();
     }
 }

@@ -2,8 +2,8 @@ package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.core.DarkCavernsConfig;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
-import com.freeranger.dark_caverns.registry.CustomItems;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
+import com.freeranger.dark_caverns.registry.CustomSpawnEggs;
 import com.freeranger.dark_caverns.registry.ShroomieTrades;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -116,7 +116,7 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!stack.is(CustomItems.SHROOMIE_SPAWN_EGG.get())
+        if (!stack.is(CustomSpawnEggs.SHROOMIE_SPAWN_EGG.get())
                 && isAlive()
                 && !isTrading()
                 && !isBaby()) {

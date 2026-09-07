@@ -43,8 +43,8 @@ import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-/** Shared server-side behavior for the five non-hostile legacy mobs. */
-public final class PortedCreature extends PathfinderMob implements GeoEntity, NeutralMob {
+/** Shared behavior for creature entity types whose differences are represented by a variant. */
+public final class VariantCreatureEntity extends PathfinderMob implements GeoEntity, NeutralMob {
     private static final UniformInt SHROOMLING_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
 
     public enum Variant {
@@ -59,8 +59,8 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
     private int remainingPersistentAngerTime;
     @Nullable private UUID persistentAngerTarget;
 
-    private PortedCreature(
-            EntityType<? extends PortedCreature> type, Level level, Variant variant) {
+    private VariantCreatureEntity(
+            EntityType<? extends VariantCreatureEntity> type, Level level, Variant variant) {
         super(type, level);
         this.variant = variant;
         if (!level.isClientSide) {
@@ -68,20 +68,24 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
         }
     }
 
-    public static PortedCreature moltener(EntityType<PortedCreature> type, Level level) {
-        return new PortedCreature(type, level, Variant.MOLTENER);
+    public static VariantCreatureEntity moltener(
+            EntityType<VariantCreatureEntity> type, Level level) {
+        return new VariantCreatureEntity(type, level, Variant.MOLTENER);
     }
 
-    public static PortedCreature camorock(EntityType<PortedCreature> type, Level level) {
-        return new PortedCreature(type, level, Variant.CAMOROCK);
+    public static VariantCreatureEntity camorock(
+            EntityType<VariantCreatureEntity> type, Level level) {
+        return new VariantCreatureEntity(type, level, Variant.CAMOROCK);
     }
 
-    public static PortedCreature luminiteFox(EntityType<PortedCreature> type, Level level) {
-        return new PortedCreature(type, level, Variant.LUMINITE_FOX);
+    public static VariantCreatureEntity luminiteFox(
+            EntityType<VariantCreatureEntity> type, Level level) {
+        return new VariantCreatureEntity(type, level, Variant.LUMINITE_FOX);
     }
 
-    public static PortedCreature shroomling(EntityType<PortedCreature> type, Level level) {
-        return new PortedCreature(type, level, Variant.SHROOMLING);
+    public static VariantCreatureEntity shroomling(
+            EntityType<VariantCreatureEntity> type, Level level) {
+        return new VariantCreatureEntity(type, level, Variant.SHROOMLING);
     }
 
     public Variant variant() {
@@ -93,7 +97,7 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
         controllers.add(new AnimationController<>(this, "controller", 0, this::animationState));
     }
 
-    private PlayState animationState(AnimationState<PortedCreature> state) {
+    private PlayState animationState(AnimationState<VariantCreatureEntity> state) {
         String entityName =
                 switch (variant) {
                     case MOLTENER -> "moltener";
@@ -265,7 +269,7 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
     }
 
     public static boolean canMoltenerSpawn(
-            EntityType<PortedCreature> type,
+            EntityType<VariantCreatureEntity> type,
             ServerLevelAccessor level,
             MobSpawnType reason,
             BlockPos pos,
@@ -280,7 +284,7 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
     }
 
     public static boolean canCamorockSpawn(
-            EntityType<PortedCreature> type,
+            EntityType<VariantCreatureEntity> type,
             ServerLevelAccessor level,
             MobSpawnType reason,
             BlockPos pos,
@@ -295,7 +299,7 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
     }
 
     public static boolean canLuminiteFoxSpawn(
-            EntityType<PortedCreature> type,
+            EntityType<VariantCreatureEntity> type,
             ServerLevelAccessor level,
             MobSpawnType reason,
             BlockPos pos,
@@ -310,7 +314,7 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
     }
 
     public static boolean canShroomlingSpawn(
-            EntityType<PortedCreature> type,
+            EntityType<VariantCreatureEntity> type,
             ServerLevelAccessor level,
             MobSpawnType reason,
             BlockPos pos,
@@ -325,7 +329,7 @@ public final class PortedCreature extends PathfinderMob implements GeoEntity, Ne
     }
 
     private static boolean canSpawn(
-            EntityType<PortedCreature> type,
+            EntityType<VariantCreatureEntity> type,
             ServerLevelAccessor level,
             MobSpawnType reason,
             BlockPos pos,

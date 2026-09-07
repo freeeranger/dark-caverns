@@ -1,7 +1,7 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.generation.PortedJigsawStructure;
+import com.freeranger.dark_caverns.generation.CavernsJigsawStructure;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.neoforged.bus.api.IEventBus;
@@ -12,10 +12,10 @@ public final class CustomStructureTypes {
     private static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
             DeferredRegister.create(Registries.STRUCTURE_TYPE, DarkCaverns.MOD_ID);
 
-    public static final DeferredHolder<StructureType<?>, StructureType<PortedJigsawStructure>>
-            PORTED_JIGSAW =
+    public static final DeferredHolder<StructureType<?>, StructureType<CavernsJigsawStructure>>
+            CAVERNS_JIGSAW =
                     STRUCTURE_TYPES.register(
-                            "ported_jigsaw", () -> () -> PortedJigsawStructure.CODEC);
+                            "caverns_jigsaw", () -> () -> CavernsJigsawStructure.CODEC);
 
     private CustomStructureTypes() {}
 

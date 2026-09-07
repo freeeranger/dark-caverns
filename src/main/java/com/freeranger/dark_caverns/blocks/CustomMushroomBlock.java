@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.neoforged.neoforge.event.EventHooks;
 
-/** A mushroom that preserves the legacy random choice between its two huge variants. */
+/** A mushroom that randomly selects between its two configured huge variants. */
 public final class CustomMushroomBlock extends MushroomBlock {
     private final ResourceKey<ConfiguredFeature<?, ?>> primaryFeature;
     private final ResourceKey<ConfiguredFeature<?, ?>> alternateFeature;

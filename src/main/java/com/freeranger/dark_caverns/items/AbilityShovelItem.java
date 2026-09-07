@@ -1,0 +1,21 @@
+package com.freeranger.dark_caverns.items;
+
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.Tier;
+
+public final class AbilityShovelItem extends ShovelItem {
+    private final ToolAbility ability;
+
+    public AbilityShovelItem(Tier tier, ToolAbility ability, Properties properties) {
+        super(tier, properties);
+        this.ability = ability;
+    }
+
+    @Override
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        ability.apply(stack, target, attacker);
+        return super.hurtEnemy(stack, target, attacker);
+    }
+}

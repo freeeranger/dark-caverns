@@ -35,37 +35,37 @@ public final class ClientModEvents {
 
         event.registerEntityRenderer(
                 CustomEntityTypes.SCORCHLING_ENTITY.get(),
-                geoRenderer(new PortedMonsterModel(), 0.4F));
+                geoRenderer(new VariantMonsterModel(), 0.4F));
         event.registerEntityRenderer(
                 CustomEntityTypes.SCORCHHOUND_ENTITY.get(),
-                geoRenderer(new PortedMonsterModel(), 1.0F));
+                geoRenderer(new VariantMonsterModel(), 1.0F));
         event.registerEntityRenderer(
                 CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(),
-                geoRenderer(new PortedMonsterModel(), 0.7F));
+                geoRenderer(new VariantMonsterModel(), 0.7F));
         event.registerEntityRenderer(
                 CustomEntityTypes.MOLTENER_ENTITY.get(),
-                geoRenderer(new PortedCreatureModel(), 0.4F));
+                geoRenderer(new VariantCreatureModel(), 0.4F));
         event.registerEntityRenderer(
                 CustomEntityTypes.CAMOROCK_ENTITY.get(),
-                geoRenderer(new PortedCreatureModel(), 0.4F));
+                geoRenderer(new VariantCreatureModel(), 0.4F));
         event.registerEntityRenderer(
                 CustomEntityTypes.LUMINITE_FOX_ENTITY.get(),
-                geoRenderer(new PortedCreatureModel(), 0.5F));
+                geoRenderer(new VariantCreatureModel(), 0.5F));
         event.registerEntityRenderer(
                 CustomEntityTypes.SHROOMIE_ENTITY.get(), geoRenderer(new ShroomieModel(), 0.3F));
         event.registerEntityRenderer(
                 CustomEntityTypes.SHROOMLING_ENTITY.get(),
-                geoRenderer(new PortedCreatureModel(), 0.6F));
+                geoRenderer(new VariantCreatureModel(), 0.6F));
     }
 
     private static <T extends Entity & GeoAnimatable> EntityRendererProvider<T> geoRenderer(
             GeoModel<T> model, float shadowRadius) {
-        return context -> new PortedGeoEntityRenderer<>(context, model, shadowRadius);
+        return context -> new DefaultGeoEntityRenderer<>(context, model, shadowRadius);
     }
 
-    private static final class PortedGeoEntityRenderer<T extends Entity & GeoAnimatable>
+    private static final class DefaultGeoEntityRenderer<T extends Entity & GeoAnimatable>
             extends GeoEntityRenderer<T> {
-        private PortedGeoEntityRenderer(
+        private DefaultGeoEntityRenderer(
                 EntityRendererProvider.Context context, GeoModel<T> model, float shadowRadius) {
             super(context, model);
             this.shadowRadius = shadowRadius;
