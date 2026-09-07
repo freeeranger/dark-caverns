@@ -5,6 +5,7 @@ import com.freeranger.dark_caverns.generation.CrackedBedrockFeature;
 import com.freeranger.dark_caverns.generation.SpikeFeature;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -19,16 +20,12 @@ public final class CustomFeatures {
                     FEATURES.register(
                             "cracked_bedrock",
                             () -> new CrackedBedrockFeature(NoneFeatureConfiguration.CODEC));
-    public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>> SPIKE =
+    public static final DeferredHolder<Feature<?>, Feature<BlockStateConfiguration>> SPIKE =
             FEATURES.register(
-                    "spike_feature",
-                    () -> new SpikeFeature(NoneFeatureConfiguration.CODEC, CustomBlocks.CARFSTONE));
-    public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>> MOLTEN_SPIKE =
+                    "spike_feature", () -> new SpikeFeature(BlockStateConfiguration.CODEC));
+    public static final DeferredHolder<Feature<?>, Feature<BlockStateConfiguration>> MOLTEN_SPIKE =
             FEATURES.register(
-                    "molten_spike_feature",
-                    () ->
-                            new SpikeFeature(
-                                    NoneFeatureConfiguration.CODEC, CustomBlocks.MOLTEN_CARFSTONE));
+                    "molten_spike_feature", () -> new SpikeFeature(BlockStateConfiguration.CODEC));
 
     private CustomFeatures() {}
 

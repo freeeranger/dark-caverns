@@ -1,4 +1,8 @@
 {
   "type": "dark_caverns:molten_spike_feature",
-  "config": {}
+  "config": {
+    "state": {
+      "Name": "dark_caverns:molten_carfstone"
+    }
+  }
 }

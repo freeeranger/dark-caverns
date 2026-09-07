@@ -1,4 +1,8 @@
 {
   "type": "dark_caverns:spike_feature",
-  "config": {}
+  "config": {
+    "state": {
+      "Name": "dark_caverns:carfstone"
+    }
+  }
 }

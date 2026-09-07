@@ -1,7 +1,6 @@
 package com.freeranger.dark_caverns.generation;
 
 import com.mojang.serialization.Codec;
-import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -10,20 +9,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 
 /** Builds the mirrored floor-and-ceiling stone spikes used by the original dimension. */
-public final class SpikeFeature extends Feature<NoneFeatureConfiguration> {
-    private final Supplier<? extends Block> sourceBlock;
-
-    public SpikeFeature(
-            Codec<NoneFeatureConfiguration> codec, Supplier<? extends Block> sourceBlock) {
+public final class SpikeFeature extends Feature<BlockStateConfiguration> {
+    public SpikeFeature(Codec<BlockStateConfiguration> codec) {
         super(codec);
-        this.sourceBlock = sourceBlock;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    public boolean place(FeaturePlaceContext<BlockStateConfiguration> context) {
         WorldGenLevel level = context.level();
         RandomSource random = context.random();
         BlockPos origin = context.origin();
@@ -32,7 +27,8 @@ public final class SpikeFeature extends Feature<NoneFeatureConfiguration> {
             origin = origin.below();
         }
 
-        Block source = sourceBlock.get();
+        BlockState spikeState = context.config().state;
+        Block source = spikeState.getBlock();
         if (!level.getBlockState(origin).is(source)) {
             return false;
         }
@@ -63,9 +59,9 @@ public final class SpikeFeature extends Feature<NoneFeatureConfiguration> {
                         continue;
                     }
 
-                    replace(level, origin.offset(xOffset, yOffset, zOffset), source);
+                    replace(level, origin.offset(xOffset, yOffset, zOffset), spikeState);
                     if (yOffset != 0 && extent > 1) {
-                        replace(level, origin.offset(xOffset, -yOffset, zOffset), source);
+                        replace(level, origin.offset(xOffset, -yOffset, zOffset), spikeState);
                     }
                 }
             }
@@ -84,7 +80,7 @@ public final class SpikeFeature extends Feature<NoneFeatureConfiguration> {
                         break;
                     }
 
-                    setBlock(level, foundation, source.defaultBlockState());
+                    setBlock(level, foundation, spikeState);
                     foundation = foundation.below();
                     if (--remaining <= 0) {
                         foundation = foundation.below(random.nextInt(5) + 1);
@@ -97,10 +93,11 @@ public final class SpikeFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
-    private void replace(WorldGenLevel level, BlockPos pos, Block source) {
+    private void replace(WorldGenLevel level, BlockPos pos, BlockState spikeState) {
         BlockState state = level.getBlockState(pos);
+        Block source = spikeState.getBlock();
         if (state.isAir() || isDirt(state) || state.is(source)) {
-            setBlock(level, pos, source.defaultBlockState());
+            setBlock(level, pos, spikeState);
         }
     }
 }

@@ -34,6 +34,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerPlayer;
@@ -53,6 +54,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
@@ -85,6 +87,30 @@ public final class PortSmokeTests {
         helper.assertTrue(
                 countModEntries(NeoForgeRegistries.ATTACHMENT_TYPES) == 2,
                 "Expected gateway cooldown and Scorchsteel state attachment IDs");
+        verifyRegistryCount(helper, Registries.BIOME, 3, "biome definitions");
+        verifyRegistryCount(helper, Registries.CONFIGURED_CARVER, 1, "configured carver");
+        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 22, "configured features");
+        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 21, "placed features");
+        verifyRegistryCount(helper, Registries.NOISE, 4, "noise definitions");
+        verifyRegistryCount(helper, Registries.NOISE_SETTINGS, 1, "noise settings");
+        verifyRegistryCount(helper, Registries.STRUCTURE, 4, "structure definitions");
+        verifyRegistryCount(helper, Registries.STRUCTURE_SET, 4, "structure sets");
+        verifyRegistryCount(helper, Registries.TEMPLATE_POOL, 4, "structure template pools");
+
+        var configuredFeatures =
+                helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
+        var spike = configuredFeatures.get(DarkCaverns.id("spike_feature"));
+        var moltenSpike = configuredFeatures.get(DarkCaverns.id("molten_spike_feature"));
+        helper.assertTrue(
+                spike != null
+                        && spike.config() instanceof BlockStateConfiguration configuration
+                        && configuration.state.is(CustomBlocks.CARFSTONE.get()),
+                "Carfstone spike material did not load from configured-feature data");
+        helper.assertTrue(
+                moltenSpike != null
+                        && moltenSpike.config() instanceof BlockStateConfiguration configuration
+                        && configuration.state.is(CustomBlocks.MOLTEN_CARFSTONE.get()),
+                "Molten spike material did not load from configured-feature data");
         long darkCavernsAdvancements =
                 helper.getLevel().getServer().getAdvancements().getAllAdvancements().stream()
                         .filter(
@@ -821,6 +847,18 @@ public final class PortSmokeTests {
         return registry.keySet().stream()
                 .filter(id -> id.getNamespace().equals(DarkCaverns.MOD_ID))
                 .count();
+    }
+
+    private static <T> void verifyRegistryCount(
+            GameTestHelper helper,
+            ResourceKey<? extends Registry<? extends T>> registryKey,
+            long expected,
+            String description) {
+        long actual =
+                countModEntries(helper.getLevel().registryAccess().registryOrThrow(registryKey));
+        helper.assertTrue(
+                actual == expected,
+                "Expected " + expected + " Dark Caverns " + description + ", found " + actual);
     }
 
     private static void verifyMob(
