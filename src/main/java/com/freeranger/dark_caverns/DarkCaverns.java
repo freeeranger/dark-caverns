@@ -1,7 +1,11 @@
 package com.freeranger.dark_caverns;
 
-import com.freeranger.dark_caverns.core.DarkCavernsConfig;
+import com.freeranger.dark_caverns.config.ClientConfig;
+import com.freeranger.dark_caverns.config.ServerConfig;
+import com.freeranger.dark_caverns.core.ArmorEffects;
+import com.freeranger.dark_caverns.core.ExplorationTrades;
 import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
+import com.freeranger.dark_caverns.registry.CustomAttachments;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomCreativeTabs;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
@@ -18,6 +22,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 
 @Mod(DarkCaverns.MOD_ID)
@@ -32,6 +37,7 @@ public final class DarkCaverns {
     public DarkCaverns(IEventBus modBus, ModContainer modContainer) {
         CustomBlocks.register(modBus);
         CustomArmorMaterials.register(modBus);
+        CustomAttachments.register(modBus);
         CustomEntityTypes.register(modBus);
         CustomItems.register(modBus);
         CustomEquipment.register(modBus);
@@ -42,10 +48,13 @@ public final class DarkCaverns {
         CustomFeatures.register(modBus);
         CustomStructureTypes.register(modBus);
 
+        ArmorEffects.register(NeoForge.EVENT_BUS);
+        ExplorationTrades.register(NeoForge.EVENT_BUS);
+
         modContainer.registerConfig(
-                ModConfig.Type.COMMON, DarkCavernsConfig.COMMON_SPEC, MOD_ID + "-common.toml");
+                ModConfig.Type.SERVER, ServerConfig.SPEC, MOD_ID + "-server.toml");
         modContainer.registerConfig(
-                ModConfig.Type.CLIENT, DarkCavernsConfig.CLIENT_SPEC, MOD_ID + "-client.toml");
+                ModConfig.Type.CLIENT, ClientConfig.SPEC, MOD_ID + "-client.toml");
 
         LOGGER.info("Initializing Dark Caverns for NeoForge 1.21.1");
     }

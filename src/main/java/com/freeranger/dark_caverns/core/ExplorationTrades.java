@@ -7,19 +7,20 @@ import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
-@EventBusSubscriber(modid = DarkCaverns.MOD_ID)
 public final class ExplorationTrades {
     public static final TagKey<Structure> FORGOTTEN_TOWER_MAP_DESTINATIONS =
             TagKey.create(Registries.STRUCTURE, DarkCaverns.id("on_forgotten_tower_maps"));
 
     private ExplorationTrades() {}
 
-    @SubscribeEvent
-    public static void addCartographerTrade(VillagerTradesEvent event) {
+    public static void register(IEventBus gameBus) {
+        gameBus.addListener(ExplorationTrades::addCartographerTrade);
+    }
+
+    private static void addCartographerTrade(VillagerTradesEvent event) {
         if (event.getType() != VillagerProfession.CARTOGRAPHER) {
             return;
         }

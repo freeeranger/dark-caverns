@@ -3,7 +3,6 @@ package com.freeranger.dark_caverns.gametest;
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.blocks.GatewayToTheCavernsBlock;
 import com.freeranger.dark_caverns.blocks.GatewayToTheOverworldBlock;
-import com.freeranger.dark_caverns.core.ArmorEffects;
 import com.freeranger.dark_caverns.core.ExplorationTrades;
 import com.freeranger.dark_caverns.core.GatewayCooldowns;
 import com.freeranger.dark_caverns.entities.ShroomieEntity;
@@ -11,6 +10,7 @@ import com.freeranger.dark_caverns.entities.VariantCreatureEntity;
 import com.freeranger.dark_caverns.entities.VariantMonsterEntity;
 import com.freeranger.dark_caverns.events.CorruptedPearlTeleportEvent;
 import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
+import com.freeranger.dark_caverns.registry.CustomAttachments;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomEquipment;
@@ -56,6 +56,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 
 @GameTestHolder(DarkCaverns.MOD_ID)
@@ -75,6 +76,9 @@ public final class PortSmokeTests {
         helper.assertTrue(
                 countModEntries(BuiltInRegistries.ENTITY_TYPE) == 11,
                 "Expected eight mobs plus three projectile entity IDs");
+        helper.assertTrue(
+                countModEntries(NeoForgeRegistries.ATTACHMENT_TYPES) == 2,
+                "Expected gateway cooldown and Scorchsteel state attachment IDs");
         long darkCavernsAdvancements =
                 helper.getLevel().getServer().getAdvancements().getAllAdvancements().stream()
                         .filter(
@@ -172,10 +176,23 @@ public final class PortSmokeTests {
         helper.assertTrue(
                 GatewayCooldowns.isReady(player, helper.getLevel()),
                 "A new player should have no gateway cooldown");
+        helper.assertFalse(
+                player.hasData(CustomAttachments.GATEWAY_COOLDOWN_UNTIL),
+                "Checking a new gateway cooldown should not allocate state");
         GatewayCooldowns.start(player, helper.getLevel());
         helper.assertTrue(
                 !GatewayCooldowns.isReady(player, helper.getLevel()),
                 "Starting a gateway cooldown should block reuse");
+        helper.assertTrue(
+                player.hasData(CustomAttachments.GATEWAY_COOLDOWN_UNTIL),
+                "Gateway cooldown should use its registered data attachment");
+        player.setData(CustomAttachments.GATEWAY_COOLDOWN_UNTIL, helper.getLevel().getGameTime());
+        helper.assertTrue(
+                GatewayCooldowns.isReady(player, helper.getLevel()),
+                "An expired gateway cooldown should allow reuse");
+        helper.assertFalse(
+                player.hasData(CustomAttachments.GATEWAY_COOLDOWN_UNTIL),
+                "Expired gateway cooldown state should be removed");
         helper.assertTrue(
                 helper.getLevel()
                         .registryAccess()
@@ -222,8 +239,9 @@ public final class PortSmokeTests {
         var pearl =
                 new com.freeranger.dark_caverns.entities.CorruptedPearlEntity(
                         helper.getLevel(), serverPlayer);
+        var teleportTarget = helper.spawn(EntityType.ZOMBIE, new BlockPos(6, 2, 2));
         var teleportEvent =
-                new CorruptedPearlTeleportEvent(serverPlayer, 1.0, 2.0, 3.0, pearl, 5.0F);
+                new CorruptedPearlTeleportEvent(teleportTarget, serverPlayer, 1.0, 2.0, 3.0, pearl);
         teleportEvent.setCanceled(true);
         helper.assertTrue(
                 teleportEvent.isCanceled(),
@@ -231,6 +249,10 @@ public final class PortSmokeTests {
         helper.assertTrue(
                 teleportEvent.getPearlEntity() == pearl,
                 "Corrupted Pearl event lost its projectile context");
+        helper.assertTrue(
+                teleportEvent.getEntity() == teleportTarget
+                        && teleportEvent.getPearlOwner() == serverPlayer,
+                "Corrupted Pearl event should expose its target and owner separately");
 
         helper.succeed();
     }
@@ -526,7 +548,7 @@ public final class PortSmokeTests {
                 EquipmentSlot.HEAD, new ItemStack(CustomEquipment.SHROOMSTONE_HELMET.get()));
         shroomPlayer.setItemSlot(
                 EquipmentSlot.CHEST, new ItemStack(CustomEquipment.SHROOMSTONE_CHESTPLATE.get()));
-        ArmorEffects.onPlayerTick(new PlayerTickEvent.Post(shroomPlayer));
+        NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(shroomPlayer));
         helper.assertTrue(
                 shroomPlayer.hasEffect(MobEffects.JUMP)
                         && shroomPlayer.getEffect(MobEffects.JUMP).getAmplifier() == 1,
@@ -535,7 +557,7 @@ public final class PortSmokeTests {
                 new LivingDamageEvent.Pre(
                         shroomPlayer,
                         new DamageContainer(helper.getLevel().damageSources().fall(), 8.0F));
-        ArmorEffects.onLivingDamage(fallDamage);
+        NeoForge.EVENT_BUS.post(fallDamage);
         helper.assertTrue(
                 Math.abs(fallDamage.getNewDamage() - 4.0F) < 0.0001F,
                 "Two Shroomstone pieces should halve fall damage");
@@ -549,7 +571,7 @@ public final class PortSmokeTests {
                 EquipmentSlot.LEGS, new ItemStack(CustomEquipment.HELLSTONE_LEGGINGS.get()));
         hellstonePlayer.setItemSlot(
                 EquipmentSlot.FEET, new ItemStack(CustomEquipment.HELLSTONE_BOOTS.get()));
-        ArmorEffects.onPlayerTick(new PlayerTickEvent.Post(hellstonePlayer));
+        NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(hellstonePlayer));
         helper.assertTrue(
                 hellstonePlayer.hasEffect(MobEffects.FIRE_RESISTANCE),
                 "A full Hellstone set should grant Fire Resistance");
@@ -557,7 +579,7 @@ public final class PortSmokeTests {
                 new LivingDamageEvent.Pre(
                         hellstonePlayer,
                         new DamageContainer(helper.getLevel().damageSources().lava(), 8.0F));
-        ArmorEffects.onLivingDamage(fireDamage);
+        NeoForge.EVENT_BUS.post(fireDamage);
         helper.assertTrue(
                 fireDamage.getNewDamage() == 0.0F,
                 "A full Hellstone set should negate fire damage");
@@ -566,18 +588,26 @@ public final class PortSmokeTests {
         scorchsteelPlayer.setItemSlot(
                 EquipmentSlot.HEAD, new ItemStack(CustomEquipment.SCORCHSTEEL_HELMET.get()));
         for (int tick = 0; tick <= 20; tick++) {
-            ArmorEffects.onPlayerTick(new PlayerTickEvent.Post(scorchsteelPlayer));
+            NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(scorchsteelPlayer));
         }
         helper.assertTrue(
                 scorchsteelPlayer.hasEffect(MobEffects.INVISIBILITY),
                 "Stationary Scorchsteel armor should grant invisibility after the configured"
                         + " delay");
+        helper.assertTrue(
+                scorchsteelPlayer.hasData(CustomAttachments.SCORCHSTEEL_STEALTH),
+                "Scorchsteel standstill tracking should use its registered data attachment");
         var zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(6, 2, 2));
         zombie.setTarget(scorchsteelPlayer);
-        ArmorEffects.onMonsterTick(new EntityTickEvent.Post(zombie));
+        NeoForge.EVENT_BUS.post(new EntityTickEvent.Post(zombie));
         helper.assertTrue(
                 zombie.getTarget() == null,
                 "Monsters should clear invisible Scorchsteel-wearing targets");
+        scorchsteelPlayer.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+        NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(scorchsteelPlayer));
+        helper.assertFalse(
+                scorchsteelPlayer.hasData(CustomAttachments.SCORCHSTEEL_STEALTH),
+                "Scorchsteel standstill state should be removed when no pieces are equipped");
 
         helper.succeed();
     }

@@ -1,6 +1,6 @@
 package com.freeranger.dark_caverns.entities;
 
-import com.freeranger.dark_caverns.core.DarkCavernsConfig;
+import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import java.util.UUID;
@@ -274,13 +274,7 @@ public final class VariantCreatureEntity extends PathfinderMob implements GeoEnt
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return canSpawn(
-                type,
-                level,
-                reason,
-                pos,
-                random,
-                DarkCavernsConfig.COMMON.moltenerSpawnChance.get());
+        return canSpawn(type, level, reason, pos, random, ServerConfig.moltenerSpawnChance());
     }
 
     public static boolean canCamorockSpawn(
@@ -289,13 +283,7 @@ public final class VariantCreatureEntity extends PathfinderMob implements GeoEnt
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return canSpawn(
-                type,
-                level,
-                reason,
-                pos,
-                random,
-                DarkCavernsConfig.COMMON.camorockSpawnChance.get());
+        return canSpawn(type, level, reason, pos, random, ServerConfig.camorockSpawnChance());
     }
 
     public static boolean canLuminiteFoxSpawn(
@@ -304,13 +292,7 @@ public final class VariantCreatureEntity extends PathfinderMob implements GeoEnt
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return canSpawn(
-                type,
-                level,
-                reason,
-                pos,
-                random,
-                DarkCavernsConfig.COMMON.luminiteFoxSpawnChance.get());
+        return canSpawn(type, level, reason, pos, random, ServerConfig.luminiteFoxSpawnChance());
     }
 
     public static boolean canShroomlingSpawn(
@@ -319,13 +301,7 @@ public final class VariantCreatureEntity extends PathfinderMob implements GeoEnt
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return canSpawn(
-                type,
-                level,
-                reason,
-                pos,
-                random,
-                DarkCavernsConfig.COMMON.shroomlingSpawnChance.get());
+        return canSpawn(type, level, reason, pos, random, ServerConfig.shroomlingSpawnChance());
     }
 
     private static boolean canSpawn(

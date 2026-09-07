@@ -1,6 +1,6 @@
 package com.freeranger.dark_caverns.generation;
 
-import com.freeranger.dark_caverns.core.DarkCavernsConfig;
+import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.registry.CustomStructureTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -86,7 +86,7 @@ public final class CavernsJigsawStructure extends Structure {
 
     @Override
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-        if (honorForgottenTowerConfig && !DarkCavernsConfig.COMMON.generateForgottenTower.get()) {
+        if (honorForgottenTowerConfig && !ServerConfig.generateForgottenTower()) {
             return Optional.empty();
         }
 

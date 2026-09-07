@@ -1,7 +1,7 @@
 package com.freeranger.dark_caverns.client;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.core.DarkCavernsConfig;
+import com.freeranger.dark_caverns.config.ClientConfig;
 import com.freeranger.dark_caverns.registry.CustomEquipment;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,9 +30,7 @@ public final class LuminiteHelmetLighting {
     public static void onClientTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
         ClientLevel level = minecraft.level;
-        if (level == null
-                || minecraft.player == null
-                || !DarkCavernsConfig.CLIENT.enableDynamicLighting.get()) {
+        if (level == null || minecraft.player == null || !ClientConfig.enableDynamicLighting()) {
             clear(minecraft.level);
             return;
         }
@@ -62,7 +60,7 @@ public final class LuminiteHelmetLighting {
         }
 
         double distanceSquared = minecraft.player.distanceToSqr(entity);
-        int maximumDistance = DarkCavernsConfig.CLIENT.maxDynamicLightDistance.get();
+        int maximumDistance = ClientConfig.maxDynamicLightDistance();
         if (distanceSquared > maximumDistance * maximumDistance) {
             return false;
         }

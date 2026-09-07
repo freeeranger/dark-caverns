@@ -1,6 +1,6 @@
 package com.freeranger.dark_caverns.entities;
 
-import com.freeranger.dark_caverns.core.DarkCavernsConfig;
+import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -210,7 +210,7 @@ public final class VariantMonsterEntity extends Monster implements GeoEntity {
     protected void blockedByShield(LivingEntity blockingEntity) {
         if (variant == Variant.SCORCHHOUND
                 && !isBaby()
-                && DarkCavernsConfig.COMMON.scorchhoundBypassShields.get()) {
+                && ServerConfig.scorchhoundBypassShields()) {
             HoglinBase.throwTarget(this, blockingEntity);
             return;
         }
@@ -278,7 +278,7 @@ public final class VariantMonsterEntity extends Monster implements GeoEntity {
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return oneIn(DarkCavernsConfig.COMMON.scorchlingSpawnChance.get(), random)
+        return oneIn(ServerConfig.scorchlingSpawnChance(), random)
                 && Monster.checkMonsterSpawnRules(type, level, reason, pos, random);
     }
 
@@ -288,7 +288,7 @@ public final class VariantMonsterEntity extends Monster implements GeoEntity {
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return oneIn(DarkCavernsConfig.COMMON.scorchhoundSpawnChance.get(), random)
+        return oneIn(ServerConfig.scorchhoundSpawnChance(), random)
                 && Monster.checkMonsterSpawnRules(type, level, reason, pos, random);
     }
 
@@ -298,7 +298,7 @@ public final class VariantMonsterEntity extends Monster implements GeoEntity {
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return oneIn(DarkCavernsConfig.COMMON.luminiteGolemSpawnChance.get(), random)
+        return oneIn(ServerConfig.luminiteGolemSpawnChance(), random)
                 && Monster.checkMonsterSpawnRules(type, level, reason, pos, random);
     }
 

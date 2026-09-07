@@ -1,6 +1,6 @@
 package com.freeranger.dark_caverns.entities;
 
-import com.freeranger.dark_caverns.core.DarkCavernsConfig;
+import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomItems;
 import net.minecraft.world.entity.EntityType;
@@ -32,7 +32,7 @@ public final class ShroombombEntity extends DarkCavernsThrowableItemProjectile {
                             getX(),
                             getY(),
                             getZ(),
-                            DarkCavernsConfig.COMMON.shroombombExplosionPower.get().floatValue(),
+                            ServerConfig.shroombombExplosionPower(),
                             Level.ExplosionInteraction.BLOCK);
         }
         finishImpact();

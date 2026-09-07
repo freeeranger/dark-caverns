@@ -1,6 +1,6 @@
 package com.freeranger.dark_caverns.entities;
 
-import com.freeranger.dark_caverns.core.DarkCavernsConfig;
+import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import com.freeranger.dark_caverns.registry.CustomSpawnEggs;
@@ -172,7 +172,7 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return random.nextInt(DarkCavernsConfig.COMMON.shroomieSpawnChance.get()) == 0
+        return random.nextInt(ServerConfig.shroomieSpawnChance()) == 0
                 && level.getBlockState(pos.below()).is(CustomBlocks.GLIMMERGRASS_BLOCK.get());
     }
 }

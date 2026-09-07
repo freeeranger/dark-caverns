@@ -1,6 +1,6 @@
 package com.freeranger.dark_caverns.generation;
 
-import com.freeranger.dark_caverns.core.DarkCavernsConfig;
+import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -19,12 +19,12 @@ public final class CrackedBedrockFeature extends Feature<NoneFeatureConfiguratio
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        int attempts = DarkCavernsConfig.COMMON.crackedBedrockVeinCount.get();
+        int attempts = ServerConfig.crackedBedrockVeinCount();
         OreConfiguration ore =
                 new OreConfiguration(
                         new BlockMatchTest(Blocks.BEDROCK),
                         CustomBlocks.CRACKED_BEDROCK.get().defaultBlockState(),
-                        DarkCavernsConfig.COMMON.crackedBedrockVeinSize.get());
+                        ServerConfig.crackedBedrockVeinSize());
         boolean placed = false;
         for (int attempt = 0; attempt < attempts; attempt++) {
             BlockPos origin =

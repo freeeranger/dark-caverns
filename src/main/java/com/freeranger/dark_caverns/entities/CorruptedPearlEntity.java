@@ -1,6 +1,6 @@
 package com.freeranger.dark_caverns.entities;
 
-import com.freeranger.dark_caverns.core.DarkCavernsConfig;
+import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.events.CorruptedPearlTeleportEvent;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomItems;
@@ -54,14 +54,12 @@ public final class CorruptedPearlEntity extends DarkCavernsThrowableItemProjecti
         if (!level().isClientSide && !isRemoved()) {
             Entity owner = getOwner();
             if (owner != null) {
-                double radius = DarkCavernsConfig.COMMON.corruptedPearlScanRadius.get();
+                double radius = ServerConfig.corruptedPearlScanRadius();
                 level()
-                        .getEntities(
-                                owner,
+                        .getEntitiesOfClass(
+                                LivingEntity.class,
                                 owner.getBoundingBox().inflate(radius),
-                                entity ->
-                                        entity instanceof LivingEntity
-                                                && !(entity instanceof Player))
+                                entity -> entity != owner && !(entity instanceof Player))
                         .stream()
                         .min(Comparator.comparingDouble(owner::distanceToSqr))
                         .ifPresent(
@@ -78,8 +76,8 @@ public final class CorruptedPearlEntity extends DarkCavernsThrowableItemProjecti
                                         CorruptedPearlTeleportEvent event =
                                                 NeoForge.EVENT_BUS.post(
                                                         new CorruptedPearlTeleportEvent(
-                                                                player, targetX, targetY, targetZ,
-                                                                this, 5.0F));
+                                                                victim, player, targetX, targetY,
+                                                                targetZ, this));
                                         if (event.isCanceled()) {
                                             return;
                                         }
