@@ -1,0 +1,13 @@
+{
+  "values": [
+    "#c:ores/coal",
+    "#c:ores/iron",
+    "#c:ores/gold",
+    "#c:ores/diamond",
+    "#c:ores/redstone",
+    "#c:ores/lapis",
+    "#c:ores/platinum",
+    "#c:ores/luminite",
+    "#c:ores/hellstone"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/luminite"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "dark_caverns:luminite_dust"
+  }
+}

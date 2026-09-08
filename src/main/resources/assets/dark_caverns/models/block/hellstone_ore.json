@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "dark_caverns:block/hellstone_ore"
-  }
-}

@@ -3,6 +3,7 @@ package com.freeranger.dark_caverns;
 import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.core.ArmorEffects;
 import com.freeranger.dark_caverns.core.ExplorationTrades;
+import com.freeranger.dark_caverns.datagen.DarkCavernsDataGenerators;
 import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
 import com.freeranger.dark_caverns.registry.CustomAttachments;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
@@ -46,6 +47,7 @@ public final class DarkCaverns {
         CustomParticles.register(modBus);
         CustomFeatures.register(modBus);
         CustomStructureTypes.register(modBus);
+        DarkCavernsDataGenerators.register(modBus);
 
         ArmorEffects.register(NeoForge.EVENT_BUS);
         ExplorationTrades.register(NeoForge.EVENT_BUS);

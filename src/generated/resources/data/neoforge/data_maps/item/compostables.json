@@ -1,0 +1,19 @@
+{
+  "values": {
+    "dark_caverns:charred_grass": {
+      "chance": 0.3
+    },
+    "dark_caverns:glimmergrass": {
+      "chance": 0.3
+    },
+    "dark_caverns:glimmershroom": {
+      "chance": 0.65
+    },
+    "dark_caverns:glimmershroom_block": {
+      "chance": 0.85
+    },
+    "dark_caverns:scorched_berries": {
+      "chance": 0.3
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:ingots/scorchsteel"
+  },
+  "base": {
+    "item": "dark_caverns:platinum_helmet"
+  },
+  "result": {
+    "count": 1,
+    "id": "dark_caverns:scorchsteel_helmet"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

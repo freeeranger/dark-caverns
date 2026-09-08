@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:gems/emerald"
+    },
+    {
+      "tag": "c:gems/emerald"
+    },
+    {
+      "tag": "c:gems/emerald"
+    },
+    {
+      "tag": "c:gems/emerald"
+    },
+    {
+      "item": "dark_caverns:shroomstone_piece"
+    },
+    {
+      "item": "dark_caverns:shroomstone_piece"
+    },
+    {
+      "item": "dark_caverns:shroomstone_piece"
+    },
+    {
+      "item": "dark_caverns:shroomstone_piece"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "dark_caverns:shroomstone"
+  }
+}

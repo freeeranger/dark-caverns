@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:gems/diamond"
+    },
+    {
+      "tag": "c:gems/diamond"
+    },
+    {
+      "tag": "c:gems/diamond"
+    },
+    {
+      "tag": "c:gems/diamond"
+    },
+    {
+      "item": "dark_caverns:hellstone_rock"
+    },
+    {
+      "item": "dark_caverns:hellstone_rock"
+    },
+    {
+      "item": "dark_caverns:hellstone_rock"
+    },
+    {
+      "item": "dark_caverns:hellstone_rock"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "dark_caverns:hellstone"
+  }
+}

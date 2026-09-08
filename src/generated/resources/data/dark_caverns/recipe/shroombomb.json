@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:mushrooms"
+    },
+    "X": {
+      "tag": "c:gunpowder"
+    }
+  },
+  "pattern": [
+    " X ",
+    "X#X",
+    " X "
+  ],
+  "result": {
+    "count": 4,
+    "id": "dark_caverns:shroombomb"
+  }
+}

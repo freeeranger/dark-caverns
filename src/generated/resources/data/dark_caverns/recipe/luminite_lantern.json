@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "dark_caverns:luminite_torch"
+    },
+    "X": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "X#X",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "dark_caverns:luminite_lantern"
+  }
+}
