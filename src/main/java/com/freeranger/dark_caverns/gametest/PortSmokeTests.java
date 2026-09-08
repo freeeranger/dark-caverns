@@ -29,6 +29,7 @@ import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
@@ -47,12 +48,14 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.phys.Vec3;
@@ -148,9 +151,57 @@ public final class PortSmokeTests {
                 "Luminite fox factory failed");
         ShroomieEntity shroomie = CustomEntityTypes.SHROOMIE_ENTITY.get().create(helper.getLevel());
         helper.assertTrue(shroomie != null, "Shroomie factory failed");
+        var shroomieOffers = shroomie.getOffers();
         helper.assertTrue(
-                shroomie.getOffers().size() == 6,
-                "Shroomie should generate five common and one rare offer");
+                shroomieOffers.size() == 7,
+                "Shroomie should generate five common, one progression, and one rare offer");
+        helper.assertTrue(
+                shroomieOffers.stream().map(offer -> offer.getResult().getItem()).distinct().count()
+                        == shroomieOffers.size(),
+                "Shroomie offers should not contain duplicate results");
+        var shroomstoneOffers =
+                shroomieOffers.stream()
+                        .filter(offer -> offer.getResult().is(CustomItems.SHROOMSTONE_PIECE.get()))
+                        .toList();
+        helper.assertTrue(
+                shroomstoneOffers.size() == 1,
+                "Every Shroomie should have exactly one Shroomstone progression offer");
+        var shroomstoneOffer = shroomstoneOffers.getFirst();
+        helper.assertTrue(
+                shroomstoneOffer.getResult().getCount() == 2
+                        && shroomstoneOffer.getBaseCostA().is(Items.DIAMOND)
+                        && shroomstoneOffer.getBaseCostA().getCount() == 1,
+                "Shroomstone trade should exchange one diamond for two pieces");
+        shroomstoneOffer.setToOutOfStock();
+        shroomie.restock();
+        helper.assertFalse(
+                shroomstoneOffer.isOutOfStock(), "Shroomie restocking should reset offer uses");
+        shroomieOffers.remove(shroomstoneOffer);
+        var preservedOffer = shroomieOffers.getFirst();
+        preservedOffer.increaseUses();
+        CompoundTag legacyShroomieData = new CompoundTag();
+        shroomie.addAdditionalSaveData(legacyShroomieData);
+        legacyShroomieData.remove("NextRestockGameTime");
+        ShroomieEntity restoredShroomie =
+                CustomEntityTypes.SHROOMIE_ENTITY.get().create(helper.getLevel());
+        helper.assertTrue(restoredShroomie != null, "Second Shroomie factory failed");
+        restoredShroomie.readAdditionalSaveData(legacyShroomieData);
+        helper.assertTrue(
+                restoredShroomie.getOffers().stream()
+                                .filter(
+                                        offer ->
+                                                offer.getResult()
+                                                        .is(CustomItems.SHROOMSTONE_PIECE.get()))
+                                .count()
+                        == 1,
+                "Existing Shroomies without a Shroomstone trade should gain one when loaded");
+        helper.assertTrue(
+                restoredShroomie.getOffers().stream()
+                        .anyMatch(
+                                offer ->
+                                        offer.getResult().is(preservedOffer.getResult().getItem())
+                                                && offer.getUses() == 1),
+                "Adding the progression trade should preserve existing offers and uses");
         ShroomlingEntity shroomling =
                 CustomEntityTypes.SHROOMLING_ENTITY.get().create(helper.getLevel());
         helper.assertTrue(shroomling != null, "Shroomling factory failed");
@@ -272,9 +323,9 @@ public final class PortSmokeTests {
                         VillagerProfession.CARTOGRAPHER,
                         helper.getLevel().registryAccess()));
         helper.assertTrue(
-                cartographerTrades.get(5).stream()
+                cartographerTrades.get(4).stream()
                         .anyMatch(VillagerTrades.TreasureMapForEmeralds.class::isInstance),
-                "Master cartographers did not receive the Forgotten Tower map trade");
+                "Expert cartographers did not receive the Forgotten Tower map trade");
         var serverPlayer =
                 new ServerPlayer(
                         helper.getLevel().getServer(),
@@ -309,6 +360,39 @@ public final class PortSmokeTests {
         verifyCompostChance(helper, CustomBlocks.GLIMMERGRASS.get().asItem(), 0.30F);
         verifyCompostChance(helper, CustomBlocks.CHARRED_GRASS.get().asItem(), 0.30F);
         verifyCompostChance(helper, CustomItems.SCORCHED_BERRIES.get(), 0.30F);
+
+        FoodProperties berryFood =
+                new ItemStack(CustomItems.SCORCHED_BERRIES.get()).get(DataComponents.FOOD);
+        helper.assertTrue(
+                berryFood != null
+                        && berryFood.nutrition() == 2
+                        && berryFood.canAlwaysEat()
+                        && berryFood.eatDurationTicks() == 16
+                        && berryFood.effects().size() == 1
+                        && berryFood
+                                .effects()
+                                .getFirst()
+                                .effect()
+                                .getEffect()
+                                .equals(MobEffects.FIRE_RESISTANCE)
+                        && berryFood.effects().getFirst().effect().getDuration() == 100,
+                "Scorched berries should be a short emergency fire-resistance food");
+        FoodProperties scorchedMeatFood =
+                new ItemStack(CustomItems.SCORCHED_MEAT.get()).get(DataComponents.FOOD);
+        helper.assertTrue(
+                scorchedMeatFood != null
+                        && scorchedMeatFood.nutrition() == 8
+                        && !scorchedMeatFood.canAlwaysEat()
+                        && scorchedMeatFood.effects().isEmpty(),
+                "Scorched meat should be strong food without a hidden saturation effect");
+        helper.assertTrue(
+                CustomBlocks.CARFSTONE_COAL_ORE.get() instanceof DropExperienceBlock
+                        && CustomBlocks.CARFSTONE_DIAMOND_ORE.get() instanceof DropExperienceBlock
+                        && CustomBlocks.CARFSTONE_REDSTONE_ORE.get() instanceof DropExperienceBlock
+                        && CustomBlocks.CARFSTONE_LAPIS_ORE.get() instanceof DropExperienceBlock
+                        && CustomBlocks.LUMINITE_ORE.get() instanceof DropExperienceBlock
+                        && CustomBlocks.HELLSTONE_ORE.get() instanceof DropExperienceBlock,
+                "Gem, dust, redstone, lapis, and coal ores should award mining experience");
 
         BlockPos samplePos = helper.absolutePos(new BlockPos(1, 2, 1));
         helper.assertTrue(

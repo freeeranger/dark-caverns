@@ -3,6 +3,7 @@ package com.freeranger.dark_caverns.items;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,14 +21,32 @@ public final class KeyToTheCavernsItem extends Item {
     public InteractionResult useOn(UseOnContext context) {
         BlockPos pos = context.getClickedPos();
         if (!context.getLevel().getBlockState(pos).is(CustomBlocks.CRACKED_BEDROCK.get())) {
+            if (!context.getLevel().isClientSide() && context.getPlayer() != null) {
+                context.getPlayer()
+                        .displayClientMessage(
+                                Component.translatable(
+                                        "message.dark_caverns.key.invalid_activation_block"),
+                                true);
+            }
             return InteractionResult.FAIL;
         }
 
         if (context.getLevel() instanceof ServerLevel level) {
-            level.setBlock(
-                    pos,
-                    CustomBlocks.GATEWAY_TO_THE_CAVERNS.get().defaultBlockState(),
-                    Block.UPDATE_ALL);
+            boolean activated =
+                    level.setBlock(
+                            pos,
+                            CustomBlocks.GATEWAY_TO_THE_CAVERNS.get().defaultBlockState(),
+                            Block.UPDATE_ALL);
+            if (!activated) {
+                if (context.getPlayer() != null) {
+                    context.getPlayer()
+                            .displayClientMessage(
+                                    Component.translatable(
+                                            "message.dark_caverns.key.activation_failed"),
+                                    true);
+                }
+                return InteractionResult.FAIL;
+            }
             if (context.getPlayer() == null || !context.getPlayer().getAbilities().instabuild) {
                 context.getItemInHand().shrink(1);
             }

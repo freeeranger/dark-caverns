@@ -2,7 +2,7 @@
   "parent": "dark_caverns:enter_dark_caverns",
   "display": {
     "icon": {
-      "id": "dark_caverns:carfstone_platinum_ore"
+      "id": "dark_caverns:platinum_piece"
     },
     "title": {
       "translate": "advancements.dark_caverns.obtain_platinum_ore.title"
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "items": "dark_caverns:carfstone_platinum_ore"
+            "items": "dark_caverns:platinum_piece"
           }
         ]
       }

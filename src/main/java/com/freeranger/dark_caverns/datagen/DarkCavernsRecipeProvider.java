@@ -253,12 +253,9 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                 .pattern(" # ")
                 .unlockedBy("has_ingredient", has(CustomItems.LUMINITE_TORCH.get()))
                 .save(output, id("throwable_luminite_torch"));
-        ShapedRecipeBuilder.shaped(CATEGORY, CustomItems.SHROOMBOMB.get(), 4)
-                .define('#', itemTag("mushrooms"))
-                .define('X', itemTag("gunpowder"))
-                .pattern(" X ")
-                .pattern("X#X")
-                .pattern(" X ")
+        ShapelessRecipeBuilder.shapeless(CATEGORY, CustomItems.SHROOMBOMB.get(), 2)
+                .requires(Ingredient.of(itemTag("mushrooms")), 2)
+                .requires(Ingredient.of(itemTag("gunpowder")), 3)
                 .unlockedBy("has_ingredient", has(itemTag("mushrooms")))
                 .save(output, id("shroombomb"));
     }
@@ -403,23 +400,35 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                         Items.NETHERITE_CHESTPLATE,
                         Items.NETHERITE_LEGGINGS,
                         Items.NETHERITE_BOOTS);
-        smithingSet(output, diamondGear, itemTag("ingots/platinum"), platinumGear);
-        smithingSet(output, platinumGear, itemTag("gems/hellstone"), hellstoneGear);
-        smithingSet(output, platinumGear, itemTag("gems/shroomstone"), shroomstoneGear);
-        smithingSet(output, platinumGear, itemTag("ingots/netherite"), netheriteGear);
+        Ingredient cavernCatalyst = Ingredient.of(itemTag("dusts/luminite"));
+        smithingSet(output, cavernCatalyst, diamondGear, itemTag("ingots/platinum"), platinumGear);
+        smithingSet(output, cavernCatalyst, platinumGear, itemTag("gems/hellstone"), hellstoneGear);
+        smithingSet(
+                output, cavernCatalyst, platinumGear, itemTag("gems/shroomstone"), shroomstoneGear);
         smithingSet(
                 output,
+                SMITHING_TEMPLATE,
+                platinumGear,
+                itemTag("ingots/netherite"),
+                netheriteGear);
+        smithingSet(
+                output,
+                cavernCatalyst,
                 platinumGear.subList(5, 9),
                 itemTag("ingots/scorchsteel"),
                 gear("scorchsteel").subList(5, 9));
     }
 
     private void smithingSet(
-            RecipeOutput output, List<Item> bases, TagKey<Item> addition, List<Item> results) {
+            RecipeOutput output,
+            Ingredient template,
+            List<Item> bases,
+            TagKey<Item> addition,
+            List<Item> results) {
         for (int index = 0; index < bases.size(); index++) {
             Item result = results.get(index);
             SmithingTransformRecipeBuilder.smithing(
-                            SMITHING_TEMPLATE,
+                            template,
                             Ingredient.of(bases.get(index)),
                             Ingredient.of(addition),
                             CATEGORY,

@@ -2,10 +2,13 @@ package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
+import com.freeranger.dark_caverns.registry.CustomItems;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import com.freeranger.dark_caverns.registry.CustomSpawnEggs;
 import com.freeranger.dark_caverns.registry.ShroomieTrades;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.Stats;
@@ -44,10 +47,16 @@ import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public final class ShroomieEntity extends AbstractVillager implements GeoEntity {
+    private static final String NEXT_RESTOCK_TIME_TAG = "NextRestockGameTime";
+    private static final long RESTOCK_INTERVAL = 12_000L;
+    private static final int RESTOCK_CHECK_INTERVAL = 20;
+
     private final AnimatableInstanceCache animationCache = GeckoLibUtil.createInstanceCache(this);
+    private long nextRestockGameTime;
 
     public ShroomieEntity(EntityType<? extends ShroomieEntity> type, Level level) {
         super(type, level);
+        nextRestockGameTime = level.getGameTime() + RESTOCK_INTERVAL;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -145,14 +154,89 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
     }
 
     @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (tickCount % RESTOCK_CHECK_INTERVAL != 0 || isTrading()) {
+            return;
+        }
+
+        long gameTime = level().getGameTime();
+        if (gameTime < nextRestockGameTime) {
+            return;
+        }
+
+        nextRestockGameTime = gameTime + RESTOCK_INTERVAL;
+        if (needsRestock()) {
+            restock();
+        }
+    }
+
+    @Override
+    public boolean canRestock() {
+        return true;
+    }
+
+    public void restock() {
+        for (MerchantOffer offer : getOffers()) {
+            offer.resetUses();
+        }
+        nextRestockGameTime = level().getGameTime() + RESTOCK_INTERVAL;
+    }
+
+    private boolean needsRestock() {
+        for (MerchantOffer offer : getOffers()) {
+            if (offer.needsRestock()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     protected void updateTrades() {
         VillagerTrades.ItemListing[] common = ShroomieTrades.commonTrades();
         VillagerTrades.ItemListing[] rare = ShroomieTrades.rareTrades();
         MerchantOffers offers = getOffers();
         addOffersFromItemListings(offers, common, 5);
+        MerchantOffer progressionOffer = ShroomieTrades.progressionTrade().getOffer(this, random);
+        if (progressionOffer != null) {
+            offers.add(progressionOffer);
+        }
         MerchantOffer rareOffer = rare[random.nextInt(rare.length)].getOffer(this, random);
         if (rareOffer != null) {
             offers.add(rareOffer);
+        }
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putLong(NEXT_RESTOCK_TIME_TAG, nextRestockGameTime);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        nextRestockGameTime =
+                tag.contains(NEXT_RESTOCK_TIME_TAG, Tag.TAG_LONG)
+                        ? tag.getLong(NEXT_RESTOCK_TIME_TAG)
+                        : level().getGameTime() + RESTOCK_INTERVAL;
+        addMissingProgressionTrade();
+    }
+
+    private void addMissingProgressionTrade() {
+        if (offers == null
+                || offers.stream()
+                        .anyMatch(
+                                offer ->
+                                        offer.getResult()
+                                                .is(CustomItems.SHROOMSTONE_PIECE.get()))) {
+            return;
+        }
+
+        MerchantOffer progressionOffer = ShroomieTrades.progressionTrade().getOffer(this, random);
+        if (progressionOffer != null) {
+            offers.add(progressionOffer);
         }
     }
 

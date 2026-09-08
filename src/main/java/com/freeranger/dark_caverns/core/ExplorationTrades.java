@@ -25,10 +25,10 @@ public final class ExplorationTrades {
             return;
         }
         event.getTrades()
-                .get(5)
+                .get(4)
                 .add(
                         new VillagerTrades.TreasureMapForEmeralds(
-                                36,
+                                20,
                                 FORGOTTEN_TOWER_MAP_DESTINATIONS,
                                 "filled_map.dark_caverns:forgotten_tower",
                                 MapDecorationTypes.RED_X,

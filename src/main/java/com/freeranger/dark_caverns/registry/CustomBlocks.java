@@ -12,8 +12,10 @@ import com.freeranger.dark_caverns.blocks.ScorchedBerryBushBlock;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
@@ -130,25 +132,39 @@ public final class CustomBlocks {
     public static final DeferredBlock<Block> LUMINITE_BLOCK =
             register("luminite_block", () -> new Block(stone(5.0F).lightLevel(state -> 15)));
     public static final DeferredBlock<Block> LUMINITE_ORE =
-            register("carfstone_luminite_ore", () -> new Block(stone(5.0F).lightLevel(state -> 9)));
+            register(
+                    "carfstone_luminite_ore",
+                    () ->
+                            new DropExperienceBlock(
+                                    UniformInt.of(1, 4), stone(5.0F).lightLevel(state -> 9)));
     public static final DeferredBlock<Block> PLATINUM_ORE =
             register("carfstone_platinum_ore", () -> new Block(stone(7.0F)));
     public static final DeferredBlock<Block> PLATINUM_BLOCK =
             register("platinum_block", () -> new Block(stone(7.0F)));
     public static final DeferredBlock<Block> CARFSTONE_COAL_ORE =
-            register("carfstone_coal_ore", () -> new Block(stone(4.5F)));
+            register(
+                    "carfstone_coal_ore",
+                    () -> new DropExperienceBlock(UniformInt.of(0, 2), stone(4.5F)));
     public static final DeferredBlock<Block> CARFSTONE_IRON_ORE =
             register("carfstone_iron_ore", () -> new Block(stone(5.0F)));
     public static final DeferredBlock<Block> CARFSTONE_GOLD_ORE =
             register("carfstone_gold_ore", () -> new Block(stone(6.0F)));
     public static final DeferredBlock<Block> CARFSTONE_DIAMOND_ORE =
-            register("carfstone_diamond_ore", () -> new Block(stone(7.0F)));
+            register(
+                    "carfstone_diamond_ore",
+                    () -> new DropExperienceBlock(UniformInt.of(3, 7), stone(7.0F)));
     public static final DeferredBlock<Block> CARFSTONE_REDSTONE_ORE =
-            register("carfstone_redstone_ore", () -> new Block(stone(6.0F)));
+            register(
+                    "carfstone_redstone_ore",
+                    () -> new DropExperienceBlock(UniformInt.of(1, 5), stone(6.0F)));
     public static final DeferredBlock<Block> CARFSTONE_LAPIS_ORE =
-            register("carfstone_lapis_ore", () -> new Block(stone(6.0F)));
+            register(
+                    "carfstone_lapis_ore",
+                    () -> new DropExperienceBlock(UniformInt.of(2, 5), stone(6.0F)));
     public static final DeferredBlock<Block> HELLSTONE_ORE =
-            register("hellstone_ore", () -> new Block(stone(9.0F)));
+            register(
+                    "hellstone_ore",
+                    () -> new DropExperienceBlock(UniformInt.of(2, 5), stone(9.0F)));
     public static final DeferredBlock<Block> HELLSTONE_BLOCK =
             copy("hellstone_block", HELLSTONE_ORE);
     public static final DeferredBlock<Block> SHROOMSTONE_BLOCK =

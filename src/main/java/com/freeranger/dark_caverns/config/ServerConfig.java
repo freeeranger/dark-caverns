@@ -70,7 +70,7 @@ public final class ServerConfig {
                         .defineInRange("corruptedPearlScanRadius", 5.0, 1.0, 32.0);
         shroombombExplosionPower =
                 builder.comment("Explosion power of thrown Shroombombs (TNT is 4.0).")
-                        .defineInRange("shroombombExplosionPower", 4.0, 0.5, 20.0);
+                        .defineInRange("shroombombExplosionPower", 2.5, 0.5, 8.0);
         scorchhoundBypassShields =
                 builder.comment(
                                 "Whether Scorchhounds fling players even when an attack is"

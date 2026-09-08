@@ -11,6 +11,6 @@
     "id": "dark_caverns:shroomstone_shovel"
   },
   "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
+    "tag": "c:dusts/luminite"
   }
 }

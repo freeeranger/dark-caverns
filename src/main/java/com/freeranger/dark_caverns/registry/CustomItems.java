@@ -24,19 +24,14 @@ public final class CustomItems {
 
     private static final FoodProperties SCORCHED_BERRIES_FOOD =
             new FoodProperties.Builder()
-                    .nutrition(3)
+                    .nutrition(2)
                     .saturationModifier(0.2F)
                     .alwaysEdible()
                     .fast()
-                    .effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 320), 1.0F)
+                    .effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100), 1.0F)
                     .build();
     private static final FoodProperties SCORCHED_MEAT_FOOD =
-            new FoodProperties.Builder()
-                    .nutrition(7)
-                    .saturationModifier(0.7F)
-                    .alwaysEdible()
-                    .effect(() -> new MobEffectInstance(MobEffects.SATURATION, 7), 1.0F)
-                    .build();
+            new FoodProperties.Builder().nutrition(8).saturationModifier(0.8F).build();
 
     public static final DeferredItem<BlockItem> SCORCHED_BERRIES =
             ITEMS.register(
@@ -78,7 +73,7 @@ public final class CustomItems {
                             new ThrowableItem(
                                     new Item.Properties(),
                                     SoundEvents.EGG_THROW,
-                                    0,
+                                    10,
                                     ShroombombEntity::new));
     public static final DeferredItem<ThrowableItem> CORRUPTED_PEARL =
             ITEMS.register(

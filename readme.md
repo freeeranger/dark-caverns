@@ -10,12 +10,12 @@ Dark Caverns is a Minecraft NeoForge mod for 1.21.1 that adds a cave dimension b
 
 Getting to the dark caverns takes a few steps:
 
-1. Buy a Forgotten Tower map from a master-level cartographer villager.
+1. Buy a Forgotten Tower map from an expert-level cartographer villager.
 2. Follow the map to the tower in a forest biome, clear out the vindicators and evoker inside, and grab the key.
 3. Dig down to bedrock in the overworld until you find cracked bedrock.
 4. Right-click the cracked bedrock with the key to open the gateway.
 
-When you jump in, make a staircase and bring a water bucket. Digging straight down will drop you right into the open cavern void.
+The gateway creates a small landing platform on the Caverns side, so the first trip no longer drops you into the open cavern.
 
 ---
 
@@ -31,12 +31,12 @@ When you jump in, make a staircase and bring a water bucket. Digging straight do
 
 ## Gear and upgrades
 
-Smelt platinum ore into platinum pieces, then combine four pieces with four iron ingots to make platinum ingots. Platinum upgrades diamond gear in a smithing table and sits between diamond and netherite in stats.
+Mine platinum ore for platinum pieces, then combine four pieces with four iron ingots to make platinum ingots. Silk Touch ore can still be smelted into a piece. Platinum upgrades diamond gear in a smithing table and sits between diamond and netherite in stats. Cavern gear upgrades use luminite dust as the smithing catalyst; only the Netherite branch requires a Netherite Upgrade Smithing Template.
 
 You can upgrade platinum gear further at a smithing table:
 
 - **Hellstone.** Crafted with hellstone rock and diamonds. Each armor piece gives 25% fire and lava resistance, reaching 100% with the full set.
-- **Shroomstone.** Bought from shroomies with emeralds. Each piece adds Jump Boost and 25% fall damage reduction. Weapons launch enemies into the air on hit.
+- **Shroomstone.** Bought from shroomies with diamonds. Each piece adds Jump Boost and 25% fall damage reduction. Weapons launch enemies into the air on hit.
 - **Scorchsteel armor.** Crafted from scorchling tails and iron. Standing still for one second grants invisibility, and mobs will stop targeting you until you move.
 
 ---

@@ -50,6 +50,8 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
 
     private void addSpecialDrops() {
         add(CustomBlocks.CARFSTONE_COAL_ORE.get(), block -> createOreDrop(block, Items.COAL));
+        add(CustomBlocks.CARFSTONE_IRON_ORE.get(), block -> createOreDrop(block, Items.RAW_IRON));
+        add(CustomBlocks.CARFSTONE_GOLD_ORE.get(), block -> createOreDrop(block, Items.RAW_GOLD));
         add(CustomBlocks.CARFSTONE_DIAMOND_ORE.get(), block -> createOreDrop(block, Items.DIAMOND));
         add(CustomBlocks.CARFSTONE_LAPIS_ORE.get(), this::createLapisOreDrops);
         add(CustomBlocks.CARFSTONE_REDSTONE_ORE.get(), this::createRedstoneOreDrops);
@@ -57,6 +59,9 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
                 CustomBlocks.HELLSTONE_ORE.get(),
                 block -> createOreDrop(block, CustomItems.HELLSTONE_ROCK.get()));
         add(CustomBlocks.LUMINITE_ORE.get(), this::createLuminiteOreDrops);
+        add(
+                CustomBlocks.PLATINUM_ORE.get(),
+                block -> createOreDrop(block, CustomItems.PLATINUM_PIECE.get()));
         add(
                 CustomBlocks.GLIMMERGRASS_BLOCK.get(),
                 block -> createSingleItemTableWithSilkTouch(block, CustomBlocks.CARFSTONE.get()));
@@ -121,11 +126,14 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
 
     private boolean hasSpecialDrop(Block block) {
         return block == CustomBlocks.CARFSTONE_COAL_ORE.get()
+                || block == CustomBlocks.CARFSTONE_IRON_ORE.get()
+                || block == CustomBlocks.CARFSTONE_GOLD_ORE.get()
                 || block == CustomBlocks.CARFSTONE_DIAMOND_ORE.get()
                 || block == CustomBlocks.CARFSTONE_LAPIS_ORE.get()
                 || block == CustomBlocks.CARFSTONE_REDSTONE_ORE.get()
                 || block == CustomBlocks.HELLSTONE_ORE.get()
                 || block == CustomBlocks.LUMINITE_ORE.get()
+                || block == CustomBlocks.PLATINUM_ORE.get()
                 || block == CustomBlocks.GLIMMERGRASS_BLOCK.get()
                 || block == CustomBlocks.GLIMMERSHROOM_BLOCK.get()
                 || block == CustomBlocks.GLIMMERGRASS.get()
