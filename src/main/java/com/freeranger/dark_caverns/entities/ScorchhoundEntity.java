@@ -15,6 +15,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -37,8 +38,8 @@ public final class ScorchhoundEntity extends AbstractAnimatedMonsterEntity {
                 .add(Attributes.ATTACK_KNOCKBACK, 0.6)
                 .add(Attributes.ARMOR, 6.0)
                 .add(Attributes.MAX_HEALTH, 40.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.2)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 2.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.23)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.75)
                 .add(Attributes.FOLLOW_RANGE, 32.0);
     }
 
@@ -47,6 +48,7 @@ public final class ScorchhoundEntity extends AbstractAnimatedMonsterEntity {
         goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.6, true));
         goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0));
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        goalSelector.addGoal(9, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }

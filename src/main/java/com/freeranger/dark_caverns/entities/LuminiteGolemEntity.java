@@ -15,6 +15,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -28,9 +29,12 @@ import software.bernie.geckolib.animation.AnimationState;
 
 public final class LuminiteGolemEntity extends AbstractAnimatedMonsterEntity {
     private static final byte ATTACK_EVENT = 4;
-    private static final int ATTACK_ANIMATION_TICKS = 10;
+    private static final int ATTACK_ANIMATION_TICKS = 14;
+    private static final int ATTACK_IMPACT_TICK = 7;
+    private static final double ATTACK_REACH_SQUARED = 12.25;
 
     private int attackAnimationTick;
+    private LivingEntity pendingAttackTarget;
 
     public LuminiteGolemEntity(EntityType<? extends LuminiteGolemEntity> type, Level level) {
         super(type, level, "luminite_golem", "walk");
@@ -38,12 +42,12 @@ public final class LuminiteGolemEntity extends AbstractAnimatedMonsterEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.ATTACK_DAMAGE, 20.0)
+                .add(Attributes.ATTACK_DAMAGE, 14.0)
                 .add(Attributes.ATTACK_KNOCKBACK, 1.0)
                 .add(Attributes.ARMOR, 10.0)
                 .add(Attributes.MAX_HEALTH, 40.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.15)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 2.0)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.9)
                 .add(Attributes.FOLLOW_RANGE, 16.0);
     }
 
@@ -52,6 +56,7 @@ public final class LuminiteGolemEntity extends AbstractAnimatedMonsterEntity {
         goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.6, true));
         goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0));
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        goalSelector.addGoal(9, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
@@ -67,27 +72,37 @@ public final class LuminiteGolemEntity extends AbstractAnimatedMonsterEntity {
 
     @Override
     public boolean doHurtTarget(Entity target) {
+        if (attackAnimationTick > 0 || !(target instanceof LivingEntity livingTarget)) {
+            return false;
+        }
         startAttackAnimation();
+        pendingAttackTarget = livingTarget;
         level().broadcastEntityEvent(this, ATTACK_EVENT);
+        return true;
+    }
 
+    private void landPendingAttack() {
+        LivingEntity target = pendingAttackTarget;
+        pendingAttackTarget = null;
+        if (target == null
+                || !target.isAlive()
+                || distanceToSqr(target) > ATTACK_REACH_SQUARED
+                || !hasLineOfSight(target)) {
+            return;
+        }
         float attackDamage = (float) getAttributeValue(Attributes.ATTACK_DAMAGE);
-        float randomizedDamage =
-                (int) attackDamage > 0
-                        ? attackDamage / 2.0F + random.nextInt((int) attackDamage)
-                        : attackDamage;
+        float randomizedDamage = attackDamage * (0.75F + random.nextFloat() * 0.5F);
         DamageSource damageSource = damageSources().mobAttack(this);
         boolean hurt = target.hurt(damageSource, randomizedDamage);
         if (hurt) {
-            if (target instanceof LivingEntity livingTarget) {
-                livingTarget.setDeltaMovement(livingTarget.getDeltaMovement().add(0.0, 0.5, 0.0));
-            }
+            target.setDeltaMovement(target.getDeltaMovement().add(0.0, 0.5, 0.0));
+            target.hurtMarked = true;
             if (level() instanceof ServerLevel serverLevel) {
                 EnchantmentHelper.doPostAttackEffects(serverLevel, target, damageSource);
             }
             setLastHurtMob(target);
         }
         playSound(CustomSoundEvents.LUMINITE_GOLEM_ATTACK.get(), 1.0F, 1.0F);
-        return hurt;
     }
 
     @Override
@@ -104,6 +119,11 @@ public final class LuminiteGolemEntity extends AbstractAnimatedMonsterEntity {
         super.aiStep();
         if (attackAnimationTick > 0) {
             attackAnimationTick--;
+            if (!level().isClientSide() && attackAnimationTick == ATTACK_IMPACT_TICK) {
+                landPendingAttack();
+            } else if (attackAnimationTick == 0) {
+                pendingAttackTarget = null;
+            }
         }
     }
 

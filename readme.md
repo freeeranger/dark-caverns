@@ -35,9 +35,9 @@ Mine platinum ore for platinum pieces, then combine four pieces with four iron i
 
 You can upgrade platinum gear further at a smithing table:
 
-- **Hellstone.** Crafted with hellstone rock and diamonds. Each armor piece gives 25% fire and lava resistance, reaching 100% with the full set.
-- **Shroomstone.** Bought from shroomies with diamonds. Each piece adds Jump Boost and 25% fall damage reduction. Weapons launch enemies into the air on hit.
-- **Scorchsteel armor.** Crafted from scorchling tails and iron. Standing still for one second grants invisibility, and mobs will stop targeting you until you move.
+- **Hellstone.** Crafted with hellstone rock and diamonds. Each armor piece gives 25% fire and lava damage reduction, reaching immunity with the full set. Fully charged tool attacks ignite their target.
+- **Shroomstone.** Bought from shroomies with diamonds. Each piece gives 25% fall damage reduction, while the full set adds Jump Boost II. Fully charged tool attacks launch enemies into the air.
+- **Scorchsteel armor.** Crafted from scorchling tails and iron. Wearing the full set and standing still for one second conceals you from hostile mobs. Moving, attacking, or taking damage breaks concealment.
 
 ---
 

@@ -15,6 +15,7 @@ public final class DarkCavernsClient {
     public DarkCavernsClient(IEventBus modBus, ModContainer modContainer) {
         ClientModEvents.register(modBus);
         LuminiteHelmetLighting.register(NeoForge.EVENT_BUS);
+        ItemTooltips.register(NeoForge.EVENT_BUS);
         modContainer.registerConfig(
                 ModConfig.Type.CLIENT, ClientConfig.SPEC, DarkCaverns.MOD_ID + "-client.toml");
     }

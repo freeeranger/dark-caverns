@@ -16,6 +16,7 @@ import com.freeranger.dark_caverns.entities.ShroomlingEntity;
 import com.freeranger.dark_caverns.events.CorruptedPearlTeleportEvent;
 import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
 import com.freeranger.dark_caverns.registry.CustomAttachments;
+import com.freeranger.dark_caverns.registry.CustomBlockTags;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomEquipment;
@@ -62,6 +63,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
@@ -443,6 +445,20 @@ public final class PortSmokeTests {
                         .defaultBlockState()
                         .is(BlockTags.MINEABLE_WITH_AXE),
                 "Glimmershroom blocks should retain their axe mining behavior");
+        helper.assertTrue(
+                CustomBlocks.CARFSTONE
+                                .get()
+                                .defaultBlockState()
+                                .is(CustomBlockTags.ROCKY_CREATURE_SPAWNABLE_ON)
+                        && CustomBlocks.MOLTEN_CARFSTONE
+                                .get()
+                                .defaultBlockState()
+                                .is(CustomBlockTags.MOLTEN_CREATURE_SPAWNABLE_ON)
+                        && CustomBlocks.GLIMMERGRASS_BLOCK
+                                .get()
+                                .defaultBlockState()
+                                .is(CustomBlockTags.GLIMMERSHROOM_CREATURE_SPAWNABLE_ON),
+                "Creature spawn-ground tags did not load");
 
         BlockPos plantPos = new BlockPos(2, 2, 2);
         helper.setBlock(plantPos.below(), CustomBlocks.GLIMMERGRASS_BLOCK.get());
@@ -646,6 +662,9 @@ public final class PortSmokeTests {
                 "Platinum boots durability multiplier changed");
 
         var toolUser = helper.makeMockPlayer(GameType.SURVIVAL);
+        for (int tick = 0; tick < 20; tick++) {
+            toolUser.tick();
+        }
         var toolTarget = helper.spawn(EntityType.ZOMBIE, new BlockPos(1, 3, 1));
         ItemStack hellstoneSword = new ItemStack(CustomEquipment.HELLSTONE_SWORD.get());
         toolUser.setItemInHand(InteractionHand.MAIN_HAND, hellstoneSword);
@@ -678,10 +697,9 @@ public final class PortSmokeTests {
         shroomPlayer.setItemSlot(
                 EquipmentSlot.CHEST, new ItemStack(CustomEquipment.SHROOMSTONE_CHESTPLATE.get()));
         NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(shroomPlayer));
-        helper.assertTrue(
-                shroomPlayer.hasEffect(MobEffects.JUMP)
-                        && shroomPlayer.getEffect(MobEffects.JUMP).getAmplifier() == 1,
-                "Two Shroomstone pieces should grant Jump Boost II");
+        helper.assertFalse(
+                shroomPlayer.hasEffect(MobEffects.JUMP),
+                "A partial Shroomstone set should not grant the full-set jump bonus");
         var fallDamage =
                 new LivingDamageEvent.Pre(
                         shroomPlayer,
@@ -690,6 +708,15 @@ public final class PortSmokeTests {
         helper.assertTrue(
                 Math.abs(fallDamage.getNewDamage() - 4.0F) < 0.0001F,
                 "Two Shroomstone pieces should halve fall damage");
+        shroomPlayer.setItemSlot(
+                EquipmentSlot.LEGS, new ItemStack(CustomEquipment.SHROOMSTONE_LEGGINGS.get()));
+        shroomPlayer.setItemSlot(
+                EquipmentSlot.FEET, new ItemStack(CustomEquipment.SHROOMSTONE_BOOTS.get()));
+        NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(shroomPlayer));
+        helper.assertTrue(
+                shroomPlayer.hasEffect(MobEffects.JUMP)
+                        && shroomPlayer.getEffect(MobEffects.JUMP).getAmplifier() == 1,
+                "A full Shroomstone set should grant Jump Boost II");
 
         var hellstonePlayer = helper.makeMockPlayer(GameType.SURVIVAL);
         hellstonePlayer.setItemSlot(
@@ -701,9 +728,9 @@ public final class PortSmokeTests {
         hellstonePlayer.setItemSlot(
                 EquipmentSlot.FEET, new ItemStack(CustomEquipment.HELLSTONE_BOOTS.get()));
         NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(hellstonePlayer));
-        helper.assertTrue(
+        helper.assertFalse(
                 hellstonePlayer.hasEffect(MobEffects.FIRE_RESISTANCE),
-                "A full Hellstone set should grant Fire Resistance");
+                "Hellstone protection should not add a redundant potion effect");
         var fireDamage =
                 new LivingDamageEvent.Pre(
                         hellstonePlayer,
@@ -719,9 +746,21 @@ public final class PortSmokeTests {
         for (int tick = 0; tick <= 20; tick++) {
             NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(scorchsteelPlayer));
         }
+        helper.assertFalse(
+                scorchsteelPlayer.hasEffect(MobEffects.INVISIBILITY),
+                "A partial Scorchsteel set should not grant concealment");
+        scorchsteelPlayer.setItemSlot(
+                EquipmentSlot.CHEST, new ItemStack(CustomEquipment.SCORCHSTEEL_CHESTPLATE.get()));
+        scorchsteelPlayer.setItemSlot(
+                EquipmentSlot.LEGS, new ItemStack(CustomEquipment.SCORCHSTEEL_LEGGINGS.get()));
+        scorchsteelPlayer.setItemSlot(
+                EquipmentSlot.FEET, new ItemStack(CustomEquipment.SCORCHSTEEL_BOOTS.get()));
+        for (int tick = 0; tick <= 20; tick++) {
+            NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(scorchsteelPlayer));
+        }
         helper.assertTrue(
                 scorchsteelPlayer.hasEffect(MobEffects.INVISIBILITY),
-                "Stationary Scorchsteel armor should grant invisibility after the configured"
+                "A stationary full Scorchsteel set should grant concealment after the configured"
                         + " delay");
         helper.assertTrue(
                 scorchsteelPlayer.hasData(CustomAttachments.SCORCHSTEEL_STEALTH),
@@ -732,6 +771,10 @@ public final class PortSmokeTests {
         helper.assertTrue(
                 zombie.getTarget() == null,
                 "Monsters should clear invisible Scorchsteel-wearing targets");
+        NeoForge.EVENT_BUS.post(new AttackEntityEvent(scorchsteelPlayer, zombie));
+        helper.assertFalse(
+                scorchsteelPlayer.hasEffect(MobEffects.INVISIBILITY),
+                "Attacking should immediately break Scorchsteel concealment");
         scorchsteelPlayer.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
         NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(scorchsteelPlayer));
         helper.assertFalse(
@@ -814,7 +857,7 @@ public final class PortSmokeTests {
                 0.6F,
                 0.4F,
                 15.0,
-                0.2,
+                0.24,
                 24.0,
                 true);
         verifyMob(
@@ -824,7 +867,7 @@ public final class PortSmokeTests {
                 1.5F,
                 1.0F,
                 40.0,
-                0.2,
+                0.23,
                 32.0,
                 true);
         verifyMob(
@@ -866,11 +909,11 @@ public final class PortSmokeTests {
                 scorchhound.getAttributeBaseValue(Attributes.ARMOR) == 6.0,
                 "Scorchhound armor changed");
         helper.assertTrue(
-                scorchhound.getAttributeBaseValue(Attributes.KNOCKBACK_RESISTANCE) == 2.0,
-                "Scorchhound declared knockback resistance changed");
+                scorchhound.getAttributeBaseValue(Attributes.KNOCKBACK_RESISTANCE) == 0.75,
+                "Scorchhound knockback resistance should remain strong but valid");
         helper.assertTrue(
-                golem.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) == 20.0,
-                "Luminite golem attack damage changed");
+                golem.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) == 14.0,
+                "Luminite golem should use its rebalanced attack damage");
         helper.assertTrue(
                 golem.getAttributeBaseValue(Attributes.ATTACK_KNOCKBACK) == 1.0,
                 "Luminite golem attack knockback changed");
@@ -878,8 +921,8 @@ public final class PortSmokeTests {
                 golem.getAttributeBaseValue(Attributes.ARMOR) == 10.0,
                 "Luminite golem armor changed");
         helper.assertTrue(
-                golem.getAttributeBaseValue(Attributes.KNOCKBACK_RESISTANCE) == 2.0,
-                "Luminite golem declared knockback resistance changed");
+                golem.getAttributeBaseValue(Attributes.KNOCKBACK_RESISTANCE) == 0.9,
+                "Luminite golem knockback resistance should remain strong but valid");
 
         ScorchhoundEntity attackingHound =
                 helper.spawn(CustomEntityTypes.SCORCHHOUND_ENTITY.get(), new BlockPos(2, 2, 2));
@@ -903,18 +946,23 @@ public final class PortSmokeTests {
         golemTarget.setHealth(100.0F);
         helper.assertTrue(
                 attackingGolem.doHurtTarget(golemTarget),
-                "Luminite golem attack should damage its target");
+                "Luminite golem should begin a telegraphed attack");
+        helper.assertTrue(
+                golemTarget.getHealth() == 100.0F,
+                "Luminite golem damage should wait for the animation's impact frame");
+        helper.assertTrue(
+                attackingGolem.attackAnimationTick() == 14,
+                "Luminite golem attack animation was not synchronized");
+        for (int tick = 0; tick < 7; tick++) {
+            attackingGolem.aiStep();
+        }
         float golemDamage = 100.0F - golemTarget.getHealth();
         helper.assertTrue(
-                golemDamage >= 10.0F && golemDamage < 30.0F,
-                "Luminite golem attack should retain its randomized 10-29 damage range");
+                golemDamage >= 10.5F && golemDamage <= 17.5F,
+                "Luminite golem attack should use its rebalanced damage range at impact");
         helper.assertTrue(
                 golemTarget.getDeltaMovement().y >= 0.5,
                 "Luminite golem attack should launch its target upward");
-        helper.assertTrue(
-                attackingGolem.attackAnimationTick() == 10,
-                "Luminite golem attack animation was not synchronized");
-
         helper.succeed();
     }
 

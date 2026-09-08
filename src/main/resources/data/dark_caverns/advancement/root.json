@@ -1,10 +1,10 @@
 {
   "display": {
     "title": {
-      "text": "Dark Caverns"
+      "translate": "advancements.dark_caverns.root.title"
     },
     "description": {
-      "text": ""
+      "translate": "advancements.dark_caverns.root.description"
     },
     "icon": {
       "id": "dark_caverns:carfstone_luminite_ore"

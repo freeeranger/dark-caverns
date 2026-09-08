@@ -6,24 +6,24 @@
   },
   "downfall": 0.4,
   "effects": {
-    "fog_color": 65793,
+    "fog_color": 465697,
     "mood_sound": {
       "block_search_extent": 8,
       "offset": 2.0,
-      "sound": "minecraft:ambient.basalt_deltas.mood",
+      "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
     },
     "music": {
-      "max_delay": 24000,
-      "min_delay": 6000,
-      "replace_current_music": true,
-      "sound": "dark_caverns:ambient.dark_caverns_ambience"
+      "max_delay": 30000,
+      "min_delay": 12000,
+      "replace_current_music": false,
+      "sound": "minecraft:music.overworld.lush_caves"
     },
     "particle": {
       "options": {
-        "type": "minecraft:ash"
+        "type": "minecraft:spore_blossom_air"
       },
-      "probability": 0.03
+      "probability": 0.006
     },
     "sky_color": 0,
     "water_color": 4159204,
@@ -66,13 +66,13 @@
         "type": "dark_caverns:shroomie",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 100
+        "weight": 50
       },
       {
         "type": "dark_caverns:shroomling",
         "maxCount": 2,
         "minCount": 1,
-        "weight": 60
+        "weight": 45
       }
     ],
     "misc": [],

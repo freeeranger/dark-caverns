@@ -1,6 +1,7 @@
 package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.config.ServerConfig;
+import com.freeranger.dark_caverns.registry.CustomBlockTags;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -11,7 +12,12 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
@@ -30,6 +36,10 @@ public final class CamorockEntity extends AbstractAnimatedPathfinderEntity {
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new PanicGoal(this, 2.0));
+        goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Player.class, 6.0F, 1.0, 1.4));
+        goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.8));
+        goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        goalSelector.addGoal(5, new RandomLookAroundGoal(this));
     }
 
     @Override
@@ -48,6 +58,12 @@ public final class CamorockEntity extends AbstractAnimatedPathfinderEntity {
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return random.nextInt(ServerConfig.camorockSpawnChance()) == 0;
+        return CavernSpawnRules.creatureOn(
+                level,
+                reason,
+                pos,
+                random,
+                ServerConfig.camorockSpawnChance(),
+                CustomBlockTags.ROCKY_CREATURE_SPAWNABLE_ON);
     }
 }

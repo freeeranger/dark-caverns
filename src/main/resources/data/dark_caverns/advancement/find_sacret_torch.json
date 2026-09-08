@@ -5,10 +5,10 @@
       "id": "dark_caverns:molten_carfstone"
     },
     "title": {
-      "translate": "advancements.dark_caverns.find_sacret_torch.title"
+      "translate": "advancements.dark_caverns.find_sacred_torch.title"
     },
     "description": {
-      "translate": "advancements.dark_caverns.find_sacret_torch.description"
+      "translate": "advancements.dark_caverns.find_sacred_torch.description"
     },
     "frame": "task",
     "show_toast": true,

@@ -61,7 +61,7 @@ public final class ServerConfig {
         scorchsteelStealthStandstillTicks =
                 builder.comment(
                                 "Ticks of standing still required to trigger Scorchsteel"
-                                        + " invisibility (20 ticks = 1s).")
+                                        + " full-set concealment (20 ticks = 1s).")
                         .defineInRange("scorchsteelStealthStandstillTicks", 20, 0, 200);
         corruptedPearlScanRadius =
                 builder.comment(

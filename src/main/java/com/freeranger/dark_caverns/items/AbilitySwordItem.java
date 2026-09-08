@@ -15,7 +15,10 @@ public final class AbilitySwordItem extends SwordItem {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        ability.apply(stack, target, attacker);
-        return super.hurtEnemy(stack, target, attacker);
+        boolean hurt = super.hurtEnemy(stack, target, attacker);
+        if (hurt) {
+            ability.apply(stack, target, attacker);
+        }
+        return hurt;
     }
 }

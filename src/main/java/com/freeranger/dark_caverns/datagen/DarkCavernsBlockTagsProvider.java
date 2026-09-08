@@ -1,5 +1,6 @@
 package com.freeranger.dark_caverns.datagen;
 
+import com.freeranger.dark_caverns.registry.CustomBlockTags;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
@@ -7,6 +8,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -216,6 +218,25 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.MOLTEN_CARFSTONE.get(),
                         CustomBlocks.CHARRED_GRASS.get(),
                         CustomBlocks.SCORCHED_BERRY_BUSH.get());
+
+        tag(CustomBlockTags.ROCKY_CREATURE_SPAWNABLE_ON)
+                .add(
+                        CustomBlocks.CARFSTONE.get(),
+                        CustomBlocks.LUMINITE_ORE.get(),
+                        CustomBlocks.PLATINUM_ORE.get(),
+                        CustomBlocks.CARFSTONE_COAL_ORE.get(),
+                        CustomBlocks.CARFSTONE_IRON_ORE.get(),
+                        CustomBlocks.CARFSTONE_GOLD_ORE.get(),
+                        CustomBlocks.CARFSTONE_DIAMOND_ORE.get(),
+                        CustomBlocks.CARFSTONE_REDSTONE_ORE.get(),
+                        CustomBlocks.CARFSTONE_LAPIS_ORE.get());
+        tag(CustomBlockTags.MOLTEN_CREATURE_SPAWNABLE_ON)
+                .add(
+                        CustomBlocks.MOLTEN_CARFSTONE.get(),
+                        CustomBlocks.HELLSTONE_ORE.get(),
+                        Blocks.MAGMA_BLOCK);
+        tag(CustomBlockTags.GLIMMERSHROOM_CREATURE_SPAWNABLE_ON)
+                .add(CustomBlocks.GLIMMERGRASS_BLOCK.get());
     }
 
     private static TagKey<Block> common(String path) {

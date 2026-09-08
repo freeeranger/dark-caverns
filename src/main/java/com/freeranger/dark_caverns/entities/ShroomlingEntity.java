@@ -1,6 +1,7 @@
 package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.config.ServerConfig;
+import com.freeranger.dark_caverns.registry.CustomBlockTags;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
@@ -57,7 +58,7 @@ public final class ShroomlingEntity extends AbstractAnimatedPathfinderEntity imp
         goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
-        targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
         targetSelector.addGoal(
                 2,
                 new NearestAttackableTargetGoal<>(
@@ -131,6 +132,12 @@ public final class ShroomlingEntity extends AbstractAnimatedPathfinderEntity imp
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return random.nextInt(ServerConfig.shroomlingSpawnChance()) == 0;
+        return CavernSpawnRules.creatureOn(
+                level,
+                reason,
+                pos,
+                random,
+                ServerConfig.shroomlingSpawnChance(),
+                CustomBlockTags.GLIMMERSHROOM_CREATURE_SPAWNABLE_ON);
     }
 }

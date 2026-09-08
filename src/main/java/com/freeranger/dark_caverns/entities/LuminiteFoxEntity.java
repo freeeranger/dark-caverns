@@ -1,7 +1,8 @@
 package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.config.ServerConfig;
-import com.freeranger.dark_caverns.registry.CustomBlocks;
+import com.freeranger.dark_caverns.registry.CustomBlockTags;
+import com.freeranger.dark_caverns.registry.CustomItems;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -38,8 +39,7 @@ public final class LuminiteFoxEntity extends AbstractAnimatedPathfinderEntity {
     protected void registerGoals() {
         goalSelector.addGoal(1, new PanicGoal(this, 1.6));
         goalSelector.addGoal(
-                2,
-                new TemptGoal(this, 1.5, Ingredient.of(CustomBlocks.LUMINITE_BLOCK.get()), false));
+                2, new TemptGoal(this, 1.5, Ingredient.of(CustomItems.LUMINITE_DUST.get()), false));
         goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0));
         goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         goalSelector.addGoal(5, new RandomLookAroundGoal(this));
@@ -66,6 +66,12 @@ public final class LuminiteFoxEntity extends AbstractAnimatedPathfinderEntity {
             MobSpawnType reason,
             BlockPos pos,
             RandomSource random) {
-        return random.nextInt(ServerConfig.luminiteFoxSpawnChance()) == 0;
+        return CavernSpawnRules.creatureOn(
+                level,
+                reason,
+                pos,
+                random,
+                ServerConfig.luminiteFoxSpawnChance(),
+                CustomBlockTags.ROCKY_CREATURE_SPAWNABLE_ON);
     }
 }

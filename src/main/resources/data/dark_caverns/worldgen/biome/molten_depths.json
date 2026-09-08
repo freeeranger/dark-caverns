@@ -6,7 +6,12 @@
   },
   "downfall": 0.4,
   "effects": {
-    "fog_color": 65793,
+    "ambient_additions_sound": {
+      "sound": "minecraft:ambient.basalt_deltas.additions",
+      "tick_chance": 0.0111
+    },
+    "ambient_loop_sound": "minecraft:ambient.basalt_deltas.loop",
+    "fog_color": 2821128,
     "mood_sound": {
       "block_search_extent": 8,
       "offset": 2.0,
@@ -17,13 +22,13 @@
       "max_delay": 24000,
       "min_delay": 6000,
       "replace_current_music": true,
-      "sound": "dark_caverns:ambient.dark_caverns_ambience"
+      "sound": "minecraft:music.nether.basalt_deltas"
     },
     "particle": {
       "options": {
         "type": "minecraft:ash"
       },
-      "probability": 0.05
+      "probability": 0.08
     },
     "sky_color": 0,
     "water_color": 4159204,
@@ -69,9 +74,9 @@
     "creature": [
       {
         "type": "dark_caverns:moltener",
-        "maxCount": 2,
+        "maxCount": 3,
         "minCount": 1,
-        "weight": 60
+        "weight": 70
       }
     ],
     "misc": [],
@@ -80,13 +85,13 @@
         "type": "dark_caverns:scorchling",
         "maxCount": 3,
         "minCount": 1,
-        "weight": 100
+        "weight": 90
       },
       {
         "type": "dark_caverns:scorchhound",
-        "maxCount": 3,
+        "maxCount": 1,
         "minCount": 1,
-        "weight": 80
+        "weight": 30
       },
       {
         "type": "minecraft:blaze",

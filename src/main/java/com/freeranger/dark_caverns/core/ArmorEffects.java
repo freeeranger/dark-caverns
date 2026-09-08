@@ -3,6 +3,9 @@ package com.freeranger.dark_caverns.core;
 import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.registry.CustomAttachments;
 import com.freeranger.dark_caverns.registry.CustomEquipment;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -12,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
@@ -22,6 +26,7 @@ public final class ArmorEffects {
         gameBus.addListener(ArmorEffects::onPlayerTick);
         gameBus.addListener(ArmorEffects::onLivingDamage);
         gameBus.addListener(ArmorEffects::onMonsterTick);
+        gameBus.addListener(ArmorEffects::onAttackEntity);
     }
 
     private static void onPlayerTick(PlayerTickEvent.Post event) {
@@ -30,15 +35,18 @@ public final class ArmorEffects {
             return;
         }
 
-        applyHellstoneSetBonus(player);
         applyShroomstoneBonus(player);
         applyScorchsteelBonus(player);
     }
 
     private static void onLivingDamage(LivingDamageEvent.Pre event) {
+        if (event.getSource().getEntity() instanceof Player attacker) {
+            breakScorchsteelStealth(attacker);
+        }
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
+        breakScorchsteelStealth(player);
 
         if (event.getSource().is(DamageTypeTags.IS_FALL)) {
             int pieces =
@@ -61,30 +69,20 @@ public final class ArmorEffects {
         }
     }
 
+    private static void onAttackEntity(AttackEntityEvent event) {
+        breakScorchsteelStealth(event.getEntity());
+    }
+
     private static void onMonsterTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Monster monster)
                 || !(monster.getTarget() instanceof Player player)
                 || !player.hasEffect(MobEffects.INVISIBILITY)) {
             return;
         }
-        if (countArmor(
-                        player,
-                        CustomEquipment.SCORCHSTEEL_HELMET.get(),
-                        CustomEquipment.SCORCHSTEEL_CHESTPLATE.get(),
-                        CustomEquipment.SCORCHSTEEL_LEGGINGS.get(),
-                        CustomEquipment.SCORCHSTEEL_BOOTS.get())
-                > 0) {
+        ScorchsteelStealthState state =
+                player.getExistingDataOrNull(CustomAttachments.SCORCHSTEEL_STEALTH);
+        if (state != null && state.isActive()) {
             monster.setTarget(null);
-        }
-    }
-
-    private static void applyHellstoneSetBonus(Player player) {
-        if (wearing(player, EquipmentSlot.HEAD, CustomEquipment.HELLSTONE_HELMET.get())
-                && wearing(player, EquipmentSlot.CHEST, CustomEquipment.HELLSTONE_CHESTPLATE.get())
-                && wearing(player, EquipmentSlot.LEGS, CustomEquipment.HELLSTONE_LEGGINGS.get())
-                && wearing(player, EquipmentSlot.FEET, CustomEquipment.HELLSTONE_BOOTS.get())) {
-            player.addEffect(
-                    new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20, 0, false, false, false));
         }
     }
 
@@ -96,9 +94,8 @@ public final class ArmorEffects {
                         CustomEquipment.SHROOMSTONE_CHESTPLATE.get(),
                         CustomEquipment.SHROOMSTONE_LEGGINGS.get(),
                         CustomEquipment.SHROOMSTONE_BOOTS.get());
-        if (pieces > 0) {
-            player.addEffect(
-                    new MobEffectInstance(MobEffects.JUMP, 20, pieces - 1, false, false, false));
+        if (pieces == 4) {
+            player.addEffect(new MobEffectInstance(MobEffects.JUMP, 20, 1, false, false, false));
         }
     }
 
@@ -110,26 +107,56 @@ public final class ArmorEffects {
                         CustomEquipment.SCORCHSTEEL_CHESTPLATE.get(),
                         CustomEquipment.SCORCHSTEEL_LEGGINGS.get(),
                         CustomEquipment.SCORCHSTEEL_BOOTS.get());
-        if (pieces == 0) {
+        if (pieces != 4) {
+            breakScorchsteelStealth(player);
             player.removeData(CustomAttachments.SCORCHSTEEL_STEALTH);
             return;
         }
 
-        int stillTicks =
-                player.getData(CustomAttachments.SCORCHSTEEL_STEALTH).update(player.position());
+        ScorchsteelStealthState state = player.getData(CustomAttachments.SCORCHSTEEL_STEALTH);
+        int stillTicks = state.update(player.position());
+
+        if (state.isActive() && stillTicks == 0) {
+            breakScorchsteelStealth(player);
+            return;
+        }
 
         if (stillTicks >= ServerConfig.scorchsteelStealthStandstillTicks()) {
-            int effectDuration =
-                    switch (pieces) {
-                        case 2 -> 40;
-                        case 3 -> 60;
-                        case 4 -> 120;
-                        default -> 20;
-                    };
+            if (state.activate()) {
+                player.displayClientMessage(
+                        Component.translatable("message.dark_caverns.scorchsteel.stealth_active"),
+                        true);
+                player.level()
+                        .playSound(
+                                null,
+                                player.blockPosition(),
+                                SoundEvents.BEACON_ACTIVATE,
+                                SoundSource.PLAYERS,
+                                0.35F,
+                                1.5F);
+            }
             player.addEffect(
-                    new MobEffectInstance(
-                            MobEffects.INVISIBILITY, effectDuration, 0, false, false, true));
+                    new MobEffectInstance(MobEffects.INVISIBILITY, 10, 0, false, false, true));
         }
+    }
+
+    private static void breakScorchsteelStealth(Player player) {
+        ScorchsteelStealthState state =
+                player.getExistingDataOrNull(CustomAttachments.SCORCHSTEEL_STEALTH);
+        if (state == null || !state.deactivate()) {
+            return;
+        }
+        player.removeEffect(MobEffects.INVISIBILITY);
+        player.displayClientMessage(
+                Component.translatable("message.dark_caverns.scorchsteel.stealth_broken"), true);
+        player.level()
+                .playSound(
+                        null,
+                        player.blockPosition(),
+                        SoundEvents.BEACON_DEACTIVATE,
+                        SoundSource.PLAYERS,
+                        0.25F,
+                        1.4F);
     }
 
     private static int countArmor(

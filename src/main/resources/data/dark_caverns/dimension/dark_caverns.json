@@ -8,8 +8,8 @@
         {
           "biome": "dark_caverns:rocky_caverns",
           "parameters": {
-            "temperature": 0.1,
-            "humidity": 0.0,
+            "temperature": -0.35,
+            "humidity": -0.1,
             "continentalness": 0.0,
             "erosion": 0.0,
             "weirdness": 0.0,
@@ -20,8 +20,8 @@
         {
           "biome": "dark_caverns:glimmershroom_forest",
           "parameters": {
-            "temperature": 0.2,
-            "humidity": 0.3,
+            "temperature": 0.1,
+            "humidity": 0.65,
             "continentalness": 0.0,
             "erosion": 0.0,
             "weirdness": 0.3,
@@ -32,11 +32,11 @@
         {
           "biome": "dark_caverns:molten_depths",
           "parameters": {
-            "temperature": 0.2,
-            "humidity": 0.0,
+            "temperature": 0.65,
+            "humidity": -0.35,
             "continentalness": 0.0,
             "erosion": 0.0,
-            "weirdness": 0.0,
+            "weirdness": -0.1,
             "depth": 0.0,
             "offset": 0.0
           }
