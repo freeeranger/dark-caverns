@@ -1,11 +1,11 @@
 {
   "type": "dark_caverns:caverns_jigsaw",
-  "biomes": "#dark_caverns:has_structure/sacret_torch",
+  "biomes": "#dark_caverns:has_structure/sacred_torch",
   "cavern_placement": true,
   "max_distance_from_center": 80,
   "size": 10,
   "spawn_overrides": {},
-  "start_pool": "dark_caverns:sacret_torch/start_pool",
+  "start_pool": "dark_caverns:sacred_torch/start_pool",
   "step": "underground_decoration",
   "terrain_adaptation": "beard_thin",
   "use_expansion_hack": false

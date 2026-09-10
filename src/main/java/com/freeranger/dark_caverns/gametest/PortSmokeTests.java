@@ -37,7 +37,6 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -77,7 +76,7 @@ import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 public final class PortSmokeTests {
     private PortSmokeTests() {}
 
-    @GameTest(template = "sacret_torch")
+    @GameTest(template = "sacred_torch")
     public static void registriesLoad(GameTestHelper helper) {
         helper.assertTrue(
                 countModEntries(BuiltInRegistries.BLOCK) == 49, "Expected all 49 block IDs");
@@ -355,7 +354,7 @@ public final class PortSmokeTests {
         helper.succeed();
     }
 
-    @GameTest(template = "sacret_torch")
+    @GameTest(template = "sacred_torch")
     public static void blockAndEquipmentBehavior(GameTestHelper helper) {
         verifyCompostChance(helper, CustomBlocks.GLIMMERSHROOM.get().asItem(), 0.65F);
         verifyCompostChance(helper, CustomBlocks.GLIMMERSHROOM_BLOCK.get().asItem(), 0.85F);
@@ -784,7 +783,7 @@ public final class PortSmokeTests {
         helper.succeed();
     }
 
-    @GameTest(template = "sacret_torch")
+    @GameTest(template = "sacred_torch")
     public static void entityCombatBehavior(GameTestHelper helper) {
         CamorockEntity camorock = CustomEntityTypes.CAMOROCK_ENTITY.get().create(helper.getLevel());
         MoltenerEntity moltener = CustomEntityTypes.MOLTENER_ENTITY.get().create(helper.getLevel());
@@ -1057,7 +1056,7 @@ public final class PortSmokeTests {
                         .getFirst()
                         .texture(false)
                         .equals(
-                                ResourceLocation.withDefaultNamespace(
+                                DarkCaverns.id(
                                         "textures/models/armor/" + textureName + "_layer_1.png")),
                 textureName + " outer armor texture does not resolve to the existing asset");
         helper.assertTrue(
@@ -1065,7 +1064,7 @@ public final class PortSmokeTests {
                         .getFirst()
                         .texture(true)
                         .equals(
-                                ResourceLocation.withDefaultNamespace(
+                                DarkCaverns.id(
                                         "textures/models/armor/" + textureName + "_layer_2.png")),
                 textureName + " inner armor texture does not resolve to the existing asset");
     }

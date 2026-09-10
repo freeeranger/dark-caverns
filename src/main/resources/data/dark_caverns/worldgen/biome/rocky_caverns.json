@@ -4,7 +4,7 @@
       "dark_caverns:dark_caverns_cave"
     ]
   },
-  "downfall": 0.4,
+  "downfall": 0.2,
   "effects": {
     "fog_color": 1053980,
     "mood_sound": {
@@ -91,5 +91,5 @@
     "water_ambient": [],
     "water_creature": []
   },
-  "temperature": 0.8
+  "temperature": 0.4
 }

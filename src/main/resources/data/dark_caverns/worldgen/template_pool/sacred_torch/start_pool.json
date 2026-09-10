@@ -4,7 +4,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "dark_caverns:sacret_torch",
+        "location": "dark_caverns:sacred_torch",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

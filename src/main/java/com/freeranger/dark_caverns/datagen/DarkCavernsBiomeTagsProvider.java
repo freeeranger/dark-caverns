@@ -27,7 +27,7 @@ final class DarkCavernsBiomeTagsProvider extends TagsProvider<Biome> {
                         Biomes.FLOWER_FOREST,
                         Biomes.BIRCH_FOREST,
                         Biomes.OLD_GROWTH_BIRCH_FOREST);
-        tag(DarkCavernsTags.modBiome("has_structure/sacret_torch"))
+        tag(DarkCavernsTags.modBiome("has_structure/sacred_torch"))
                 .add(ResourceKey.create(Registries.BIOME, DarkCaverns.id("molten_depths")));
         tag(DarkCavernsTags.modBiome("has_structure/shroomie_house"))
                 .add(ResourceKey.create(Registries.BIOME, DarkCaverns.id("glimmershroom_forest")));

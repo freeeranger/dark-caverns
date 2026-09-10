@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
@@ -113,10 +112,7 @@ public final class CustomArmorMaterials {
                                 enchantmentValue,
                                 equipSound,
                                 repairIngredient,
-                                // These textures currently use the Minecraft namespace.
-                                List.of(
-                                        new ArmorMaterial.Layer(
-                                                ResourceLocation.withDefaultNamespace(name))),
+                                List.of(new ArmorMaterial.Layer(DarkCaverns.id(name))),
                                 toughness,
                                 knockbackResistance));
     }
