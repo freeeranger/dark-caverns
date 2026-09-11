@@ -2,7 +2,7 @@
 
 [![CurseForge](https://img.shields.io/badge/CurseForge-Dark%20Caverns-f16436?logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![Wiki](https://img.shields.io/badge/Documentation-Official%20Wiki-blue?logo=github)](https://github.com/freeeranger/dark-caverns/wiki) [![YouTube Trailer](https://img.shields.io/badge/YouTube-Mod%20Trailer-red?logo=youtube)](https://www.youtube.com/watch?v=Z3q_B4iXvOw) [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.1-brightgreen)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![NeoForge](https://img.shields.io/badge/Modloader-NeoForge-orange)](https://neoforged.net/)
 
-Dark Caverns is a Minecraft NeoForge mod for 1.21.1 that adds a cave dimension below bedrock. The dimension has huge open caverns at the top and deep cave systems underneath, with three biomes, custom mobs, and upgradeable gear tiers.
+Dark Caverns is a Minecraft NeoForge mod for 1.21.1 that adds a cave dimension below bedrock. Large central vaults connect through dense passages, layered shelves, and rare vertical rifts, with three biomes, custom mobs, and upgradeable gear tiers.
 
 ---
 
@@ -23,8 +23,8 @@ The gateway creates a small landing platform on the Caverns side, so the first t
 
 | Biome | Description | Mobs and features |
 | :--- | :--- | :--- |
-| Rocky Caverns | Stone caves made of carfstone and stalagmites. Generates overworld ores, luminite, and rare platinum. | Luminite golems, luminite foxes, camorocks, territory markers |
-| Molten Depths | Volcanic biome with molten carfstone and magma. Generates hellstone on the surface. | Scorchlings, scorchhounds, molteners, blazes, sacred torches |
+| Rocky Caverns | Carfstone caves with stalagmites, stalactites, and occasional columns. Generates overworld ores, luminite, and rare platinum. | Luminite golems, luminite foxes, camorocks |
+| Molten Depths | Volcanic biome with molten carfstone, magma, and lower lava flows. Generates hellstone on the surface. | Scorchlings, scorchhounds, molteners, blazes, sacred torches, territory markers |
 | Glimmershroom Forest | Glowing mushroom biome covered in glimmergrass. The safest place to build a base. | Shroomies, shroomlings, shroomie houses, giant mushrooms |
 
 ---
@@ -72,6 +72,9 @@ Run the automated in-game regression suite with:
 ```shell
 ./gradlew runGameTestServer
 ```
+
+See [terrain generation notes](docs/terrain-generation.md) for the composed cavern
+router, fixed test seeds, and generated terrain cross-sections.
 
 Check or apply the repository's formatting rules with:
 

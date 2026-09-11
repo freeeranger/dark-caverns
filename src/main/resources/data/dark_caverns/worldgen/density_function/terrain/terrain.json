@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:max",
+  "argument1": "dark_caverns:terrain/shell",
+  "argument2": {
+    "type": "minecraft:min",
+    "argument1": "dark_caverns:terrain/supported_terrain",
+    "argument2": "dark_caverns:terrain/rifts"
+  }
+}

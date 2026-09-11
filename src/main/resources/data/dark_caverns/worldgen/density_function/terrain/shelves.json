@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:min",
+  "argument1": {
+    "type": "minecraft:add",
+    "argument1": 0.1,
+    "argument2": {
+      "type": "minecraft:mul",
+      "argument1": -1,
+      "argument2": {
+        "type": "minecraft:abs",
+        "argument": {
+          "type": "minecraft:noise",
+          "noise": "dark_caverns:terrain/shelves",
+          "xz_scale": 0.35,
+          "y_scale": 1.5
+        }
+      }
+    }
+  },
+  "argument2": {
+    "type": "minecraft:cache_2d",
+    "argument": {
+      "type": "minecraft:add",
+      "argument1": -0.05,
+      "argument2": {
+        "type": "minecraft:noise",
+        "noise": "dark_caverns:terrain/shelf_region",
+        "xz_scale": 1,
+        "y_scale": 0
+      }
+    }
+  }
+}

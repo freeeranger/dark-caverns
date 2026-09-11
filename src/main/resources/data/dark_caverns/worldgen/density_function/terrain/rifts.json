@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:max",
+  "argument1": {
+    "type": "minecraft:add",
+    "argument1": -0.045,
+    "argument2": {
+      "type": "minecraft:abs",
+      "argument": {
+        "type": "minecraft:noise",
+        "noise": "dark_caverns:terrain/rifts",
+        "xz_scale": 1,
+        "y_scale": 0.025
+      }
+    }
+  },
+  "argument2": {
+    "type": "minecraft:cache_2d",
+    "argument": {
+      "type": "minecraft:add",
+      "argument1": 0.5,
+      "argument2": {
+        "type": "minecraft:noise",
+        "noise": "dark_caverns:terrain/rift_region",
+        "xz_scale": 1,
+        "y_scale": 0
+      }
+    }
+  }
+}

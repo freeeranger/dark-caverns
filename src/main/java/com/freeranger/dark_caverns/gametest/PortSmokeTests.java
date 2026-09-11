@@ -14,6 +14,7 @@ import com.freeranger.dark_caverns.entities.ScorchlingEntity;
 import com.freeranger.dark_caverns.entities.ShroomieEntity;
 import com.freeranger.dark_caverns.entities.ShroomlingEntity;
 import com.freeranger.dark_caverns.events.CorruptedPearlTeleportEvent;
+import com.freeranger.dark_caverns.generation.CavernFormationConfiguration;
 import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
 import com.freeranger.dark_caverns.registry.CustomAttachments;
 import com.freeranger.dark_caverns.registry.CustomBlockTags;
@@ -57,7 +58,6 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
-import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
@@ -95,7 +95,8 @@ public final class PortSmokeTests {
         verifyRegistryCount(helper, Registries.CONFIGURED_CARVER, 1, "configured carver");
         verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 22, "configured features");
         verifyRegistryCount(helper, Registries.PLACED_FEATURE, 21, "placed features");
-        verifyRegistryCount(helper, Registries.NOISE, 4, "noise definitions");
+        verifyRegistryCount(helper, Registries.NOISE, 14, "noise definitions");
+        verifyRegistryCount(helper, Registries.DENSITY_FUNCTION, 12, "terrain density functions");
         verifyRegistryCount(helper, Registries.NOISE_SETTINGS, 1, "noise settings");
         verifyRegistryCount(helper, Registries.STRUCTURE, 4, "structure definitions");
         verifyRegistryCount(helper, Registries.STRUCTURE_SET, 4, "structure sets");
@@ -107,13 +108,14 @@ public final class PortSmokeTests {
         var moltenSpike = configuredFeatures.get(DarkCaverns.id("molten_spike_feature"));
         helper.assertTrue(
                 spike != null
-                        && spike.config() instanceof BlockStateConfiguration configuration
-                        && configuration.state.is(CustomBlocks.CARFSTONE.get()),
+                        && spike.config() instanceof CavernFormationConfiguration configuration
+                        && configuration.state().is(CustomBlocks.CARFSTONE.get()),
                 "Carfstone spike material did not load from configured-feature data");
         helper.assertTrue(
                 moltenSpike != null
-                        && moltenSpike.config() instanceof BlockStateConfiguration configuration
-                        && configuration.state.is(CustomBlocks.MOLTEN_CARFSTONE.get()),
+                        && moltenSpike.config()
+                                instanceof CavernFormationConfiguration configuration
+                        && configuration.state().is(CustomBlocks.MOLTEN_CARFSTONE.get()),
                 "Molten spike material did not load from configured-feature data");
         long darkCavernsAdvancements =
                 helper.getLevel().getServer().getAdvancements().getAllAdvancements().stream()

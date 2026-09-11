@@ -3,6 +3,12 @@
   "config": {
     "state": {
       "Name": "dark_caverns:carfstone"
-    }
+    },
+    "min_gap": 8,
+    "max_height": 64,
+    "max_radius": 8,
+    "column_chance": 0.025,
+    "opposing_chance": 0.18,
+    "ceiling_chance": 0.45
   }
 }

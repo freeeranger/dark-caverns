@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:add",
+  "argument1": "dark_caverns:terrain/vertical_bias",
+  "argument2": {
+    "type": "minecraft:min",
+    "argument1": "dark_caverns:terrain/vaults",
+    "argument2": "dark_caverns:terrain/tunnels"
+  }
+}

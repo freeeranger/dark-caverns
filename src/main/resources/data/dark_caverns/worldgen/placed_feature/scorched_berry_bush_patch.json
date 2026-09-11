@@ -1,9 +1,16 @@
 {
   "feature": "dark_caverns:scorched_berry_bush_patch",
   "placement": [
-    { "type": "minecraft:count", "count": 8 },
-    { "type": "minecraft:in_square" },
-    { "type": "minecraft:height_range", "height": { "type": "minecraft:uniform", "min_inclusive": { "absolute": 0 }, "max_inclusive": { "absolute": 255 } } },
-    { "type": "minecraft:biome" }
+    {
+      "type": "minecraft:count_on_every_layer",
+      "count": 1
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 4
+    },
+    {
+      "type": "minecraft:biome"
+    }
   ]
 }

@@ -1,20 +1,30 @@
 package com.freeranger.dark_caverns.generation;
 
 import com.freeranger.dark_caverns.config.ServerConfig;
+import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomStructureTypes;
+import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.ArrayList;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.NoiseColumn;
+import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pools.DimensionPadding;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
@@ -24,14 +34,10 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSetting
 
 /**
  * Jigsaw placement shared by the four Dark Caverns structures. Surface structures follow the world
- * surface; cavern structures scan down for a solid shelf with open space above it.
+ * surface; cavern structures select a supported, dry footprint with full template clearance.
  */
 public final class CavernsJigsawStructure extends Structure {
     private static final int CAVERN_ROOF_MARGIN = 20;
-    private static final int CAVERN_CLEARANCE_HEIGHT = 3;
-    private static final int CAVERN_FLOOR_OFFSET = 15;
-    private static final int CAVERN_SEARCH_MINIMUM_BELOW_SEA_LEVEL = 2;
-    private static final int CAVERN_FALLBACK_BELOW_SEA_LEVEL = 13;
 
     public static final MapCodec<CavernsJigsawStructure> CODEC =
             RecordCodecBuilder.<CavernsJigsawStructure>mapCodec(
@@ -125,10 +131,38 @@ public final class CavernsJigsawStructure extends Structure {
 
     private Optional<GenerationStub> findCavernGenerationPoint(
             GenerationContext context, int x, int z) {
-        int floorY = findCavernShelf(context, x, z);
-        int minimum = context.heightAccessor().getMinBuildHeight() + 1;
-        BlockPos start = new BlockPos(x, Math.max(minimum, floorY - CAVERN_FLOOR_OFFSET), z);
-        return addPieces(context, start, Optional.empty());
+        // Resolve the actual template and rotation before checking its footprint and headroom.
+        var candidate = addPieces(context, new BlockPos(x, 128, z), Optional.empty());
+        if (candidate.isEmpty()) return Optional.empty();
+        var pieces = candidate.get().getPiecesBuilder();
+        if (pieces.isEmpty()) return Optional.empty();
+        var bounds = pieces.getBoundingBox();
+        // Bound noise sampling for datapacks with unusually large, multi-piece start pools.
+        if (bounds.getXSpan() > 64 || bounds.getZSpan() > 64) return Optional.empty();
+        var columns = new ArrayList<NoiseColumn>();
+        for (int bx = bounds.minX(); bx <= bounds.maxX(); bx++) {
+            for (int bz = bounds.minZ(); bz <= bounds.maxZ(); bz++) {
+                columns.add(
+                        context.chunkGenerator()
+                                .getBaseColumn(
+                                        bx, bz, context.heightAccessor(), context.randomState()));
+            }
+        }
+        var floor =
+                CavernFloorFinder.find(
+                        columns,
+                        Math.max(
+                                context.heightAccessor().getMinBuildHeight() + 6,
+                                context.chunkGenerator().getSeaLevel() + 4),
+                        context.heightAccessor().getMaxBuildHeight() - CAVERN_ROOF_MARGIN,
+                        bounds.getYSpan(),
+                        context.random());
+        if (floor.isEmpty()) return Optional.empty();
+        int offset = floor.getAsInt() - bounds.minY();
+        for (var piece : pieces.build().pieces()) piece.move(0, offset, 0);
+        return Optional.of(
+                new GenerationStub(
+                        candidate.get().position().offset(0, offset, 0), Either.right(pieces)));
     }
 
     private Optional<GenerationStub> findSurfaceGenerationPoint(
@@ -167,29 +201,6 @@ public final class CavernsJigsawStructure extends Structure {
                 LiquidSettings.APPLY_WATERLOGGING);
     }
 
-    private static int findCavernShelf(GenerationContext context, int x, int z) {
-        int maximum = context.heightAccessor().getMaxBuildHeight() - CAVERN_ROOF_MARGIN;
-        int minimum =
-                context.chunkGenerator().getSeaLevel() - CAVERN_SEARCH_MINIMUM_BELOW_SEA_LEVEL;
-        NoiseColumn column =
-                context.chunkGenerator()
-                        .getBaseColumn(x, z, context.heightAccessor(), context.randomState());
-
-        for (int y = maximum; y > minimum; y--) {
-            BlockState floor = column.getBlock(y);
-            BlockState clearance =
-                    column.getBlock(
-                            Math.min(
-                                    y + CAVERN_CLEARANCE_HEIGHT,
-                                    context.heightAccessor().getMaxBuildHeight() - 1));
-            if (!floor.isAir() && floor.getFluidState().isEmpty() && clearance.isAir()) {
-                return y;
-            }
-        }
-
-        return context.chunkGenerator().getSeaLevel() - CAVERN_FALLBACK_BELOW_SEA_LEVEL;
-    }
-
     private static DataResult<CavernsJigsawStructure> verifyRange(
             CavernsJigsawStructure structure) {
         int terrainMargin =
@@ -210,5 +221,51 @@ public final class CavernsJigsawStructure extends Structure {
     @Override
     public StructureType<?> type() {
         return CustomStructureTypes.CAVERNS_JIGSAW.get();
+    }
+
+    @Override
+    public void afterPlace(
+            WorldGenLevel level,
+            StructureManager structureManager,
+            ChunkGenerator generator,
+            RandomSource random,
+            BoundingBox writable,
+            ChunkPos chunk,
+            PiecesContainer pieces) {
+        if (!cavernPlacement) return;
+        for (var piece : pieces.pieces()) {
+            var box = piece.getBoundingBox();
+            for (int x = Math.max(box.minX(), writable.minX());
+                    x <= Math.min(box.maxX(), writable.maxX());
+                    x++) {
+                for (int z = Math.max(box.minZ(), writable.minZ());
+                        z <= Math.min(box.maxZ(), writable.maxZ());
+                        z++) {
+                    BlockPos floor = new BlockPos(x, box.minY(), z);
+                    if (writable.isInside(floor)) fillFoundation(level, floor);
+                }
+            }
+        }
+    }
+
+    public static void fillFoundation(WorldGenLevel level, BlockPos floor) {
+        if (level.isOutsideBuildHeight(floor) || !level.ensureCanWrite(floor)) return;
+        var material = level.getBlockState(floor);
+        if (!material.is(CustomBlocks.CARFSTONE.get())
+                && !material.is(CustomBlocks.MOLTEN_CARFSTONE.get())
+                && !material.is(CustomBlocks.GLIMMERGRASS_BLOCK.get())) return;
+        BlockState[] column = new BlockState[CavernFloorFinder.MAX_FOUNDATION_DEPTH + 2];
+        int bottom = floor.getY() - column.length + 1;
+        for (int y = 0; y < column.length; y++) {
+            BlockPos pos = new BlockPos(floor.getX(), bottom + y, floor.getZ());
+            if (level.isOutsideBuildHeight(pos) || !level.ensureCanWrite(pos)) return;
+            column[y] = level.getBlockState(pos);
+        }
+        int depth =
+                CavernFloorFinder.foundationDepth(new NoiseColumn(bottom, column), floor.getY());
+        if (material.is(CustomBlocks.GLIMMERGRASS_BLOCK.get()))
+            material = CustomBlocks.CARFSTONE.get().defaultBlockState();
+        for (int dy = 1; dy < depth; dy++)
+            level.setBlock(floor.below(dy), material, Block.UPDATE_CLIENTS);
     }
 }

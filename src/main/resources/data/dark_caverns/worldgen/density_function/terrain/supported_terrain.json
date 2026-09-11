@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:min",
+  "argument1": {
+    "type": "minecraft:max",
+    "argument1": "dark_caverns:terrain/excavation",
+    "argument2": {
+      "type": "minecraft:max",
+      "argument1": "dark_caverns:terrain/shelves",
+      "argument2": {
+        "type": "minecraft:max",
+        "argument1": "dark_caverns:terrain/pillars",
+        "argument2": "dark_caverns:terrain/ceiling_ribs"
+      }
+    }
+  },
+  "argument2": {
+    "type": "minecraft:add",
+    "argument1": "dark_caverns:terrain/vertical_bias",
+    "argument2": "dark_caverns:terrain/tunnels"
+  }
+}
