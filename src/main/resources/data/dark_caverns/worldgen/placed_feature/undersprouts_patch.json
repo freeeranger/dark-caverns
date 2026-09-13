@@ -1,0 +1,16 @@
+{
+  "feature": "dark_caverns:undersprouts_patch",
+  "placement": [
+    {
+      "type": "minecraft:count_on_every_layer",
+      "count": 2
+    },
+    {
+      "type": "dark_caverns:biome_transition",
+      "biome": 3
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

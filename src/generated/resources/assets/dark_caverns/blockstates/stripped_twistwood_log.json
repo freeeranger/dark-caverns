@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "dark_caverns:block/stripped_twistwood_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "dark_caverns:block/stripped_twistwood_log"
+    },
+    "axis=z": {
+      "model": "dark_caverns:block/stripped_twistwood_log_horizontal",
+      "x": 90
+    }
+  }
+}

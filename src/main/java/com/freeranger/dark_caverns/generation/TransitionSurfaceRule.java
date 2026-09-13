@@ -34,6 +34,12 @@ public enum TransitionSurfaceRule implements SurfaceRules.RuleSource {
                                 SurfaceRules.state(
                                         CustomBlocks.GLIMMERGRASS_BLOCK.get().defaultBlockState()))
                         .apply(context);
+        var hallow =
+                SurfaceRules.ifTrue(
+                                SurfaceRules.ON_FLOOR,
+                                SurfaceRules.state(
+                                        CustomBlocks.OVERGROWN_CARFSTONE.get().defaultBlockState()))
+                        .apply(context);
         var moltenState =
                 SurfaceRules.state(CustomBlocks.MOLTEN_CARFSTONE.get().defaultBlockState());
         var molten =
@@ -56,6 +62,7 @@ public enum TransitionSurfaceRule implements SurfaceRules.RuleSource {
                 }
                 return switch (material) {
                     case BiomeTransition.FOREST -> forest.tryApply(x, y, z);
+                    case BiomeTransition.HALLOW -> hallow.tryApply(x, y, z);
                     case BiomeTransition.MOLTEN -> molten.tryApply(x, y, z);
                     default -> null;
                 };

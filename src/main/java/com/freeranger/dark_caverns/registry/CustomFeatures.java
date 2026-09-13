@@ -3,7 +3,9 @@ package com.freeranger.dark_caverns.registry;
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.generation.CavernFormationConfiguration;
 import com.freeranger.dark_caverns.generation.CrackedBedrockFeature;
+import com.freeranger.dark_caverns.generation.HallowLakeFeature;
 import com.freeranger.dark_caverns.generation.SpikeFeature;
+import com.freeranger.dark_caverns.generation.TwistwoodTreeFeature;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -29,7 +31,13 @@ public final class CustomFeatures {
                             "molten_spike_feature",
                             () -> new SpikeFeature(CavernFormationConfiguration.CODEC));
 
+    public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>>
+            TWISTWOOD_TREE = FEATURES.register("twistwood_tree", TwistwoodTreeFeature::new);
+
     private CustomFeatures() {}
+
+    public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>> HALLOW_LAKE =
+            FEATURES.register("hallow_lake", HallowLakeFeature::new);
 
     public static void register(IEventBus modBus) {
         FEATURES.register(modBus);

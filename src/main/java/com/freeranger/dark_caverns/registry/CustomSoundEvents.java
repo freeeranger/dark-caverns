@@ -68,6 +68,9 @@ public final class CustomSoundEvents {
 
     private CustomSoundEvents() {}
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> TANGLED_HALLOW_MUSIC =
+            register("music.tangled_hallow");
+
     public static void register(IEventBus modBus) {
         SOUNDS.register(modBus);
     }

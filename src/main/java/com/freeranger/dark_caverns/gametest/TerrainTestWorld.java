@@ -91,6 +91,10 @@ final class TerrainTestWorld {
                                 }
                                 case "getBiome" -> biomes.apply((BlockPos) args[0]);
                                 case "getSeed" -> seed;
+                                // Isolated geometry tests record water placement but do not run
+                                // ticks.
+                                // Lake stability also has a separate live ServerLevel tick test.
+                                case "scheduleTick" -> null;
                                 case "getRandom" -> random;
                                 case "toString" -> "TerrainTestWorld";
                                 case "hashCode" -> System.identityHashCode(proxy);

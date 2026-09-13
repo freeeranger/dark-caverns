@@ -1,0 +1,100 @@
+{
+  "carvers": {
+    "air": [
+      "dark_caverns:dark_caverns_cave"
+    ]
+  },
+  "downfall": 0.65,
+  "effects": {
+    "fog_color": 4154385,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    },
+    "music": {
+      "sound": "dark_caverns:music.tangled_hallow",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    },
+    "particle": {
+      "options": {
+        "type": "minecraft:spore_blossom_air"
+      },
+      "probability": 0.003
+    },
+    "sky_color": 0,
+    "water_color": 3126883,
+    "water_fog_color": 1928522
+  },
+  "features": [
+    [],
+    ["dark_caverns:hallow_lake"],
+    [],
+    [],
+    [],
+    [],
+    [
+      "dark_caverns:luminite_ore_feature",
+      "dark_caverns:coal_ore_feature",
+      "dark_caverns:iron_ore_feature",
+      "dark_caverns:gold_ore_feature",
+      "dark_caverns:diamond_ore_feature",
+      "dark_caverns:redstone_ore_feature",
+      "dark_caverns:lapis_ore_feature",
+      "dark_caverns:platinum_ore_feature"
+    ],
+    [],
+    [],
+    [
+      "dark_caverns:twistwood_tree",
+      "dark_caverns:glimmergrass_patch",
+      "dark_caverns:shroom_patch",
+      "dark_caverns:charred_grass_patch",
+      "dark_caverns:scorched_berry_bush_patch",
+      "dark_caverns:undersprouts_patch"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "dark_caverns:camorock",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 45
+      },
+      {
+        "type": "dark_caverns:luminite_fox",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 60
+      }
+    ],
+    "misc": [],
+    "monster": [
+      {
+        "type": "dark_caverns:luminite_golem",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 25
+      },
+      {
+        "type": "minecraft:skeleton",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 10
+      }
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.65
+}

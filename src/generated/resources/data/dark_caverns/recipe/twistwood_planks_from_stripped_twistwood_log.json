@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "dark_caverns:stripped_twistwood_log"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "dark_caverns:twistwood_planks"
+  }
+}

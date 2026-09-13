@@ -54,6 +54,50 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
         buildMaterialRecipes(flatAdvancements);
         buildCookingRecipes(flatAdvancements);
         buildSmithingRecipes(flatAdvancements);
+        for (var log :
+                List.of(
+                        CustomBlocks.TWISTWOOD_LOG.get(),
+                        CustomBlocks.TWISTWOOD_WOOD.get(),
+                        CustomBlocks.STRIPPED_TWISTWOOD_LOG.get(),
+                        CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get()))
+            ShapelessRecipeBuilder.shapeless(
+                            RecipeCategory.BUILDING_BLOCKS, CustomBlocks.TWISTWOOD_PLANKS.get(), 4)
+                    .requires(log)
+                    .unlockedBy("has_log", has(log))
+                    .save(flatAdvancements, DarkCaverns.id("twistwood_planks_from_" + name(log)));
+        shaped(
+                flatAdvancements,
+                "twistwood_wood",
+                CustomBlocks.TWISTWOOD_WOOD.get(),
+                3,
+                input(CustomBlocks.TWISTWOOD_LOG.get()),
+                "##",
+                "##");
+        shaped(
+                flatAdvancements,
+                "stripped_twistwood_wood",
+                CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get(),
+                3,
+                input(CustomBlocks.STRIPPED_TWISTWOOD_LOG.get()),
+                "##",
+                "##");
+        shaped(
+                flatAdvancements,
+                "twistwood_door",
+                CustomBlocks.TWISTWOOD_DOOR.get(),
+                3,
+                input(CustomBlocks.TWISTWOOD_PLANKS.get()),
+                "##",
+                "##",
+                "##");
+        shaped(
+                flatAdvancements,
+                "twistwood_trapdoor",
+                CustomBlocks.TWISTWOOD_TRAPDOOR.get(),
+                2,
+                input(CustomBlocks.TWISTWOOD_PLANKS.get()),
+                "###",
+                "###");
     }
 
     private void buildStoneFamilyRecipes(RecipeOutput output, StoneFamily family) {

@@ -79,22 +79,22 @@ public final class PortSmokeTests {
     @GameTest(template = "sacred_torch")
     public static void registriesLoad(GameTestHelper helper) {
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.BLOCK) == 49, "Expected all 49 block IDs");
+                countModEntries(BuiltInRegistries.BLOCK) == 60, "Expected all 60 block IDs");
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.ITEM) == 102,
-                "Expected 46 block items plus 56 standalone item IDs");
+                countModEntries(BuiltInRegistries.ITEM) == 113,
+                "Expected 57 block items plus 56 standalone item IDs");
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.SOUND_EVENT) == 27, "Expected all 27 sound IDs");
+                countModEntries(BuiltInRegistries.SOUND_EVENT) == 28, "Expected all 28 sound IDs");
         helper.assertTrue(
                 countModEntries(BuiltInRegistries.ENTITY_TYPE) == 11,
                 "Expected eight mobs plus three projectile entity IDs");
         helper.assertTrue(
                 countModEntries(NeoForgeRegistries.ATTACHMENT_TYPES) == 2,
                 "Expected gateway cooldown and Scorchsteel state attachment IDs");
-        verifyRegistryCount(helper, Registries.BIOME, 3, "biome definitions");
+        verifyRegistryCount(helper, Registries.BIOME, 4, "biome definitions");
         verifyRegistryCount(helper, Registries.CONFIGURED_CARVER, 1, "configured carver");
-        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 22, "configured features");
-        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 21, "placed features");
+        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 25, "configured features");
+        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 24, "placed features");
         verifyRegistryCount(helper, Registries.NOISE, 14, "noise definitions");
         verifyRegistryCount(helper, Registries.DENSITY_FUNCTION, 12, "terrain density functions");
         verifyRegistryCount(helper, Registries.NOISE_SETTINGS, 1, "noise settings");
@@ -124,8 +124,8 @@ public final class PortSmokeTests {
                                         advancement.id().getNamespace().equals(DarkCaverns.MOD_ID))
                         .count();
         helper.assertTrue(
-                darkCavernsAdvancements == 162,
-                "Expected 20 progression advancements and 142 recipe unlock advancements");
+                darkCavernsAdvancements == 170,
+                "Expected 20 progression advancements and 150 recipe unlock advancements");
         helper.assertTrue(
                 helper.getLevel()
                                 .getServer()

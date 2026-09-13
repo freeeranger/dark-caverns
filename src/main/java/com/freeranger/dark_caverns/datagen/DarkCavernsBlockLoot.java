@@ -49,6 +49,18 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
     }
 
     private void addSpecialDrops() {
+        add(
+                CustomBlocks.OVERGROWN_CARFSTONE.get(),
+                block -> createSingleItemTableWithSilkTouch(block, CustomBlocks.CARFSTONE.get()));
+        add(CustomBlocks.UNDERSPROUTS.get(), block -> createShearsOnlyDrop(block));
+        add(
+                CustomBlocks.TWISTWOOD_LEAVES.get(),
+                block ->
+                        createLeavesDrops(
+                                block,
+                                CustomBlocks.TWISTWOOD_SAPLING.get(),
+                                NORMAL_LEAVES_SAPLING_CHANCES));
+        add(CustomBlocks.TWISTWOOD_DOOR.get(), this::createDoorTable);
         add(CustomBlocks.CARFSTONE_COAL_ORE.get(), block -> createOreDrop(block, Items.COAL));
         add(CustomBlocks.CARFSTONE_IRON_ORE.get(), block -> createOreDrop(block, Items.RAW_IRON));
         add(CustomBlocks.CARFSTONE_GOLD_ORE.get(), block -> createOreDrop(block, Items.RAW_GOLD));
@@ -125,7 +137,11 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
     }
 
     private boolean hasSpecialDrop(Block block) {
-        return block == CustomBlocks.CARFSTONE_COAL_ORE.get()
+        return block == CustomBlocks.OVERGROWN_CARFSTONE.get()
+                || block == CustomBlocks.UNDERSPROUTS.get()
+                || block == CustomBlocks.TWISTWOOD_LEAVES.get()
+                || block == CustomBlocks.TWISTWOOD_DOOR.get()
+                || block == CustomBlocks.CARFSTONE_COAL_ORE.get()
                 || block == CustomBlocks.CARFSTONE_IRON_ORE.get()
                 || block == CustomBlocks.CARFSTONE_GOLD_ORE.get()
                 || block == CustomBlocks.CARFSTONE_DIAMOND_ORE.get()

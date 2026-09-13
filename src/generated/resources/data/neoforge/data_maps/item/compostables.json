@@ -14,6 +14,15 @@
     },
     "dark_caverns:scorched_berries": {
       "chance": 0.3
+    },
+    "dark_caverns:twistwood_leaves": {
+      "chance": 0.3
+    },
+    "dark_caverns:twistwood_sapling": {
+      "chance": 0.3
+    },
+    "dark_caverns:undersprouts": {
+      "chance": 0.3
     }
   }
 }

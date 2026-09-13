@@ -9,18 +9,27 @@ import com.freeranger.dark_caverns.blocks.GlimmershroomBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
 import com.freeranger.dark_caverns.blocks.ScorchedBerryBushBlock;
+import com.freeranger.dark_caverns.blocks.TwistwoodLogBlock;
+import com.freeranger.dark_caverns.blocks.TwistwoodSaplingBlock;
+import java.util.Optional;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -206,9 +215,97 @@ public final class CustomBlocks {
                                             .offsetType(BlockBehaviour.OffsetType.XZ),
                                     MOLTEN_CARFSTONE));
 
+    public static final DeferredBlock<Block> OVERGROWN_CARFSTONE =
+            register("overgrown_carfstone", () -> new Block(stone(4.0F)));
+    public static final DeferredBlock<CustomPlantBlock> UNDERSPROUTS =
+            register(
+                    "undersprouts",
+                    () ->
+                            new CustomPlantBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS),
+                                    OVERGROWN_CARFSTONE));
+    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_TWISTWOOD_LOG =
+            register(
+                    "stripped_twistwood_log",
+                    () ->
+                            new RotatedPillarBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_OAK_LOG)));
+    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_TWISTWOOD_WOOD =
+            register(
+                    "stripped_twistwood_wood",
+                    () ->
+                            new RotatedPillarBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(
+                                            Blocks.STRIPPED_OAK_WOOD)));
+    public static final DeferredBlock<TwistwoodLogBlock> TWISTWOOD_LOG =
+            register(
+                    "twistwood_log",
+                    () ->
+                            new TwistwoodLogBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG),
+                                    STRIPPED_TWISTWOOD_LOG));
+    public static final DeferredBlock<TwistwoodLogBlock> TWISTWOOD_WOOD =
+            register(
+                    "twistwood_wood",
+                    () ->
+                            new TwistwoodLogBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD),
+                                    STRIPPED_TWISTWOOD_WOOD));
+    public static final DeferredBlock<Block> TWISTWOOD_PLANKS =
+            register(
+                    "twistwood_planks",
+                    () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)));
+    public static final DeferredBlock<LeavesBlock> TWISTWOOD_LEAVES =
+            register(
+                    "twistwood_leaves",
+                    () -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)));
+    public static final DeferredBlock<DoorBlock> TWISTWOOD_DOOR =
+            register(
+                    "twistwood_door",
+                    () ->
+                            new DoorBlock(
+                                    BlockSetType.OAK,
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR)));
+    public static final DeferredBlock<TrapDoorBlock> TWISTWOOD_TRAPDOOR =
+            register(
+                    "twistwood_trapdoor",
+                    () ->
+                            new TrapDoorBlock(
+                                    BlockSetType.OAK,
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR)));
+    public static final DeferredBlock<TwistwoodSaplingBlock> TWISTWOOD_SAPLING =
+            register(
+                    "twistwood_sapling",
+                    () ->
+                            new TwistwoodSaplingBlock(
+                                    new TreeGrower(
+                                            "dark_caverns:twistwood",
+                                            Optional.empty(),
+                                            Optional.of(featureKey("twistwood_tree")),
+                                            Optional.empty()),
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)));
+
     private CustomBlocks() {}
 
     public static void register(IEventBus modBus) {
+        modBus.addListener(
+                (net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent event) ->
+                        event.enqueueWork(
+                                () -> {
+                                    var fire =
+                                            (net.minecraft.world.level.block.FireBlock) Blocks.FIRE;
+                                    for (var block :
+                                            java.util.List.of(
+                                                    TWISTWOOD_LOG.get(),
+                                                    TWISTWOOD_WOOD.get(),
+                                                    STRIPPED_TWISTWOOD_LOG.get(),
+                                                    STRIPPED_TWISTWOOD_WOOD.get(),
+                                                    TWISTWOOD_PLANKS.get(),
+                                                    TWISTWOOD_DOOR.get(),
+                                                    TWISTWOOD_TRAPDOOR.get()))
+                                        fire.setFlammable(block, 5, 5);
+                                    fire.setFlammable(TWISTWOOD_LEAVES.get(), 30, 60);
+                                }));
         BLOCKS.register(modBus);
         BLOCK_ITEMS.register(modBus);
     }

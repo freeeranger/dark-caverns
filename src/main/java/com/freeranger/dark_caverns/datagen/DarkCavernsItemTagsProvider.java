@@ -32,6 +32,13 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
     }
 
     private void copyBlockTags() {
+        copy(BlockTags.LOGS, ItemTags.LOGS);
+        copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
+        copy(BlockTags.PLANKS, ItemTags.PLANKS);
+        copy(BlockTags.LEAVES, ItemTags.LEAVES);
+        copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
+        copy(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS);
+        copy(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS);
         for (String path :
                 new String[] {
                     "cobblestone",

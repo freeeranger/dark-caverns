@@ -28,6 +28,38 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
         addMiningTags();
         addVanillaBehaviorTags();
         addModTags();
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(CustomBlocks.OVERGROWN_CARFSTONE.get());
+        tag(BlockTags.LOGS)
+                .add(
+                        CustomBlocks.TWISTWOOD_LOG.get(),
+                        CustomBlocks.TWISTWOOD_WOOD.get(),
+                        CustomBlocks.STRIPPED_TWISTWOOD_LOG.get(),
+                        CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get());
+        tag(BlockTags.LOGS_THAT_BURN)
+                .add(
+                        CustomBlocks.TWISTWOOD_LOG.get(),
+                        CustomBlocks.TWISTWOOD_WOOD.get(),
+                        CustomBlocks.STRIPPED_TWISTWOOD_LOG.get(),
+                        CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get());
+        tag(BlockTags.MINEABLE_WITH_AXE)
+                .add(
+                        CustomBlocks.TWISTWOOD_LOG.get(),
+                        CustomBlocks.TWISTWOOD_WOOD.get(),
+                        CustomBlocks.STRIPPED_TWISTWOOD_LOG.get(),
+                        CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get(),
+                        CustomBlocks.TWISTWOOD_PLANKS.get(),
+                        CustomBlocks.TWISTWOOD_DOOR.get(),
+                        CustomBlocks.TWISTWOOD_TRAPDOOR.get());
+        tag(BlockTags.PLANKS).add(CustomBlocks.TWISTWOOD_PLANKS.get());
+        tag(BlockTags.LEAVES).add(CustomBlocks.TWISTWOOD_LEAVES.get());
+        tag(BlockTags.MINEABLE_WITH_HOE).add(CustomBlocks.TWISTWOOD_LEAVES.get());
+        tag(BlockTags.SAPLINGS).add(CustomBlocks.TWISTWOOD_SAPLING.get());
+        tag(BlockTags.WOODEN_DOORS).add(CustomBlocks.TWISTWOOD_DOOR.get());
+        tag(BlockTags.WOODEN_TRAPDOORS).add(CustomBlocks.TWISTWOOD_TRAPDOOR.get());
+        tag(DarkCavernsTags.modBlock("dark_caverns_base_carveable"))
+                .add(CustomBlocks.OVERGROWN_CARFSTONE.get());
+        tag(CustomBlockTags.ROCKY_CREATURE_SPAWNABLE_ON)
+                .add(CustomBlocks.OVERGROWN_CARFSTONE.get());
     }
 
     private void addCommonTags() {

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/door_top_left_open",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bottom": "dark_caverns:block/twistwood_door_bottom",
+    "top": "dark_caverns:block/twistwood_door_top"
+  }
+}

@@ -13,6 +13,7 @@ public final class BiomeTransition {
     public static final int ROCKY = 0;
     public static final int FOREST = 1;
     public static final int MOLTEN = 2;
+    public static final int HALLOW = 3;
     // Surface/feature generation guarantees BIOMES only in the adjacent chunks. With this
     // grid and radius, even vanilla's fuzzy biome lookup stays inside that dependency ring.
     public static final int RADIUS = 16;
@@ -27,12 +28,14 @@ public final class BiomeTransition {
     public static int identity(Holder<Biome> biome) {
         if (biome.is(DarkCaverns.id("glimmershroom_forest"))) return FOREST;
         if (biome.is(DarkCaverns.id("molten_depths"))) return MOLTEN;
+        if (biome.is(DarkCaverns.id("tangled_hallow"))) return HALLOW;
         return ROCKY;
     }
 
     public Weights weights(int x, int z) {
         double forest = 0;
         double molten = 0;
+        double hallow = 0;
         double total = 0;
         int gx = Math.floorDiv(x, GRID);
         int gz = Math.floorDiv(z, GRID);
@@ -50,25 +53,32 @@ public final class BiomeTransition {
                                 key -> identity(biomes.apply(new BlockPos(bx, 128, bz))));
                 if (biome == FOREST) forest += w;
                 if (biome == MOLTEN) molten += w;
+                if (biome == HALLOW) hallow += w;
                 total += w;
             }
         }
-        return new Weights(forest / total, molten / total);
+        return new Weights(forest / total, molten / total, hallow / total);
     }
 
-    public record Weights(double forest, double molten) {
+    public record Weights(double forest, double molten, double hallow) {
+        public Weights(double forest, double molten) {
+            this(forest, molten, 0);
+        }
+
         public double cover(int biome) {
             // Direct forest/heat contact exposes a rocky buffer on both sides.
             return switch (biome) {
                 case FOREST -> forest * (1 - molten) * (1 - molten);
-                case MOLTEN -> molten * (1 - forest) * (1 - forest);
-                default -> Math.max(0, 1 - forest - molten);
+                case HALLOW -> hallow * (1 - molten) * (1 - molten);
+                case MOLTEN -> molten * (1 - forest - hallow) * (1 - forest - hallow);
+                default -> Math.max(0, 1 - forest - molten - hallow);
             };
         }
 
         public int material(double patch) {
             if (patch < cover(MOLTEN)) return MOLTEN;
             if (patch >= 1 - cover(FOREST)) return FOREST;
+            if (patch >= 1 - cover(FOREST) - cover(HALLOW)) return HALLOW;
             return ROCKY;
         }
 

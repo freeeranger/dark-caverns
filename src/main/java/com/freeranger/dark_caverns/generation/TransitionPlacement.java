@@ -16,7 +16,7 @@ public final class TransitionPlacement extends PlacementFilter {
             RecordCodecBuilder.mapCodec(
                     instance ->
                             instance.group(
-                                            Codec.intRange(0, 2)
+                                            Codec.intRange(0, 3)
                                                     .fieldOf("biome")
                                                     .forGetter(p -> p.biome),
                                             Codec.BOOL

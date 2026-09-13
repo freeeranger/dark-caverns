@@ -37,9 +37,9 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class BiomeTransitionTests {
     private static final String[] NAMES = {
-        "rocky_caverns", "glimmershroom_forest", "molten_depths"
+        "rocky_caverns", "glimmershroom_forest", "molten_depths", "tangled_hallow"
     };
-    private static final int[] COLORS = {0x85899b, 0x54bb91, 0xe27e48};
+    private static final int[] COLORS = {0x85899b, 0x68bdec, 0xe27e48, 0x819744};
 
     private BiomeTransitionTests() {}
 
@@ -54,8 +54,8 @@ public final class BiomeTransitionTests {
                                                 ResourceKey.create(
                                                         Registries.BIOME, DarkCaverns.id(name))))
                         .toList();
-        for (int left = 0; left < 3; left++) {
-            for (int right = left + 1; right < 3; right++) {
+        for (int left = 0; left < 4; left++) {
+            for (int right = left + 1; right < 4; right++) {
                 Holder<Biome> a = biomes.get(left);
                 Holder<Biome> b = biomes.get(right);
                 var transition = new BiomeTransition(pos -> pos.getX() < 0 ? a : b);
@@ -124,9 +124,9 @@ public final class BiomeTransitionTests {
                         source.possibleBiomes().stream().toList(),
                         biome -> biome.value().getGenerationSettings().features(),
                         true);
-        long[] seeds = {0, 8675309, -7046029254386353131L};
-        int[][] pairs = {{0, 1}, {0, 2}, {1, 2}};
-        BufferedImage preview = new BufferedImage(792, 960, BufferedImage.TYPE_INT_RGB);
+        long[] seeds = {0, 8675309, -7046029254386353131L, 0, 8675309, -7046029254386353131L};
+        int[][] pairs = {{0, 1}, {0, 2}, {1, 2}, {0, 3}, {1, 3}, {2, 3}};
+        BufferedImage preview = new BufferedImage(792, 1920, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = preview.createGraphics();
         graphics.setColor(new Color(0x101723));
         graphics.fillRect(0, 0, preview.getWidth(), preview.getHeight());
@@ -210,7 +210,8 @@ public final class BiomeTransitionTests {
                         "glimmergrass_patch",
                         "shroom_patch",
                         "charred_grass_patch",
-                        "scorched_berry_bush_patch"
+                        "scorched_berry_bush_patch",
+                        "undersprouts_patch"
                     }) {
                 var placed =
                         helper.getLevel()
@@ -238,17 +239,20 @@ public final class BiomeTransitionTests {
                 boolean molten =
                         block.is(CustomBlocks.CHARRED_GRASS.get())
                                 || block.is(CustomBlocks.SCORCHED_BERRY_BUSH.get());
-                if (!forest && !molten) continue;
+                boolean hallow = block.is(CustomBlocks.UNDERSPROUTS.get());
+                if (!forest && !molten && !hallow) continue;
                 plants++;
                 BlockState ground = volume.get(entry.getKey().below());
                 helper.assertTrue(
                         ground.is(
-                                forest
-                                        ? CustomBlocks.GLIMMERGRASS_BLOCK.get()
-                                        : CustomBlocks.MOLTEN_CARFSTONE.get()),
+                                hallow
+                                        ? CustomBlocks.OVERGROWN_CARFSTONE.get()
+                                        : forest
+                                                ? CustomBlocks.GLIMMERGRASS_BLOCK.get()
+                                                : CustomBlocks.MOLTEN_CARFSTONE.get()),
                         "Transition plant escaped its matching surface patch");
                 int nativeBiome = BiomeTransition.identity(volume.world.getBiome(entry.getKey()));
-                if (nativeBiome != (forest ? 1 : 2)) spillover++;
+                if (nativeBiome != (hallow ? 3 : forest ? 1 : 2)) spillover++;
             }
             helper.assertTrue(plants > 0, "Mixed-biome decoration produced no plants");
             helper.assertTrue(
@@ -315,13 +319,16 @@ public final class BiomeTransitionTests {
     private static boolean surface(BlockState state) {
         return state.is(CustomBlocks.CARFSTONE.get())
                 || state.is(CustomBlocks.MOLTEN_CARFSTONE.get())
-                || state.is(CustomBlocks.GLIMMERGRASS_BLOCK.get());
+                || state.is(CustomBlocks.GLIMMERGRASS_BLOCK.get())
+                || state.is(CustomBlocks.OVERGROWN_CARFSTONE.get());
     }
 
     private static int material(BlockState state) {
         return state.is(CustomBlocks.MOLTEN_CARFSTONE.get())
                 ? 2
-                : state.is(CustomBlocks.GLIMMERGRASS_BLOCK.get()) ? 1 : 0;
+                : state.is(CustomBlocks.GLIMMERGRASS_BLOCK.get())
+                        ? 1
+                        : state.is(CustomBlocks.OVERGROWN_CARFSTONE.get()) ? 3 : 0;
     }
 
     private static void drawPreview(
@@ -353,13 +360,15 @@ public final class BiomeTransitionTests {
                 g.fillRect(8 + x * 2, top + 48 + z * 2, 2, 2);
                 double f = weights.cover(1);
                 double m = weights.cover(2);
+                double h = weights.cover(3);
                 int color = 0;
                 for (int shift : new int[] {0, 8, 16})
                     color |=
                             (int)
-                                            (((COLORS[0] >> shift) & 255) * (1 - f - m)
+                                            (((COLORS[0] >> shift) & 255) * (1 - f - m - h)
                                                     + ((COLORS[1] >> shift) & 255) * f
-                                                    + ((COLORS[2] >> shift) & 255) * m)
+                                                    + ((COLORS[2] >> shift) & 255) * m
+                                                    + ((COLORS[3] >> shift) & 255) * h)
                                     << shift;
                 g.setColor(new Color(color));
                 g.fillRect(272 + x * 2, top + 48 + z * 2, 2, 2);

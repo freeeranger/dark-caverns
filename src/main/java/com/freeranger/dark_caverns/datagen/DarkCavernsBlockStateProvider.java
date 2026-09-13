@@ -32,6 +32,7 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
         registerGlimmershroomBlock();
         registerLighting();
         registerGateways();
+        registerTwistwood();
     }
 
     private void registerSimpleBlocks() {
@@ -67,6 +68,65 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                                 modLoc("block/glimmergrass_block_top"));
         simpleBlock(glimmergrass, ConfiguredModel.allYRotations(glimmergrassModel, 0, false));
         simpleBlockItem(glimmergrass, glimmergrassModel);
+    }
+
+    private void registerTwistwood() {
+        Block ground = CustomBlocks.OVERGROWN_CARFSTONE.get();
+        simpleBlockWithItem(
+                ground,
+                models().cubeBottomTop(
+                                name(ground),
+                                modLoc("block/overgrown_carfstone_side"),
+                                modLoc("block/carfstone"),
+                                modLoc("block/overgrown_carfstone_top")));
+        for (var log :
+                List.of(
+                        CustomBlocks.TWISTWOOD_LOG.get(),
+                        CustomBlocks.STRIPPED_TWISTWOOD_LOG.get())) {
+            logBlock(log);
+            simpleBlockItem(log, existingBlockModel(log));
+        }
+        axisBlock(
+                CustomBlocks.TWISTWOOD_WOOD.get(),
+                modLoc("block/twistwood_log"),
+                modLoc("block/twistwood_log"));
+        simpleBlockItem(
+                CustomBlocks.TWISTWOOD_WOOD.get(),
+                existingBlockModel(CustomBlocks.TWISTWOOD_WOOD.get()));
+        axisBlock(
+                CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get(),
+                modLoc("block/stripped_twistwood_log"),
+                modLoc("block/stripped_twistwood_log"));
+        simpleBlockItem(
+                CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get(),
+                existingBlockModel(CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get()));
+        simpleCubeWithItem(CustomBlocks.TWISTWOOD_PLANKS.get());
+        simpleBlockWithItem(
+                CustomBlocks.TWISTWOOD_LEAVES.get(),
+                models().cubeAll("twistwood_leaves", modLoc("block/twistwood_leaves"))
+                        .renderType(CUTOUT));
+        doorBlockWithRenderType(
+                CustomBlocks.TWISTWOOD_DOOR.get(),
+                modLoc("block/twistwood_door_bottom"),
+                modLoc("block/twistwood_door_top"),
+                CUTOUT);
+        trapdoorBlockWithRenderType(
+                CustomBlocks.TWISTWOOD_TRAPDOOR.get(),
+                modLoc("block/twistwood_trapdoor"),
+                true,
+                CUTOUT);
+        simpleBlockItem(
+                CustomBlocks.TWISTWOOD_TRAPDOOR.get(),
+                models().getExistingFile(modLoc("block/twistwood_trapdoor_bottom")));
+        crossBlock(CustomBlocks.UNDERSPROUTS.get());
+        crossBlock(CustomBlocks.TWISTWOOD_SAPLING.get());
+        for (String plant : List.of("undersprouts", "twistwood_sapling"))
+            itemModels()
+                    .withExistingParent(plant, mcLoc("item/generated"))
+                    .texture("layer0", modLoc("block/" + plant));
+        itemModels()
+                .withExistingParent("twistwood_door", mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/twistwood_door"));
     }
 
     private void registerStoneFamilies() {

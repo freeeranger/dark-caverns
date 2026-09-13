@@ -10,11 +10,11 @@
           "parameters": {
             "temperature": -0.35,
             "humidity": -0.1,
-            "continentalness": 0.0,
-            "erosion": 0.0,
-            "weirdness": 0.0,
-            "depth": 0.0,
-            "offset": 0.0
+            "continentalness": 0,
+            "erosion": 0,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
           }
         },
         {
@@ -22,11 +22,11 @@
           "parameters": {
             "temperature": 0.1,
             "humidity": 0.65,
-            "continentalness": 0.0,
-            "erosion": 0.0,
+            "continentalness": 0,
+            "erosion": 0,
             "weirdness": 0.3,
             "depth": 0.1,
-            "offset": 0.0
+            "offset": 0
           }
         },
         {
@@ -34,11 +34,23 @@
           "parameters": {
             "temperature": 0.65,
             "humidity": -0.35,
-            "continentalness": 0.0,
-            "erosion": 0.0,
+            "continentalness": 0,
+            "erosion": 0,
             "weirdness": -0.1,
-            "depth": 0.0,
-            "offset": 0.0
+            "depth": 0,
+            "offset": 0
+          }
+        },
+        {
+          "biome": "dark_caverns:tangled_hallow",
+          "parameters": {
+            "temperature": 0.15,
+            "humidity": 0.55,
+            "continentalness": 0,
+            "erosion": 0,
+            "weirdness": -0.45,
+            "depth": 0,
+            "offset": 0
           }
         }
       ]

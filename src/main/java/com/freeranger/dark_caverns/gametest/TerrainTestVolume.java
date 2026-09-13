@@ -181,7 +181,7 @@ final class TerrainTestVolume {
                 var mask = chunk.getOrCreateCarvingMask(GenerationStep.Carving.AIR);
                 // Same neighboring start chunks and random seeding as
                 // NoiseBasedChunkGenerator.applyCarvers.
-                // All three cavern biomes use the same single carver.
+                // All cavern biomes use the same single carver.
                 for (int dx = -8; dx <= 8; dx++) {
                     for (int dz = -8; dz <= 8; dz++) {
                         var start = new ChunkPos(chunk.getPos().x + dx, chunk.getPos().z + dz);

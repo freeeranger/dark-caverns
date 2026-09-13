@@ -1,4 +1,5 @@
 {
+  "music.tangled_hallow": {"sounds": [{"name":"dark_caverns:music_whispers_below","stream":true},{"name":"dark_caverns:music_crystal_dreams","stream":true}]},
   "ambient.dark_caverns_ambience": {
     "subtitle": "subtitles.ambient.dark_caverns_ambience",
     "sounds": [
