@@ -42,6 +42,16 @@ final class TerrainTestWorld {
             Holder<Biome> biome,
             long seed,
             Function<ChunkPos, ChunkAccess> chunks) {
+        return create(read, write, bounds, pos -> biome, seed, chunks);
+    }
+
+    static WorldGenLevel create(
+            Function<BlockPos, BlockState> read,
+            BiConsumer<BlockPos, BlockState> write,
+            Predicate<BlockPos> bounds,
+            Function<BlockPos, Holder<Biome>> biomes,
+            long seed,
+            Function<ChunkPos, ChunkAccess> chunks) {
         RandomSource random = RandomSource.create(seed);
         return (WorldGenLevel)
                 Proxy.newProxyInstance(
@@ -79,7 +89,7 @@ final class TerrainTestWorld {
                                     while (y >= 0 && read.apply(new BlockPos(x, y, z)).isAir()) y--;
                                     yield y + 1;
                                 }
-                                case "getBiome" -> biome;
+                                case "getBiome" -> biomes.apply((BlockPos) args[0]);
                                 case "getSeed" -> seed;
                                 case "getRandom" -> random;
                                 case "toString" -> "TerrainTestWorld";

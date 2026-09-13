@@ -4,7 +4,7 @@
       "dark_caverns:dark_caverns_cave"
     ]
   },
-  "downfall": 0.0,
+  "downfall": 0,
   "effects": {
     "ambient_additions_sound": {
       "sound": "minecraft:ambient.basalt_deltas.additions",
@@ -14,7 +14,7 @@
     "fog_color": 2821128,
     "mood_sound": {
       "block_search_extent": 8,
-      "offset": 2.0,
+      "offset": 2,
       "sound": "minecraft:ambient.basalt_deltas.mood",
       "tick_delay": 6000
     },
@@ -60,6 +60,8 @@
       "dark_caverns:lava_spring"
     ],
     [
+      "dark_caverns:glimmergrass_patch",
+      "dark_caverns:shroom_patch",
       "dark_caverns:fire_patch",
       "dark_caverns:charred_grass_patch",
       "dark_caverns:scorched_berry_bush_patch"
@@ -104,5 +106,5 @@
     "water_ambient": [],
     "water_creature": []
   },
-  "temperature": 2.0
+  "temperature": 2
 }

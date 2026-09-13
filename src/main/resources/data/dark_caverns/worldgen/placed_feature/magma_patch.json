@@ -1,9 +1,32 @@
 {
   "feature": "dark_caverns:magma_patch",
   "placement": [
-    { "type": "minecraft:count", "count": 12 },
-    { "type": "minecraft:in_square" },
-    { "type": "minecraft:height_range", "height": { "type": "minecraft:uniform", "min_inclusive": { "absolute": 0 }, "max_inclusive": { "absolute": 255 } } },
-    { "type": "minecraft:biome" }
+    {
+      "type": "minecraft:count",
+      "count": 12
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "absolute": 0
+        },
+        "max_inclusive": {
+          "absolute": 255
+        }
+      }
+    },
+    {
+      "type": "dark_caverns:biome_transition",
+      "biome": 2,
+      "core": true
+    },
+    {
+      "type": "minecraft:biome"
+    }
   ]
 }

@@ -6,6 +6,11 @@
       "count": 2
     },
     {
+      "type": "dark_caverns:biome_transition",
+      "biome": 1,
+      "core": false
+    },
+    {
       "type": "minecraft:biome"
     }
   ]

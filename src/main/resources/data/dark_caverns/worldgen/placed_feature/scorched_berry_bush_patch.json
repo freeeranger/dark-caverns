@@ -10,6 +10,11 @@
       "chance": 4
     },
     {
+      "type": "dark_caverns:biome_transition",
+      "biome": 2,
+      "core": false
+    },
+    {
       "type": "minecraft:biome"
     }
   ]

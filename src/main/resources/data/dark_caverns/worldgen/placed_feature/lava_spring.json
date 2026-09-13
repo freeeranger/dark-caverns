@@ -1,16 +1,32 @@
 {
   "feature": "dark_caverns:lava_spring",
   "placement": [
-    { "type": "minecraft:count", "count": 6 },
-    { "type": "minecraft:in_square" },
+    {
+      "type": "minecraft:count",
+      "count": 6
+    },
+    {
+      "type": "minecraft:in_square"
+    },
     {
       "type": "minecraft:height_range",
       "height": {
         "type": "minecraft:uniform",
-        "min_inclusive": { "absolute": 12 },
-        "max_inclusive": { "absolute": 48 }
+        "min_inclusive": {
+          "absolute": 12
+        },
+        "max_inclusive": {
+          "absolute": 48
+        }
       }
     },
-    { "type": "minecraft:biome" }
+    {
+      "type": "dark_caverns:biome_transition",
+      "biome": 2,
+      "core": true
+    },
+    {
+      "type": "minecraft:biome"
+    }
   ]
 }

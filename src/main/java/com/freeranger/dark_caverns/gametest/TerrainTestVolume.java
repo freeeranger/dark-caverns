@@ -14,6 +14,7 @@ import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
+import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.FixedBiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -46,75 +47,109 @@ final class TerrainTestVolume {
     final WorldGenLevel world;
     final GameTestHelper helper;
     final Map<BlockPos, BlockState> featureWrites = new HashMap<>();
+    final int minX;
+    final int minZ;
+    final BiomeManager biomeManager;
 
     TerrainTestVolume(GameTestHelper helper, long seed, String biomeName) {
+        this(
+                helper,
+                seed,
+                new FixedBiomeSource(
+                        helper.getLevel()
+                                .registryAccess()
+                                .registryOrThrow(Registries.BIOME)
+                                .getHolderOrThrow(
+                                        ResourceKey.create(
+                                                Registries.BIOME, DarkCaverns.id(biomeName)))),
+                -CHUNKS / 2,
+                -CHUNKS / 2,
+                false);
+    }
+
+    TerrainTestVolume(
+            GameTestHelper helper,
+            long seed,
+            BiomeSource source,
+            int minChunkX,
+            int minChunkZ,
+            boolean reverse) {
         this.helper = helper;
         this.seed = seed;
+        minX = minChunkX * 16;
+        minZ = minChunkZ * 16;
         var level = helper.getLevel();
         var registries = level.registryAccess();
         var biomes = registries.registryOrThrow(Registries.BIOME);
-        biome =
-                biomes.getHolderOrThrow(
-                        ResourceKey.create(Registries.BIOME, DarkCaverns.id(biomeName)));
+        biome = source.possibleBiomes().iterator().next();
         var settings =
                 registries
                         .registryOrThrow(Registries.NOISE_SETTINGS)
                         .getHolderOrThrow(
                                 ResourceKey.create(
                                         Registries.NOISE_SETTINGS, DarkCaverns.id("dark_caverns")));
-        generator = new NoiseBasedChunkGenerator(new FixedBiomeSource(biome), settings);
+        generator = new NoiseBasedChunkGenerator(source, settings);
         random =
                 RandomState.create(
                         settings.value(), registries.lookupOrThrow(Registries.NOISE), seed);
-        var biomeManager = new BiomeManager((x, y, z) -> biome, BiomeManager.obfuscateSeed(seed));
+        biomeManager =
+                new BiomeManager(
+                        (x, y, z) -> source.getNoiseBiome(x, y, z, random.sampler()),
+                        BiomeManager.obfuscateSeed(seed));
         var fluid =
                 new Aquifer.FluidStatus(
                         settings.value().seaLevel(), settings.value().defaultFluid());
-        for (int x = 0; x < CHUNKS; x++) {
-            for (int z = 0; z < CHUNKS; z++) {
-                var chunk =
-                        new ProtoChunk(
-                                new ChunkPos(x - CHUNKS / 2, z - CHUNKS / 2),
-                                UpgradeData.EMPTY,
-                                HEIGHT,
-                                biomes,
-                                null);
-                chunks[x][z] = chunk;
-                chunk.getOrCreateNoiseChunk(
-                        c ->
-                                NoiseChunk.forChunk(
-                                        c,
-                                        random,
-                                        new Beardifier(
-                                                new ObjectArrayList<Beardifier.Rigid>().iterator(),
-                                                new ObjectArrayList<JigsawJunction>().iterator()),
-                                        settings.value(),
-                                        (bx, by, bz) -> fluid,
-                                        Blender.empty()));
-                generator
-                        .createBiomes(random, Blender.empty(), level.structureManager(), chunk)
-                        .join();
-                generator
-                        .fillFromNoise(Blender.empty(), random, level.structureManager(), chunk)
-                        .join();
-                generator.buildSurface(
-                        chunk,
-                        new WorldGenerationContext(generator, HEIGHT),
-                        random,
-                        level.structureManager(),
-                        biomeManager,
-                        biomes,
-                        Blender.empty());
-            }
+        for (int index = 0; index < CHUNKS * CHUNKS; index++) {
+            int ordered = reverse ? CHUNKS * CHUNKS - 1 - index : index;
+            int x = ordered / CHUNKS;
+            int z = ordered % CHUNKS;
+            var chunk =
+                    new ProtoChunk(
+                            new ChunkPos(x + minChunkX, z + minChunkZ),
+                            UpgradeData.EMPTY,
+                            HEIGHT,
+                            biomes,
+                            null);
+            chunks[x][z] = chunk;
+            chunk.getOrCreateNoiseChunk(
+                    c ->
+                            NoiseChunk.forChunk(
+                                    c,
+                                    random,
+                                    new Beardifier(
+                                            new ObjectArrayList<Beardifier.Rigid>().iterator(),
+                                            new ObjectArrayList<JigsawJunction>().iterator()),
+                                    settings.value(),
+                                    (bx, by, bz) -> fluid,
+                                    Blender.empty()));
+            generator.createBiomes(random, Blender.empty(), level.structureManager(), chunk).join();
+            generator
+                    .fillFromNoise(Blender.empty(), random, level.structureManager(), chunk)
+                    .join();
+            generator.buildSurface(
+                    chunk,
+                    new WorldGenerationContext(generator, HEIGHT),
+                    random,
+                    level.structureManager(),
+                    biomeManager.withDifferentSource(
+                            (qx, qy, qz) -> {
+                                if (Math.abs(Math.floorDiv(qx, 4) - chunk.getPos().x) > 1
+                                        || Math.abs(Math.floorDiv(qz, 4) - chunk.getPos().z) > 1)
+                                    throw new AssertionError(
+                                            "Surface rule exceeded the BIOMES dependency ring");
+                                return source.getNoiseBiome(qx, qy, qz, random.sampler());
+                            }),
+                    biomes,
+                    Blender.empty());
         }
         world =
                 TerrainTestWorld.create(
                         this::get,
                         this::set,
                         this::inside,
-                        biome,
+                        biomeManager::getBiome,
                         seed,
-                        pos -> chunks[pos.x + CHUNKS / 2][pos.z + CHUNKS / 2]);
+                        pos -> chunks[pos.x - minChunkX][pos.z - minChunkZ]);
     }
 
     void carve() {
@@ -155,7 +190,7 @@ final class TerrainTestVolume {
                             carver.carve(
                                     context,
                                     chunk,
-                                    pos -> biome,
+                                    biomeManager::getBiome,
                                     carvingRandom,
                                     noise.aquifer(),
                                     start,
@@ -191,22 +226,22 @@ final class TerrainTestVolume {
     }
 
     boolean inside(BlockPos pos) {
-        return pos.getX() >= MIN
-                && pos.getX() < MIN + WIDTH
-                && pos.getZ() >= MIN
-                && pos.getZ() < MIN + WIDTH
+        return pos.getX() >= minX
+                && pos.getX() < minX + WIDTH
+                && pos.getZ() >= minZ
+                && pos.getZ() < minZ + WIDTH
                 && pos.getY() >= 0
                 && pos.getY() < 256;
     }
 
     BlockState get(BlockPos pos) {
         if (!inside(pos)) return Blocks.BEDROCK.defaultBlockState();
-        return chunks[(pos.getX() - MIN) >> 4][(pos.getZ() - MIN) >> 4].getBlockState(pos);
+        return chunks[(pos.getX() - minX) >> 4][(pos.getZ() - minZ) >> 4].getBlockState(pos);
     }
 
     void set(BlockPos pos, BlockState state) {
         if (!inside(pos)) throw new AssertionError("Out-of-volume write");
-        chunks[(pos.getX() - MIN) >> 4][(pos.getZ() - MIN) >> 4].setBlockState(pos, state, false);
+        chunks[(pos.getX() - minX) >> 4][(pos.getZ() - minZ) >> 4].setBlockState(pos, state, false);
         featureWrites.put(pos.immutable(), state);
     }
 
@@ -216,7 +251,7 @@ final class TerrainTestVolume {
         for (int y = 0; y < 256; y++) {
             for (int z = 0; z < WIDTH; z++) {
                 for (int x = 0; x < WIDTH; x++) {
-                    var state = get(pos.set(x + MIN, y, z + MIN));
+                    var state = get(pos.set(x + minX, y, z + minZ));
                     blocks[(y * WIDTH + z) * WIDTH + x] =
                             (byte) (state.isAir() ? 0 : state.getFluidState().isEmpty() ? 1 : 2);
                 }

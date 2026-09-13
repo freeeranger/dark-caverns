@@ -9,7 +9,7 @@
     "fog_color": 465697,
     "mood_sound": {
       "block_search_extent": 8,
-      "offset": 2.0,
+      "offset": 2,
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
     },
@@ -52,7 +52,9 @@
       "dark_caverns:huge_mushroom_feature",
       "dark_caverns:huge_high_mushroom_feature",
       "dark_caverns:glimmergrass_patch",
-      "dark_caverns:shroom_patch"
+      "dark_caverns:shroom_patch",
+      "dark_caverns:charred_grass_patch",
+      "dark_caverns:scorched_berry_bush_patch"
     ],
     []
   ],

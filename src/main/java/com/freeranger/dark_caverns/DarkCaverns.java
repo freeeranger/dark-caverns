@@ -16,6 +16,7 @@ import com.freeranger.dark_caverns.registry.CustomParticles;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import com.freeranger.dark_caverns.registry.CustomSpawnEggs;
 import com.freeranger.dark_caverns.registry.CustomStructureTypes;
+import com.freeranger.dark_caverns.registry.CustomWorldgen;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -47,6 +48,7 @@ public final class DarkCaverns {
         CustomParticles.register(modBus);
         CustomFeatures.register(modBus);
         CustomStructureTypes.register(modBus);
+        CustomWorldgen.register(modBus);
         DarkCavernsDataGenerators.register(modBus);
 
         ArmorEffects.register(NeoForge.EVENT_BUS);

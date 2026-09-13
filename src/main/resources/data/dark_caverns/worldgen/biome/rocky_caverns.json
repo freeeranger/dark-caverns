@@ -9,7 +9,7 @@
     "fog_color": 1053980,
     "mood_sound": {
       "block_search_extent": 8,
-      "offset": 2.0,
+      "offset": 2,
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
     },
@@ -50,7 +50,12 @@
       "dark_caverns:spike_feature"
     ],
     [],
-    [],
+    [
+      "dark_caverns:glimmergrass_patch",
+      "dark_caverns:shroom_patch",
+      "dark_caverns:charred_grass_patch",
+      "dark_caverns:scorched_berry_bush_patch"
+    ],
     []
   ],
   "has_precipitation": false,
