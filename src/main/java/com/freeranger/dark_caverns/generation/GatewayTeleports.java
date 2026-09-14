@@ -31,18 +31,33 @@ public final class GatewayTeleports {
 
     private GatewayTeleports() {}
 
-    @Nullable public static Entity toDarkCaverns(ServerLevel source, Entity entity) {
+    public static void toDarkCaverns(ServerLevel source, Entity entity, BlockPos sourceGateway) {
         ServerLevel destination = source.getServer().getLevel(DARK_CAVERNS);
         if (destination == null) {
             showFailure(entity, "message.dark_caverns.gateway.dimension_unavailable");
-            return null;
+            return;
         }
         if (!GatewayCooldowns.isReady(entity, source)) {
             showFailure(entity, "message.dark_caverns.gateway.recharging");
-            return null;
+            return;
         }
 
         BlockPos column = BlockPos.containing(entity.getX(), 0, entity.getZ());
+        GatewayChunkLoading.prepare(
+                source,
+                destination,
+                entity,
+                column,
+                SAFE_POSITION_SEARCH_RADIUS,
+                () ->
+                        source.getBlockState(sourceGateway)
+                                .is(CustomBlocks.GATEWAY_TO_THE_CAVERNS.get()),
+                () -> arriveInCaverns(source, destination, entity, column));
+    }
+
+    @Nullable private static Entity arriveInCaverns(
+            ServerLevel source, ServerLevel destination, Entity entity, BlockPos column) {
+        if (!GatewayCooldowns.isReady(entity, source)) return null;
         BlockPos gateway = findRoofGateway(destination, column);
         if (gateway == null) {
             showFailure(entity, "message.dark_caverns.gateway.destination_blocked");
@@ -77,18 +92,33 @@ public final class GatewayTeleports {
         return changeDimension(source, destination, entity, arrival);
     }
 
-    @Nullable public static Entity toOverworld(ServerLevel source, Entity entity) {
+    public static void toOverworld(ServerLevel source, Entity entity, BlockPos sourceGateway) {
         ServerLevel destination = source.getServer().getLevel(Level.OVERWORLD);
         if (destination == null) {
             showFailure(entity, "message.dark_caverns.gateway.dimension_unavailable");
-            return null;
+            return;
         }
         if (!GatewayCooldowns.isReady(entity, source)) {
             showFailure(entity, "message.dark_caverns.gateway.recharging");
-            return null;
+            return;
         }
 
         BlockPos column = BlockPos.containing(entity.getX(), 0, entity.getZ());
+        GatewayChunkLoading.prepare(
+                source,
+                destination,
+                entity,
+                column,
+                SAFE_POSITION_SEARCH_RADIUS,
+                () ->
+                        source.getBlockState(sourceGateway)
+                                .is(CustomBlocks.GATEWAY_TO_THE_OVERWORLD.get()),
+                () -> arriveInOverworld(source, destination, entity, column));
+    }
+
+    @Nullable private static Entity arriveInOverworld(
+            ServerLevel source, ServerLevel destination, Entity entity, BlockPos column) {
+        if (!GatewayCooldowns.isReady(entity, source)) return null;
         BlockPos gateway = findBottomGateway(destination, column);
         if (gateway == null) {
             showFailure(entity, "message.dark_caverns.gateway.destination_blocked");
@@ -132,6 +162,7 @@ public final class GatewayTeleports {
                 moved -> {
                     moved.resetFallDistance();
                     GatewayCooldowns.start(moved, destination);
+                    DimensionTransition.PLACE_PORTAL_TICKET.onTransition(moved);
                 });
     }
 

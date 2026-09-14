@@ -4,6 +4,7 @@ import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.core.ArmorEffects;
 import com.freeranger.dark_caverns.core.ExplorationTrades;
 import com.freeranger.dark_caverns.datagen.DarkCavernsDataGenerators;
+import com.freeranger.dark_caverns.generation.GatewayChunkLoading;
 import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
 import com.freeranger.dark_caverns.registry.CustomAttachments;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
@@ -53,6 +54,7 @@ public final class DarkCaverns {
 
         ArmorEffects.register(NeoForge.EVENT_BUS);
         ExplorationTrades.register(NeoForge.EVENT_BUS);
+        GatewayChunkLoading.register(NeoForge.EVENT_BUS);
 
         modContainer.registerConfig(
                 ModConfig.Type.SERVER, ServerConfig.SPEC, MOD_ID + "-server.toml");

@@ -19,7 +19,7 @@ public final class GatewayToTheCavernsBlock extends Block {
         if (level instanceof ServerLevel serverLevel
                 && entity.getVehicle() == null
                 && !entity.isVehicle()) {
-            GatewayTeleports.toDarkCaverns(serverLevel, entity);
+            GatewayTeleports.toDarkCaverns(serverLevel, entity, pos.immutable());
         }
         super.stepOn(level, pos, state, entity);
     }

@@ -19,7 +19,7 @@ public final class GatewayToTheOverworldBlock extends Block {
         if (level instanceof ServerLevel serverLevel
                 && entity.getVehicle() == null
                 && !entity.isVehicle()) {
-            GatewayTeleports.toOverworld(serverLevel, entity);
+            GatewayTeleports.toOverworld(serverLevel, entity, pos.immutable());
         }
         super.entityInside(state, level, pos, entity);
     }

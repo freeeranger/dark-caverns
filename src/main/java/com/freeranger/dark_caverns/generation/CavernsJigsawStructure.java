@@ -8,10 +8,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import java.util.ArrayList;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.QuartPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.NoiseColumn;
@@ -134,20 +134,20 @@ public final class CavernsJigsawStructure extends Structure {
         // Resolve the actual template and rotation before checking its footprint and headroom.
         var candidate = addPieces(context, new BlockPos(x, 128, z), Optional.empty());
         if (candidate.isEmpty()) return Optional.empty();
+        // Vanilla's biome filter runs after findGenerationPoint. Reject here only if no
+        // possible height at the actual start position can pass it (including 3D datapacks).
+        if (!hasPossibleBiome(context, candidate.get().position())) return Optional.empty();
         var pieces = candidate.get().getPiecesBuilder();
         if (pieces.isEmpty()) return Optional.empty();
         var bounds = pieces.getBoundingBox();
         // Bound noise sampling for datapacks with unusually large, multi-piece start pools.
         if (bounds.getXSpan() > 64 || bounds.getZSpan() > 64) return Optional.empty();
-        var columns = new ArrayList<NoiseColumn>();
-        for (int bx = bounds.minX(); bx <= bounds.maxX(); bx++) {
-            for (int bz = bounds.minZ(); bz <= bounds.maxZ(); bz++) {
-                columns.add(
-                        context.chunkGenerator()
-                                .getBaseColumn(
-                                        bx, bz, context.heightAccessor(), context.randomState()));
-            }
-        }
+        var columns =
+                CavernNoiseColumns.footprint(
+                        context.chunkGenerator(),
+                        context.heightAccessor(),
+                        context.randomState(),
+                        bounds);
         var floor =
                 CavernFloorFinder.find(
                         columns,
@@ -163,6 +163,20 @@ public final class CavernsJigsawStructure extends Structure {
         return Optional.of(
                 new GenerationStub(
                         candidate.get().position().offset(0, offset, 0), Either.right(pieces)));
+    }
+
+    private static boolean hasPossibleBiome(GenerationContext context, BlockPos start) {
+        int qx = QuartPos.fromBlock(start.getX()), qz = QuartPos.fromBlock(start.getZ());
+        for (int qy = QuartPos.fromBlock(context.heightAccessor().getMinBuildHeight());
+                qy <= QuartPos.fromBlock(context.heightAccessor().getMaxBuildHeight() - 1);
+                qy++) {
+            if (context.validBiome()
+                    .test(
+                            context.biomeSource()
+                                    .getNoiseBiome(qx, qy, qz, context.randomState().sampler())))
+                return true;
+        }
+        return false;
     }
 
     private Optional<GenerationStub> findSurfaceGenerationPoint(

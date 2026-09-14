@@ -1,11 +1,11 @@
 package com.freeranger.dark_caverns.generation;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import java.util.HashMap;
-import java.util.Map;
+import it.unimi.dsi.fastutil.longs.Long2IntOpenHashMap;
 import java.util.function.Function;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 
 /** Horizontal, finite-width biome blending. Caches belong to one surface pass, never a world. */
@@ -19,16 +19,19 @@ public final class BiomeTransition {
     public static final int RADIUS = 16;
     private static final int GRID = 8;
     private final Function<BlockPos, Holder<Biome>> biomes;
-    private final Map<Long, Integer> samples = new HashMap<>();
+    private static final ResourceLocation FOREST_ID = DarkCaverns.id("glimmershroom_forest");
+    private static final ResourceLocation MOLTEN_ID = DarkCaverns.id("molten_depths");
+    private static final ResourceLocation HALLOW_ID = DarkCaverns.id("tangled_hallow");
+    private final Long2IntOpenHashMap samples = new Long2IntOpenHashMap();
 
     public BiomeTransition(Function<BlockPos, Holder<Biome>> biomes) {
         this.biomes = biomes;
     }
 
     public static int identity(Holder<Biome> biome) {
-        if (biome.is(DarkCaverns.id("glimmershroom_forest"))) return FOREST;
-        if (biome.is(DarkCaverns.id("molten_depths"))) return MOLTEN;
-        if (biome.is(DarkCaverns.id("tangled_hallow"))) return HALLOW;
+        if (biome.is(FOREST_ID)) return FOREST;
+        if (biome.is(MOLTEN_ID)) return MOLTEN;
+        if (biome.is(HALLOW_ID)) return HALLOW;
         return ROCKY;
     }
 

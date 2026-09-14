@@ -34,8 +34,7 @@ public final class TransitionPlacement extends PlacementFilter {
     @Override
     protected boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
         double chance =
-                new BiomeTransition(context.getLevel()::getBiome)
-                        .weights(pos.getX(), pos.getZ())
+                TransitionPlacementCache.weights(context.getLevel(), pos.getX(), pos.getZ())
                         .chance(biome, core);
         // Preserve the existing random stream and density in pure biome interiors.
         return chance >= 1 || (chance > 0 && random.nextFloat() < chance);
