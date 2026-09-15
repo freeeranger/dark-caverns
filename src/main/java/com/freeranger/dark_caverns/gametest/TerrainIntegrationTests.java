@@ -39,6 +39,11 @@ public final class TerrainIntegrationTests {
             if (seedIndex == 1)
                 volume.feature(
                         "hellstone_ore_feature", GenerationStep.Decoration.UNDERGROUND_ORES, 8);
+            if (seedIndex == 1)
+                volume.feature(
+                        "ashy_molten_carfstone_patch",
+                        GenerationStep.Decoration.UNDERGROUND_ORES,
+                        10);
             if (seedIndex < 2)
                 volume.formations(seedIndex == 0 ? "spike_feature" : "molten_spike_feature");
             byte[] after = volume.snapshot();
@@ -178,6 +183,8 @@ public final class TerrainIntegrationTests {
             volume.feature("charred_grass_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 1);
             volume.feature(
                     "scorched_berry_bush_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 2);
+            volume.feature(
+                    "ashy_charred_grass_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 6);
         } else if (biomeIndex == 2) {
             volume.feature("glimmergrass_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 2);
             volume.feature("shroom_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 3);
@@ -192,6 +199,8 @@ public final class TerrainIntegrationTests {
         int luminite = 0;
         int platinum = 0;
         int hellstone = 0;
+        int ashyGround = 0;
+        int ashyPlants = 0;
         int width = TerrainTestVolume.WIDTH;
         var pos = new BlockPos.MutableBlockPos();
         for (int i = 0; i < geometry.length; i++) {
@@ -203,6 +212,8 @@ public final class TerrainIntegrationTests {
             if (state.is(CustomBlocks.LUMINITE_ORE.get())) luminite++;
             if (state.is(CustomBlocks.PLATINUM_ORE.get())) platinum++;
             if (state.is(CustomBlocks.HELLSTONE_ORE.get())) hellstone++;
+            if (state.is(CustomBlocks.ASHY_MOLTEN_CARFSTONE.get())) ashyGround++;
+            if (state.is(CustomBlocks.ASHY_CHARRED_GRASS.get())) ashyPlants++;
             if (canStand(geometry, i) && volume.get(pos.below()).is(groundTag)) spawnFloors++;
         }
         long plants =
@@ -210,6 +221,8 @@ public final class TerrainIntegrationTests {
                         .filter(
                                 e ->
                                         e.getValue().is(CustomBlocks.CHARRED_GRASS.get())
+                                                || e.getValue()
+                                                        .is(CustomBlocks.ASHY_CHARRED_GRASS.get())
                                                 || e.getValue()
                                                         .is(CustomBlocks.SCORCHED_BERRY_BUSH.get())
                                                 || e.getValue().is(CustomBlocks.GLIMMERGRASS.get())
@@ -231,11 +244,27 @@ public final class TerrainIntegrationTests {
                                 .is(CustomBlocks.GLIMMERGRASS_BLOCK.get()),
                         "Forest vegetation lost its floor");
             }
+            if (state.is(CustomBlocks.ASHY_CHARRED_GRASS.get())) {
+                helper.assertTrue(
+                        volume.get(entry.getKey().below())
+                                .is(CustomBlocks.ASHY_MOLTEN_CARFSTONE.get()),
+                        "Ashy Charred Grass escaped its ashy floor");
+            }
         }
         helper.assertTrue(
                 luminite > 0 && platinum > 0, "Terrain must retain mineable luminite and platinum");
         if (biomeIndex == 1)
             helper.assertTrue(hellstone > 0, "Molten surfaces must retain hellstone");
+        if (biomeIndex == 1) {
+            helper.assertTrue(
+                    ashyGround >= 100 && ashyGround < 20000,
+                    "Ash fields are missing or overwhelm Molten Depths: " + ashyGround);
+            helper.assertTrue(ashyPlants >= 10, "Ash fields generated without vegetation");
+        } else {
+            helper.assertTrue(
+                    ashyGround == 0 && ashyPlants == 0,
+                    "Ash-field worldgen leaked outside Molten Depths");
+        }
         if (biomeIndex != 0) helper.assertTrue(plants > 0, "Floor-based vegetation did not place");
         helper.assertTrue(
                 spawnFloors > 1000, "Biome creatures need sufficient tagged, walkable ground");
@@ -243,12 +272,14 @@ public final class TerrainIntegrationTests {
                 volume.biome.value().getBackgroundMusic().isPresent(),
                 "Biome music must remain assigned");
         DarkCaverns.LOGGER.info(
-                "Terrain content seed {}: luminite={}, platinum={}, hellstone={}, plants={},"
-                        + " spawnFloors={}",
+                "Terrain content seed {}: luminite={}, platinum={}, hellstone={}, ash={},"
+                        + " ashyPlants={}, plants={}, spawnFloors={}",
                 volume.seed,
                 luminite,
                 platinum,
                 hellstone,
+                ashyGround,
+                ashyPlants,
                 plants,
                 spawnFloors);
     }

@@ -41,6 +41,7 @@ final class DarkCavernsItemModelProvider extends ItemModelProvider {
                         CustomBlocks.GLIMMERSHROOM.get().asItem(),
                         CustomBlocks.GLIMMERGRASS.get().asItem(),
                         CustomBlocks.CHARRED_GRASS.get().asItem(),
+                        CustomBlocks.ASHY_CHARRED_GRASS.get().asItem(),
                         CustomBlocks.LUMINITE_LANTERN.get().asItem(),
                         CustomItems.SCORCHED_BERRIES.get(),
                         CustomItems.LUMINITE_TORCH.get());
@@ -63,6 +64,7 @@ final class DarkCavernsItemModelProvider extends ItemModelProvider {
                             } else if (item == CustomBlocks.GLIMMERSHROOM.get().asItem()
                                     || item == CustomBlocks.GLIMMERGRASS.get().asItem()
                                     || item == CustomBlocks.CHARRED_GRASS.get().asItem()
+                                    || item == CustomBlocks.ASHY_CHARRED_GRASS.get().asItem()
                                     || item == CustomItems.LUMINITE_TORCH.get()) {
                                 blockTextureItem(item);
                             } else {

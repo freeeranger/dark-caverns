@@ -1,5 +1,8 @@
 {
   "values": {
+    "dark_caverns:ashy_charred_grass": {
+      "chance": 0.3
+    },
     "dark_caverns:charred_grass": {
       "chance": 0.3
     },

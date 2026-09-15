@@ -1,0 +1,8 @@
+{
+  "feature": "dark_caverns:ashy_charred_grass_patch",
+  "placement": [
+    { "type": "minecraft:count_on_every_layer", "count": 3 },
+    { "type": "dark_caverns:biome_transition", "biome": 2, "core": false },
+    { "type": "minecraft:biome" }
+  ]
+}

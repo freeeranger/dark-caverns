@@ -59,7 +59,7 @@ public final class CavernArrivalTests {
                 new BlockPos(
                         sourceGateway.getX(),
                         destination.getMaxBuildHeight() - 3,
-                        sourceGateway.getZ());
+                        sourceGateway.getZ() + 14);
         // Warm only this test fixture explicitly. GameTest advances ticks as fast as possible,
         // which can expire normal travel timeouts during cold Nether generation. Non-blocking
         // cold preparation and cancellation have dedicated GatewayLoadingTests.
@@ -73,8 +73,18 @@ public final class CavernArrivalTests {
         // flake.
         var floor = new BlockPos(sourceGateway.getX(), 128, sourceGateway.getZ());
         for (BlockPos pos :
-                BlockPos.betweenClosed(floor.offset(-10, -1, -10), floor.offset(10, 4, 10))) {
-            destination.setBlock(pos, pos.getY() <= 128 ? STONE : AIR, Block.UPDATE_ALL);
+                BlockPos.betweenClosed(
+                        floor.offset(-10, -1, -10),
+                        new BlockPos(
+                                floor.getX() + 10,
+                                destination.getMaxBuildHeight() - 1,
+                                floor.getZ() + 10))) {
+            destination.setBlock(
+                    pos,
+                    pos.getY() >= destination.getMaxBuildHeight() - 5
+                            ? Blocks.BEDROCK.defaultBlockState()
+                            : pos.getY() <= 128 ? STONE : AIR,
+                    Block.UPDATE_CLIENTS);
         }
         destination.setBlock(
                 roof,
@@ -105,6 +115,18 @@ public final class CavernArrivalTests {
                             helper.assertTrue(
                                     Math.abs(moved.getYRot() - link.facing().toYRot()) < 0.01,
                                     "Arrival did not face the walk-out");
+                            helper.assertTrue(
+                                    link.gateway().getY() == destination.getMaxBuildHeight() - 1,
+                                    "Linked arrival did not reach the real roof");
+                            BlockPos well = link.gateway().relative(link.facing(), 3);
+                            for (int y = 129; y < destination.getMaxBuildHeight() - 1; y++) {
+                                helper.assertTrue(
+                                        destination
+                                                .getBlockState(
+                                                        new BlockPos(well.getX(), y, well.getZ()))
+                                                .is(Blocks.LADDER),
+                                        "Neighbour updates removed a ladder rung at Y=" + y);
+                            }
                             helper.assertTrue(
                                     destination
                                             .getBlockState(roof)
@@ -172,7 +194,7 @@ public final class CavernArrivalTests {
                 world(
                         helper,
                         column,
-                        pos -> writes.getOrDefault(pos, pos.getY() <= 128 ? STONE : AIR),
+                        pos -> writes.getOrDefault(pos, flatCave(pos)),
                         writes,
                         new AtomicInteger());
         var plan = CavernArrival.find(world, column);
@@ -182,7 +204,14 @@ public final class CavernArrivalTests {
                 plan.equals(CavernArrival.find(world, column)),
                 "Arrival search was not deterministic");
         helper.assertTrue(plan.place(world), "Preflighted arrival failed placement");
-        helper.assertTrue(writes.size() <= 256, "Arrival exceeded its small footprint");
+        helper.assertTrue(
+                writes.size() <= CavernArrival.MAX_PLACED_BLOCKS,
+                "Arrival exceeded its bounded footprint");
+        helper.assertTrue(
+                plan.gateway().getY() == world.getMaxBuildHeight() - 1
+                        && world.getBlockState(plan.gateway().relative(plan.facing()))
+                                .is(Blocks.BEDROCK),
+                "Portal is not part of the actual bedrock ceiling");
         helper.assertTrue(
                 world.getBlockState(plan.gateway()).is(CustomBlocks.GATEWAY_TO_THE_OVERWORLD.get()),
                 "Missing return gateway");
@@ -195,12 +224,27 @@ public final class CavernArrivalTests {
                         .is(CustomBlocks.SMOOTH_CARFSTONE.get()),
                 "Return gateway has no standing floor");
         for (int forward = 0; forward <= 5; forward++) {
-            BlockPos feet = plan.feet().relative(plan.facing(), forward);
+            BlockPos feet = plan.exit().relative(plan.facing(), forward);
             helper.assertTrue(
                     world.getBlockState(feet).isAir()
                             && world.getBlockState(feet.above()).isAir()
                             && !world.getBlockState(feet.below()).isAir(),
                     "Walk-out route is blocked or ends in a drop");
+        }
+        BlockPos shaft = plan.gateway().relative(plan.facing(), -3);
+        for (int y = plan.exit().getY(); y < world.getMaxBuildHeight() - 1; y++) {
+            BlockPos rung = new BlockPos(shaft.getX(), y, shaft.getZ());
+            helper.assertTrue(
+                    world.getBlockState(rung).is(Blocks.LADDER)
+                            && world.getBlockState(rung).canSurvive(world, rung),
+                    "Ladder shaft has a missing or unsupported rung at " + rung);
+        }
+        for (int y : new int[] {plan.exit().getY(), plan.feet().getY()}) {
+            BlockPos doorway = new BlockPos(shaft.getX(), y, shaft.getZ()).relative(plan.facing());
+            helper.assertTrue(
+                    world.getBlockState(doorway).isAir()
+                            && world.getBlockState(doorway.above()).isAir(),
+                    "Ladder exit is blocked");
         }
         long lights =
                 writes.values().stream()
@@ -220,6 +264,38 @@ public final class CavernArrivalTests {
 
     @GameTest(template = "sacred_torch", timeoutTicks = 40)
     public static void arrivalRefusesUnsafeSitesAndStaleExcavation(GameTestHelper helper) {
+        for (BlockState obstruction :
+                new BlockState[] {
+                    Blocks.CHEST.defaultBlockState(),
+                    Blocks.DIAMOND_ORE.defaultBlockState(),
+                    Blocks.WATER.defaultBlockState(),
+                    Blocks.LAVA.defaultBlockState()
+                }) {
+            var untouched = new HashMap<BlockPos, BlockState>();
+            var blockedShaft =
+                    world(
+                            helper,
+                            BlockPos.ZERO,
+                            pos -> pos.getY() == 190 ? obstruction : flatCave(pos),
+                            untouched,
+                            new AtomicInteger());
+            helper.assertTrue(
+                    CavernArrival.find(blockedShaft, BlockPos.ZERO) == null && untouched.isEmpty(),
+                    "Shaft excavated a protected or flooded layer");
+        }
+        var noRoofWrites = new HashMap<BlockPos, BlockState>();
+        helper.assertTrue(
+                CavernArrival.find(
+                                        world(
+                                                helper,
+                                                BlockPos.ZERO,
+                                                pos -> pos.getY() <= 128 ? STONE : AIR,
+                                                noRoofWrites,
+                                                new AtomicInteger()),
+                                        BlockPos.ZERO)
+                                == null
+                        && noRoofWrites.isEmpty(),
+                "A floating portal was created without actual bedrock overhead");
         for (BlockState protectedFloor :
                 new BlockState[] {
                     Blocks.DIAMOND_ORE.defaultBlockState(),
@@ -259,7 +335,7 @@ public final class CavernArrivalTests {
                 world(
                         helper,
                         BlockPos.ZERO,
-                        pos -> writes.getOrDefault(pos, pos.getY() <= 128 ? STONE : AIR),
+                        pos -> writes.getOrDefault(pos, flatCave(pos)),
                         writes,
                         new AtomicInteger());
         var plan = CavernArrival.find(world, BlockPos.ZERO);
@@ -289,13 +365,13 @@ public final class CavernArrivalTests {
                 world(
                         helper,
                         BlockPos.ZERO,
-                        pos -> fixture.getOrDefault(pos, pos.getY() <= 128 ? STONE : AIR),
+                        pos -> fixture.getOrDefault(pos, flatCave(pos)),
                         writes,
                         new AtomicInteger());
         var original = CavernArrival.find(pocketWorld, BlockPos.ZERO);
         BlockPos barrier =
-                original.gateway()
-                        .below(2)
+                original.exit()
+                        .relative(original.facing(), -2)
                         .relative(original.facing())
                         .relative(original.facing().getClockWise(), 2);
         BlockPos water = barrier.relative(original.facing().getClockWise());
@@ -309,6 +385,16 @@ public final class CavernArrivalTests {
                 !pocketWorld.getBlockState(barrier).isAir()
                         && pocketWorld.getBlockState(water).is(Blocks.WATER),
                 "Arrival opened or drained an adjacent fluid pocket");
+        writes.clear();
+        fixture.clear();
+        BlockPos wallOre = original.gateway().relative(original.facing(), -4).atY(180);
+        fixture.put(wallOre, Blocks.DIAMOND_ORE.defaultBlockState());
+        var orePlan = CavernArrival.find(pocketWorld, BlockPos.ZERO);
+        helper.assertTrue(
+                orePlan != null
+                        && orePlan.place(pocketWorld)
+                        && pocketWorld.getBlockState(wallOre).is(Blocks.DIAMOND_ORE),
+                "Shaft wall ore was unnecessarily destroyed");
         helper.succeed();
     }
 
@@ -384,7 +470,8 @@ public final class CavernArrivalTests {
                         helper.assertTrue(
                                 plan.place(world), "Generated landing failed its preflight");
                         helper.assertTrue(
-                                writes.size() <= 256, "Generated arrival exceeded its footprint");
+                                writes.size() <= CavernArrival.MAX_PLACED_BLOCKS,
+                                "Generated arrival exceeded its footprint");
                     }
                     maxReads = Math.max(maxReads, reads.get());
                 }
@@ -400,6 +487,12 @@ public final class CavernArrivalTests {
             helper.assertTrue(maxReads < 150000, "Arrival search exceeded bounded read budget");
         }
         helper.succeed();
+    }
+
+    private static BlockState flatCave(BlockPos pos) {
+        return pos.getY() >= 251
+                ? Blocks.BEDROCK.defaultBlockState()
+                : pos.getY() <= 128 ? STONE : AIR;
     }
 
     private static WorldGenLevel world(

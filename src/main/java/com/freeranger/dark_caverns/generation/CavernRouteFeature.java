@@ -158,6 +158,7 @@ public final class CavernRouteFeature extends Feature<NoneFeatureConfiguration> 
     private static boolean natural(BlockState state) {
         return state.is(CustomBlocks.CARFSTONE.get())
                 || state.is(CustomBlocks.MOLTEN_CARFSTONE.get())
+                || state.is(CustomBlocks.ASHY_MOLTEN_CARFSTONE.get())
                 || state.is(CustomBlocks.GLIMMERGRASS_BLOCK.get())
                 || state.is(CustomBlocks.OVERGROWN_CARFSTONE.get());
     }

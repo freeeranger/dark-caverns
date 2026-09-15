@@ -50,6 +50,8 @@ public final class CustomBlocks {
             register("carfstone", () -> new Block(stone(4.0F)));
     public static final DeferredBlock<Block> SMOOTH_CARFSTONE = copy("smooth_carfstone", CARFSTONE);
     public static final DeferredBlock<Block> CARFSTONE_BRICKS = copy("carfstone_bricks", CARFSTONE);
+    public static final DeferredBlock<Block> CHISELED_CARFSTONE_BRICKS =
+            copy("chiseled_carfstone_bricks", CARFSTONE_BRICKS);
     public static final DeferredBlock<StairBlock> CARFSTONE_BRICK_STAIRS =
             stairs("carfstone_brick_stairs", CARFSTONE_BRICKS);
     public static final DeferredBlock<SlabBlock> CARFSTONE_BRICK_SLAB =
@@ -91,6 +93,10 @@ public final class CustomBlocks {
             copy("smooth_molten_carfstone", MOLTEN_CARFSTONE);
     public static final DeferredBlock<Block> MOLTEN_CARFSTONE_BRICKS =
             copy("molten_carfstone_bricks", MOLTEN_CARFSTONE);
+    public static final DeferredBlock<Block> CHISELED_MOLTEN_CARFSTONE_BRICKS =
+            copy("chiseled_molten_carfstone_bricks", MOLTEN_CARFSTONE_BRICKS);
+    public static final DeferredBlock<Block> ASHY_MOLTEN_CARFSTONE =
+            copy("ashy_molten_carfstone", MOLTEN_CARFSTONE);
     public static final DeferredBlock<StairBlock> MOLTEN_CARFSTONE_BRICK_STAIRS =
             stairs("molten_carfstone_brick_stairs", MOLTEN_CARFSTONE_BRICKS);
     public static final DeferredBlock<SlabBlock> MOLTEN_CARFSTONE_BRICK_SLAB =
@@ -214,6 +220,14 @@ public final class CustomBlocks {
                                     BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS)
                                             .offsetType(BlockBehaviour.OffsetType.XZ),
                                     MOLTEN_CARFSTONE));
+    public static final DeferredBlock<CustomPlantBlock> ASHY_CHARRED_GRASS =
+            register(
+                    "ashy_charred_grass",
+                    () ->
+                            new CustomPlantBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS)
+                                            .offsetType(BlockBehaviour.OffsetType.XZ),
+                                    ASHY_MOLTEN_CARFSTONE));
 
     public static final DeferredBlock<Block> OVERGROWN_CARFSTONE =
             register("overgrown_carfstone", () -> new Block(stone(4.0F)));

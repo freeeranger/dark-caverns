@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "dark_caverns:block/molten_carfstone",
+    "side": "dark_caverns:block/ashy_molten_carfstone_side",
+    "top": "dark_caverns:block/ashy_molten_carfstone_top"
+  }
+}

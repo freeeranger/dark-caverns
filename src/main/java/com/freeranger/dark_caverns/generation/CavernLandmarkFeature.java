@@ -218,6 +218,7 @@ public final class CavernLandmarkFeature extends Feature<CavernLandmarkConfigura
 
     private static boolean natural(BlockState state) {
         return state.is(CustomBlocks.CARFSTONE.get())
-                || state.is(CustomBlocks.MOLTEN_CARFSTONE.get());
+                || state.is(CustomBlocks.MOLTEN_CARFSTONE.get())
+                || state.is(CustomBlocks.ASHY_MOLTEN_CARFSTONE.get());
     }
 }

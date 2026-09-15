@@ -51,7 +51,8 @@
       "dark_caverns:lapis_ore_feature",
       "dark_caverns:platinum_ore_feature",
       "dark_caverns:hellstone_ore_feature",
-      "dark_caverns:magma_patch"
+      "dark_caverns:magma_patch",
+      "dark_caverns:ashy_molten_carfstone_patch"
     ],
     [
       "dark_caverns:molten_spike_feature",
@@ -67,7 +68,8 @@
       "dark_caverns:fire_patch",
       "dark_caverns:charred_grass_patch",
       "dark_caverns:scorched_berry_bush_patch",
-      "dark_caverns:undersprouts_patch"
+      "dark_caverns:undersprouts_patch",
+      "dark_caverns:ashy_charred_grass_patch"
     ],
     ["dark_caverns:cavern_routes"]
   ],

@@ -98,7 +98,10 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
 
     private void addEquipment() {
         addArmorNamespace("armor");
-        addArmorNamespace("armors");
+        tag(common("armors")).addTag(common("armor"));
+        for (String slot : new String[] {"helmets", "chestplates", "leggings", "boots"}) {
+            tag(common("armors/" + slot)).addTag(common("armor/" + slot));
+        }
 
         tag(common("tools"))
                 .addTag(common("tools/swords"))
@@ -106,31 +109,42 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
                 .addTag(common("tools/axes"))
                 .addTag(common("tools/shovels"))
                 .addTag(common("tools/hoes"));
-        tag(common("tools/swords"))
-                .add(
-                        CustomEquipment.PLATINUM_SWORD.get(),
-                        CustomEquipment.HELLSTONE_SWORD.get(),
-                        CustomEquipment.SHROOMSTONE_SWORD.get());
-        tag(common("tools/pickaxes"))
-                .add(
-                        CustomEquipment.PLATINUM_PICKAXE.get(),
-                        CustomEquipment.HELLSTONE_PICKAXE.get(),
-                        CustomEquipment.SHROOMSTONE_PICKAXE.get());
-        tag(common("tools/axes"))
-                .add(
-                        CustomEquipment.PLATINUM_AXE.get(),
-                        CustomEquipment.HELLSTONE_AXE.get(),
-                        CustomEquipment.SHROOMSTONE_AXE.get());
-        tag(common("tools/shovels"))
-                .add(
-                        CustomEquipment.PLATINUM_SHOVEL.get(),
-                        CustomEquipment.HELLSTONE_SHOVEL.get(),
-                        CustomEquipment.SHROOMSTONE_SHOVEL.get());
-        tag(common("tools/hoes"))
-                .add(
-                        CustomEquipment.PLATINUM_HOE.get(),
-                        CustomEquipment.HELLSTONE_HOE.get(),
-                        CustomEquipment.SHROOMSTONE_HOE.get());
+        equipment(
+                ItemTags.SWORDS,
+                "tools/swords",
+                CustomEquipment.PLATINUM_SWORD.get(),
+                CustomEquipment.HELLSTONE_SWORD.get(),
+                CustomEquipment.SHROOMSTONE_SWORD.get());
+        equipment(
+                ItemTags.PICKAXES,
+                "tools/pickaxes",
+                CustomEquipment.PLATINUM_PICKAXE.get(),
+                CustomEquipment.HELLSTONE_PICKAXE.get(),
+                CustomEquipment.SHROOMSTONE_PICKAXE.get());
+        equipment(
+                ItemTags.AXES,
+                "tools/axes",
+                CustomEquipment.PLATINUM_AXE.get(),
+                CustomEquipment.HELLSTONE_AXE.get(),
+                CustomEquipment.SHROOMSTONE_AXE.get());
+        equipment(
+                ItemTags.SHOVELS,
+                "tools/shovels",
+                CustomEquipment.PLATINUM_SHOVEL.get(),
+                CustomEquipment.HELLSTONE_SHOVEL.get(),
+                CustomEquipment.SHROOMSTONE_SHOVEL.get());
+        equipment(
+                ItemTags.HOES,
+                "tools/hoes",
+                CustomEquipment.PLATINUM_HOE.get(),
+                CustomEquipment.HELLSTONE_HOE.get(),
+                CustomEquipment.SHROOMSTONE_HOE.get());
+    }
+
+    private void equipment(TagKey<Item> vanilla, String compatibility, Item... items) {
+        // Vanilla's enchantable tags inherit these categories, not the old c:tools/* tags.
+        tag(vanilla).add(items);
+        tag(common(compatibility)).add(items);
     }
 
     private void addArmorNamespace(String root) {
@@ -139,31 +153,35 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
                 .addTag(common(root + "/chestplates"))
                 .addTag(common(root + "/leggings"))
                 .addTag(common(root + "/boots"));
-        tag(common(root + "/helmets"))
-                .add(
-                        CustomEquipment.PLATINUM_HELMET.get(),
-                        CustomEquipment.HELLSTONE_HELMET.get(),
-                        CustomEquipment.SCORCHSTEEL_HELMET.get(),
-                        CustomEquipment.SHROOMSTONE_HELMET.get(),
-                        CustomEquipment.LUMINITE_HELMET.get());
-        tag(common(root + "/chestplates"))
-                .add(
-                        CustomEquipment.PLATINUM_CHESTPLATE.get(),
-                        CustomEquipment.HELLSTONE_CHESTPLATE.get(),
-                        CustomEquipment.SCORCHSTEEL_CHESTPLATE.get(),
-                        CustomEquipment.SHROOMSTONE_CHESTPLATE.get());
-        tag(common(root + "/leggings"))
-                .add(
-                        CustomEquipment.PLATINUM_LEGGINGS.get(),
-                        CustomEquipment.HELLSTONE_LEGGINGS.get(),
-                        CustomEquipment.SCORCHSTEEL_LEGGINGS.get(),
-                        CustomEquipment.SHROOMSTONE_LEGGINGS.get());
-        tag(common(root + "/boots"))
-                .add(
-                        CustomEquipment.PLATINUM_BOOTS.get(),
-                        CustomEquipment.HELLSTONE_BOOTS.get(),
-                        CustomEquipment.SCORCHSTEEL_BOOTS.get(),
-                        CustomEquipment.SHROOMSTONE_BOOTS.get());
+        equipment(
+                ItemTags.HEAD_ARMOR,
+                root + "/helmets",
+                CustomEquipment.PLATINUM_HELMET.get(),
+                CustomEquipment.HELLSTONE_HELMET.get(),
+                CustomEquipment.SCORCHSTEEL_HELMET.get(),
+                CustomEquipment.SHROOMSTONE_HELMET.get(),
+                CustomEquipment.LUMINITE_HELMET.get());
+        equipment(
+                ItemTags.CHEST_ARMOR,
+                root + "/chestplates",
+                CustomEquipment.PLATINUM_CHESTPLATE.get(),
+                CustomEquipment.HELLSTONE_CHESTPLATE.get(),
+                CustomEquipment.SCORCHSTEEL_CHESTPLATE.get(),
+                CustomEquipment.SHROOMSTONE_CHESTPLATE.get());
+        equipment(
+                ItemTags.LEG_ARMOR,
+                root + "/leggings",
+                CustomEquipment.PLATINUM_LEGGINGS.get(),
+                CustomEquipment.HELLSTONE_LEGGINGS.get(),
+                CustomEquipment.SCORCHSTEEL_LEGGINGS.get(),
+                CustomEquipment.SHROOMSTONE_LEGGINGS.get());
+        equipment(
+                ItemTags.FOOT_ARMOR,
+                root + "/boots",
+                CustomEquipment.PLATINUM_BOOTS.get(),
+                CustomEquipment.HELLSTONE_BOOTS.get(),
+                CustomEquipment.SCORCHSTEEL_BOOTS.get(),
+                CustomEquipment.SHROOMSTONE_BOOTS.get());
     }
 
     private static TagKey<Item> common(String path) {

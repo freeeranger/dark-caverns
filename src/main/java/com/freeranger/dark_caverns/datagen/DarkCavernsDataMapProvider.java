@@ -25,6 +25,7 @@ final class DarkCavernsDataMapProvider extends DataMapProvider {
                 .add(DarkCaverns.id("glimmershroom_block"), new Compostable(0.85F), false)
                 .add(DarkCaverns.id("glimmergrass"), new Compostable(0.30F), false)
                 .add(DarkCaverns.id("charred_grass"), new Compostable(0.30F), false)
+                .add(DarkCaverns.id("ashy_charred_grass"), new Compostable(0.30F), false)
                 .add(DarkCaverns.id("scorched_berries"), new Compostable(0.30F), false);
         builder(NeoForgeDataMaps.FURNACE_FUELS)
                 .add(DarkCaverns.id("scorchling_tail"), new FurnaceFuel(1600), false);

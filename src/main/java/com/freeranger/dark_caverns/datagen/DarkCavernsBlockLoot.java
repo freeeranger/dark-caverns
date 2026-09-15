@@ -82,6 +82,7 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
                 block -> createMushroomBlockDrop(block, CustomBlocks.GLIMMERSHROOM.get()));
         add(CustomBlocks.GLIMMERGRASS.get(), block -> createShearsOnlyDrop(block));
         add(CustomBlocks.CHARRED_GRASS.get(), block -> createShearsOnlyDrop(block));
+        add(CustomBlocks.ASHY_CHARRED_GRASS.get(), block -> createShearsOnlyDrop(block));
         add(CustomBlocks.SCORCHED_BERRY_BUSH.get(), this::createScorchedBerryDrops);
     }
 
@@ -154,6 +155,7 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
                 || block == CustomBlocks.GLIMMERSHROOM_BLOCK.get()
                 || block == CustomBlocks.GLIMMERGRASS.get()
                 || block == CustomBlocks.CHARRED_GRASS.get()
+                || block == CustomBlocks.ASHY_CHARRED_GRASS.get()
                 || block == CustomBlocks.SCORCHED_BERRY_BUSH.get();
     }
 

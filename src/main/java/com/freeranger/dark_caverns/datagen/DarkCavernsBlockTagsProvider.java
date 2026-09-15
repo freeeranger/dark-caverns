@@ -64,13 +64,17 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
 
     private void addCommonTags() {
         tag(common("cobblestone"))
-                .add(CustomBlocks.CARFSTONE.get(), CustomBlocks.MOLTEN_CARFSTONE.get());
+                .add(
+                        CustomBlocks.CARFSTONE.get(),
+                        CustomBlocks.MOLTEN_CARFSTONE.get(),
+                        CustomBlocks.ASHY_MOLTEN_CARFSTONE.get());
         tag(common("mushrooms")).add(CustomBlocks.GLIMMERSHROOM.get());
         tag(common("stone"))
                 .add(
                         CustomBlocks.CARFSTONE.get(),
                         CustomBlocks.SMOOTH_CARFSTONE.get(),
                         CustomBlocks.MOLTEN_CARFSTONE.get(),
+                        CustomBlocks.ASHY_MOLTEN_CARFSTONE.get(),
                         CustomBlocks.SMOOTH_MOLTEN_CARFSTONE.get());
 
         TagKey<Block> ores = common("ores");
@@ -115,6 +119,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.CARFSTONE.get(),
                         CustomBlocks.SMOOTH_CARFSTONE.get(),
                         CustomBlocks.CARFSTONE_BRICKS.get(),
+                        CustomBlocks.CHISELED_CARFSTONE_BRICKS.get(),
                         CustomBlocks.CARFSTONE_STAIRS.get(),
                         CustomBlocks.CARFSTONE_SLAB.get(),
                         CustomBlocks.CARFSTONE_WALL.get(),
@@ -127,6 +132,8 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.MOLTEN_CARFSTONE.get(),
                         CustomBlocks.SMOOTH_MOLTEN_CARFSTONE.get(),
                         CustomBlocks.MOLTEN_CARFSTONE_BRICKS.get(),
+                        CustomBlocks.CHISELED_MOLTEN_CARFSTONE_BRICKS.get(),
+                        CustomBlocks.ASHY_MOLTEN_CARFSTONE.get(),
                         CustomBlocks.MOLTEN_CARFSTONE_STAIRS.get(),
                         CustomBlocks.MOLTEN_CARFSTONE_SLAB.get(),
                         CustomBlocks.MOLTEN_CARFSTONE_WALL.get(),
@@ -158,6 +165,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.GLIMMERSHROOM_BLOCK.get(),
                         CustomBlocks.GLIMMERGRASS.get(),
                         CustomBlocks.CHARRED_GRASS.get());
+        tag(BlockTags.MINEABLE_WITH_AXE).add(CustomBlocks.ASHY_CHARRED_GRASS.get());
 
         tag(BlockTags.NEEDS_STONE_TOOL).add(CustomBlocks.CARFSTONE_IRON_ORE.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
@@ -248,7 +256,9 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.GLIMMERGRASS.get(),
                         CustomBlocks.GLIMMERSHROOM.get(),
                         CustomBlocks.MOLTEN_CARFSTONE.get(),
+                        CustomBlocks.ASHY_MOLTEN_CARFSTONE.get(),
                         CustomBlocks.CHARRED_GRASS.get(),
+                        CustomBlocks.ASHY_CHARRED_GRASS.get(),
                         CustomBlocks.SCORCHED_BERRY_BUSH.get());
 
         tag(CustomBlockTags.ROCKY_CREATURE_SPAWNABLE_ON)
@@ -265,6 +275,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
         tag(CustomBlockTags.MOLTEN_CREATURE_SPAWNABLE_ON)
                 .add(
                         CustomBlocks.MOLTEN_CARFSTONE.get(),
+                        CustomBlocks.ASHY_MOLTEN_CARFSTONE.get(),
                         CustomBlocks.HELLSTONE_ORE.get(),
                         Blocks.MAGMA_BLOCK);
         tag(CustomBlockTags.GLIMMERSHROOM_CREATURE_SPAWNABLE_ON)

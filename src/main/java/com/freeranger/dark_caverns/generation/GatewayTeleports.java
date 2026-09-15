@@ -83,7 +83,9 @@ public final class GatewayTeleports {
                 showFailure(entity, "message.dark_caverns.gateway.no_landing");
                 return null;
             }
-            link = new GatewayLinks.Link(origin, plan.gateway(), plan.feet(), plan.facing());
+            link =
+                    new GatewayLinks.Link(
+                            origin, plan.gateway(), plan.feet(), plan.facing().getOpposite());
             links.put(link);
         }
         // Existing arrivals are never rebuilt: player changes belong to the player.

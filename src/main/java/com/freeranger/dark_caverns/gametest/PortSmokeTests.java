@@ -79,10 +79,10 @@ public final class PortSmokeTests {
     @GameTest(template = "sacred_torch")
     public static void registriesLoad(GameTestHelper helper) {
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.BLOCK) == 60, "Expected all 60 block IDs");
+                countModEntries(BuiltInRegistries.BLOCK) == 64, "Expected all 64 block IDs");
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.ITEM) == 113,
-                "Expected 57 block items plus 56 standalone item IDs");
+                countModEntries(BuiltInRegistries.ITEM) == 117,
+                "Expected 61 block items plus 56 standalone item IDs");
         helper.assertTrue(
                 countModEntries(BuiltInRegistries.SOUND_EVENT) == 28, "Expected all 28 sound IDs");
         helper.assertTrue(
@@ -93,8 +93,8 @@ public final class PortSmokeTests {
                 "Expected gateway cooldown and Scorchsteel state attachment IDs");
         verifyRegistryCount(helper, Registries.BIOME, 4, "biome definitions");
         verifyRegistryCount(helper, Registries.CONFIGURED_CARVER, 1, "configured carver");
-        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 28, "configured features");
-        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 27, "placed features");
+        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 30, "configured features");
+        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 29, "placed features");
         verifyRegistryCount(helper, Registries.NOISE, 14, "noise definitions");
         verifyRegistryCount(helper, Registries.DENSITY_FUNCTION, 12, "terrain density functions");
         verifyRegistryCount(helper, Registries.NOISE_SETTINGS, 1, "noise settings");
@@ -124,8 +124,8 @@ public final class PortSmokeTests {
                                         advancement.id().getNamespace().equals(DarkCaverns.MOD_ID))
                         .count();
         helper.assertTrue(
-                darkCavernsAdvancements == 170,
-                "Expected 20 progression advancements and 150 recipe unlock advancements");
+                darkCavernsAdvancements == 174,
+                "Expected 20 progression advancements and 154 recipe unlock advancements");
         helper.assertTrue(
                 helper.getLevel()
                                 .getServer()
@@ -362,6 +362,7 @@ public final class PortSmokeTests {
         verifyCompostChance(helper, CustomBlocks.GLIMMERSHROOM_BLOCK.get().asItem(), 0.85F);
         verifyCompostChance(helper, CustomBlocks.GLIMMERGRASS.get().asItem(), 0.30F);
         verifyCompostChance(helper, CustomBlocks.CHARRED_GRASS.get().asItem(), 0.30F);
+        verifyCompostChance(helper, CustomBlocks.ASHY_CHARRED_GRASS.get().asItem(), 0.30F);
         verifyCompostChance(helper, CustomItems.SCORCHED_BERRIES.get(), 0.30F);
 
         FoodProperties berryFood =
@@ -482,6 +483,20 @@ public final class PortSmokeTests {
                         .defaultBlockState()
                         .canSurvive(helper.getLevel(), helper.absolutePos(plantPos)),
                 "Charred grass should survive on molten carfstone");
+        helper.setBlock(plantPos.below(), CustomBlocks.ASHY_MOLTEN_CARFSTONE.get());
+        helper.assertTrue(
+                CustomBlocks.ASHY_CHARRED_GRASS
+                        .get()
+                        .defaultBlockState()
+                        .canSurvive(helper.getLevel(), helper.absolutePos(plantPos)),
+                "Ashy charred grass should survive on ashy molten carfstone");
+        helper.assertFalse(
+                CustomBlocks.CHARRED_GRASS
+                        .get()
+                        .defaultBlockState()
+                        .canSurvive(helper.getLevel(), helper.absolutePos(plantPos)),
+                "Normal charred grass should not survive on an ashy patch");
+        helper.setBlock(plantPos.below(), CustomBlocks.MOLTEN_CARFSTONE.get());
         helper.assertTrue(
                 CustomBlocks.SCORCHED_BERRY_BUSH
                         .get()

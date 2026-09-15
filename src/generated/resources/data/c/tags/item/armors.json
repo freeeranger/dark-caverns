@@ -1,8 +1,5 @@
 {
   "values": [
-    "#c:armors/helmets",
-    "#c:armors/chestplates",
-    "#c:armors/leggings",
-    "#c:armors/boots"
+    "#c:armor"
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:disk",
+  "config": {
+    "half_height": 1,
+    "radius": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 7,
+      "min_inclusive": 4
+    },
+    "state_provider": {
+      "fallback": {
+        "type": "minecraft:simple_state_provider",
+        "state": { "Name": "dark_caverns:ashy_molten_carfstone" }
+      },
+      "rules": []
+    },
+    "target": {
+      "type": "minecraft:all_of",
+      "predicates": [
+        { "type": "minecraft:matching_blocks", "blocks": "dark_caverns:molten_carfstone" },
+        { "type": "minecraft:matching_blocks", "blocks": "minecraft:air", "offset": [0, 1, 0] }
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "feature": "dark_caverns:ashy_molten_carfstone_patch",
+  "placement": [
+    { "type": "minecraft:count_on_every_layer", "count": 1 },
+    { "type": "minecraft:rarity_filter", "chance": 2 },
+    { "type": "dark_caverns:biome_transition", "biome": 2, "core": true },
+    { "type": "minecraft:biome" }
+  ]
+}

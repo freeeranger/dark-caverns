@@ -40,10 +40,12 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                         CustomBlocks.CARFSTONE.get(),
                         CustomBlocks.SMOOTH_CARFSTONE.get(),
                         CustomBlocks.CARFSTONE_BRICKS.get(),
+                        CustomBlocks.CHISELED_CARFSTONE_BRICKS.get(),
                         CustomBlocks.CRACKED_BEDROCK.get(),
                         CustomBlocks.MOLTEN_CARFSTONE.get(),
                         CustomBlocks.SMOOTH_MOLTEN_CARFSTONE.get(),
                         CustomBlocks.MOLTEN_CARFSTONE_BRICKS.get(),
+                        CustomBlocks.CHISELED_MOLTEN_CARFSTONE_BRICKS.get(),
                         CustomBlocks.LUMINITE_BLOCK.get(),
                         CustomBlocks.LUMINITE_ORE.get(),
                         CustomBlocks.PLATINUM_ORE.get(),
@@ -58,6 +60,15 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                         CustomBlocks.HELLSTONE_BLOCK.get(),
                         CustomBlocks.SHROOMSTONE_BLOCK.get())
                 .forEach(this::simpleCubeWithItem);
+
+        Block ashyGround = CustomBlocks.ASHY_MOLTEN_CARFSTONE.get();
+        simpleBlockWithItem(
+                ashyGround,
+                models().cubeBottomTop(
+                                name(ashyGround),
+                                modLoc("block/ashy_molten_carfstone_side"),
+                                modLoc("block/molten_carfstone"),
+                                modLoc("block/ashy_molten_carfstone_top")));
 
         Block glimmergrass = CustomBlocks.GLIMMERGRASS_BLOCK.get();
         ModelFile glimmergrassModel =
@@ -180,6 +191,7 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
         crossBlock(CustomBlocks.GLIMMERSHROOM.get());
         crossBlock(CustomBlocks.GLIMMERGRASS.get());
         crossBlock(CustomBlocks.CHARRED_GRASS.get());
+        crossBlock(CustomBlocks.ASHY_CHARRED_GRASS.get());
 
         Block bush = CustomBlocks.SCORCHED_BERRY_BUSH.get();
         getVariantBuilder(bush)

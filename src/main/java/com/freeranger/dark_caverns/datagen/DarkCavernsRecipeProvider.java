@@ -51,6 +51,7 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
         RecipeOutput flatAdvancements = flattenRecipeAdvancements(output);
         buildStoneFamilyRecipes(flatAdvancements, carfstoneFamily());
         buildStoneFamilyRecipes(flatAdvancements, moltenCarfstoneFamily());
+        buildChiseledRecipes(flatAdvancements);
         buildMaterialRecipes(flatAdvancements);
         buildCookingRecipes(flatAdvancements);
         buildSmithingRecipes(flatAdvancements);
@@ -98,6 +99,24 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                 input(CustomBlocks.TWISTWOOD_PLANKS.get()),
                 "###",
                 "###");
+    }
+
+    private void buildChiseledRecipes(RecipeOutput output) {
+        chiseled(
+                output,
+                CustomBlocks.CHISELED_CARFSTONE_BRICKS.get(),
+                CustomBlocks.CARFSTONE_BRICK_SLAB.get(),
+                CustomBlocks.CARFSTONE_BRICKS.get());
+        chiseled(
+                output,
+                CustomBlocks.CHISELED_MOLTEN_CARFSTONE_BRICKS.get(),
+                CustomBlocks.MOLTEN_CARFSTONE_BRICK_SLAB.get(),
+                CustomBlocks.MOLTEN_CARFSTONE_BRICKS.get());
+    }
+
+    private void chiseled(RecipeOutput output, ItemLike result, ItemLike slab, ItemLike bricks) {
+        shaped(output, name(result) + "_from_crafting", result, 1, input(slab), "#", "#");
+        stonecut(output, name(result) + "_from_stonecutting", result, 1, input(bricks));
     }
 
     private void buildStoneFamilyRecipes(RecipeOutput output, StoneFamily family) {

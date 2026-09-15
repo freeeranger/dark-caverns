@@ -1,8 +1,5 @@
 {
   "values": [
-    "dark_caverns:platinum_chestplate",
-    "dark_caverns:hellstone_chestplate",
-    "dark_caverns:scorchsteel_chestplate",
-    "dark_caverns:shroomstone_chestplate"
+    "#c:armor/chestplates"
   ]
 }
