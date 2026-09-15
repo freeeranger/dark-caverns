@@ -192,13 +192,44 @@ public final class TangledHallowTests {
             throws IOException {
         var volume = new TerrainTestVolume(helper, 8675309, "tangled_hallow");
         volume.carve();
-        var terrainStats = TerrainTopology.measure(volume.snapshot());
+        byte[] dryTerrain = volume.snapshot();
+        var terrainStats = TerrainTopology.measure(dryTerrain);
         volume.feature("hallow_lake", GenerationStep.Decoration.LAKES, 0);
         long water = volume.featureWrites.values().stream().filter(s -> s.is(Blocks.WATER)).count();
+        long lilies =
+                volume.featureWrites.values().stream().filter(s -> s.is(Blocks.LILY_PAD)).count();
         helper.assertTrue(
-                water > 30, "Registered lake placement found no suitable natural shelves");
+                water > 500 && water < 6000,
+                "Surface lakes are missing or overwhelm Tangled Hallow: " + water);
+        helper.assertTrue(lilies >= 20, "Surface lakes generated without enough lily pads");
+        int layer = TerrainTestVolume.WIDTH * TerrainTestVolume.WIDTH;
+        int surfaceWater = 0;
+        for (var entry : volume.featureWrites.entrySet()) {
+            BlockPos pos = entry.getKey();
+            if (entry.getValue().is(Blocks.LILY_PAD)) {
+                helper.assertTrue(
+                        volume.get(pos.below()).is(Blocks.WATER)
+                                && entry.getValue().canSurvive(volume.world, pos),
+                        "Lily pad is not floating on a lake surface");
+            }
+            if (!entry.getValue().is(Blocks.WATER) || volume.get(pos.above()).is(Blocks.WATER))
+                continue;
+            surfaceWater++;
+            int index =
+                    (pos.getY() * TerrainTestVolume.WIDTH + pos.getZ() - TerrainTestVolume.MIN)
+                                    * TerrainTestVolume.WIDTH
+                            + pos.getX()
+                            - TerrainTestVolume.MIN;
+            helper.assertTrue(
+                    dryTerrain[index] == 1 && dryTerrain[index + layer] == 0,
+                    "Lake was buried below the exposed cavern floor");
+        }
+        helper.assertTrue(surfaceWater > 100, "Lakes have too little visible surface water");
         byte[] before = volume.snapshot();
         var oldStats = TerrainTopology.measure(before);
+        helper.assertTrue(
+                oldStats.largestWalk >= terrainStats.largestWalk * .75,
+                "Surface lakes severed too much of the forest floor");
         volume.feature("twistwood_tree", GenerationStep.Decoration.VEGETAL_DECORATION, 0);
         byte[] afterTrees = volume.snapshot();
         var stats = TerrainTopology.measure(afterTrees);
@@ -215,7 +246,6 @@ public final class TangledHallowTests {
         int lostFloors = 0;
         int originalFloors = 0;
         int added = 0;
-        int layer = 128 * 128;
         for (int i = layer; i < before.length - layer; i++) {
             if (before[i] == 0 && afterTrees[i] == 1) added++;
             if (before[i] == 0 && before[i + layer] == 0 && before[i - layer] == 1) {
@@ -239,8 +269,11 @@ public final class TangledHallowTests {
                         .count();
         helper.assertTrue(plants > 0, "Undergrowth failed on generated floors");
         DarkCaverns.LOGGER.info(
-                "Tangled Hallow lakes: water={}, originalWalk={}, afterLakesWalk={}",
+                "Tangled Hallow lakes: water={}, surface={}, lilies={}, originalWalk={},"
+                        + " afterLakesWalk={}",
                 water,
+                surfaceWater,
+                lilies,
                 terrainStats.largestWalk,
                 oldStats.largestWalk);
         DarkCaverns.LOGGER.info(
@@ -263,6 +296,8 @@ public final class TangledHallowTests {
                         + logs
                         + "\nwater="
                         + water
+                        + "\nlilies="
+                        + lilies
                         + "\nleaves="
                         + leaves
                         + "\nplants="

@@ -2,6 +2,8 @@ package com.freeranger.dark_caverns.generation;
 
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
+import java.util.ArrayDeque;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
@@ -32,24 +34,31 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
         int rx = 5 + context.random().nextInt(3);
         int rz = 4 + context.random().nextInt(3);
         double phase = context.random().nextDouble() * Math.PI * 2;
-        // Prefer a lake, but fit a smaller pool when a shelf is not broad enough.
-        for (int shrink = 0; shrink <= 2; shrink++) {
-            for (int drop = 2; drop <= 3; drop++) {
-                if (basin(
-                        level,
-                        origin.below(drop),
-                        Math.max(3, rx - shrink),
-                        Math.max(3, rz - shrink),
-                        phase)) return true;
-            }
+        // The water surface replaces the exposed shelf itself. The previous implementation
+        // started one or two blocks below it, which made otherwise successful lakes look buried.
+        for (int shrink = 0; shrink <= 4; shrink++) {
+            if (basin(
+                    level,
+                    origin.below(),
+                    Math.max(2, rx - shrink),
+                    Math.max(2, rz - shrink),
+                    phase,
+                    context.random())) return true;
         }
         return false;
     }
 
     private static boolean basin(
-            WorldGenLevel level, BlockPos center, int rx, int rz, double phase) {
+            WorldGenLevel level,
+            BlockPos center,
+            int rx,
+            int rz,
+            double phase,
+            net.minecraft.util.RandomSource random) {
         Set<BlockPos> water = new LinkedHashSet<>();
+        Set<BlockPos> surfaceWater = new LinkedHashSet<>();
         Set<BlockPos> air = new LinkedHashSet<>();
+        Set<BlockPos> candidates = new LinkedHashSet<>();
         for (int x = -rx; x <= rx; x++) {
             for (int z = -rz; z <= rz; z++) {
                 double angle = Math.atan2(z, x);
@@ -58,36 +67,92 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
                 double radial = Math.sqrt(x * x / (double) (rx * rx) + z * z / (double) (rz * rz));
                 if (radial > edge) continue;
                 BlockPos surface = center.offset(x, 0, z);
-                if (!level.getBiome(surface).is(DarkCaverns.id("tangled_hallow"))) return false;
-                int depth = 1 + (int) Math.floor(Math.max(0, 1 - radial) * 2.5);
-                for (int y = 0; y < depth; y++) water.add(surface.below(y));
-                for (int y = 1; y <= 3; y++) air.add(surface.above(y));
-                if (!level.getBlockState(surface.above(4)).isAir()) return false;
+                if (level.getBiome(surface).is(DarkCaverns.id("tangled_hallow"))
+                        && exposedNaturalFloor(level, surface)) candidates.add(surface);
             }
+        }
+        if (!candidates.contains(center)) return false;
+        var queue = new ArrayDeque<BlockPos>();
+        queue.add(center);
+        surfaceWater.add(center);
+        while (!queue.isEmpty()) {
+            BlockPos pos = queue.remove();
+            for (Direction direction : Direction.Plane.HORIZONTAL) {
+                BlockPos neighbor = pos.relative(direction);
+                if (candidates.contains(neighbor) && surfaceWater.add(neighbor))
+                    queue.add(neighbor);
+            }
+        }
+        int minX = surfaceWater.stream().mapToInt(BlockPos::getX).min().orElse(0);
+        int maxX = surfaceWater.stream().mapToInt(BlockPos::getX).max().orElse(0);
+        int minZ = surfaceWater.stream().mapToInt(BlockPos::getZ).min().orElse(0);
+        int maxZ = surfaceWater.stream().mapToInt(BlockPos::getZ).max().orElse(0);
+        if (surfaceWater.size() < 12 || maxX - minX < 3 || maxZ - minZ < 3) return false;
+        for (BlockPos surface : surfaceWater) {
+            int x = surface.getX() - center.getX();
+            int z = surface.getZ() - center.getZ();
+            double radial = Math.sqrt(x * x / (double) (rx * rx) + z * z / (double) (rz * rz));
+            int depth = 1 + (int) Math.floor(Math.max(0, 1 - radial) * 2.5);
+            for (int y = 0; y < depth; y++) water.add(surface.below(y));
+            for (int y = 1; y <= 3; y++) air.add(surface.above(y));
         }
         for (BlockPos pos : water) {
             if (!level.ensureCanWrite(pos) || !natural(level.getBlockState(pos))) return false;
-            // Check both the retaining wall and its backing. Do not manufacture dams over air,
-            // replace ores/structures, or let water touch existing lava or other lakes.
+            // Require an existing natural retaining wall. We do not build dams, replace
+            // ores/structures, or let water touch existing lava or other lakes.
             for (Direction direction : Direction.values()) {
                 if (direction == Direction.UP) continue;
                 BlockPos wall = pos.relative(direction);
-                if (!water.contains(wall)
-                        && (!natural(level.getBlockState(wall))
-                                || !natural(level.getBlockState(wall.relative(direction)))))
-                    return false;
+                if (!water.contains(wall) && !natural(level.getBlockState(wall))) return false;
             }
         }
         for (BlockPos pos : air) {
             BlockState state = level.getBlockState(pos);
-            if (!level.ensureCanWrite(pos) || (!state.isAir() && !natural(state))) return false;
+            // A surface lake may replace the exposed shelf, never excavate a hidden chamber.
+            if (!level.ensureCanWrite(pos) || !state.isAir()) return false;
         }
         // Commit only once every water cell has a dry, solid containment envelope.
         air.forEach(pos -> level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2));
         water.forEach(pos -> level.setBlock(pos, Blocks.WATER.defaultBlockState(), 2));
         water.forEach(
                 pos -> level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level)));
+        placeLilyPads(level, center, surfaceWater, random);
         return true;
+    }
+
+    private static boolean exposedNaturalFloor(WorldGenLevel level, BlockPos surface) {
+        if (!natural(level.getBlockState(surface))) return false;
+        for (int y = 1; y <= 4; y++)
+            if (!level.getBlockState(surface.above(y)).isAir()) return false;
+        return true;
+    }
+
+    private static void placeLilyPads(
+            WorldGenLevel level,
+            BlockPos center,
+            Set<BlockPos> surfaceWater,
+            net.minecraft.util.RandomSource random) {
+        var pads = new LinkedHashSet<BlockPos>();
+        for (BlockPos water : surfaceWater) {
+            int neighbors = 0;
+            for (Direction direction : Direction.Plane.HORIZONTAL)
+                if (surfaceWater.contains(water.relative(direction))) neighbors++;
+            if (neighbors >= 2 && random.nextFloat() < 0.18F) pads.add(water.above());
+        }
+        // Even a small lake should communicate its identity immediately.
+        if (pads.size() < 3) {
+            surfaceWater.stream()
+                    .sorted(
+                            Comparator.comparingInt(
+                                            (BlockPos pos) ->
+                                                    Math.abs(pos.getX() - center.getX())
+                                                            + Math.abs(pos.getZ() - center.getZ()))
+                                    .thenComparingLong(BlockPos::asLong))
+                    .limit(3 - pads.size())
+                    .map(BlockPos::above)
+                    .forEach(pads::add);
+        }
+        pads.forEach(pos -> level.setBlock(pos, Blocks.LILY_PAD.defaultBlockState(), 2));
     }
 
     private static boolean natural(BlockState state) {

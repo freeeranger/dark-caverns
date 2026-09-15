@@ -58,7 +58,7 @@ public final class HallowLakeTests {
         helper.assertTrue(water.size() > 30, "Lake is too small to read as a basin");
         for (BlockPos pos : water) {
             helper.assertTrue(
-                    pos.getY() >= 35 && pos.getY() <= 38, "Lake depth escaped its bounded shelf");
+                    pos.getY() >= 37 && pos.getY() <= 39, "Lake depth escaped its bounded shelf");
             for (Direction direction : Direction.values()) {
                 if (direction == Direction.UP) continue;
                 BlockState neighbor = read(first, pos.relative(direction));
