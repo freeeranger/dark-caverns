@@ -56,7 +56,7 @@
       "dark_caverns:scorched_berry_bush_patch",
       "dark_caverns:undersprouts_patch"
     ],
-    []
+    ["dark_caverns:cavern_routes"]
   ],
   "has_precipitation": false,
   "spawn_costs": {},

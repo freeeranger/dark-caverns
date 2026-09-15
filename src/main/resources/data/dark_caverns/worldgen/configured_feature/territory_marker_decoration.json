@@ -1,0 +1,9 @@
+{
+  "type": "dark_caverns:cavern_landmark",
+  "config": {
+    "template": "dark_caverns:territory_marker",
+    "chance": 0.22,
+    "groups": false,
+    "vertical_spacing": 16
+  }
+}

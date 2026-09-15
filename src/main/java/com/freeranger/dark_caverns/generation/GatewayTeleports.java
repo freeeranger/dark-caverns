@@ -21,9 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class GatewayTeleports {
     private static final int GATEWAY_CLEARANCE = 2;
-    private static final int LANDING_RADIUS = 1;
     private static final int SAFE_POSITION_SEARCH_RADIUS = 4;
-    private static final int ROOF_SEARCH_DEPTH = 6;
     private static final int BOTTOM_SEARCH_HEIGHT = 5;
 
     public static final ResourceKey<Level> DARK_CAVERNS =
@@ -33,6 +31,15 @@ public final class GatewayTeleports {
 
     public static void toDarkCaverns(ServerLevel source, Entity entity, BlockPos sourceGateway) {
         ServerLevel destination = source.getServer().getLevel(DARK_CAVERNS);
+        prepareArrival(source, destination, entity, sourceGateway);
+    }
+
+    /** Arrival workflow with an explicitly resolved destination (also used by server fixtures). */
+    public static void prepareArrival(
+            ServerLevel source,
+            @Nullable ServerLevel destination,
+            Entity entity,
+            BlockPos sourceGateway) {
         if (destination == null) {
             showFailure(entity, "message.dark_caverns.gateway.dimension_unavailable");
             return;
@@ -42,58 +49,79 @@ public final class GatewayTeleports {
             return;
         }
 
-        BlockPos column = BlockPos.containing(entity.getX(), 0, entity.getZ());
+        var origin = new GatewayLinks.Origin(source.dimension(), sourceGateway);
+        var link = GatewayLinks.get(source.getServer()).from(origin);
+        BlockPos column = link == null ? sourceGateway : link.feet();
         GatewayChunkLoading.prepare(
                 source,
                 destination,
                 entity,
                 column,
-                SAFE_POSITION_SEARCH_RADIUS,
+                link == null ? CavernArrival.SEARCH_RADIUS : SAFE_POSITION_SEARCH_RADIUS,
                 () ->
                         source.getBlockState(sourceGateway)
                                 .is(CustomBlocks.GATEWAY_TO_THE_CAVERNS.get()),
-                () -> arriveInCaverns(source, destination, entity, column));
+                () -> arriveInCaverns(source, destination, entity, origin, link));
     }
 
     @Nullable private static Entity arriveInCaverns(
-            ServerLevel source, ServerLevel destination, Entity entity, BlockPos column) {
+            ServerLevel source,
+            ServerLevel destination,
+            Entity entity,
+            GatewayLinks.Origin origin,
+            @Nullable GatewayLinks.Link preparedLink) {
         if (!GatewayCooldowns.isReady(entity, source)) return null;
-        BlockPos gateway = findRoofGateway(destination, column);
-        if (gateway == null) {
-            showFailure(entity, "message.dark_caverns.gateway.destination_blocked");
-            return null;
+        var links = GatewayLinks.get(source.getServer());
+        // Another traveler may have established this link while our chunks were preparing.
+        // Retry through prepare() so its exact destination footprint is guaranteed loaded.
+        if (!java.util.Objects.equals(preparedLink, links.from(origin))) return null;
+        var link = preparedLink;
+        if (link == null) {
+            var plan = CavernArrival.find(destination, origin.pos());
+            if (plan == null || !plan.place(destination)) {
+                GatewayCooldowns.start(entity, source);
+                showFailure(entity, "message.dark_caverns.gateway.no_landing");
+                return null;
+            }
+            link = new GatewayLinks.Link(origin, plan.gateway(), plan.feet(), plan.facing());
+            links.put(link);
         }
-
-        GatewayPreparation preparation =
-                prepareGateway(
-                        destination,
-                        gateway,
-                        CustomBlocks.GATEWAY_TO_THE_OVERWORLD.get(),
-                        Direction.DOWN);
-        if (preparation == GatewayPreparation.FAILED) {
-            showFailure(entity, "message.dark_caverns.gateway.destination_blocked");
-            return null;
-        }
-        BlockPos preferredArrival = gateway.below(GATEWAY_CLEARANCE);
-        if (preparation == GatewayPreparation.CREATED) {
-            buildLanding(destination, preferredArrival.below());
-        } else if (hasClearHeadroom(destination, preferredArrival)
-                && canBuildLandingOn(destination, preferredArrival.below())) {
-            // Upgrade gateways created by older versions without disturbing existing builds.
-            buildLanding(destination, preferredArrival.below());
-        }
-
-        BlockPos arrival = findSafeArrival(destination, preferredArrival);
+        // Existing arrivals are never rebuilt: player changes belong to the player.
+        BlockPos arrival =
+                destination
+                                .getBlockState(link.gateway())
+                                .is(CustomBlocks.GATEWAY_TO_THE_OVERWORLD.get())
+                        ? findSafeArrival(destination, link.feet())
+                        : null;
         if (arrival == null) {
             showFailure(entity, "message.dark_caverns.gateway.destination_blocked");
             return null;
         }
 
-        return changeDimension(source, destination, entity, arrival);
+        Entity moved =
+                changeDimension(source, destination, entity, arrival, link.facing().toYRot(), 0);
+        if (moved != null) showFailure(moved, "message.dark_caverns.gateway.arrived");
+        return moved;
     }
 
     public static void toOverworld(ServerLevel source, Entity entity, BlockPos sourceGateway) {
-        ServerLevel destination = source.getServer().getLevel(Level.OVERWORLD);
+        var link =
+                source.dimension().equals(DARK_CAVERNS)
+                        ? GatewayLinks.get(source.getServer()).home(sourceGateway)
+                        : null;
+        ServerLevel destination =
+                source.getServer()
+                        .getLevel(link == null ? Level.OVERWORLD : link.origin().dimension());
+        prepareReturn(source, destination, entity, sourceGateway, link);
+    }
+
+    /** Return workflow after resolving a saved link, or the legacy unlinked destination. */
+    public static void prepareReturn(
+            ServerLevel source,
+            @Nullable ServerLevel destination,
+            Entity entity,
+            BlockPos sourceGateway,
+            @Nullable GatewayLinks.Link link) {
         if (destination == null) {
             showFailure(entity, "message.dark_caverns.gateway.dimension_unavailable");
             return;
@@ -103,7 +131,7 @@ public final class GatewayTeleports {
             return;
         }
 
-        BlockPos column = BlockPos.containing(entity.getX(), 0, entity.getZ());
+        BlockPos column = link == null ? sourceGateway : link.origin().pos();
         GatewayChunkLoading.prepare(
                 source,
                 destination,
@@ -113,7 +141,22 @@ public final class GatewayTeleports {
                 () ->
                         source.getBlockState(sourceGateway)
                                 .is(CustomBlocks.GATEWAY_TO_THE_OVERWORLD.get()),
-                () -> arriveInOverworld(source, destination, entity, column));
+                () -> {
+                    if (link == null) {
+                        // Keep old roof gateways usable without touching their platforms.
+                        arriveInOverworld(source, destination, entity, column);
+                    } else if (GatewayCooldowns.isReady(entity, source)) {
+                        BlockPos arrival =
+                                destination
+                                                .getBlockState(column)
+                                                .is(CustomBlocks.GATEWAY_TO_THE_CAVERNS.get())
+                                        ? findSafeArrival(destination, column.above())
+                                        : null;
+                        if (arrival == null)
+                            showFailure(entity, "message.dark_caverns.gateway.destination_blocked");
+                        else changeDimension(source, destination, entity, arrival);
+                    }
+                });
     }
 
     @Nullable private static Entity arriveInOverworld(
@@ -147,18 +190,29 @@ public final class GatewayTeleports {
 
     @Nullable private static Entity changeDimension(
             ServerLevel source, ServerLevel destination, Entity entity, BlockPos target) {
+        return changeDimension(
+                source, destination, entity, target, entity.getYRot(), entity.getXRot());
+    }
+
+    @Nullable private static Entity changeDimension(
+            ServerLevel source,
+            ServerLevel destination,
+            Entity entity,
+            BlockPos target,
+            float yaw,
+            float pitch) {
         GatewayCooldowns.start(entity, source);
-        return entity.changeDimension(transition(destination, entity, target));
+        return entity.changeDimension(transition(destination, target, yaw, pitch));
     }
 
     private static DimensionTransition transition(
-            ServerLevel destination, Entity entity, BlockPos target) {
+            ServerLevel destination, BlockPos target, float yaw, float pitch) {
         return new DimensionTransition(
                 destination,
                 Vec3.atBottomCenterOf(target),
                 Vec3.ZERO,
-                entity.getYRot(),
-                entity.getXRot(),
+                yaw,
+                pitch,
                 moved -> {
                     moved.resetFallDistance();
                     GatewayCooldowns.start(moved, destination);
@@ -182,23 +236,6 @@ public final class GatewayTeleports {
                     Block.UPDATE_ALL);
         }
         return GatewayPreparation.CREATED;
-    }
-
-    private static void buildLanding(ServerLevel level, BlockPos center) {
-        for (BlockPos pos :
-                BlockPos.betweenClosed(
-                        center.offset(-LANDING_RADIUS, 0, -LANDING_RADIUS),
-                        center.offset(LANDING_RADIUS, 0, LANDING_RADIUS))) {
-            if (canBuildLandingOn(level, pos)) {
-                level.setBlock(
-                        pos, CustomBlocks.CARFSTONE.get().defaultBlockState(), Block.UPDATE_ALL);
-            }
-        }
-    }
-
-    private static boolean canBuildLandingOn(ServerLevel level, BlockPos pos) {
-        BlockState state = level.getBlockState(pos);
-        return state.isAir() || !state.getFluidState().isEmpty();
     }
 
     @Nullable private static BlockPos findSafeArrival(ServerLevel level, BlockPos preferred) {
@@ -249,26 +286,6 @@ public final class GatewayTeleports {
         if (entity instanceof ServerPlayer player) {
             player.displayClientMessage(Component.translatable(translationKey), true);
         }
-    }
-
-    @Nullable private static BlockPos findRoofGateway(ServerLevel level, BlockPos column) {
-        int roof = level.getMaxBuildHeight() - 1;
-        int searchStart = roof - ROOF_SEARCH_DEPTH + 1;
-        BlockPos.MutableBlockPos candidate = new BlockPos.MutableBlockPos();
-
-        for (int y = searchStart; y <= roof; y++) {
-            candidate.set(column.getX(), y, column.getZ());
-            if (level.getBlockState(candidate).is(CustomBlocks.GATEWAY_TO_THE_OVERWORLD.get())) {
-                return candidate.immutable();
-            }
-        }
-        for (int y = searchStart; y <= roof; y++) {
-            candidate.set(column.getX(), y, column.getZ());
-            if (level.getBlockState(candidate).is(Blocks.BEDROCK)) {
-                return candidate.immutable();
-            }
-        }
-        return null;
     }
 
     @Nullable private static BlockPos findBottomGateway(ServerLevel level, BlockPos column) {

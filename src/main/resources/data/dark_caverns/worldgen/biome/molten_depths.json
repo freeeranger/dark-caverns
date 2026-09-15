@@ -54,7 +54,9 @@
       "dark_caverns:magma_patch"
     ],
     [
-      "dark_caverns:molten_spike_feature"
+      "dark_caverns:molten_spike_feature",
+      "dark_caverns:sacred_torch_decoration",
+      "dark_caverns:territory_marker_decoration"
     ],
     [
       "dark_caverns:lava_spring"
@@ -67,7 +69,7 @@
       "dark_caverns:scorched_berry_bush_patch",
       "dark_caverns:undersprouts_patch"
     ],
-    []
+    ["dark_caverns:cavern_routes"]
   ],
   "has_precipitation": false,
   "spawn_costs": {},

@@ -1,0 +1,6 @@
+{
+  "feature": "dark_caverns:cavern_routes",
+  "placement": [
+    { "type": "minecraft:biome" }
+  ]
+}

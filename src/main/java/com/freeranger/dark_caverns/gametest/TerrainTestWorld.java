@@ -2,15 +2,19 @@ package com.freeranger.dark_caverns.gametest;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 
@@ -52,7 +56,19 @@ final class TerrainTestWorld {
             Function<BlockPos, Holder<Biome>> biomes,
             long seed,
             Function<ChunkPos, ChunkAccess> chunks) {
+        return create(read, write, bounds, biomes, seed, chunks, null);
+    }
+
+    static WorldGenLevel create(
+            Function<BlockPos, BlockState> read,
+            BiConsumer<BlockPos, BlockState> write,
+            Predicate<BlockPos> bounds,
+            Function<BlockPos, Holder<Biome>> biomes,
+            long seed,
+            Function<ChunkPos, ChunkAccess> chunks,
+            ServerLevel server) {
         RandomSource random = RandomSource.create(seed);
+        var blockEntities = new HashMap<BlockPos, BlockEntity>();
         return (WorldGenLevel)
                 Proxy.newProxyInstance(
                         WorldGenLevel.class.getClassLoader(),
@@ -60,6 +76,20 @@ final class TerrainTestWorld {
                         (proxy, method, args) -> {
                             return switch (method.getName()) {
                                 case "getBlockState" -> read.apply((BlockPos) args[0]);
+                                case "getLevel" ->
+                                        java.util.Objects.requireNonNull(
+                                                server, "No template server backing");
+                                case "registryAccess" ->
+                                        java.util.Objects.requireNonNull(server).registryAccess();
+                                case "blockUpdated" -> null;
+                                case "getBlockEntity" -> {
+                                    var pos = ((BlockPos) args[0]).immutable();
+                                    var state = read.apply(pos);
+                                    yield state.getBlock() instanceof EntityBlock block
+                                            ? blockEntities.computeIfAbsent(
+                                                    pos, key -> block.newBlockEntity(pos, state))
+                                            : null;
+                                }
                                 case "getChunk" -> {
                                     ChunkPos pos =
                                             args[0] instanceof BlockPos block
@@ -77,6 +107,7 @@ final class TerrainTestWorld {
                                         throw new AssertionError(
                                                 "Out-of-bounds feature write: " + pos);
                                     write.accept(pos, (BlockState) args[1]);
+                                    blockEntities.remove(pos);
                                     yield true;
                                 }
                                 case "getMinBuildHeight" -> 0;

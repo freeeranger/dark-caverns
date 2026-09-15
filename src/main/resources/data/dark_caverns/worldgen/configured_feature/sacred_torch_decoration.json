@@ -1,0 +1,9 @@
+{
+  "type": "dark_caverns:cavern_landmark",
+  "config": {
+    "template": "dark_caverns:sacred_torch",
+    "chance": 0.65,
+    "groups": true,
+    "vertical_spacing": 12
+  }
+}

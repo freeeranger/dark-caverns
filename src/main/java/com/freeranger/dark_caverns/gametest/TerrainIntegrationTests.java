@@ -163,7 +163,7 @@ public final class TerrainIntegrationTests {
         ImageIO.write(image, "png", directory.resolve("integrated-" + seed + ".png").toFile());
     }
 
-    private static boolean canStand(byte[] blocks, int index) {
+    static boolean canStand(byte[] blocks, int index) {
         int layer = TerrainTestVolume.WIDTH * TerrainTestVolume.WIDTH;
         return index >= layer
                 && index < blocks.length - layer

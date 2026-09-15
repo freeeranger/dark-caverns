@@ -93,8 +93,8 @@ public final class PortSmokeTests {
                 "Expected gateway cooldown and Scorchsteel state attachment IDs");
         verifyRegistryCount(helper, Registries.BIOME, 4, "biome definitions");
         verifyRegistryCount(helper, Registries.CONFIGURED_CARVER, 1, "configured carver");
-        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 25, "configured features");
-        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 24, "placed features");
+        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 28, "configured features");
+        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 27, "placed features");
         verifyRegistryCount(helper, Registries.NOISE, 14, "noise definitions");
         verifyRegistryCount(helper, Registries.DENSITY_FUNCTION, 12, "terrain density functions");
         verifyRegistryCount(helper, Registries.NOISE_SETTINGS, 1, "noise settings");

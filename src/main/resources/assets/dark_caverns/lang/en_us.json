@@ -108,6 +108,8 @@
   "message.dark_caverns.key.activation_failed": "The key failed to open the gateway.",
   "message.dark_caverns.gateway.dimension_unavailable": "The gateway's destination is unavailable.",
   "message.dark_caverns.gateway.destination_blocked": "The other side of the gateway is blocked.",
+  "message.dark_caverns.gateway.no_landing": "No safe cave entrance nearby. Try opening a gateway farther away.",
+  "message.dark_caverns.gateway.arrived": "Follow the lit path into the caverns. Jump into the gateway overhead to return.",
   "message.dark_caverns.gateway.recharging": "The gateway is recharging.",
   "message.dark_caverns.gateway.preparing": "Preparing the other side... Stay near the gateway.",
   "message.dark_caverns.gateway.timeout": "The gateway took too long to prepare. Step off and try again.",

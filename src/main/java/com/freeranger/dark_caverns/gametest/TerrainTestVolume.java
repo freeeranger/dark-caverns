@@ -149,7 +149,8 @@ final class TerrainTestVolume {
                         this::inside,
                         biomeManager::getBiome,
                         seed,
-                        pos -> chunks[pos.x - minChunkX][pos.z - minChunkZ]);
+                        pos -> chunks[pos.x - minChunkX][pos.z - minChunkZ],
+                        level);
     }
 
     void carve() {
