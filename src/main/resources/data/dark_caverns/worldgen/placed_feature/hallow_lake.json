@@ -1,7 +1,7 @@
 {
   "feature": "dark_caverns:hallow_lake",
   "placement": [
-    { "type": "minecraft:count_on_every_layer", "count": 4 },
+    { "type": "minecraft:count_on_every_layer", "count": 1 },
     { "type": "dark_caverns:biome_transition", "biome": 3, "core": true },
     { "type": "minecraft:biome" }
   ]

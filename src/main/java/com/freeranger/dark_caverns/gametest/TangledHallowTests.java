@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 import javax.imageio.ImageIO;
 import net.minecraft.core.BlockPos;
@@ -204,6 +205,7 @@ public final class TangledHallowTests {
         helper.assertTrue(lilies >= 20, "Surface lakes generated without enough lily pads");
         int layer = TerrainTestVolume.WIDTH * TerrainTestVolume.WIDTH;
         int surfaceWater = 0;
+        var waterSurface = new HashSet<BlockPos>();
         for (var entry : volume.featureWrites.entrySet()) {
             BlockPos pos = entry.getKey();
             if (entry.getValue().is(Blocks.LILY_PAD)) {
@@ -215,6 +217,7 @@ public final class TangledHallowTests {
             if (!entry.getValue().is(Blocks.WATER) || volume.get(pos.above()).is(Blocks.WATER))
                 continue;
             surfaceWater++;
+            waterSurface.add(pos);
             int index =
                     (pos.getY() * TerrainTestVolume.WIDTH + pos.getZ() - TerrainTestVolume.MIN)
                                     * TerrainTestVolume.WIDTH
@@ -225,6 +228,13 @@ public final class TangledHallowTests {
                     "Lake was buried below the exposed cavern floor");
         }
         helper.assertTrue(surfaceWater > 100, "Lakes have too little visible surface water");
+        WaterShape shape = waterShape(waterSurface);
+        helper.assertTrue(
+                shape.lakes() >= 3
+                        && shape.lakes() <= 24
+                        && shape.largest() >= 55
+                        && shape.small() >= 1,
+                "Lake size mix is sparse or cluttered: visible=" + surfaceWater + ", " + shape);
         byte[] before = volume.snapshot();
         var oldStats = TerrainTopology.measure(before);
         helper.assertTrue(
@@ -269,11 +279,14 @@ public final class TangledHallowTests {
                         .count();
         helper.assertTrue(plants > 0, "Undergrowth failed on generated floors");
         DarkCaverns.LOGGER.info(
-                "Tangled Hallow lakes: water={}, surface={}, lilies={}, originalWalk={},"
-                        + " afterLakesWalk={}",
+                "Tangled Hallow lakes: water={}, surface={}, lilies={}, lakes={}, largest={},"
+                        + " small={}, originalWalk={}, afterLakesWalk={}",
                 water,
                 surfaceWater,
                 lilies,
+                shape.lakes(),
+                shape.largest(),
+                shape.small(),
                 terrainStats.largestWalk,
                 oldStats.largestWalk);
         DarkCaverns.LOGGER.info(
@@ -298,6 +311,10 @@ public final class TangledHallowTests {
                         + water
                         + "\nlilies="
                         + lilies
+                        + "\nlakes="
+                        + shape.lakes()
+                        + "\nlargest_lake="
+                        + shape.largest()
                         + "\nleaves="
                         + leaves
                         + "\nplants="
@@ -311,6 +328,32 @@ public final class TangledHallowTests {
                         + "\n");
         helper.succeed();
     }
+
+    private static WaterShape waterShape(Set<BlockPos> surface) {
+        var remaining = new HashSet<>(surface);
+        int lakes = 0;
+        int largest = 0;
+        int small = 0;
+        while (!remaining.isEmpty()) {
+            var queue = new ArrayDeque<BlockPos>();
+            queue.add(remaining.iterator().next());
+            int size = 0;
+            while (!queue.isEmpty()) {
+                BlockPos pos = queue.remove();
+                if (!remaining.remove(pos)) continue;
+                size++;
+                for (Direction direction : Direction.Plane.HORIZONTAL)
+                    if (remaining.contains(pos.relative(direction)))
+                        queue.add(pos.relative(direction));
+            }
+            lakes++;
+            largest = Math.max(largest, size);
+            if (size < 50) small++;
+        }
+        return new WaterShape(lakes, largest, small);
+    }
+
+    private record WaterShape(int lakes, int largest, int small) {}
 
     private static boolean place(Room room) {
         return CustomFeatures.TWISTWOOD_TREE

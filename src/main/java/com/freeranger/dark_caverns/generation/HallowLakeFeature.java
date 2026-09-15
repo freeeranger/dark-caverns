@@ -31,18 +31,26 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
                 || origin.getY() > level.getMaxBuildHeight() - 8
                 || !level.getBlockState(origin).isAir()
                 || !natural(level.getBlockState(origin.below()))) return false;
-        int rx = 5 + context.random().nextInt(3);
-        int rz = 4 + context.random().nextInt(3);
+        // Most successful placements should read as lakes. Small ponds remain as occasional
+        // accents rather than winning simply because they fit almost every shelf.
+        boolean large = context.random().nextFloat() < 0.90F;
+        int rx = large ? 9 + context.random().nextInt(5) : 4 + context.random().nextInt(3);
+        int rz = large ? 7 + context.random().nextInt(5) : 4 + context.random().nextInt(3);
+        int minRadius = large ? 6 : 3;
+        int minArea = large ? 55 : 18;
+        int minSpan = large ? 7 : 4;
         double phase = context.random().nextDouble() * Math.PI * 2;
         // The water surface replaces the exposed shelf itself. The previous implementation
         // started one or two blocks below it, which made otherwise successful lakes look buried.
-        for (int shrink = 0; shrink <= 4; shrink++) {
+        for (int shrink = 0; shrink <= (large ? 2 : 1); shrink++) {
             if (basin(
                     level,
                     origin.below(),
-                    Math.max(2, rx - shrink),
-                    Math.max(2, rz - shrink),
+                    Math.max(minRadius, rx - shrink),
+                    Math.max(minRadius, rz - shrink),
                     phase,
+                    minArea,
+                    minSpan,
                     context.random())) return true;
         }
         return false;
@@ -54,6 +62,8 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
             int rx,
             int rz,
             double phase,
+            int minArea,
+            int minSpan,
             net.minecraft.util.RandomSource random) {
         Set<BlockPos> water = new LinkedHashSet<>();
         Set<BlockPos> surfaceWater = new LinkedHashSet<>();
@@ -68,7 +78,7 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
                 if (radial > edge) continue;
                 BlockPos surface = center.offset(x, 0, z);
                 if (level.getBiome(surface).is(DarkCaverns.id("tangled_hallow"))
-                        && exposedNaturalFloor(level, surface)) candidates.add(surface);
+                        && safeExposedFloor(level, surface)) candidates.add(surface);
             }
         }
         if (!candidates.contains(center)) return false;
@@ -87,7 +97,8 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
         int maxX = surfaceWater.stream().mapToInt(BlockPos::getX).max().orElse(0);
         int minZ = surfaceWater.stream().mapToInt(BlockPos::getZ).min().orElse(0);
         int maxZ = surfaceWater.stream().mapToInt(BlockPos::getZ).max().orElse(0);
-        if (surfaceWater.size() < 12 || maxX - minX < 3 || maxZ - minZ < 3) return false;
+        if (surfaceWater.size() < minArea || maxX - minX < minSpan || maxZ - minZ < minSpan)
+            return false;
         for (BlockPos surface : surfaceWater) {
             int x = surface.getX() - center.getX();
             int z = surface.getZ() - center.getZ();
@@ -120,10 +131,14 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
-    private static boolean exposedNaturalFloor(WorldGenLevel level, BlockPos surface) {
+    private static boolean safeExposedFloor(WorldGenLevel level, BlockPos surface) {
         if (!natural(level.getBlockState(surface))) return false;
         for (int y = 1; y <= 4; y++)
             if (!level.getBlockState(surface.above(y)).isAir()) return false;
+        // Leave an existing block-wide shore at shelf edges instead of rejecting the whole lake
+        // later because one selected water tile borders a drop.
+        for (Direction direction : Direction.Plane.HORIZONTAL)
+            if (!natural(level.getBlockState(surface.relative(direction)))) return false;
         return true;
     }
 
