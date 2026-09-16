@@ -260,6 +260,18 @@ const UtilityLoadout: React.FC = () => (
   </section>
 );
 
+const HomeActions: React.FC = () => (
+  <div className="home-actions">
+    <a href="./download/" className="mc-btn mc-btn-luminite min-h-11 min-w-0 gap-2 px-3 text-xs sm:px-5 sm:text-sm">
+      <PixelIcon name="download" className="h-4 w-4" />
+      <span>Download</span>
+    </a>
+    <a href="./guides/" className="mc-btn min-h-11 min-w-0 px-3 text-xs sm:px-5 sm:text-sm">
+      Browse guides
+    </a>
+  </div>
+);
+
 export const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#121316] text-[#d6dae5] font-sans flex flex-col antialiased">
@@ -279,30 +291,19 @@ export const HomePage: React.FC = () => {
               <li>NeoForge</li>
               <li>GeckoLib required</li>
             </ul>
-            <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap">
-              <a href="./download/" className="mc-btn mc-btn-luminite min-h-11 gap-2 px-5 text-sm sm:text-base">
-                <PixelIcon name="download" className="h-4 w-4" />
-                <span>Download Dark Caverns</span>
-              </a>
-              <a href="./guides/" className="mc-btn min-h-11 px-5 text-sm sm:text-base">
-                Enter the caverns
-              </a>
-            </div>
+            <HomeActions />
           </div>
 
-          <figure className="home-hero-media">
+          <div className="home-hero-media">
             <img
-              src="./overview-hero-placeholder.svg"
-              alt="Placeholder for a wide in-game Dark Caverns screenshot"
-              width="1600"
-              height="900"
+              src="https://media.forgecdn.net/attachments/383/120/2021-07-26_09.png"
+              alt="A wide view across jagged Dark Caverns formations with glowing ore in the rock"
+              width="1920"
+              height="1080"
               loading="eager"
               fetchPriority="high"
             />
-            <figcaption>
-              Image placeholder. Replace <code>public/overview-hero-placeholder.svg</code> with a 16:9 in-game screenshot.
-            </figcaption>
-          </figure>
+          </div>
         </section>
 
         <section className="trailer-section" aria-labelledby="trailer-heading">
@@ -325,23 +326,10 @@ export const HomePage: React.FC = () => {
         <UtilityLoadout />
 
         <section className="home-final-cta mc-box" aria-labelledby="final-cta-heading">
-          <div className="space-y-2">
-            <h2 id="final-cta-heading" className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">
-              Ready to break bedrock?
-            </h2>
-            <p className="max-w-2xl text-sm text-[#aeb5c5] sm:text-base">
-              Install the mod, find the Forgotten Tower, and open your first permanent gateway into the Dark Caverns.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <a href="./download/" className="mc-btn mc-btn-luminite min-h-11 gap-2 px-5">
-              <PixelIcon name="download" className="h-4 w-4" />
-              <span>Choose a download</span>
-            </a>
-            <a href="./guides/?guide=getting-to-the-caverns" className="mc-btn min-h-11 px-5">
-              Read the gateway guide
-            </a>
-          </div>
+          <h2 id="final-cta-heading" className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">
+            Ready to explore?
+          </h2>
+          <HomeActions />
         </section>
       </main>
 

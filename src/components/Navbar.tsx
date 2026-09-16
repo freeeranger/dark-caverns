@@ -1,4 +1,5 @@
 import React from 'react';
+import { PixelIcon } from './PixelIcon';
 
 interface NavbarProps {
   currentPath: '/' | '/guides/' | '/wiki/' | '/download/' | '/credits/';
@@ -57,12 +58,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
 
           <a
             href={`${prefix}download/`}
-            className={`mc-btn mc-btn-luminite min-h-11 min-w-0 px-1 py-1.5 text-[11px] sm:px-4 sm:text-sm ${
+            className={`mc-btn mc-btn-luminite min-h-11 min-w-0 gap-1 px-1 py-1.5 text-[11px] sm:gap-2 sm:px-4 sm:text-sm ${
               currentPath === '/download/' ? 'mc-btn-active' : ''
             }`}
             aria-current={currentPath === '/download/' ? 'page' : undefined}
             aria-label="Download"
           >
+            <PixelIcon name="download" className="h-3.5 w-3.5" />
             <span className="sm:hidden">Get</span>
             <span className="hidden sm:inline">Download</span>
           </a>
