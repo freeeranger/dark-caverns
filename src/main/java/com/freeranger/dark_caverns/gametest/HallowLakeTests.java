@@ -51,11 +51,21 @@ public final class HallowLakeTests {
                 place(room(helper, repeated, false, false), ORIGIN) && first.equals(repeated),
                 "Lake is not deterministic");
         Set<BlockPos> water = new HashSet<>();
+        Set<BlockPos> sproutlets = new HashSet<>();
         first.forEach(
                 (pos, state) -> {
                     if (state.is(Blocks.WATER)) water.add(pos);
+                    if (state.is(CustomBlocks.WATER_SPROUTLETS.get())) sproutlets.add(pos);
                 });
         helper.assertTrue(water.size() > 30, "Lake is too small to read as a basin");
+        helper.assertTrue(!sproutlets.isEmpty(), "Lake generated without Water Sproutlets");
+        helper.assertTrue(
+                first.values().stream().noneMatch(state -> state.is(Blocks.LILY_PAD)),
+                "Lake generated vanilla lily pads instead of Water Sproutlets");
+        for (BlockPos pos : sproutlets)
+            helper.assertTrue(
+                    read(first, pos.below()).is(Blocks.WATER),
+                    "Water Sproutlets generated away from the lake surface");
         for (BlockPos pos : water) {
             helper.assertTrue(
                     pos.getY() >= 37 && pos.getY() <= 39, "Lake depth escaped its bounded shelf");

@@ -19,6 +19,7 @@ final class DarkCavernsDataMapProvider extends DataMapProvider {
     protected void gather(HolderLookup.Provider provider) {
         builder(NeoForgeDataMaps.COMPOSTABLES)
                 .add(DarkCaverns.id("undersprouts"), new Compostable(0.30F), false)
+                .add(DarkCaverns.id("water_sproutlets"), new Compostable(0.65F), false)
                 .add(DarkCaverns.id("twistwood_sapling"), new Compostable(0.30F), false)
                 .add(DarkCaverns.id("twistwood_leaves"), new Compostable(0.30F), false)
                 .add(DarkCaverns.id("glimmershroom"), new Compostable(0.65F), false)

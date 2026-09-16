@@ -26,6 +26,9 @@
     },
     "dark_caverns:undersprouts": {
       "chance": 0.3
+    },
+    "dark_caverns:water_sproutlets": {
+      "chance": 0.65
     }
   }
 }

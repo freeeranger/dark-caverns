@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.WaterlilyBlock;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -238,6 +239,12 @@ public final class CustomBlocks {
                             new CustomPlantBlock(
                                     BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS),
                                     OVERGROWN_CARFSTONE));
+    public static final DeferredBlock<WaterlilyBlock> WATER_SPROUTLETS =
+            register(
+                    "water_sproutlets",
+                    () ->
+                            new WaterlilyBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.LILY_PAD)));
     public static final DeferredBlock<RotatedPillarBlock> STRIPPED_TWISTWOOD_LOG =
             register(
                     "stripped_twistwood_log",

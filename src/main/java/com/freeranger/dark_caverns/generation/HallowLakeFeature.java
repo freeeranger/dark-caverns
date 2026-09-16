@@ -127,7 +127,7 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
         water.forEach(pos -> level.setBlock(pos, Blocks.WATER.defaultBlockState(), 2));
         water.forEach(
                 pos -> level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level)));
-        placeLilyPads(level, center, surfaceWater, random);
+        placeSproutlets(level, center, surfaceWater, random);
         return true;
     }
 
@@ -142,7 +142,7 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
-    private static void placeLilyPads(
+    private static void placeSproutlets(
             WorldGenLevel level,
             BlockPos center,
             Set<BlockPos> surfaceWater,
@@ -167,7 +167,10 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
                     .map(BlockPos::above)
                     .forEach(pads::add);
         }
-        pads.forEach(pos -> level.setBlock(pos, Blocks.LILY_PAD.defaultBlockState(), 2));
+        pads.forEach(
+                pos ->
+                        level.setBlock(
+                                pos, CustomBlocks.WATER_SPROUTLETS.get().defaultBlockState(), 2));
     }
 
     private static boolean natural(BlockState state) {

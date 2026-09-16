@@ -135,6 +135,16 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
             itemModels()
                     .withExistingParent(plant, mcLoc("item/generated"))
                     .texture("layer0", modLoc("block/" + plant));
+        Block waterSproutlets = CustomBlocks.WATER_SPROUTLETS.get();
+        ModelFile waterSproutletsModel =
+                models().withExistingParent(name(waterSproutlets), mcLoc("block/lily_pad"))
+                        .texture("particle", modLoc("block/water_sproutlets"))
+                        .texture("texture", modLoc("block/water_sproutlets"))
+                        .renderType(CUTOUT);
+        simpleBlock(waterSproutlets, ConfiguredModel.allYRotations(waterSproutletsModel, 0, false));
+        itemModels()
+                .withExistingParent("water_sproutlets", mcLoc("item/generated"))
+                .texture("layer0", modLoc("block/water_sproutlets"));
         itemModels()
                 .withExistingParent("twistwood_door", mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/twistwood_door"));

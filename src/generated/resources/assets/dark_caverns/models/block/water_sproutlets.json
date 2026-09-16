@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/lily_pad",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "dark_caverns:block/water_sproutlets",
+    "texture": "dark_caverns:block/water_sproutlets"
+  }
+}

@@ -252,7 +252,9 @@ public final class TerrainIntegrationTests {
             }
         }
         helper.assertTrue(
-                luminite > 0 && platinum > 0, "Terrain must retain mineable luminite and platinum");
+                luminite >= 2300 && luminite < 10000,
+                "Luminite must be common without overwhelming base stone: " + luminite);
+        helper.assertTrue(platinum > 0, "Terrain must retain mineable platinum");
         if (biomeIndex == 1)
             helper.assertTrue(hellstone > 0, "Molten surfaces must retain hellstone");
         if (biomeIndex == 1) {

@@ -29,6 +29,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -197,22 +198,28 @@ public final class TangledHallowTests {
         var terrainStats = TerrainTopology.measure(dryTerrain);
         volume.feature("hallow_lake", GenerationStep.Decoration.LAKES, 0);
         long water = volume.featureWrites.values().stream().filter(s -> s.is(Blocks.WATER)).count();
-        long lilies =
-                volume.featureWrites.values().stream().filter(s -> s.is(Blocks.LILY_PAD)).count();
+        long sproutlets =
+                volume.featureWrites.values().stream()
+                        .filter(s -> s.is(CustomBlocks.WATER_SPROUTLETS.get()))
+                        .count();
         helper.assertTrue(
                 water > 500 && water < 6000,
                 "Surface lakes are missing or overwhelm Tangled Hallow: " + water);
-        helper.assertTrue(lilies >= 20, "Surface lakes generated without enough lily pads");
+        helper.assertTrue(
+                sproutlets >= 20, "Surface lakes generated without enough Water Sproutlets");
+        helper.assertTrue(
+                volume.featureWrites.values().stream().noneMatch(s -> s.is(Blocks.LILY_PAD)),
+                "Tangled Hallow lakes still generated vanilla lily pads");
         int layer = TerrainTestVolume.WIDTH * TerrainTestVolume.WIDTH;
         int surfaceWater = 0;
         var waterSurface = new HashSet<BlockPos>();
         for (var entry : volume.featureWrites.entrySet()) {
             BlockPos pos = entry.getKey();
-            if (entry.getValue().is(Blocks.LILY_PAD)) {
+            if (entry.getValue().is(CustomBlocks.WATER_SPROUTLETS.get())) {
                 helper.assertTrue(
                         volume.get(pos.below()).is(Blocks.WATER)
                                 && entry.getValue().canSurvive(volume.world, pos),
-                        "Lily pad is not floating on a lake surface");
+                        "Water Sproutlets are not floating on a lake surface");
             }
             if (!entry.getValue().is(Blocks.WATER) || volume.get(pos.above()).is(Blocks.WATER))
                 continue;
@@ -276,7 +283,68 @@ public final class TangledHallowTests {
         helper.assertTrue(
                 stats.largestWalk >= terrainStats.largestWalk * .7 && stats.routeHeight >= 24,
                 "Forest severed important walking routes");
-        volume.feature("undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 7);
+        volume.feature("hallow_clutter", GenerationStep.Decoration.VEGETAL_DECORATION, 1);
+        byte[] afterClutter = volume.snapshot();
+        var clutterStats = TerrainTopology.measure(afterClutter);
+        int clutterLogs = 0;
+        int horizontalClutterLogs = 0;
+        int verticalClutterLogs = 0;
+        int clutterLeaves = 0;
+        for (var entry : volume.featureWrites.entrySet()) {
+            BlockPos pos = entry.getKey();
+            int index =
+                    (pos.getY() * TerrainTestVolume.WIDTH + pos.getZ() - TerrainTestVolume.MIN)
+                                    * TerrainTestVolume.WIDTH
+                            + pos.getX()
+                            - TerrainTestVolume.MIN;
+            if (afterTrees[index] != 0) continue;
+            BlockState state = entry.getValue();
+            if (state.is(CustomBlocks.TWISTWOOD_LOG.get())) {
+                clutterLogs++;
+                if (state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y)
+                    verticalClutterLogs++;
+                else horizontalClutterLogs++;
+            }
+            if (state.is(CustomBlocks.TWISTWOOD_LEAVES.get())) {
+                clutterLeaves++;
+                helper.assertTrue(
+                        state.getValue(LeavesBlock.PERSISTENT),
+                        "Low Hallow thickets used decaying leaves");
+            }
+        }
+        helper.assertTrue(
+                clutterLogs > 60
+                        && horizontalClutterLogs > 40
+                        && verticalClutterLogs > 10
+                        && clutterLeaves > 10,
+                "Hallow clutter lacks fallen logs, stumps, roots, or thickets: logs="
+                        + clutterLogs
+                        + ", horizontal="
+                        + horizontalClutterLogs
+                        + ", vertical="
+                        + verticalClutterLogs
+                        + ", leaves="
+                        + clutterLeaves);
+        int clutterFloors = 0;
+        int clutterLostFloors = 0;
+        for (int i = layer; i < afterTrees.length - layer; i++) {
+            if (TerrainIntegrationTests.canStand(afterTrees, i)) {
+                clutterFloors++;
+                if (!TerrainIntegrationTests.canStand(afterClutter, i)) clutterLostFloors++;
+            }
+            if (afterTrees[i] != 0)
+                helper.assertTrue(
+                        afterTrees[i] == afterClutter[i],
+                        "Hallow clutter replaced terrain, water, or an existing tree");
+        }
+        helper.assertTrue(
+                clutterLostFloors < clutterFloors * .02
+                        && clutterStats.largestWalk >= stats.largestWalk * .9,
+                "Hallow clutter blocked too much forest floor: lost="
+                        + clutterLostFloors
+                        + "/"
+                        + clutterFloors);
+        volume.feature("undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 8);
         long plants =
                 volume.featureWrites.values().stream()
                         .filter(s -> s.is(CustomBlocks.UNDERSPROUTS.get()))
@@ -285,28 +353,36 @@ public final class TangledHallowTests {
                 plants > 2000,
                 "Tangled Hallow generated too little undergrowth: undersprouts=" + plants);
         DarkCaverns.LOGGER.info(
-                "Tangled Hallow lakes: water={}, surface={}, lilies={}, lakes={}, largest={},"
+                "Tangled Hallow lakes: water={}, surface={}, sproutlets={}, lakes={}, largest={},"
                         + " small={}, originalWalk={}, afterLakesWalk={}",
                 water,
                 surfaceWater,
-                lilies,
+                sproutlets,
                 shape.lakes(),
                 shape.largest(),
                 shape.small(),
                 terrainStats.largestWalk,
                 oldStats.largestWalk);
         DarkCaverns.LOGGER.info(
-                "Tangled Hallow: logs={}, leaves={}, plants={}, lostFloors={}/{}, added={},"
-                        + " largestWalk={}->{}, routeHeight={}",
+                "Tangled Hallow: logs={}, leaves={}, plants={}, clutterLogs={} ({} horizontal, {}"
+                        + " vertical), clutterLeaves={}, clutterLost={}/{}, lostFloors={}/{},"
+                        + " added={}, largestWalk={}->{}->{}, routeHeight={}",
                 logs,
                 leaves,
                 plants,
+                clutterLogs,
+                horizontalClutterLogs,
+                verticalClutterLogs,
+                clutterLeaves,
+                clutterLostFloors,
+                clutterFloors,
                 lostFloors,
                 originalFloors,
                 added,
                 oldStats.largestWalk,
                 stats.largestWalk,
-                stats.routeHeight);
+                clutterStats.largestWalk,
+                clutterStats.routeHeight);
         Path dir = Path.of("../build/reports/terrain");
         Files.createDirectories(dir);
         Files.writeString(
@@ -315,8 +391,8 @@ public final class TangledHallowTests {
                         + logs
                         + "\nwater="
                         + water
-                        + "\nlilies="
-                        + lilies
+                        + "\nsproutlets="
+                        + sproutlets
                         + "\nlakes="
                         + shape.lakes()
                         + "\nlargest_lake="
@@ -325,12 +401,20 @@ public final class TangledHallowTests {
                         + leaves
                         + "\nplants="
                         + plants
+                        + "\nclutter_logs="
+                        + clutterLogs
+                        + "\nclutter_leaves="
+                        + clutterLeaves
+                        + "\nclutter_lost_floors="
+                        + clutterLostFloors
+                        + "/"
+                        + clutterFloors
                         + "\nlost_floors="
                         + lostFloors
                         + "/"
                         + originalFloors
                         + "\nroute_height="
-                        + stats.routeHeight
+                        + clutterStats.routeHeight
                         + "\n");
         helper.succeed();
     }
