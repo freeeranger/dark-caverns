@@ -1,88 +1,66 @@
 import React from 'react';
 import { SmithingRecipe } from '../data/modData';
-import { getTextureUrl } from '../utils/assets';
 import { MinecraftTooltip } from './MinecraftTooltip';
 import { PixelIcon } from './PixelIcon';
+import { TextureImage } from './TextureImage';
 
 interface SmithingTableProps {
   recipe: SmithingRecipe;
   basePrefix?: string;
 }
 
+interface SmithingSlotProps {
+  label: string;
+  name: string;
+  texture?: string;
+  output?: boolean;
+}
+
+const SmithingSlot: React.FC<SmithingSlotProps> = ({ label, name, texture, output = false }) => (
+  <div className="flex flex-col items-center gap-1">
+    <MinecraftTooltip content={name}>
+      <div className={`mc-slot ${output ? 'mc-slot-output' : ''}`}>
+        {texture && (
+          <TextureImage
+            texture={texture}
+            alt={name}
+            className={`${output ? 'h-8 w-8' : 'h-6 w-6'} pixel-art`}
+            width={output ? 32 : 24}
+            height={output ? 32 : 24}
+          />
+        )}
+      </div>
+    </MinecraftTooltip>
+    <span className={`text-[10px] font-mono ${output ? 'text-[#55ffaf]' : 'text-[#8e95a8]'}`}>
+      {label}
+    </span>
+  </div>
+);
+
 export const SmithingTable: React.FC<SmithingTableProps> = ({ recipe }) => {
+  const summary = `${recipe.template.name} + ${recipe.base.name} + ${recipe.addition.name} makes ${recipe.output.name}`;
+
   return (
-    <div className="inline-flex items-center gap-2 select-none py-2">
-      {/* Template Slot */}
-      <div className="flex flex-col items-center gap-1">
-        <MinecraftTooltip content={recipe.template.name}>
-          <div className="mc-slot">
-            {recipe.template.texture && (
-              <img
-                src={getTextureUrl(recipe.template.texture)}
-                alt={recipe.template.name}
-                className="w-6 h-6 pixel-art"
-              />
-            )}
+    <figure className="max-w-full space-y-2">
+      <div className="max-w-full overflow-x-auto pb-1">
+        <div className="inline-flex min-w-max items-center gap-2 select-none py-2" aria-label={summary}>
+          <SmithingSlot label="Template" name={recipe.template.name} texture={recipe.template.texture} />
+          <PixelIcon name="plus" className="w-3.5 h-3.5 text-[#686f80]" aria-hidden="true" />
+          <SmithingSlot label="Base" name={recipe.base.name} texture={recipe.base.texture} />
+          <PixelIcon name="plus" className="w-3.5 h-3.5 text-[#686f80]" aria-hidden="true" />
+          <SmithingSlot label="Material" name={recipe.addition.name} texture={recipe.addition.texture} />
+          <div className="text-[#828898] flex items-center justify-center px-1" aria-hidden="true">
+            <PixelIcon name="arrow-right" className="w-5 h-5" />
           </div>
-        </MinecraftTooltip>
-        <span className="text-[10px] font-mono text-[#787f90]">Template</span>
+          <SmithingSlot
+            label="Result"
+            name={recipe.output.name}
+            texture={recipe.output.texture}
+            output
+          />
+        </div>
       </div>
-
-      <PixelIcon name="plus" className="w-3.5 h-3.5 text-[#686f80]" />
-
-      {/* Base Slot */}
-      <div className="flex flex-col items-center gap-1">
-        <MinecraftTooltip content={recipe.base.name}>
-          <div className="mc-slot">
-            {recipe.base.texture && (
-              <img
-                src={getTextureUrl(recipe.base.texture)}
-                alt={recipe.base.name}
-                className="w-6 h-6 pixel-art"
-              />
-            )}
-          </div>
-        </MinecraftTooltip>
-        <span className="text-[10px] font-mono text-[#787f90]">Base</span>
-      </div>
-
-      <PixelIcon name="plus" className="w-3.5 h-3.5 text-[#686f80]" />
-
-      {/* Addition Slot */}
-      <div className="flex flex-col items-center gap-1">
-        <MinecraftTooltip content={recipe.addition.name}>
-          <div className="mc-slot">
-            {recipe.addition.texture && (
-              <img
-                src={getTextureUrl(recipe.addition.texture)}
-                alt={recipe.addition.name}
-                className="w-6 h-6 pixel-art"
-              />
-            )}
-          </div>
-        </MinecraftTooltip>
-        <span className="text-[10px] font-mono text-[#787f90]">Material</span>
-      </div>
-
-      <div className="text-[#828898] flex items-center justify-center px-1">
-        <PixelIcon name="arrow-right" className="w-5 h-5" />
-      </div>
-
-      {/* Output Slot */}
-      <div className="flex flex-col items-center gap-1">
-        <MinecraftTooltip content={recipe.output.name}>
-          <div className="mc-slot mc-slot-output">
-            {recipe.output.texture && (
-              <img
-                src={getTextureUrl(recipe.output.texture)}
-                alt={recipe.output.name}
-                className="w-8 h-8 pixel-art"
-              />
-            )}
-          </div>
-        </MinecraftTooltip>
-        <span className="text-[10px] font-mono text-[#55ffaf]">Result</span>
-      </div>
-    </div>
+      <figcaption className="recipe-summary">{summary}</figcaption>
+    </figure>
   );
 };

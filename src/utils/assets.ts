@@ -17,7 +17,7 @@ const VANILLA_MAPPING: Record<string, string> = {
 
 /**
  * Returns the remote GitHub URL for an item/block texture.
- * Avoids copying texture assets into the docs distribution folder.
+ * Avoids copying texture assets into the website build.
  */
 export function getTextureUrl(texturePath?: string): string {
   if (!texturePath) return '';

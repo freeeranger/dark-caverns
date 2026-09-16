@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { PixelIcon } from '../components/PixelIcon';
 
 interface Contributor {
   name: string;
@@ -29,8 +30,8 @@ export const CreditsPage: React.FC = () => {
             <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold">
               Credits
             </h1>
-            <p className="text-xs sm:text-sm text-[#8e95a8] mt-1">
-              Contributors and acknowledgments for Dark Caverns
+            <p className="mt-2 text-sm text-[#a0a7ba]">
+              The people who contributed art, creatures, and music to the mod.
             </p>
           </div>
 
@@ -48,6 +49,20 @@ export const CreditsPage: React.FC = () => {
                 </p>
               </div>
             ))}
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-[#232630] pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs text-[#9ba2b5]">Built for Minecraft 1.21.1 with NeoForge and GeckoLib.</p>
+            <a
+              href="https://github.com/freeeranger/dark-caverns"
+              target="_blank"
+              rel="noreferrer"
+              className="mc-btn min-h-11 gap-2 px-4 text-xs"
+              aria-label="View the Dark Caverns source on GitHub, opens in a new tab"
+            >
+              <span>Project source</span>
+              <PixelIcon name="external-link" className="h-3 w-3" />
+            </a>
           </div>
         </div>
       </main>

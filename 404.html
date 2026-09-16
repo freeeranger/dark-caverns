@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="./favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dark Caverns</title>
+    <link rel="icon" type="image/png" href="/dark-caverns/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Page not found | Dark Caverns</title>
+    <meta name="description" content="The requested page does not exist on the Dark Caverns website." />
     <script>
-      // Automatic recovery for missing trailing slashes on GitHub Pages
       (function() {
         var path = window.location.pathname;
         var validDirs = ['guides', 'wiki', 'download', 'credits'];
@@ -21,99 +21,110 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@south-paw/typeface-minecraft@1.0.0/index.css" rel="stylesheet">
     <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      ::selection { background: #55ffaf; color: #0c1015; }
       body {
         margin: 0;
-        background-color: #121316;
+        background: #121316;
         color: #d6dae5;
         font-family: 'Rubik', system-ui, sans-serif;
+        min-height: 100vh;
+        padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      }
+      main {
         display: flex;
+        min-height: calc(100vh - 48px);
         align-items: center;
         justify-content: center;
-        min-height: 100vh;
-        padding: 24px;
-        box-sizing: border-box;
       }
       .mc-404-box {
-        background-color: #17181c;
-        border: 2px solid #000000;
-        box-shadow: inset 2px 2px 0px #2a2c34, inset -2px -2px 0px #0c0d0f;
-        max-width: 500px;
+        background: #17181c;
+        border: 2px solid #000;
+        box-shadow: inset 2px 2px 0 #2a2c34, inset -2px -2px 0 #0c0d0f;
+        max-width: 560px;
         width: 100%;
-        padding: 32px;
+        padding: clamp(24px, 6vw, 40px);
         text-align: center;
       }
-      .mc-title {
+      .mc-icon {
+        display: grid;
+        width: 52px;
+        height: 52px;
+        margin: 0 auto 20px;
+        place-items: center;
+        background: #1c1d22;
+        border: 2px solid #000;
+      }
+      .mc-icon img { width: 34px; height: 34px; image-rendering: pixelated; }
+      h1 {
+        margin: 0 0 12px;
         font-family: 'Minecraft', monospace;
-        font-size: 28px;
-        color: #ff5555;
-        text-shadow: 2px 2px 0px #000;
-        margin-bottom: 12px;
+        font-size: clamp(24px, 7vw, 36px);
+        line-height: 1.15;
+        color: #ff7777;
+        text-shadow: 2px 2px 0 #000;
       }
-      .mc-desc {
+      p {
+        max-width: 44ch;
+        margin: 0 auto 28px;
+        color: #aeb5c5;
         font-size: 14px;
-        color: #a0a7ba;
-        line-height: 1.6;
-        margin-bottom: 24px;
+        line-height: 1.65;
       }
-      .mc-btn-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        justify-content: center;
-      }
-      .mc-btn-style {
+      nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+      a {
         display: inline-flex;
+        min-height: 44px;
         align-items: center;
         justify-content: center;
-        font-family: 'Minecraft', monospace;
-        font-size: 15px;
-        background-color: #44464a;
+        padding: 8px 16px;
         color: #e2e4ec;
-        text-shadow: 2px 2px 0px #18191b;
+        background: #44464a;
         border-top: 2px solid #7e8187;
         border-left: 2px solid #7e8187;
-        border-bottom: 2px solid #202124;
         border-right: 2px solid #202124;
-        padding: 8px 18px;
-        cursor: pointer;
+        border-bottom: 2px solid #202124;
+        font-family: 'Minecraft', monospace;
+        font-size: 14px;
         text-decoration: none;
-        -webkit-user-select: none;
+        text-shadow: 2px 2px 0 #18191b;
         user-select: none;
       }
-      .mc-btn-style:hover {
-        background-color: #55575c;
-        color: #ffffa0;
-      }
-      .mc-btn-luminite {
-        background-color: #0c433f;
-        border-top: 2px solid #00ddc0;
-        border-left: 2px solid #00ddc0;
-        border-bottom: 2px solid #05211f;
-        border-right: 2px solid #05211f;
+      a:hover { background: #55575c; color: #ffffa0; }
+      a:focus-visible { outline: 2px solid #55ffaf; outline-offset: 3px; }
+      .primary {
         color: #e2fff8;
-        text-shadow: 2px 2px 0px #041716;
+        background: #0c433f;
+        border-top-color: #00ddc0;
+        border-left-color: #00ddc0;
+        border-right-color: #05211f;
+        border-bottom-color: #05211f;
+        text-shadow: 2px 2px 0 #041716;
       }
-      .mc-btn-luminite:hover {
-        background-color: #125953;
-        border-top-color: #55ffaf;
-        border-left-color: #55ffaf;
-        color: #ffffff;
+      .primary:hover { background: #125953; color: #fff; }
+      @media (max-width: 420px) {
+        nav { display: grid; grid-template-columns: 1fr 1fr; }
+        nav a:first-child { grid-column: 1 / -1; }
       }
     </style>
   </head>
   <body>
-    <div class="mc-404-box">
-      <div class="mc-title">You fell out of the world!</div>
-      <p class="mc-desc">
-        This address does not point to a page on the Dark Caverns site.
-      </p>
-      <div class="mc-btn-row">
-        <a href="./" class="mc-btn-style mc-btn-luminite">Respawn at home</a>
-        <a href="./guides/" class="mc-btn-style">Guides</a>
-        <a href="./wiki/" class="mc-btn-style">Wiki</a>
-        <a href="./download/" class="mc-btn-style">Download</a>
-      </div>
-    </div>
+    <main>
+      <section class="mc-404-box" aria-labelledby="missing-title">
+        <div class="mc-icon" aria-hidden="true">
+          <img src="/dark-caverns/favicon.png" alt="" />
+        </div>
+        <h1 id="missing-title">You fell out of the world!</h1>
+        <p>This address does not point to a page on the Dark Caverns site. Return home or open one of the main references.</p>
+        <nav aria-label="Page recovery">
+          <a href="/dark-caverns/" class="primary">Respawn at home</a>
+          <a href="/dark-caverns/guides/">Guides</a>
+          <a href="/dark-caverns/wiki/">Wiki</a>
+          <a href="/dark-caverns/download/">Download</a>
+        </nav>
+      </section>
+    </main>
   </body>
 </html>

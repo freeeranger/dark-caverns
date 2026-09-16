@@ -7,6 +7,7 @@ import {
   shift,
   useHover,
   useFocus,
+  useClick,
   useDismiss,
   useRole,
   useInteractions,
@@ -41,12 +42,14 @@ export const MinecraftTooltip: React.FC<MinecraftTooltipProps> = ({
 
   const hover = useHover(context, { delay: { open: 40, close: 0 } });
   const focus = useFocus(context);
+  const click = useClick(context);
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: 'tooltip' });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     hover,
     focus,
+    click,
     dismiss,
     role
   ]);
@@ -56,6 +59,7 @@ export const MinecraftTooltip: React.FC<MinecraftTooltipProps> = ({
       <span
         ref={refs.setReference}
         {...getReferenceProps()}
+        tabIndex={0}
         className="inline-flex items-center justify-center"
       >
         {children}
@@ -66,7 +70,7 @@ export const MinecraftTooltip: React.FC<MinecraftTooltipProps> = ({
             ref={refs.setFloating}
             style={floatingStyles}
             {...getFloatingProps()}
-            className="z-[9999] pointer-events-none select-none mc-tooltip px-2 py-1 max-w-xs whitespace-nowrap"
+            className="z-[9999] pointer-events-none select-none mc-tooltip px-2 py-1 max-w-xs text-center"
           >
             <div className="font-pixel text-[11px] text-[#e8ecf4] mc-shadow-subtle leading-none">
               {content}
