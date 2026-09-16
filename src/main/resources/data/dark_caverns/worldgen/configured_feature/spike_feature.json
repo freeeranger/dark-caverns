@@ -9,6 +9,10 @@
     "max_radius": 8,
     "column_chance": 0.025,
     "opposing_chance": 0.18,
-    "ceiling_chance": 0.45
+    "ceiling_chance": 0.45,
+    "surface_ore": {
+      "Name": "dark_caverns:carfstone_luminite_ore"
+    },
+    "surface_ore_chance": 0.08
   }
 }

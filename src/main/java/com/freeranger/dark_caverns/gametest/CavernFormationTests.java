@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.imageio.ImageIO;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -51,6 +52,36 @@ public final class CavernFormationTests {
                 helper.assertTrue(
                         ceilingHeight >= 17 && floorHeight == 0,
                         "Stalactite must attach to the actual ceiling");
+            if (mode == 0)
+                helper.assertTrue(
+                        room.edits.values().stream()
+                                .noneMatch(state -> state.is(CustomBlocks.LUMINITE_ORE.get())),
+                        "Floor stalagmites must not receive surface Luminite");
+            if (mode == 1) {
+                var surfaceOre =
+                        room.edits.entrySet().stream()
+                                .filter(
+                                        entry ->
+                                                entry.getValue()
+                                                        .is(CustomBlocks.LUMINITE_ORE.get()))
+                                .toList();
+                helper.assertTrue(
+                        !surfaceOre.isEmpty(),
+                        "Carfstone stalactites should receive common surface Luminite");
+                helper.assertTrue(
+                        surfaceOre.stream()
+                                .allMatch(
+                                        entry ->
+                                                java.util.Arrays.stream(Direction.values())
+                                                        .anyMatch(
+                                                                direction ->
+                                                                        room.get(
+                                                                                        entry.getKey()
+                                                                                                .relative(
+                                                                                                        direction))
+                                                                                .isAir())),
+                        "Stalactite Luminite must remain exposed to cavern air");
+            }
             if (mode == 2)
                 helper.assertTrue(
                         floorHeight > 0
@@ -145,12 +176,32 @@ public final class CavernFormationTests {
         helper.assertTrue(
                 bounded.edits.keySet().stream().allMatch(bounded::inside),
                 "Feature wrote into an unavailable neighboring chunk");
+        Room moltenCeiling = new Room(80, material);
+        helper.assertTrue(
+                place(helper, moltenCeiling, config(material, 1)),
+                "Molten stalactite placement failed");
+        helper.assertTrue(
+                moltenCeiling.edits.values().stream()
+                        .noneMatch(state -> state.is(CustomBlocks.LUMINITE_ORE.get())),
+                "Molten Carfstone stalactites must never receive Luminite ore");
         helper.succeed();
     }
 
     private static CavernFormationConfiguration config(BlockState material, int mode) {
+        Optional<BlockState> surfaceOre =
+                material.is(CustomBlocks.CARFSTONE.get())
+                        ? Optional.of(CustomBlocks.LUMINITE_ORE.get().defaultBlockState())
+                        : Optional.empty();
         return new CavernFormationConfiguration(
-                material, 8, 64, 8, mode == 3 ? 1 : 0, mode == 2 ? 1 : 0, mode == 1 ? 1 : 0);
+                material,
+                8,
+                64,
+                8,
+                mode == 3 ? 1 : 0,
+                mode == 2 ? 1 : 0,
+                mode == 1 ? 1 : 0,
+                surfaceOre,
+                surfaceOre.isPresent() ? 0.08F : 0.0F);
     }
 
     private static boolean place(

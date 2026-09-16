@@ -1,7 +1,12 @@
 package com.freeranger.dark_caverns.generation;
 
 import com.mojang.serialization.Codec;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -14,6 +19,9 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 public final class SpikeFeature extends Feature<CavernFormationConfiguration> {
     private static final int SEARCH_LIMIT = 256;
     private static final int FOUNDATION_SEARCH = 4;
+    private static final int MAX_SURFACE_ORE = 32;
+    private static final int SURFACE_ORE_PATCH_SIZE = 4;
+    private static final Direction[] DIRECTIONS = Direction.values();
 
     public SpikeFeature(Codec<CavernFormationConfiguration> codec) {
         super(codec);
@@ -43,10 +51,9 @@ public final class SpikeFeature extends Feature<CavernFormationConfiguration> {
                             height - config.maxHeight(),
                             config.maxHeight());
             int radius = radius(config, Math.max(lower, height - lower), random);
-            boolean placed = grow(level, gap.floor(), 1, lower, radius, config.state(), random);
+            boolean placed = grow(level, gap.floor(), 1, lower, radius, config, random);
             // The two tips share an axis and meet without an air seam.
-            return grow(level, gap.ceiling(), -1, height - lower, radius, config.state(), random)
-                    || placed;
+            return grow(level, gap.ceiling(), -1, height - lower, radius, config, random) || placed;
         }
         if (floor && ceiling && random.nextFloat() < config.opposingChance()) {
             int budget = Math.min(config.maxHeight() * 2, height - 3 - random.nextInt(3));
@@ -64,7 +71,7 @@ public final class SpikeFeature extends Feature<CavernFormationConfiguration> {
                                 1,
                                 lower,
                                 radius(config, lower, random),
-                                config.state(),
+                                config,
                                 random);
                 int upper = budget - lower;
                 return grow(
@@ -73,7 +80,7 @@ public final class SpikeFeature extends Feature<CavernFormationConfiguration> {
                                 -1,
                                 upper,
                                 radius(config, upper, random),
-                                config.state(),
+                                config,
                                 random)
                         || placed;
             }
@@ -93,7 +100,7 @@ public final class SpikeFeature extends Feature<CavernFormationConfiguration> {
                         direction,
                         length,
                         radius(config, length, random),
-                        config.state(),
+                        config,
                         random);
         if (height < 24 && placed) {
             for (int i = 0; i < 2; i++) {
@@ -109,7 +116,7 @@ public final class SpikeFeature extends Feature<CavernFormationConfiguration> {
                         direction,
                         Math.min(length - 1, nearby.get().height() / 3),
                         1,
-                        config.state(),
+                        config,
                         random);
             }
         }
@@ -133,9 +140,13 @@ public final class SpikeFeature extends Feature<CavernFormationConfiguration> {
             int direction,
             int height,
             int radius,
-            BlockState material,
+            CavernFormationConfiguration config,
             RandomSource random) {
+        BlockState material = config.state();
         if (height < 1 || !isAnchor(level, anchor, material)) return false;
+        boolean decorateSurface =
+                direction < 0 && config.surfaceOre().isPresent() && config.surfaceOreChance() > 0;
+        List<BlockPos> formationBlocks = decorateSurface ? new ArrayList<>() : List.of();
         double phase = random.nextDouble() * Math.PI * 2;
         boolean placed = false;
         for (int dx = -radius; dx <= radius; dx++) {
@@ -173,7 +184,104 @@ public final class SpikeFeature extends Feature<CavernFormationConfiguration> {
                     if (level.isOutsideBuildHeight(pos)
                             || !level.ensureCanWrite(pos)
                             || !level.getBlockState(pos).isAir()) break;
-                    placed |= level.setBlock(pos, material, Block.UPDATE_CLIENTS);
+                    boolean set = level.setBlock(pos, material, Block.UPDATE_CLIENTS);
+                    placed |= set;
+                    if (set && decorateSurface) formationBlocks.add(pos.immutable());
+                }
+            }
+        }
+        if (decorateSurface && !formationBlocks.isEmpty()) {
+            placeSurfaceOre(
+                    level,
+                    formationBlocks,
+                    material,
+                    config.surfaceOre().orElseThrow(),
+                    config.surfaceOreChance(),
+                    random);
+        }
+        return placed;
+    }
+
+    private static void placeSurfaceOre(
+            WorldGenLevel level,
+            List<BlockPos> formationBlocks,
+            BlockState material,
+            BlockState ore,
+            float chance,
+            RandomSource random) {
+        Set<BlockPos> formation = new HashSet<>(formationBlocks);
+        List<BlockPos> exposed = new ArrayList<>();
+        for (BlockPos pos : formationBlocks) {
+            if (!level.getBlockState(pos).is(material.getBlock())) continue;
+            for (Direction direction : DIRECTIONS) {
+                BlockPos neighbor = pos.relative(direction);
+                if (!formation.contains(neighbor) && level.getBlockState(neighbor).isAir()) {
+                    exposed.add(pos);
+                    break;
+                }
+            }
+        }
+        if (exposed.isEmpty()) return;
+
+        int target = Mth.clamp(Mth.ceil(exposed.size() * chance), 1, MAX_SURFACE_ORE);
+        Set<BlockPos> eligible = new HashSet<>(exposed);
+        int orePlaced = 0;
+        while (orePlaced < target && !eligible.isEmpty()) {
+            BlockPos seed = takeRandomEligible(exposed, eligible, random);
+            if (seed == null) break;
+            orePlaced +=
+                    growSurfaceOrePatch(
+                            level,
+                            seed,
+                            eligible,
+                            material,
+                            ore,
+                            Math.min(SURFACE_ORE_PATCH_SIZE, target - orePlaced),
+                            random);
+        }
+    }
+
+    private static BlockPos takeRandomEligible(
+            List<BlockPos> exposed, Set<BlockPos> eligible, RandomSource random) {
+        for (int attempt = 0; attempt < Math.min(16, exposed.size()); attempt++) {
+            BlockPos candidate = exposed.get(random.nextInt(exposed.size()));
+            if (eligible.contains(candidate)) return candidate;
+        }
+        for (BlockPos candidate : exposed) {
+            if (eligible.contains(candidate)) return candidate;
+        }
+        return null;
+    }
+
+    private static int growSurfaceOrePatch(
+            WorldGenLevel level,
+            BlockPos seed,
+            Set<BlockPos> eligible,
+            BlockState material,
+            BlockState ore,
+            int budget,
+            RandomSource random) {
+        List<BlockPos> frontier = new ArrayList<>();
+        Set<BlockPos> queued = new HashSet<>();
+        frontier.add(seed);
+        queued.add(seed);
+        int placed = 0;
+        while (placed < budget && !frontier.isEmpty()) {
+            int index = random.nextInt(frontier.size());
+            BlockPos current = frontier.remove(index);
+            queued.remove(current);
+            if (!eligible.remove(current)) continue;
+            if (level.getBlockState(current).is(material.getBlock())
+                    && level.setBlock(current, ore, Block.UPDATE_CLIENTS)) {
+                placed++;
+            }
+
+            int firstDirection = random.nextInt(DIRECTIONS.length);
+            for (int offset = 0; offset < DIRECTIONS.length; offset++) {
+                Direction direction = DIRECTIONS[(firstDirection + offset) % DIRECTIONS.length];
+                BlockPos neighbor = current.relative(direction);
+                if (eligible.contains(neighbor) && queued.add(neighbor)) {
+                    frontier.add(neighbor);
                 }
             }
         }

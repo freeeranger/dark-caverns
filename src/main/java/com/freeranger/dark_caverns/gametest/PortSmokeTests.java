@@ -109,14 +109,23 @@ public final class PortSmokeTests {
         helper.assertTrue(
                 spike != null
                         && spike.config() instanceof CavernFormationConfiguration configuration
-                        && configuration.state().is(CustomBlocks.CARFSTONE.get()),
-                "Carfstone spike material did not load from configured-feature data");
+                        && configuration.state().is(CustomBlocks.CARFSTONE.get())
+                        && configuration.surfaceOre().isPresent()
+                        && configuration
+                                .surfaceOre()
+                                .orElseThrow()
+                                .is(CustomBlocks.LUMINITE_ORE.get())
+                        && configuration.surfaceOreChance() == 0.08F,
+                "Carfstone spike material or surface Luminite did not load from configured-feature"
+                        + " data");
         helper.assertTrue(
                 moltenSpike != null
                         && moltenSpike.config()
                                 instanceof CavernFormationConfiguration configuration
-                        && configuration.state().is(CustomBlocks.MOLTEN_CARFSTONE.get()),
-                "Molten spike material did not load from configured-feature data");
+                        && configuration.state().is(CustomBlocks.MOLTEN_CARFSTONE.get())
+                        && configuration.surfaceOre().isEmpty()
+                        && configuration.surfaceOreChance() == 0.0F,
+                "Molten spike material must load without surface ore");
         long darkCavernsAdvancements =
                 helper.getLevel().getServer().getAdvancements().getAllAdvancements().stream()
                         .filter(

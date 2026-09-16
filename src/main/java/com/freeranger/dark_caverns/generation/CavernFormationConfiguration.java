@@ -2,6 +2,7 @@ package com.freeranger.dark_caverns.generation;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.Optional;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
@@ -13,7 +14,9 @@ public record CavernFormationConfiguration(
         int maxRadius,
         float columnChance,
         float opposingChance,
-        float ceilingChance)
+        float ceilingChance,
+        Optional<BlockState> surfaceOre,
+        float surfaceOreChance)
         implements FeatureConfiguration {
     public static final Codec<CavernFormationConfiguration> CODEC =
             RecordCodecBuilder.create(
@@ -50,6 +53,36 @@ public record CavernFormationConfiguration(
                                                     .optionalFieldOf("ceiling_chance", 0.45F)
                                                     .forGetter(
                                                             CavernFormationConfiguration
-                                                                    ::ceilingChance))
+                                                                    ::ceilingChance),
+                                            BlockState.CODEC
+                                                    .optionalFieldOf("surface_ore")
+                                                    .forGetter(
+                                                            CavernFormationConfiguration
+                                                                    ::surfaceOre),
+                                            Codec.floatRange(0, 1)
+                                                    .optionalFieldOf("surface_ore_chance", 0.0F)
+                                                    .forGetter(
+                                                            CavernFormationConfiguration
+                                                                    ::surfaceOreChance))
                                     .apply(instance, CavernFormationConfiguration::new));
+
+    public CavernFormationConfiguration(
+            BlockState state,
+            int minGap,
+            int maxHeight,
+            int maxRadius,
+            float columnChance,
+            float opposingChance,
+            float ceilingChance) {
+        this(
+                state,
+                minGap,
+                maxHeight,
+                maxRadius,
+                columnChance,
+                opposingChance,
+                ceilingChance,
+                Optional.empty(),
+                0.0F);
+    }
 }
