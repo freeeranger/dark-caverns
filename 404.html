@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dark Caverns</title>
+    <script>
+      // Automatic recovery for missing trailing slashes on GitHub Pages
+      (function() {
+        var path = window.location.pathname;
+        var validDirs = ['guides', 'wiki', 'download', 'credits'];
+        for (var i = 0; i < validDirs.length; i++) {
+          if (path.endsWith('/' + validDirs[i])) {
+            window.location.replace(path + '/' + window.location.search + window.location.hash);
+            return;
+          }
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        background-color: #121316;
+        color: #d6dae5;
+        font-family: 'Rubik', system-ui, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 24px;
+        box-sizing: border-box;
+      }
+      .mc-404-box {
+        background-color: #17181c;
+        border: 2px solid #000000;
+        box-shadow: inset 2px 2px 0px #2a2c34, inset -2px -2px 0px #0c0d0f;
+        max-width: 500px;
+        width: 100%;
+        padding: 32px;
+        text-align: center;
+      }
+      .mc-title {
+        font-family: 'Minecraft', monospace;
+        font-size: 28px;
+        color: #ff5555;
+        text-shadow: 2px 2px 0px #000;
+        margin-bottom: 12px;
+      }
+      .mc-desc {
+        font-size: 14px;
+        color: #a0a7ba;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+      .mc-btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      .mc-btn-style {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Minecraft', monospace;
+        font-size: 15px;
+        background-color: #44464a;
+        color: #e2e4ec;
+        text-shadow: 2px 2px 0px #18191b;
+        border-top: 2px solid #7e8187;
+        border-left: 2px solid #7e8187;
+        border-bottom: 2px solid #202124;
+        border-right: 2px solid #202124;
+        padding: 8px 18px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .mc-btn-style:hover {
+        background-color: #55575c;
+        color: #ffffa0;
+      }
+      .mc-btn-luminite {
+        background-color: #0c433f;
+        border-top: 2px solid #00ddc0;
+        border-left: 2px solid #00ddc0;
+        border-bottom: 2px solid #05211f;
+        border-right: 2px solid #05211f;
+        color: #e2fff8;
+        text-shadow: 2px 2px 0px #041716;
+      }
+      .mc-btn-luminite:hover {
+        background-color: #125953;
+        border-top-color: #55ffaf;
+        border-left-color: #55ffaf;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mc-404-box">
+      <div class="mc-title">You fell out of the world!</div>
+      <p class="mc-desc">
+        The cavern path you were looking for doesn't exist or collapsed into the void.
+      </p>
+      <div class="mc-btn-row">
+        <a href="./" class="mc-btn-style mc-btn-luminite">Respawn at home</a>
+        <a href="./guides/" class="mc-btn-style">Guides</a>
+        <a href="./wiki/" class="mc-btn-style">Wiki</a>
+        <a href="./download/" class="mc-btn-style">Download</a>
+      </div>
+    </div>
+  </body>
+</html>
