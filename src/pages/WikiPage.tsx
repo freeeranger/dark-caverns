@@ -10,6 +10,12 @@ import { PixelIcon } from '../components/PixelIcon';
 import { getTextureUrl, getGithubSourceUrl } from '../utils/assets';
 
 const CATEGORIES = ['all', 'biomes', 'materials', 'gear', 'items', 'mobs'] as const;
+type CopyStatus = 'copied' | 'error';
+
+interface CopyFeedback {
+  registryId: string;
+  status: CopyStatus;
+}
 
 export const WikiPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useQueryState(
@@ -21,6 +27,7 @@ export const WikiPage: React.FC = () => {
     parseAsString.withDefault(WIKI_ENTRIES[0].id)
   );
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [copyFeedback, setCopyFeedback] = useState<CopyFeedback | null>(null);
 
   // Fallback support for hash navigation
   useEffect(() => {
@@ -63,8 +70,29 @@ export const WikiPage: React.FC = () => {
     return WIKI_ENTRIES.find((item) => item.id === activeEntryId) || WIKI_ENTRIES[0];
   }, [activeEntryId]);
 
+  const registryId = `dark_caverns:${selectedItem.id}`;
+  const copyStatus = copyFeedback?.registryId === registryId ? copyFeedback.status : null;
+
+  useEffect(() => {
+    if (!copyFeedback) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setCopyFeedback(null), 2000);
+    return () => window.clearTimeout(timeout);
+  }, [copyFeedback]);
+
   const selectItem = (item: WikiEntry) => {
     setActiveEntryId(item.id);
+  };
+
+  const copyRegistryId = async () => {
+    try {
+      await navigator.clipboard.writeText(registryId);
+      setCopyFeedback({ registryId, status: 'copied' });
+    } catch {
+      setCopyFeedback({ registryId, status: 'error' });
+    }
   };
 
   return (
@@ -184,16 +212,40 @@ export const WikiPage: React.FC = () => {
                   <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold break-words">
                     {selectedItem.name}
                   </h1>
-                  <div className="flex min-w-0 flex-wrap items-center gap-2 mt-0.5">
-                    <span className="min-w-0 break-all text-xs font-mono text-[#8e95a8]">
-                      dark_caverns:{selectedItem.id}
-                    </span>
-                    <span className="text-[#3c4150]">,</span>
+                  <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 mt-0.5">
+                    <code className="registry-id min-w-0 break-all text-xs font-mono text-[#8e95a8]">
+                      {registryId}
+                    </code>
+                    <button
+                      type="button"
+                      onClick={copyRegistryId}
+                      className={`inline-flex min-h-11 items-center gap-1 px-1.5 text-[11px] font-pixel sm:min-h-8 ${
+                        copyStatus === 'copied'
+                          ? 'text-[#55ffaf]'
+                          : copyStatus === 'error'
+                            ? 'text-[#ff9970]'
+                            : 'text-[#8e95a8] hover:text-white'
+                      }`}
+                      aria-label={`Copy registry ID ${registryId}`}
+                      title={copyStatus === 'error' ? 'Copy failed. Select the ID instead.' : 'Copy registry ID'}
+                    >
+                      <PixelIcon
+                        name={copyStatus === 'copied' ? 'check' : 'copy'}
+                        className="w-3 h-3"
+                      />
+                      <span aria-live="polite">
+                        {copyStatus === 'copied'
+                          ? 'Copied'
+                          : copyStatus === 'error'
+                            ? 'Select ID'
+                            : 'Copy ID'}
+                      </span>
+                    </button>
                     <a
                       href={getGithubSourceUrl(selectedItem.texture)}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-[11px] font-pixel text-[#55ffaf] hover:text-[#ffffa0] inline-flex items-center gap-1"
+                      className="inline-flex min-h-11 items-center gap-1 text-[11px] font-pixel text-[#55ffaf] hover:text-[#ffffa0] sm:min-h-8"
                       title="View file on GitHub"
                     >
                       <span>GitHub source</span>

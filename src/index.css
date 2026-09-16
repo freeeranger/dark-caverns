@@ -51,11 +51,16 @@ svg {
 
 main p,
 main td,
+.registry-id,
 input,
 textarea,
 [contenteditable='true'] {
   -webkit-user-select: text;
   user-select: text;
+}
+
+.registry-id {
+  cursor: text;
 }
 
 :focus-visible {
