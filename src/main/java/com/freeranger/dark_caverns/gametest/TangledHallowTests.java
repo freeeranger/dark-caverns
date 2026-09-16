@@ -252,7 +252,11 @@ public final class TangledHallowTests {
                         .filter(s -> s.is(CustomBlocks.TWISTWOOD_LEAVES.get()))
                         .count();
         helper.assertTrue(
-                logs > 20 && leaves > 50, "Registered forest placement did not create a woodland");
+                logs > 1000 && leaves > 2500,
+                "Tangled Hallow generated too few twistwood trees: logs="
+                        + logs
+                        + ", leaves="
+                        + leaves);
         int lostFloors = 0;
         int originalFloors = 0;
         int added = 0;
@@ -277,7 +281,9 @@ public final class TangledHallowTests {
                 volume.featureWrites.values().stream()
                         .filter(s -> s.is(CustomBlocks.UNDERSPROUTS.get()))
                         .count();
-        helper.assertTrue(plants > 0, "Undergrowth failed on generated floors");
+        helper.assertTrue(
+                plants > 2000,
+                "Tangled Hallow generated too little undergrowth: undersprouts=" + plants);
         DarkCaverns.LOGGER.info(
                 "Tangled Hallow lakes: water={}, surface={}, lilies={}, lakes={}, largest={},"
                         + " small={}, originalWalk={}, afterLakesWalk={}",
