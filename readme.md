@@ -1,82 +1,79 @@
-[![Dark Caverns Mod Trailer](https://img.youtube.com/vi/Z3q_B4iXvOw/maxresdefault.jpg)](https://www.youtube.com/watch?v=Z3q_B4iXvOw)
+# Dark Caverns
 
-[![CurseForge](https://img.shields.io/badge/CurseForge-Dark%20Caverns-f16436?logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![Wiki](https://img.shields.io/badge/Documentation-Official%20Wiki-blue?logo=github)](https://github.com/freeeranger/dark-caverns/wiki) [![YouTube Trailer](https://img.shields.io/badge/YouTube-Mod%20Trailer-red?logo=youtube)](https://www.youtube.com/watch?v=Z3q_B4iXvOw) [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.1-brightgreen)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![NeoForge](https://img.shields.io/badge/Modloader-NeoForge-orange)](https://neoforged.net/)
+[![Website](https://img.shields.io/badge/Website-Dark%20Caverns-4b69bd?logo=githubpages)](https://freeeranger.github.io/dark-caverns/) [![CurseForge](https://img.shields.io/badge/CurseForge-Download-f16436?logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.1-brightgreen)](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) [![NeoForge](https://img.shields.io/badge/Modloader-NeoForge-orange)](https://neoforged.net/)
 
-Dark Caverns is a Minecraft NeoForge mod for 1.21.1 that adds a cave dimension below bedrock. Large central vaults connect through dense passages, layered shelves, and rare vertical rifts, with three biomes, custom mobs, and upgradeable gear tiers.
+[![Dark Caverns mod trailer](https://img.youtube.com/vi/Z3q_B4iXvOw/maxresdefault.jpg)](https://www.youtube.com/watch?v=Z3q_B4iXvOw)
 
----
+Dark Caverns is a Minecraft NeoForge mod for 1.21.1. It adds a cave dimension beneath the Overworld bedrock. Its terrain contains large vaults, dense passages, shelves, and vertical rifts. It has four biomes. Custom mobs and structures appear throughout the dimension. Its materials are used for new equipment.
 
 ## How to get there
 
-Getting to the dark caverns takes a few steps:
+To enter Dark Caverns:
 
 1. Buy a Forgotten Tower map from an expert-level cartographer villager.
-2. Follow the map to the tower in a forest biome, clear out the vindicators and evoker inside, and grab the key.
-3. Dig down to bedrock in the overworld until you find cracked bedrock.
-4. Right-click the cracked bedrock with the key to open the gateway.
+2. Follow the map to a tower in a forest biome. Defeat the vindicators and evoker, then take the key.
+3. Dig down to Overworld bedrock and find cracked bedrock.
+4. Use the key on the cracked bedrock to open the gateway.
 
-The gateway creates a small landing platform on the Caverns side, so the first trip no longer drops you into the open cavern.
-
----
+The gateway builds a lantern-lit entrance on a safe cave floor. The gateway above the entrance returns you to the Overworld. The mod saves the link between both gateways, so later visits use the same entrance without rebuilding it.
 
 ## Biomes
 
-| Biome | Description | Mobs and features |
+| Biome | Terrain and resources | Mobs and landmarks |
 | :--- | :--- | :--- |
-| Rocky Caverns | Carfstone caves with stalagmites, stalactites, and occasional columns. Generates overworld ores, luminite, and rare platinum. | Luminite golems, luminite foxes, camorocks |
-| Molten Depths | Volcanic biome with molten carfstone, magma, and lower lava flows. Generates hellstone on the surface. | Scorchlings, scorchhounds, molteners, blazes, sacred torches, territory markers |
-| Glimmershroom Forest | Glowing mushroom biome covered in glimmergrass. The safest place to build a base. | Shroomies, shroomlings, shroomie houses, giant mushrooms |
+| Rocky Caverns | Carfstone caverns with stalagmites, stalactites, columns, Overworld ores, Luminite, and rare Platinum. Luminite also forms in clusters on exposed Carfstone stalactites. | Luminite golems, Luminite foxes, and camorocks |
+| Molten Depths | Molten Carfstone, magma, lava flows, ash, and exposed Hellstone. | Scorchlings, scorchhounds, molteners, blazes, sacred torches, and territory markers |
+| Glimmershroom Forest | Glimmergrass and giant glowing mushrooms. | Shroomies, shroomlings, and Shroomie houses |
+| Tangled Hallow | Overgrown Carfstone, shallow teal lakes, and winding Twistwood trees. | Luminite foxes, camorocks, golems, and skeletons |
 
----
+Biome transitions mix neighboring ground and plants instead of cutting between biomes along straight borders. A strip of rocky ground separates Glimmershroom Forest and Molten Depths at shared borders.
+
+New chunks may include short ramps, cut-throughs, and small natural bridges between nearby walking areas. These connections avoid ores, trees, structures, and fluids. Large drops and vertical rifts remain hazardous.
+
+Twistwood leaves drop saplings. The saplings grow without light on Overgrown Carfstone or ordinary planting soil, and bone meal works on them. Twistwood logs can be stripped or crafted into wood, planks, doors, and trapdoors. Twistwood planks work in vanilla wood recipes.
+
+World generation changes only affect new chunks.
 
 ## Gear and upgrades
 
-Mine platinum ore for platinum pieces, then combine four pieces with four iron ingots to make platinum ingots. Silk Touch ore can still be smelted into a piece. Platinum upgrades diamond gear in a smithing table and sits between diamond and netherite in stats. Cavern gear upgrades use luminite dust as the smithing catalyst; only the Netherite branch requires a Netherite Upgrade Smithing Template.
+Platinum ore drops Platinum Pieces. Four Platinum Pieces and four iron ingots make one Platinum Ingot. Smelting Silk Touch ore yields one piece. Use a smithing table to upgrade diamond equipment with Platinum. Platinum equipment has stats between diamond and Netherite.
 
-You can upgrade platinum gear further at a smithing table:
+Luminite Dust is the smithing catalyst for Cavern equipment upgrades. A Netherite upgrade still requires a Netherite Upgrade Smithing Template.
 
-- **Hellstone.** Crafted with hellstone rock and diamonds. Each armor piece gives 25% fire and lava damage reduction, reaching immunity with the full set. Fully charged tool attacks ignite their target.
-- **Shroomstone.** Bought from shroomies with diamonds. Each piece gives 25% fall damage reduction, while the full set adds Jump Boost II. Fully charged tool attacks launch enemies into the air.
-- **Scorchsteel armor.** Crafted from scorchling tails and iron. Wearing the full set and standing still for one second conceals you from hostile mobs. Moving, attacking, or taking damage breaks concealment.
+- **Hellstone.** Four Hellstone Rocks and four diamonds make one Hellstone. Each armor piece reduces fire and lava damage by 25 percent. A full set prevents both types of damage. Fully charged tool attacks ignite their target.
+- **Shroomstone.** Buy Shroomstone Pieces from Shroomies with diamonds. Four pieces and four emeralds make one Shroomstone. Each armor piece reduces fall damage by 25 percent. A full set grants Jump Boost II. Fully charged tool attacks launch enemies.
+- **Scorchsteel armor.** Four Scorchling Tails and four iron ingots make one Scorchsteel Ingot. A full set conceals you from hostile mobs after you stand still for one second. Moving, attacking, or taking damage ends the effect.
 
----
+## Other items and blocks
 
-## Interesting items and blocks
-
-- **Luminite lights.** Torches, lanterns, and throwable torches that emit light level 15. Throwing torches makes it easier to scout dark caverns without walking in blindly.
-- **Corrupted pearl.** Thrown pearls that teleport the closest mob near you to where the pearl lands. Useful for moving villagers and livestock into pens.
-- **Shroombomb.** Throwable explosive crafted from glimmershrooms and gunpowder for combat and quick mining.
-- **Glimmershroom block.** Bounces entities like a slime block, but without sticking to adjacent blocks.
-
----
+- **Luminite lights.** Luminite Torches and Lanterns emit light level 15. Throwable Luminite Torches place light on distant surfaces.
+- **Corrupted Pearl.** A Corrupted Pearl teleports the nearest mob to the thrower to its landing point.
+- **Shroombomb.** This throwable explosive uses Glimmershrooms and gunpowder. It damages enemies and breaks blocks.
+- **Glimmershroom Block.** Entities bounce on it as they do on a slime block, but it does not stick to adjacent blocks.
 
 ## Links
 
-- [Official wiki](https://github.com/freeeranger/dark-caverns/wiki), full stats, recipes, and mob drops
-- [CurseForge page](https://www.curseforge.com/minecraft/mc-mods/dark-caverns), downloads and changelogs
-- [YouTube mod trailer](https://www.youtube.com/watch?v=Z3q_B4iXvOw), gameplay preview
-- [Issue tracker](https://github.com/freeeranger/dark-caverns/issues), bug reports and feedback
-
----
+- [Official website](https://freeeranger.github.io/dark-caverns/)
+- [Official wiki](https://github.com/freeeranger/dark-caverns/wiki) for stats, recipes, and mob drops
+- [CurseForge](https://www.curseforge.com/minecraft/mc-mods/dark-caverns) for downloads and changelogs
+- [YouTube trailer](https://www.youtube.com/watch?v=Z3q_B4iXvOw)
+- [Issue tracker](https://github.com/freeeranger/dark-caverns/issues) for bug reports and feedback
 
 ## Development
 
-Building Dark Caverns requires a Java 21 JDK. The Gradle wrapper downloads the remaining build dependencies.
+Building Dark Caverns requires Java 21. The Gradle wrapper downloads the other build dependencies.
 
 ```shell
 ./gradlew build
 ```
 
-Run the automated in-game regression suite with:
+Run the in-game test suite with:
 
 ```shell
 ./gradlew runGameTestServer
 ```
 
-See [terrain generation notes](docs/terrain-generation.md) for the composed cavern
-router, fixed test seeds, and generated terrain cross-sections.
-
-Check or apply the repository's formatting rules with:
+Check or apply the repository formatting rules with:
 
 ```shell
 ./gradlew spotlessCheck
