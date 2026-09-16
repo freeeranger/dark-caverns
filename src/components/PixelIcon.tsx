@@ -9,6 +9,7 @@ export type PixelIconName =
   | 'download'
   | 'copy'
   | 'check'
+  | 'menu'
   | 'close'
   | 'chevron-right';
 
@@ -63,6 +64,9 @@ export const PixelIcon: React.FC<PixelIconProps> = ({ name, className = 'w-4 h-4
       )}
       {name === 'check' && (
         <path d="M20 5h2v4h-2V5Zm-2 6h2V9h-2v2Zm-2 2h2v-2h-2v2Zm-2 2h2v-2h-2v2Zm-2 2h2v-2h-2v2Zm-2 0h2v2h-2v-2Zm-2-2h2v2H8v-2Zm-2-2h2v2H6v-2Z" />
+      )}
+      {name === 'menu' && (
+        <path d="M4 5h16v2H4V5Zm0 6h16v2H4v-2Zm0 6h16v2H4v-2Z" />
       )}
       {name === 'close' && (
         <path d="M7 19H5V17H7V19ZM19 19H17V17H19V19ZM9 15V17H7V15H9ZM17 17H15V15H17V17ZM11 15H9V13H11V15ZM15 15H13V13H15V15ZM13 13H11V11H13V13ZM11 11H9V9H11V11ZM15 11H13V9H15V11ZM9 9H7V7H9V9ZM17 9H15V7H17V9ZM7 7H5V5H7V7ZM19 7H17V5H19V7Z" />
