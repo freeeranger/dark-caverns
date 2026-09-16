@@ -371,6 +371,78 @@ html {
   user-select: text;
 }
 
+.guide-steps {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.guide-step {
+  min-width: 0;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #232630;
+}
+
+.guide-step:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.guide-step-heading {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.guide-step-number {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  background: #0c433f;
+  border: 1px solid #00ddc0;
+  color: #e2fff8;
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  text-shadow: 1px 1px 0 #041716;
+}
+
+.guide-step-body {
+  max-width: 72ch;
+  margin-top: 0.75rem;
+}
+
+.guide-recipes {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.guide-recipe {
+  min-width: 0;
+  padding: 1rem;
+}
+
+.guide-recipe-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #232630;
+}
+
+.guide-note {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 72ch;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #151b1b;
+  border: 1px solid #28655f;
+}
+
 .home-hero {
   display: grid;
   overflow: hidden;

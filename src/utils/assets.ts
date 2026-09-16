@@ -6,6 +6,7 @@ const GITHUB_BLOB_BASE =
   'https://github.com/freeeranger/dark-caverns/blob/1.21.1-neoforge/src/main/resources/assets/dark_caverns/';
 
 const VANILLA_MAPPING: Record<string, string> = {
+  'textures/item/compass.png': 'textures/item/compass_16.png',
   'textures/item/diamond.png': 'textures/item/diamond.png',
   'textures/item/diamond_sword.png': 'textures/item/diamond_sword.png',
   'textures/item/emerald.png': 'textures/item/emerald.png',

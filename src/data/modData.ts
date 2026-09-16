@@ -7,6 +7,7 @@ export interface RecipeSlot {
 export interface CraftingRecipe {
   slots: (RecipeSlot | null)[]; // 9 slots for 3x3 grid
   output: RecipeSlot;
+  shapeless?: boolean;
 }
 
 export interface SmithingRecipe {
@@ -32,6 +33,7 @@ export interface GuideStep {
   title: string;
   body: string;
   note?: string;
+  recipeEntryIds?: string[];
 }
 
 export interface GuideChapter {
@@ -98,6 +100,33 @@ export const WIKI_ENTRIES: WikiEntry[] = [
   },
 
   // Key Items
+  {
+    id: 'cavern_compass',
+    name: 'Cavern Compass',
+    category: 'items',
+    texture: 'textures/item/cavern_compass.png',
+    description: 'The Cavern Compass points back to your gateway while you explore the Dark Caverns.',
+    details: 'A normal Compass spins in the Dark Caverns. The Cavern Compass points to your linked gateway instead. Use it on a Lodestone if you want the needle to track that block.',
+    stats: [
+      { label: 'Cavern target', value: 'Your linked gateway' },
+      { label: 'Lodestone binding', value: 'Supported' },
+      { label: 'Recipe', value: '4 Luminite Dust, 4 Platinum Pieces, 1 Compass' }
+    ],
+    recipe: {
+      slots: [
+        { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
+        { name: 'Platinum Piece', texture: 'textures/item/platinum_piece.png' },
+        { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
+        { name: 'Platinum Piece', texture: 'textures/item/platinum_piece.png' },
+        { name: 'Compass', texture: 'textures/item/compass.png' },
+        { name: 'Platinum Piece', texture: 'textures/item/platinum_piece.png' },
+        { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
+        { name: 'Platinum Piece', texture: 'textures/item/platinum_piece.png' },
+        { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' }
+      ],
+      output: { name: 'Cavern Compass', texture: 'textures/item/cavern_compass.png', count: 1 }
+    }
+  },
   {
     id: 'key_to_the_caverns',
     name: 'Key to the Caverns',
@@ -167,7 +196,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
         { name: 'Gunpowder', texture: 'textures/item/gunpowder.png' },
         null, null, null, null
       ],
-      output: { name: 'Shroombomb', texture: 'textures/item/shroombomb.png', count: 2 }
+      output: { name: 'Shroombomb', texture: 'textures/item/shroombomb.png', count: 2 },
+      shapeless: true
     }
   },
 
@@ -207,7 +237,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
         { name: 'Iron Ingot', texture: 'textures/item/iron_ingot.png' },
         null
       ],
-      output: { name: 'Platinum Ingot', texture: 'textures/item/platinum_ingot.png', count: 1 }
+      output: { name: 'Platinum Ingot', texture: 'textures/item/platinum_ingot.png', count: 1 },
+      shapeless: true
     }
   },
   {
@@ -233,7 +264,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
         { name: 'Diamond', texture: 'textures/item/diamond.png' },
         null
       ],
-      output: { name: 'Hellstone', texture: 'textures/item/hellstone.png', count: 1 }
+      output: { name: 'Hellstone', texture: 'textures/item/hellstone.png', count: 1 },
+      shapeless: true
     }
   },
   {
@@ -259,7 +291,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
         { name: 'Emerald', texture: 'textures/item/emerald.png' },
         null
       ],
-      output: { name: 'Shroomstone', texture: 'textures/item/shroomstone.png', count: 1 }
+      output: { name: 'Shroomstone', texture: 'textures/item/shroomstone.png', count: 1 },
+      shapeless: true
     }
   },
   {
@@ -284,7 +317,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
         { name: 'Iron Ingot', texture: 'textures/item/iron_ingot.png' },
         null
       ],
-      output: { name: 'Scorchsteel Ingot', texture: 'textures/item/scorchsteel_ingot.png', count: 1 }
+      output: { name: 'Scorchsteel Ingot', texture: 'textures/item/scorchsteel_ingot.png', count: 1 },
+      shapeless: true
     }
   },
 
@@ -494,21 +528,42 @@ export const GUIDES: GuideChapter[] = [
     summary: 'Buy the Forgotten Tower map, take the key from the tower, and use it on Cracked Bedrock.',
     steps: [
       {
-        title: '1. Buy the Forgotten Tower map',
+        title: 'Buy the Forgotten Tower map',
         body: 'Trade with an Expert Cartographer in the Overworld for an explorer map to a nearby Illager tower.'
       },
       {
-        title: '2. Defeat the Illagers and claim the key',
+        title: 'Defeat the Illagers and claim the key',
         body: 'Follow the map to the tower, defeat the Illagers, and loot the Key to the Caverns from the top chest.'
       },
       {
-        title: '3. Dig down to bedrock',
+        title: 'Dig down to bedrock',
         body: 'Mine down to the Overworld bedrock floor and look for Cracked Bedrock. Small veins appear throughout the bottom bedrock layer.'
       },
       {
-        title: '4. Open the gateway',
+        title: 'Open the gateway',
         body: 'Use the Key on Cracked Bedrock to replace that block with a permanent gateway, then step onto it.',
         note: 'The return gateway is in the Dark Caverns ceiling. Follow the lights down the enclosed ladder shaft. To return, jump into the gateway overhead.'
+      }
+    ]
+  },
+  {
+    id: 'cavern-compass-navigation',
+    title: 'Cavern Compass navigation',
+    summary: 'Craft a Cavern Compass so you can find your linked gateway while exploring.',
+    steps: [
+      {
+        title: 'Gather the materials',
+        body: 'Bring a Compass into the Dark Caverns. Mine Luminite Dust and Platinum Pieces until you have 4 of each.'
+      },
+      {
+        title: 'Craft the Cavern Compass',
+        body: 'Place the Compass in the center of a Crafting Table. Put Luminite Dust in the four corners and Platinum Pieces in the four remaining slots.',
+        recipeEntryIds: ['cavern_compass']
+      },
+      {
+        title: 'Follow it back to your gateway',
+        body: 'The needle points to your linked gateway in the Dark Caverns. A normal Compass spins here, so keep the Cavern Compass with you on long trips.',
+        note: 'Use the Cavern Compass on a Lodestone to make the needle track that block instead.'
       }
     ]
   },
@@ -518,19 +573,19 @@ export const GUIDES: GuideChapter[] = [
     summary: 'Find the lakes and harvest Twistwood. Bring light for hostile mobs.',
     steps: [
       {
-        title: '1. Find the forest floor',
+        title: 'Find the forest floor',
         body: 'Overgrown Carfstone, Undersprouts, and dense Twistwood trees mark the biome. Its water is teal, and it has its own music.'
       },
       {
-        title: '2. Search the surface lakes',
+        title: 'Search the surface lakes',
         body: 'Surface lakes cut into open cavern floors. Water Sproutlets grow on the water and replace Lily Pads in this biome.'
       },
       {
-        title: '3. Farm Twistwood underground',
+        title: 'Farm Twistwood underground',
         body: 'Twistwood saplings grow without sunlight. Replant them to farm logs and planks inside the dimension. You can also craft Twistwood doors and trapdoors.'
       },
       {
-        title: '4. Watch for golems',
+        title: 'Watch for golems',
         body: 'Camorocks and Luminite Foxes are passive, but Luminite Golems and Skeletons also spawn here. Keep the forest floor lit while you gather wood or build.'
       }
     ]
@@ -541,24 +596,28 @@ export const GUIDES: GuideChapter[] = [
     summary: 'Use Luminite Dust to upgrade Diamond gear to Platinum. Then upgrade Platinum with Hellstone, Shroomstone, or Scorchsteel.',
     steps: [
       {
-        title: '1. Use Luminite Dust as the template',
+        title: 'Use Luminite Dust as the template',
         body: 'Put Luminite Dust in the template slot of a standard Smithing Table. Dark Caverns gear does not use Netherite Upgrade Smithing Templates.'
       },
       {
-        title: '2. Platinum gear',
-        body: 'Craft a Platinum Ingot from 4 Platinum Pieces and 4 Iron Ingots. At a Smithing Table, use Luminite Dust and the ingot to upgrade Diamond gear. Platinum tools have 1,843 durability, 10 mining speed, and 20 enchantability.'
+        title: 'Platinum gear',
+        body: 'Craft a Platinum Ingot from 4 Platinum Pieces and 4 Iron Ingots. Use it with Luminite Dust to upgrade Diamond gear at a Smithing Table. Platinum tools have 1,843 durability, 10 mining speed, and 20 enchantability.',
+        recipeEntryIds: ['platinum_ingot', 'platinum_gear']
       },
       {
-        title: '3. Hellstone gear',
-        body: 'Mine Hellstone Ore for Hellstone Rock. Combine 4 rocks with 4 Diamonds to craft Hellstone. At a Smithing Table, use Luminite Dust and Hellstone to upgrade Platinum gear. A full armor set blocks all fire and lava damage.'
+        title: 'Hellstone gear',
+        body: 'Mine Hellstone Ore for Hellstone Rock. Combine 4 rocks with 4 Diamonds to craft Hellstone. Use it with Luminite Dust to upgrade Platinum gear at a Smithing Table. A full armor set blocks all fire and lava damage.',
+        recipeEntryIds: ['hellstone', 'hellstone_gear']
       },
       {
-        title: '4. Shroomstone gear',
-        body: 'Trade with Shroomies for Shroomstone Pieces. Combine 4 pieces with 4 Emeralds to craft Shroomstone. At a Smithing Table, use Luminite Dust and Shroomstone to upgrade Platinum gear. A full armor set grants Jump Boost II and blocks all fall damage.'
+        title: 'Shroomstone gear',
+        body: 'Trade with Shroomies for Shroomstone Pieces. Combine 4 pieces with 4 Emeralds to craft Shroomstone. Use it with Luminite Dust to upgrade Platinum gear at a Smithing Table. A full armor set grants Jump Boost II and blocks all fall damage.',
+        recipeEntryIds: ['shroomstone', 'shroomstone_gear']
       },
       {
-        title: '5. Scorchsteel armor',
-        body: 'Craft a Scorchsteel Ingot from 4 Scorchling Tails and 4 Iron Ingots. At a Smithing Table, use Luminite Dust and the ingot to upgrade Platinum armor. The full set conceals you from hostile monsters after you stand still for 1 second.'
+        title: 'Scorchsteel armor',
+        body: 'Craft a Scorchsteel Ingot from 4 Scorchling Tails and 4 Iron Ingots. Use it with Luminite Dust to upgrade Platinum armor at a Smithing Table. The full set conceals you from hostile monsters after you stand still for 1 second.',
+        recipeEntryIds: ['scorchsteel_ingot', 'scorchsteel_armor']
       }
     ]
   },
@@ -568,16 +627,17 @@ export const GUIDES: GuideChapter[] = [
     summary: 'Mine Hellstone, collect Scorched Berries, and hunt Scorchlings for armor materials.',
     steps: [
       {
-        title: '1. Eat Scorched Berries for Fire Resistance',
+        title: 'Eat Scorched Berries for Fire Resistance',
         body: 'Harvest Scorched Berries from bushes on Molten Carfstone. Eating one grants 5 seconds of Fire Resistance.'
       },
       {
-        title: '2. Mine Hellstone',
+        title: 'Mine Hellstone',
         body: 'Hellstone Ore generates inside Molten Carfstone. Mine it with a Diamond Pickaxe or better to collect Hellstone Rock. Hellstone Rock does not burn in fire or lava.'
       },
       {
-        title: '3. Craft Scorchsteel armor',
-        body: 'Defeat Scorchlings for Scorchling Tails. Combine 4 tails with 4 Iron Ingots for a Scorchsteel Ingot, then use Luminite Dust to upgrade Platinum armor at a Smithing Table.'
+        title: 'Craft Scorchsteel armor',
+        body: 'Defeat Scorchlings for Scorchling Tails. Combine 4 tails with 4 Iron Ingots for a Scorchsteel Ingot, then use it with Luminite Dust to upgrade Platinum armor at a Smithing Table.',
+        recipeEntryIds: ['scorchsteel_ingot', 'scorchsteel_armor']
       }
     ]
   },
@@ -587,15 +647,15 @@ export const GUIDES: GuideChapter[] = [
     summary: 'Find Shroomie Houses and trade for Shroomstone Pieces or a Corrupted Pearl.',
     steps: [
       {
-        title: '1. Find the Glimmershroom Forest',
+        title: 'Find the Glimmershroom Forest',
         body: 'Follow glowing cyan mushrooms through the caves until you reach glimmergrass. Shroomie Houses generate among giant glimmershrooms.'
       },
       {
-        title: '2. Trade with Shroomies',
+        title: 'Trade with Shroomies',
         body: 'Each Shroomie has five common offers and one rare offer. All Shroomies trade 2 Shroomstone Pieces for 1 Diamond. The Corrupted Pearl trade costs 4 Ender Pearls.'
       },
       {
-        title: '3. Build an underground base',
+        title: 'Build an underground base',
         body: 'No native monsters spawn in the Glimmershroom Forest. Monsters from nearby biomes and structures can enter it. Shroomlings remain neutral until provoked.'
       }
     ]

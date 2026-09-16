@@ -55,7 +55,10 @@ function ingredientSummary(recipe: CraftingRecipe): string {
 
 export const CraftingGrid: React.FC<CraftingGridProps> = ({ recipe }) => {
   const outputCount = recipe.output.count ?? 1;
-  const summary = `Use ${ingredientSummary(recipe)} to make ${countedItem(recipe.output.name, outputCount)}.`;
+  const ingredients = `Use ${ingredientSummary(recipe)} to make ${countedItem(recipe.output.name, outputCount)}.`;
+  const summary = recipe.shapeless
+    ? `${ingredients} The ingredients can go in any crafting-grid slots.`
+    : ingredients;
 
   return (
     <figure className="max-w-full space-y-2">

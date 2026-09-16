@@ -2,9 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useQueryState, parseAsString } from 'nuqs';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { GUIDES } from '../data/modData';
+import { CraftingGrid } from '../components/CraftingGrid';
 import { SmithingTable } from '../components/SmithingTable';
 import { PixelIcon } from '../components/PixelIcon';
+import { GUIDES, WIKI_ENTRIES, WikiEntry } from '../data/modData';
+
+const WIKI_ENTRY_BY_ID = new Map(WIKI_ENTRIES.map((entry) => [entry.id, entry]));
+
+function getRecipeEntries(ids: string[] | undefined): WikiEntry[] {
+  return (ids ?? [])
+    .map((id) => WIKI_ENTRY_BY_ID.get(id))
+    .filter((entry): entry is WikiEntry => Boolean(entry));
+}
 
 export const GuidesPage: React.FC = () => {
   const [guideParam, setGuideParam] = useQueryState(
@@ -115,48 +124,70 @@ export const GuidesPage: React.FC = () => {
               <span>Back to guides</span>
             </button>
             <div className="border-b border-[#232630] pb-4">
-              <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold break-words">
-                {activeGuide.title}
-              </h1>
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold break-words">
+                  {activeGuide.title}
+                </h1>
+                <span className="mc-tag shrink-0">
+                  {activeGuide.steps.length} {activeGuide.steps.length === 1 ? 'step' : 'steps'}
+                </span>
+              </div>
               <p className="text-xs sm:text-sm text-[#a0a7ba] mt-1.5 leading-relaxed">
                 {activeGuide.summary}
               </p>
             </div>
 
-            {/* Steps */}
-            <div className="space-y-6 text-sm leading-relaxed text-[#c6cbe0]">
-              {activeGuide.steps.map((step, idx) => (
-                <div key={step.title} className="space-y-2 border-b border-[#232630] pb-5 last:border-b-0">
-                  <h2 className="font-pixel text-sm sm:text-base text-white">
-                    {step.title}
-                  </h2>
-                  <p className="text-xs sm:text-sm text-[#a0a7ba] leading-relaxed">
-                    {step.body}
-                  </p>
+            <ol className="guide-steps text-sm leading-relaxed text-[#c6cbe0]">
+              {activeGuide.steps.map((step, idx) => {
+                const recipeEntries = getRecipeEntries(step.recipeEntryIds);
 
-                  {/* Inline visual for Smithing guide */}
-                  {activeGuide.id === 'smithing-and-gear-progression' && idx === 2 && (
-                    <div className="pt-2 space-y-1">
-                      <div className="font-pixel text-xs text-white pb-1">Smithing table recipe</div>
-                      <SmithingTable
-                        recipe={{
-                          template: { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
-                          base: { name: 'Platinum Sword', texture: 'textures/item/platinum_sword.png' },
-                          addition: { name: 'Hellstone', texture: 'textures/item/hellstone.png' },
-                          output: { name: 'Hellstone Sword', texture: 'textures/item/hellstone_sword.png' }
-                        }}
-                      />
+                return (
+                  <li key={step.title} className="guide-step">
+                    <div className="guide-step-heading">
+                      <span className="guide-step-number" aria-hidden="true">{idx + 1}</span>
+                      <h2 className="font-pixel text-sm sm:text-base text-white">
+                        {step.title}
+                      </h2>
                     </div>
-                  )}
-
-                  {step.note && (
-                    <p className="text-xs text-[#ffd276] border-l-2 border-[#55ffaf] pl-3 py-1 mt-2">
-                      {step.note}
+                    <p className="guide-step-body text-xs sm:text-sm text-[#a0a7ba] leading-relaxed">
+                      {step.body}
                     </p>
-                  )}
-                </div>
-              ))}
-            </div>
+
+                    {recipeEntries.length > 0 && (
+                      <div className="guide-recipes" aria-label={`${step.title} recipes`}>
+                        {recipeEntries.flatMap((entry) => [
+                          entry.recipe ? (
+                            <section key={`${entry.id}-crafting`} className="guide-recipe mc-inset">
+                              <div className="guide-recipe-heading">
+                                <h3 className="font-pixel text-xs text-white">{entry.recipe.output.name}</h3>
+                                <span className="mc-tag">Crafting recipe</span>
+                              </div>
+                              <CraftingGrid recipe={entry.recipe} />
+                            </section>
+                          ) : null,
+                          entry.smithing ? (
+                            <section key={`${entry.id}-smithing`} className="guide-recipe mc-inset">
+                              <div className="guide-recipe-heading">
+                                <h3 className="font-pixel text-xs text-white">{entry.smithing.output.name}</h3>
+                                <span className="mc-tag">Smithing table</span>
+                              </div>
+                              <SmithingTable recipe={entry.smithing} />
+                            </section>
+                          ) : null
+                        ])}
+                      </div>
+                    )}
+
+                    {step.note && (
+                      <aside className="guide-note">
+                        <span className="font-pixel text-[10px] text-[#55ffaf]">Good to know</span>
+                        <p className="text-xs text-[#ffd276]">{step.note}</p>
+                      </aside>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
           </article>
         </div>
       </main>
