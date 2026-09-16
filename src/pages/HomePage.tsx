@@ -197,31 +197,26 @@ const EquipmentPath: React.FC = () => (
   <section className="space-y-5" aria-labelledby="equipment-heading">
     <SectionHeading
       id="equipment-heading"
-      title="Choose what your armor solves"
+      title="Choose what your gear solves"
       description="Luminite Dust carries Diamond equipment into Platinum, then into specialized cavern gear."
       href="./guides/?guide=smithing-and-gear-progression"
       linkLabel="Smithing guide"
     />
     <div className="equipment-path mc-box">
-      {GEAR.map((tier, index) => (
+      {GEAR.map((tier) => (
         <article key={tier.name} className="equipment-tier">
-          <div className="flex items-center gap-3">
-            <span className="mc-slot shrink-0">
-              <TextureImage
-                texture={tier.texture}
-                alt={tier.name}
-                className="h-6 w-6 pixel-art"
-                width={24}
-                height={24}
-              />
-            </span>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-[11px] text-[#747c90]">{index + 1}</span>
-                <h3 className={`font-pixel text-base ${tier.color}`}>{tier.name}</h3>
-              </div>
-              <p className="mt-1 text-sm text-[#aeb5c5]">{tier.description}</p>
-            </div>
+          <span className="mc-slot shrink-0">
+            <TextureImage
+              texture={tier.texture}
+              alt={tier.name}
+              className="h-6 w-6 pixel-art"
+              width={24}
+              height={24}
+            />
+          </span>
+          <div className="min-w-0 pt-0.5">
+            <h3 className={`font-pixel text-base leading-tight ${tier.color}`}>{tier.name}</h3>
+            <p className="mt-2 text-sm text-[#aeb5c5]">{tier.description}</p>
           </div>
         </article>
       ))}
@@ -286,11 +281,6 @@ export const HomePage: React.FC = () => {
             <p className="max-w-xl text-base leading-relaxed text-[#bbc2d1] sm:text-lg">
               Descend beneath bedrock into a cave dimension with four biomes, specialized equipment, native creatures, and its own route home.
             </p>
-            <ul className="compatibility-line" aria-label="Supported game configuration">
-              <li>Minecraft 1.21.1</li>
-              <li>NeoForge</li>
-              <li>GeckoLib required</li>
-            </ul>
             <HomeActions />
           </div>
 

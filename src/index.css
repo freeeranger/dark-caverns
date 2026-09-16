@@ -373,31 +373,10 @@ html {
   padding: 1.5rem;
 }
 
-.compatibility-line {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  color: #8e95a8;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-
-.compatibility-line li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.compatibility-line li::before {
-  width: 0.4rem;
-  height: 0.4rem;
-  background: #55ffaf;
-  border: 1px solid #05211f;
-  content: '';
-}
-
 .home-hero-media {
   min-width: 0;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
   background: #0c0d10;
   border-top: 2px solid #000;
 }
@@ -405,9 +384,9 @@ html {
 .home-hero-media img {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   object-fit: cover;
+  object-position: center 58%;
 }
 
 .trailer-section {
@@ -487,6 +466,11 @@ html {
 }
 
 .equipment-tier {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-content: start;
+  align-items: start;
+  gap: 1rem;
   min-width: 0;
   padding: 1.25rem;
   border-bottom: 1px solid #2a2c34;
@@ -591,9 +575,7 @@ html {
   }
 
   .home-hero-media {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    aspect-ratio: auto;
     border-top: 0;
     border-left: 2px solid #000;
   }
