@@ -48,8 +48,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Rocky Caverns',
     category: 'biomes',
     texture: 'textures/block/carfstone.png',
-    description: 'A Carfstone cave biome with large chambers, layered passages, stone bridges, stalactites, and stalagmites.',
-    details: 'Luminite Ore is common here and can appear on exposed Carfstone formations. Platinum and the six Overworld ores also generate throughout the biome.',
+    description: 'Rocky Caverns has Carfstone chambers, layered passages, stone bridges, stalactites, and stalagmites.',
+    details: 'Luminite Ore appears throughout the biome and on exposed Carfstone formations. Platinum and the six Overworld ores also generate here.',
     stats: [
       { label: 'Stone', value: 'Carfstone' },
       { label: 'Ores', value: 'Luminite, Platinum, Coal, Iron, Gold, Redstone, Lapis, Diamond' },
@@ -61,11 +61,11 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Molten Depths',
     category: 'biomes',
     texture: 'textures/block/molten_carfstone.png',
-    description: 'A hot cave biome made of Molten Carfstone, ash patches, magma, and lava springs.',
-    details: 'Hellstone Ore only replaces Molten Carfstone. Scorched Berry bushes provide short Fire Resistance, while Scorchlings and Scorchhounds make open ground dangerous.',
+    description: 'Molten Depths has Molten Carfstone, ash patches, magma, and lava springs.',
+    details: 'Hellstone Ore replaces only Molten Carfstone. Scorched Berries grant short Fire Resistance. Scorchlings and Scorchhounds attack on open ground.',
     stats: [
       { label: 'Stone', value: 'Molten Carfstone, Ashy Molten Carfstone' },
-      { label: 'Native Ore', value: 'Hellstone Ore' },
+      { label: 'Native ore', value: 'Hellstone Ore' },
       { label: 'Plants', value: 'Scorched Berries, Charred Grass, Ashy Charred Grass' },
       { label: 'Fauna', value: 'Scorchlings, Scorchhounds, Molteners' }
     ]
@@ -75,8 +75,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Glimmershroom Forest',
     category: 'biomes',
     texture: 'textures/block/glimmershroom.png',
-    description: 'A glowing fungal cave filled with tall glimmershrooms and glimmergrass.',
-    details: 'The biome has no native monster spawns. Shroomies trade useful blocks and progression materials, while neutral Shroomlings attack only after they are provoked.',
+    description: 'Tall glimmershrooms and glimmergrass light this fungal cave biome.',
+    details: 'No native monsters spawn here. Shroomies trade blocks and gear materials. Shroomlings remain neutral until provoked.',
     stats: [
       { label: 'Flora', value: 'Glimmershrooms, Glimmergrass' },
       { label: 'Settlements', value: 'Shroomie Houses' },
@@ -88,8 +88,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Tangled Hallow',
     category: 'biomes',
     texture: 'textures/block/twistwood_log.png',
-    description: 'A dense subterranean forest with overgrown Carfstone, twisted Twistwood trees, and teal surface lakes.',
-    details: 'Water Sproutlets grow across the lakes. Twistwood saplings grow without sunlight, so logs and planks can be farmed inside the Dark Caverns.',
+    description: 'Tangled Hallow is a subterranean forest with Overgrown Carfstone, twisted Twistwood trees, and teal surface lakes.',
+    details: 'Water Sproutlets grow across the lakes. Twistwood saplings grow without sunlight, so you can farm logs and planks inside the Dark Caverns.',
     stats: [
       { label: 'Flora', value: 'Twistwood Trees, Undersprouts, Water Sproutlets' },
       { label: 'Ground', value: 'Overgrown Carfstone' },
@@ -103,8 +103,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Key to the Caverns',
     category: 'items',
     texture: 'textures/item/key_to_the_caverns.png',
-    description: 'Used on Cracked Bedrock in the Overworld floor to open a gateway into the Dark Caverns.',
-    details: 'The key waits in the Forgotten Tower. Using it replaces one Cracked Bedrock block with a permanent gateway. The linked return gateway forms in the Dark Caverns ceiling above a lit ladder shaft that opens onto safe cave ground.',
+    description: 'Use the key on Cracked Bedrock in the Overworld floor to open a gateway into the Dark Caverns.',
+    details: 'The Forgotten Tower\'s top chest contains the key. The key replaces one Cracked Bedrock block with a permanent gateway. A linked return gateway appears in the Dark Caverns ceiling above a lit ladder shaft that reaches safe cave ground.',
     stats: [
       { label: 'Source', value: 'Forgotten Tower chest' },
       { label: 'Target', value: 'Cracked Bedrock' },
@@ -116,12 +116,12 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Throwable Luminite Torch',
     category: 'items',
     texture: 'textures/item/throwable_luminite_torch.png',
-    description: 'A throwable variant of the Luminite Torch that places torches on impact.',
-    details: 'Thrown like a snowball. It places a Luminite Torch on the top or side of a valid block, and drops itself if the torch cannot be placed.',
+    description: 'Throw this Luminite Torch to place it where it lands.',
+    details: 'It travels like a snowball and places a Luminite Torch on the top or side of a valid block. If placement fails, the item drops instead.',
     stats: [
       { label: 'Type', value: 'Throwable Luminite Torch' },
       { label: 'Placement', value: 'Places Luminite Torch on impact' },
-      { label: 'Crafting Yield', value: '4 Throwable Luminite Torches' }
+      { label: 'Crafting yield', value: '4 Throwable Luminite Torches' }
     ],
     recipe: {
       slots: [
@@ -139,11 +139,11 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Corrupted Pearl',
     category: 'items',
     texture: 'textures/item/corrupted_pearl.png',
-    description: 'Teleports the nearest non-player creature near you to wherever the pearl lands.',
-    details: 'A rare Shroomie trade that costs 4 Ender Pearls. The Corrupted Pearl keeps you in place and moves the nearest non-player creature within 5 blocks of you to the landing point.',
+    description: 'Throw the pearl to move a nearby non-player creature to its landing point.',
+    details: 'Shroomies can offer it as a rare trade for 4 Ender Pearls. It moves the nearest non-player creature within 5 blocks of you, but it does not move you.',
     stats: [
       { label: 'Source', value: 'Shroomie trade' },
-      { label: 'Stack Size', value: '16' },
+      { label: 'Stack size', value: '16' },
       { label: 'Effect', value: 'Teleports nearest mob' }
     ]
   },
@@ -152,11 +152,11 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Shroombomb',
     category: 'items',
     texture: 'textures/item/shroombomb.png',
-    description: 'An impact explosive made from mushrooms and gunpowder.',
-    details: 'Explodes as soon as it hits a block or creature. Its default explosion power is 2.5, compared with 4.0 for TNT, and the server config can change it.',
+    description: 'A Shroombomb explodes when it hits a block or creature.',
+    details: 'Its default explosion power is 2.5. TNT has an explosion power of 4.0. Server owners can change the Shroombomb value in the config.',
     stats: [
       { label: 'Detonation', value: 'On impact' },
-      { label: 'Crafting Yield', value: '2 Shroombombs' }
+      { label: 'Crafting yield', value: '2 Shroombombs' }
     ],
     recipe: {
       slots: [
@@ -177,11 +177,11 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Luminite Dust',
     category: 'materials',
     texture: 'textures/item/luminite_dust.png',
-    description: 'The smithing template catalyst for all Cavern gear upgrades.',
+    description: 'Use Luminite Dust in the template slot for every Cavern gear upgrade.',
     details: 'Carfstone Luminite Ore generates throughout the Dark Caverns and on exposed Carfstone formations. Put Luminite Dust in the template slot of a Smithing Table for Platinum, Hellstone, Shroomstone, and Scorchsteel upgrades.',
     stats: [
-      { label: 'Smithing Role', value: 'Upgrade Template Catalyst' },
-      { label: 'Ore Source', value: 'Carfstone Luminite Ore' }
+      { label: 'Smithing role', value: 'Template item' },
+      { label: 'Ore source', value: 'Carfstone Luminite Ore' }
     ]
   },
   {
@@ -189,11 +189,11 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Platinum Ingot',
     category: 'materials',
     texture: 'textures/item/platinum_ingot.png',
-    description: 'Forged from 4 Platinum Pieces and 4 Iron Ingots.',
+    description: 'Combine 4 Platinum Pieces and 4 Iron Ingots to craft a Platinum Ingot.',
     details: 'Carfstone Platinum Ore generates below Y = 80 throughout the Dark Caverns and drops Platinum Pieces. Use a Platinum Ingot with Luminite Dust at a Smithing Table to upgrade Diamond gear.',
     stats: [
-      { label: 'Recipe', value: '4 Platinum Pieces + 4 Iron Ingots' },
-      { label: 'Ore Height', value: 'Below Y = 80' }
+      { label: 'Recipe', value: '4 Platinum Pieces and 4 Iron Ingots' },
+      { label: 'Ore height', value: 'Below Y = 80' }
     ],
     recipe: {
       slots: [
@@ -215,11 +215,11 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Hellstone',
     category: 'materials',
     texture: 'textures/item/hellstone.png',
-    description: 'Crafted from 4 Hellstone Rocks and 4 Diamonds.',
-    details: 'Hellstone Rock drops from Hellstone Ore in the Molten Depths. Hellstone does not burn in fire or lava and upgrades Platinum equipment into Hellstone gear at a Smithing Table.',
+    description: 'Combine 4 Hellstone Rocks and 4 Diamonds to craft Hellstone.',
+    details: 'Hellstone Rock drops from Hellstone Ore in the Molten Depths and does not burn in fire or lava. Use Hellstone at a Smithing Table to upgrade Platinum equipment into Hellstone gear.',
     stats: [
-      { label: 'Recipe', value: '4 Hellstone Rocks + 4 Diamonds' },
-      { label: 'Item Fire Resistance', value: 'Does not burn' }
+      { label: 'Recipe', value: '4 Hellstone Rocks and 4 Diamonds' },
+      { label: 'Item fire resistance', value: 'Does not burn' }
     ],
     recipe: {
       slots: [
@@ -241,11 +241,11 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Shroomstone',
     category: 'materials',
     texture: 'textures/item/shroomstone.png',
-    description: 'Crafted from 4 Shroomstone Pieces and 4 Emeralds.',
-    details: 'Shroomies trade 2 Shroomstone Pieces for 1 Diamond. Finished Shroomstone upgrades Platinum equipment into Shroomstone gear at a Smithing Table.',
+    description: 'Combine 4 Shroomstone Pieces and 4 Emeralds to craft Shroomstone.',
+    details: 'Shroomies trade 2 Shroomstone Pieces for 1 Diamond. Use Shroomstone at a Smithing Table to upgrade Platinum equipment into Shroomstone gear.',
     stats: [
-      { label: 'Piece Source', value: 'Shroomie trade' },
-      { label: 'Recipe', value: '4 Shroomstone Pieces + 4 Emeralds' }
+      { label: 'Piece source', value: 'Shroomie trade' },
+      { label: 'Recipe', value: '4 Shroomstone Pieces and 4 Emeralds' }
     ],
     recipe: {
       slots: [
@@ -267,10 +267,10 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Scorchsteel Ingot',
     category: 'materials',
     texture: 'textures/item/scorchsteel_ingot.png',
-    description: 'Crafted from 4 Scorchling Tails and 4 Iron Ingots.',
-    details: 'Use it with Luminite Dust at a Smithing Table to upgrade Platinum armor into Scorchsteel armor.',
+    description: 'Combine 4 Scorchling Tails and 4 Iron Ingots to craft a Scorchsteel Ingot.',
+    details: 'Use the ingot with Luminite Dust at a Smithing Table to upgrade Platinum armor into Scorchsteel armor.',
     stats: [
-      { label: 'Recipe', value: '4 Scorchling Tails + 4 Iron Ingots' }
+      { label: 'Recipe', value: '4 Scorchling Tails and 4 Iron Ingots' }
     ],
     recipe: {
       slots: [
@@ -294,13 +294,13 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Platinum Armor and Tools',
     category: 'gear',
     texture: 'textures/item/platinum_sword.png',
-    description: 'Upgrades Diamond gear at the smithing table using Platinum Ingots.',
-    details: 'Platinum tools mine faster than Netherite tools, while their durability and damage sit between Diamond and Netherite. Platinum armor has 2.5 toughness and the whole tier has 20 enchantability. Platinum gear upgrades into Hellstone or Shroomstone gear, and Platinum armor also upgrades into Scorchsteel.',
+    description: 'Use Platinum Ingots to upgrade Diamond gear at a Smithing Table.',
+    details: 'Platinum tools mine faster than Netherite tools. Their durability and damage fall between Diamond and Netherite. Platinum armor has 2.5 toughness, and every Platinum item has 20 enchantability. Upgrade Platinum gear to Hellstone or Shroomstone. You can also upgrade Platinum armor to Scorchsteel.',
     stats: [
-      { label: 'Tool Durability', value: '1,843' },
-      { label: 'Mining Speed', value: '10' },
+      { label: 'Tool durability', value: '1,843' },
+      { label: 'Mining speed', value: '10' },
       { label: 'Enchantability', value: '20' },
-      { label: 'Smithing Catalyst', value: 'Luminite Dust' }
+      { label: 'Smithing item', value: 'Luminite Dust' }
     ],
     smithing: {
       template: { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
@@ -314,12 +314,12 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Hellstone Armor and Tools',
     category: 'gear',
     texture: 'textures/item/hellstone_sword.png',
-    description: 'Upgrades Platinum gear. A full armor set blocks fire and lava damage.',
-    details: 'Each armor piece reduces fire and lava damage by 25%. Wearing the full set grants complete immunity to fire and lava. Fully charged attacks ignite targets for 8 seconds.',
+    description: 'Use Hellstone to upgrade Platinum gear. A full armor set blocks fire and lava damage.',
+    details: 'Each armor piece cuts fire and lava damage by 25%. The full set blocks all fire and lava damage. Fully charged attacks set targets on fire for 8 seconds.',
     stats: [
-      { label: 'Armor Bonus', value: '25% Fire/Lava damage reduction per piece' },
-      { label: 'Full Set Bonus', value: '100% Fire and Lava immunity' },
-      { label: 'Tool Trait', value: 'Fully charged attacks ignite for 8 seconds' }
+      { label: 'Armor bonus', value: '25% less fire and lava damage per piece' },
+      { label: 'Full set bonus', value: 'Blocks all fire and lava damage' },
+      { label: 'Tool trait', value: 'Fully charged attacks set targets on fire for 8 seconds' }
     ],
     smithing: {
       template: { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
@@ -333,12 +333,12 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Shroomstone Armor and Tools',
     category: 'gear',
     texture: 'textures/item/shroomstone_sword.png',
-    description: 'Upgrades Platinum gear. A full armor set grants Jump Boost II and blocks fall damage.',
-    details: 'Each armor piece reduces fall damage by 25%. Wearing the full set grants Jump Boost II and negates all fall damage. Fully charged strikes launch targets into the air.',
+    description: 'Use Shroomstone to upgrade Platinum gear. A full armor set grants Jump Boost II and blocks fall damage.',
+    details: 'Each armor piece cuts fall damage by 25%. The full set grants Jump Boost II and blocks all fall damage. Fully charged attacks launch targets into the air.',
     stats: [
-      { label: 'Armor Bonus', value: '25% Fall damage reduction per piece' },
-      { label: 'Full Set Bonus', value: 'Jump Boost II + 100% Fall Negation' },
-      { label: 'Tool Trait', value: 'Fully charged attacks launch targets upward' }
+      { label: 'Armor bonus', value: '25% less fall damage per piece' },
+      { label: 'Full set bonus', value: 'Jump Boost II and no fall damage' },
+      { label: 'Tool trait', value: 'Fully charged attacks launch targets upward' }
     ],
     smithing: {
       template: { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
@@ -352,12 +352,12 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Scorchsteel Armor',
     category: 'gear',
     texture: 'textures/item/scorchsteel_chestplate.png',
-    description: 'Upgrades Platinum armor. Stand still to hide from monsters.',
-    details: 'At a Smithing Table, combine Luminite Dust, a piece of Platinum armor, and a Scorchsteel Ingot. Wearing the full set and standing still for 1 second applies invisibility and clears hostile monster targets. Moving, attacking, or taking damage ends concealment.',
+    description: 'Use a Scorchsteel Ingot to upgrade Platinum armor. Stand still to hide from monsters.',
+    details: 'At a Smithing Table, combine Luminite Dust, a piece of Platinum armor, and a Scorchsteel Ingot. After you stand still for 1 second, the full set makes you invisible and causes hostile monsters to lose their target. Moving, attacking, or taking damage ends the effect.',
     stats: [
-      { label: 'Full Set Bonus', value: 'Hostile monsters lose their target' },
+      { label: 'Full set bonus', value: 'Hostile monsters lose their target' },
       { label: 'Delay', value: '1.0 second standing still' },
-      { label: 'Breaks On', value: 'Moving, attacking, or taking damage' }
+      { label: 'Breaks on', value: 'Moving, attacking, or taking damage' }
     ],
     smithing: {
       template: { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
@@ -371,10 +371,10 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Luminite Helmet',
     category: 'gear',
     texture: 'textures/item/luminite_helmet.png',
-    description: 'Lights the area around you while worn.',
-    details: 'Crafted from 5 Luminite Dust or bought from a Shroomie for 10 Iron Ingots. It creates client-side dynamic light while worn. Players can disable the effect in the client config.',
+    description: 'The Luminite Helmet lights the area around you while worn.',
+    details: 'Craft it with 5 Luminite Dust or buy it from a Shroomie for 10 Iron Ingots. The helmet creates client-side dynamic light while worn. You can disable the effect in the client config.',
     stats: [
-      { label: 'Light Source', value: 'Dynamic light while worn' },
+      { label: 'Light source', value: 'Dynamic light while worn' },
       { label: 'Recipe', value: '5 Luminite Dust' },
       { label: 'Trade', value: '10 Iron Ingots' }
     ],
@@ -398,13 +398,13 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Shroomie',
     category: 'mobs',
     texture: 'textures/item/shroomie_spawn_egg.png',
-    description: 'Peaceful traders found in the Glimmershroom Forest.',
+    description: 'Shroomies are peaceful traders in the Glimmershroom Forest.',
     details: 'Each Shroomie offers five common trades, one guaranteed Shroomstone Piece trade, and one rare trade. Their prices use Luminite Dust, Iron Ingots, Gold Ingots, Diamonds, Ender Pearls, or Emeralds, depending on the offer.',
     stats: [
-      { label: 'Behavior', value: 'Passive / Trader' },
+      { label: 'Behavior', value: 'Passive trader' },
       { label: 'Location', value: 'Glimmershroom Forest' },
-      { label: 'Progression Trade', value: '1 Diamond for 2 Shroomstone Pieces' },
-      { label: 'Pearl Trade', value: '4 Ender Pearls for 1 Corrupted Pearl' }
+      { label: 'Shroomstone trade', value: '1 Diamond for 2 Shroomstone Pieces' },
+      { label: 'Pearl trade', value: '4 Ender Pearls for 1 Corrupted Pearl' }
     ]
   },
   {
@@ -412,25 +412,25 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Camorock',
     category: 'mobs',
     texture: 'textures/item/camorock_spawn_egg.png',
-    description: 'A timid Carfstone creature that flees from nearby players.',
-    details: 'Camorocks wander the Rocky Caverns and Tangled Hallow. Their weighted loot includes Carfstone, Raw Iron, Gold Nuggets, Luminite Dust, and a rare Diamond.',
+    description: 'Camorocks are timid Carfstone creatures that flee nearby players.',
+    details: 'Camorocks wander the Rocky Caverns and Tangled Hallow. They can drop Carfstone, Raw Iron, Gold Nuggets, Luminite Dust, or a rare Diamond.',
     stats: [
-      { label: 'Behavior', value: 'Passive / Avoids players' },
+      { label: 'Behavior', value: 'Passive, avoids players' },
       { label: 'Location', value: 'Rocky Caverns, Tangled Hallow' },
-      { label: 'Rare Drop', value: 'Diamond' }
+      { label: 'Rare drop', value: 'Diamond' }
     ]
   },
   {
     id: 'scorchling_hound',
-    name: 'Scorchling & Scorchhound',
+    name: 'Scorchling and Scorchhound',
     category: 'mobs',
     texture: 'textures/item/scorchhound_spawn_egg.png',
-    description: 'Predators of the Molten Depths.',
-    details: 'Scorchlings leap at players and drop the tails needed for Scorchsteel. Scorchhounds have 40 health, throw players with melee attacks, and drop Scorched Meat.',
+    description: 'Scorchlings and Scorchhounds hunt players in the Molten Depths.',
+    details: 'Scorchlings leap at players and drop the tails used to craft Scorchsteel. Scorchhounds have 40 health. Their melee attacks throw players, and they drop Scorched Meat.',
     stats: [
       { label: 'Behavior', value: 'Hostile' },
       { label: 'Location', value: 'Molten Depths' },
-      { label: 'Key Drops', value: 'Scorchling Tails, Scorched Meat' }
+      { label: 'Key drops', value: 'Scorchling Tails, Scorched Meat' }
     ]
   },
   {
@@ -438,12 +438,12 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Luminite Fox',
     category: 'mobs',
     texture: 'textures/item/luminite_fox_spawn_egg.png',
-    description: 'A passive creature found in Rocky Caverns and Tangled Hallow.',
-    details: 'Luminite Dust attracts Luminite Foxes. A fox killed by a player has a 25% chance to drop one Luminite Dust.',
+    description: 'Luminite Foxes are passive creatures in Rocky Caverns and Tangled Hallow.',
+    details: 'Luminite Dust attracts Luminite Foxes. When a player kills one, it has a 25% chance to drop one Luminite Dust.',
     stats: [
       { label: 'Behavior', value: 'Passive' },
       { label: 'Location', value: 'Rocky Caverns, Tangled Hallow' },
-      { label: 'Tempt Item', value: 'Luminite Dust' }
+      { label: 'Tempt item', value: 'Luminite Dust' }
     ]
   },
   {
@@ -451,8 +451,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Luminite Golem',
     category: 'mobs',
     texture: 'textures/item/luminite_golem_spawn_egg.png',
-    description: 'A slow, armored monster found in Rocky Caverns and Tangled Hallow.',
-    details: 'Luminite Golems have 40 health, 10 armor, strong knockback resistance, and a heavy attack that launches its target. They drop 3 to 6 Luminite Dust and 1 to 3 Carfstone.',
+    description: 'The Luminite Golem is a slow, armored monster in Rocky Caverns and Tangled Hallow.',
+    details: 'It has 40 health, 10 armor, strong knockback resistance, and a heavy attack that launches its target. It drops 3 to 6 Luminite Dust and 1 to 3 Carfstone.',
     stats: [
       { label: 'Behavior', value: 'Hostile' },
       { label: 'Location', value: 'Rocky Caverns, Tangled Hallow' },
@@ -464,8 +464,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Shroomling',
     category: 'mobs',
     texture: 'textures/item/shroomling_spawn_egg.png',
-    description: 'A neutral creature native to the Glimmershroom Forest.',
-    details: 'Shroomlings attack after they are provoked and alert nearby Shroomlings. They drop 1 to 3 Glimmershrooms before Looting bonuses.',
+    description: 'Shroomlings are neutral creatures in the Glimmershroom Forest.',
+    details: 'Shroomlings attack players who provoke them and alert nearby Shroomlings. They drop 1 to 3 Glimmershrooms before Looting bonuses.',
     stats: [
       { label: 'Behavior', value: 'Neutral' },
       { label: 'Location', value: 'Glimmershroom Forest' },
@@ -477,12 +477,12 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Moltener',
     category: 'mobs',
     texture: 'textures/item/moltener_spawn_egg.png',
-    description: 'A passive creature found in the Molten Depths.',
+    description: 'Molteners are passive creatures in the Molten Depths.',
     details: 'Scorched Berries attract Molteners. They can drop Fire Charges or Gold Nuggets.',
     stats: [
       { label: 'Behavior', value: 'Passive' },
       { label: 'Location', value: 'Molten Depths' },
-      { label: 'Tempt Item', value: 'Scorched Berries' }
+      { label: 'Tempt item', value: 'Scorched Berries' }
     ]
   }
 ];
@@ -491,7 +491,7 @@ export const GUIDES: GuideChapter[] = [
   {
     id: 'getting-to-the-caverns',
     title: 'Getting to the caverns',
-    summary: 'Find the Forgotten Tower, claim the key, and open a Bedrock Gateway.',
+    summary: 'Buy the Forgotten Tower map, take the key from the tower, and use it on Cracked Bedrock.',
     steps: [
       {
         title: '1. Buy the Forgotten Tower map',
@@ -503,31 +503,31 @@ export const GUIDES: GuideChapter[] = [
       },
       {
         title: '3. Dig down to bedrock',
-        body: 'Mine down to the Overworld bedrock floor and look for Cracked Bedrock. It generates in small veins throughout the bottom bedrock layer.'
+        body: 'Mine down to the Overworld bedrock floor and look for Cracked Bedrock. Small veins appear throughout the bottom bedrock layer.'
       },
       {
         title: '4. Open the gateway',
         body: 'Use the Key on Cracked Bedrock to replace that block with a permanent gateway, then step onto it.',
-        note: 'The linked return gateway sits in the Dark Caverns ceiling. Follow the lights down the enclosed ladder shaft, then jump into the gateway overhead when you want to return.'
+        note: 'The return gateway is in the Dark Caverns ceiling. Follow the lights down the enclosed ladder shaft. To return, jump into the gateway overhead.'
       }
     ]
   },
   {
     id: 'exploring-the-tangled-hallow',
     title: 'Exploring the Tangled Hallow',
-    summary: 'Find surface lakes, harvest Twistwood, and prepare for the biome\'s hostile spawns.',
+    summary: 'Find the lakes and harvest Twistwood. Bring light for hostile mobs.',
     steps: [
       {
         title: '1. Find the forest floor',
-        body: 'Look for Overgrown Carfstone covered with Undersprouts and dense Twistwood trees. The biome also has its own music and teal water color.'
+        body: 'Overgrown Carfstone, Undersprouts, and dense Twistwood trees mark the biome. Its water is teal, and it has its own music.'
       },
       {
         title: '2. Search the surface lakes',
-        body: 'The lakes cut into open cavern floors rather than hiding underground. Water Sproutlets grow on their surfaces and can be collected as the biome\'s alternative to Lily Pads.'
+        body: 'Surface lakes cut into open cavern floors. Water Sproutlets grow on the water and replace Lily Pads in this biome.'
       },
       {
         title: '3. Farm Twistwood underground',
-        body: 'Twistwood saplings grow without sunlight. Replant saplings to produce renewable logs, planks, doors, and trapdoors inside the dimension.'
+        body: 'Twistwood saplings grow without sunlight. Replant them to farm logs and planks inside the dimension. You can also craft Twistwood doors and trapdoors.'
       },
       {
         title: '4. Watch for golems',
@@ -538,45 +538,45 @@ export const GUIDES: GuideChapter[] = [
   {
     id: 'smithing-and-gear-progression',
     title: 'Smithing and gear progression',
-    summary: 'Use Luminite Dust to upgrade Diamond gear and choose a later specialization.',
+    summary: 'Use Luminite Dust to upgrade Diamond gear to Platinum. Then upgrade Platinum with Hellstone, Shroomstone, or Scorchsteel.',
     steps: [
       {
-        title: '1. Luminite dust as upgrade catalyst',
-        body: 'Dark Caverns gear upgrades use Luminite Dust in the template slot at a standard smithing table instead of Netherite upgrade templates.'
+        title: '1. Use Luminite Dust as the template',
+        body: 'Put Luminite Dust in the template slot of a standard Smithing Table. Dark Caverns gear does not use Netherite Upgrade Smithing Templates.'
       },
       {
         title: '2. Platinum gear',
-        body: 'Combine 4 Platinum Pieces and 4 Iron Ingots for a Platinum Ingot. At the Smithing Table, combine Luminite Dust, Diamond gear, and a Platinum Ingot. Platinum tools have 1,843 durability, 10 mining speed, and 20 enchantability.'
+        body: 'Craft a Platinum Ingot from 4 Platinum Pieces and 4 Iron Ingots. At a Smithing Table, use Luminite Dust and the ingot to upgrade Diamond gear. Platinum tools have 1,843 durability, 10 mining speed, and 20 enchantability.'
       },
       {
         title: '3. Hellstone gear',
-        body: 'Mine Hellstone Ore for Hellstone Rock, then combine 4 rocks with 4 Diamonds to make Hellstone. At the Smithing Table, combine Luminite Dust, Platinum gear, and Hellstone. A full armor set blocks all fire and lava damage.'
+        body: 'Mine Hellstone Ore for Hellstone Rock. Combine 4 rocks with 4 Diamonds to craft Hellstone. At a Smithing Table, use Luminite Dust and Hellstone to upgrade Platinum gear. A full armor set blocks all fire and lava damage.'
       },
       {
         title: '4. Shroomstone gear',
-        body: 'Trade with Shroomies for Shroomstone Pieces, then combine 4 pieces with 4 Emeralds to make Shroomstone. At the Smithing Table, combine Luminite Dust, Platinum gear, and Shroomstone. A full armor set grants Jump Boost II and blocks all fall damage.'
+        body: 'Trade with Shroomies for Shroomstone Pieces. Combine 4 pieces with 4 Emeralds to craft Shroomstone. At a Smithing Table, use Luminite Dust and Shroomstone to upgrade Platinum gear. A full armor set grants Jump Boost II and blocks all fall damage.'
       },
       {
         title: '5. Scorchsteel armor',
-        body: 'Combine 4 Scorchling Tails with 4 Iron Ingots for a Scorchsteel Ingot. At the Smithing Table, combine Luminite Dust, Platinum armor, and the ingot. A full set conceals you from hostile monsters after you stand still for 1 second.'
+        body: 'Craft a Scorchsteel Ingot from 4 Scorchling Tails and 4 Iron Ingots. At a Smithing Table, use Luminite Dust and the ingot to upgrade Platinum armor. The full set conceals you from hostile monsters after you stand still for 1 second.'
       }
     ]
   },
   {
     id: 'surviving-the-molten-depths',
     title: 'Surviving the Molten Depths',
-    summary: 'Harvest Hellstone, gather Scorched Berries, and hunt Scorchlings.',
+    summary: 'Mine Hellstone, collect Scorched Berries, and hunt Scorchlings for armor materials.',
     steps: [
       {
-        title: '1. Scorched berries for quick fire resistance',
+        title: '1. Eat Scorched Berries for Fire Resistance',
         body: 'Harvest Scorched Berries from bushes on Molten Carfstone. Eating one grants 5 seconds of Fire Resistance.'
       },
       {
-        title: '2. Mining Hellstone',
-        body: 'Hellstone Ore generates inside Molten Carfstone. Mine it with a Diamond Pickaxe or better to collect Hellstone Rock. The dropped rock does not burn in fire or lava.'
+        title: '2. Mine Hellstone',
+        body: 'Hellstone Ore generates inside Molten Carfstone. Mine it with a Diamond Pickaxe or better to collect Hellstone Rock. Hellstone Rock does not burn in fire or lava.'
       },
       {
-        title: '3. Crafting Scorchsteel armor',
+        title: '3. Craft Scorchsteel armor',
         body: 'Defeat Scorchlings for Scorchling Tails. Combine 4 tails with 4 Iron Ingots for a Scorchsteel Ingot, then use Luminite Dust to upgrade Platinum armor at a Smithing Table.'
       }
     ]
@@ -584,19 +584,19 @@ export const GUIDES: GuideChapter[] = [
   {
     id: 'shroomie-trading-and-settlements',
     title: 'Shroomie trading and settlements',
-    summary: 'Find Shroomie Houses and check each trader for common, progression, and rare offers.',
+    summary: 'Find Shroomie Houses and trade for Shroomstone Pieces or a Corrupted Pearl.',
     steps: [
       {
-        title: '1. Locating the Glimmershroom Forest',
-        body: 'Follow glowing cyan mushrooms through cave tunnels until stone gives way to glimmergrass. Shroomie houses generate naturally among giant glimmershrooms.'
+        title: '1. Find the Glimmershroom Forest',
+        body: 'Follow glowing cyan mushrooms through the caves until you reach glimmergrass. Shroomie Houses generate among giant glimmershrooms.'
       },
       {
-        title: '2. Bartering with Shroomies',
-        body: 'Each Shroomie has five common offers, a guaranteed trade of 1 Diamond for 2 Shroomstone Pieces, and one rare offer. The Corrupted Pearl rare trade costs 4 Ender Pearls.'
+        title: '2. Trade with Shroomies',
+        body: 'Each Shroomie has five common offers and one rare offer. All Shroomies trade 2 Shroomstone Pieces for 1 Diamond. The Corrupted Pearl trade costs 4 Ender Pearls.'
       },
       {
-        title: '3. Building an underground base',
-        body: 'The Glimmershroom Forest has no native monster spawns, though nearby biomes and structures can still bring danger. Shroomlings remain neutral until provoked.'
+        title: '3. Build an underground base',
+        body: 'No native monsters spawn in the Glimmershroom Forest. Monsters from nearby biomes and structures can enter it. Shroomlings remain neutral until provoked.'
       }
     ]
   }

@@ -71,7 +71,7 @@ export const GuidesPage: React.FC = () => {
             aria-label="Guide chapters"
           >
             <div className="mc-panel-header -mx-4 -mt-4 p-3 border-b-2 border-black">
-              <span className="font-pixel text-xs sm:text-sm text-white">Guides and walkthroughs</span>
+              <span className="font-pixel text-xs sm:text-sm text-white">Guides</span>
             </div>
 
             <nav aria-label="Choose a guide">

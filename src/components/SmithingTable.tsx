@@ -38,7 +38,7 @@ const SmithingSlot: React.FC<SmithingSlotProps> = ({ label, name, texture, outpu
 );
 
 export const SmithingTable: React.FC<SmithingTableProps> = ({ recipe }) => {
-  const summary = `${recipe.template.name} + ${recipe.base.name} + ${recipe.addition.name} makes ${recipe.output.name}`;
+  const summary = `Use ${recipe.template.name} with ${recipe.base.name} and ${recipe.addition.name} to make ${recipe.output.name}.`;
 
   return (
     <figure className="max-w-full space-y-2">

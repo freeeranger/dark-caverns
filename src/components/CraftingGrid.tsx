@@ -11,6 +11,26 @@ interface CraftingGridProps {
 
 const GRID_POSITIONS = ['top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right'];
 
+const ITEM_PLURALS: Record<string, string> = {
+  Diamond: 'Diamonds',
+  Emerald: 'Emeralds',
+  Gunpowder: 'Gunpowder',
+  'Hellstone Rock': 'Hellstone Rocks',
+  'Iron Ingot': 'Iron Ingots',
+  'Luminite Dust': 'Luminite Dust',
+  'Luminite Torch': 'Luminite Torches',
+  Mushroom: 'Mushrooms',
+  'Platinum Piece': 'Platinum Pieces',
+  'Scorchling Tail': 'Scorchling Tails',
+  Shroombomb: 'Shroombombs',
+  'Shroomstone Piece': 'Shroomstone Pieces',
+  'Throwable Luminite Torch': 'Throwable Luminite Torches'
+};
+
+function countedItem(name: string, count: number): string {
+  return `${count} ${count === 1 ? name : ITEM_PLURALS[name] ?? name}`;
+}
+
 function ingredientSummary(recipe: CraftingRecipe): string {
   const counts = new Map<string, number>();
 
@@ -20,13 +40,22 @@ function ingredientSummary(recipe: CraftingRecipe): string {
     }
   });
 
-  return Array.from(counts.entries())
-    .map(([name, count]) => `${count} ${name}`)
-    .join(' + ');
+  const ingredients = Array.from(counts.entries()).map(([name, count]) => countedItem(name, count));
+
+  if (ingredients.length < 2) {
+    return ingredients[0] ?? '';
+  }
+
+  if (ingredients.length === 2) {
+    return `${ingredients[0]} and ${ingredients[1]}`;
+  }
+
+  return `${ingredients.slice(0, -1).join(', ')}, and ${ingredients[ingredients.length - 1]}`;
 }
 
 export const CraftingGrid: React.FC<CraftingGridProps> = ({ recipe }) => {
-  const summary = `${ingredientSummary(recipe)} makes ${recipe.output.count ?? 1} ${recipe.output.name}`;
+  const outputCount = recipe.output.count ?? 1;
+  const summary = `Use ${ingredientSummary(recipe)} to make ${countedItem(recipe.output.name, outputCount)}.`;
 
   return (
     <figure className="max-w-full space-y-2">

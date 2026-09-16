@@ -37,25 +37,25 @@ const BIOMES = [
     name: 'Rocky Caverns',
     color: 'text-white',
     texture: 'textures/block/carfstone.png',
-    description: 'Layered Carfstone chambers, natural bridges, exposed Luminite, and towering formations.'
+    description: 'Rocky Caverns has layered Carfstone chambers, stone bridges, exposed Luminite, and tall formations.'
   },
   {
     name: 'Molten Depths',
     color: 'text-[#ff9970]',
     texture: 'textures/block/molten_carfstone.png',
-    description: 'Lava springs, ash patches, magma, Hellstone, and hostile Scorchlings.'
+    description: 'Molten Depths has lava springs, ash patches, magma, Hellstone, and hostile Scorchlings.'
   },
   {
     name: 'Glimmershroom Forest',
     color: 'text-[#7dd3fc]',
     texture: 'textures/block/glimmershroom.png',
-    description: 'Blue fungal light, giant glimmershrooms, Shroomie traders, and neutral Shroomlings.'
+    description: 'Giant glimmershrooms cast blue light over Shroomie traders and neutral Shroomlings.'
   },
   {
     name: 'Tangled Hallow',
     color: 'text-[#55ffaf]',
     texture: 'textures/block/twistwood_log.png',
-    description: 'Dense Twistwood, teal surface lakes, Water Sproutlets, and a renewable forest floor.'
+    description: 'Dense Twistwood surrounds teal surface lakes covered with Water Sproutlets.'
   }
 ];
 
@@ -64,7 +64,7 @@ const GEAR = [
     name: 'Platinum',
     color: 'text-white',
     texture: 'textures/item/platinum_sword.png',
-    description: 'Fast post-Diamond tools with 20 enchantability.'
+    description: 'Platinum tools mine faster than Netherite tools and have 20 enchantability.'
   },
   {
     name: 'Hellstone',
@@ -90,22 +90,22 @@ const UTILITIES = [
   {
     name: 'Luminite Helmet',
     texture: 'textures/item/luminite_helmet.png',
-    description: 'Creates client-side dynamic light around its wearer.'
+    description: 'The helmet creates client-side dynamic light around its wearer.'
   },
   {
     name: 'Throwable Luminite Torch',
     texture: 'textures/item/throwable_luminite_torch.png',
-    description: 'Places torches on distant walls and ledges.'
+    description: 'The throwable torch places light on distant walls and ledges.'
   },
   {
     name: 'Corrupted Pearl',
     texture: 'textures/item/corrupted_pearl.png',
-    description: 'Moves the nearest non-player creature to the landing point.'
+    description: 'The pearl moves the nearest non-player creature to its landing point.'
   },
   {
     name: 'Shroombomb',
     texture: 'textures/item/shroombomb.png',
-    description: 'Creates a small configurable explosion on impact.'
+    description: 'The bomb creates a small configurable explosion on impact.'
   }
 ];
 
@@ -135,7 +135,7 @@ const GatewayJourney: React.FC = () => (
     <SectionHeading
       id="gateway-heading"
       title="Break through bedrock"
-      description="The route into the dimension begins with an explorer map and ends at a permanent gateway."
+      description="An Expert Cartographer sells the Forgotten Tower map. The tower holds the key that opens Cracked Bedrock."
       href="./guides/?guide=getting-to-the-caverns"
       linkLabel="Gateway guide"
     />
@@ -167,7 +167,7 @@ const BiomeOverview: React.FC = () => (
     <SectionHeading
       id="biomes-heading"
       title="Four biomes in one dimension"
-      description="The cave floor changes from bare Carfstone to molten ash, fungal light, and dense underground forest."
+      description="Each biome has its own stone, plants, water, ore, and creatures."
       href="./wiki/?category=biomes"
       linkLabel="Biome reference"
     />
@@ -198,7 +198,7 @@ const EquipmentPath: React.FC = () => (
     <SectionHeading
       id="equipment-heading"
       title="Choose what your gear solves"
-      description="Luminite Dust carries Diamond equipment into Platinum, then into specialized cavern gear."
+      description="Use Luminite Dust at a Smithing Table to upgrade Diamond gear to Platinum and other cavern gear."
       href="./guides/?guide=smithing-and-gear-progression"
       linkLabel="Smithing guide"
     />
@@ -229,7 +229,7 @@ const UtilityLoadout: React.FC = () => (
     <SectionHeading
       id="utilities-heading"
       title="Tools made for cavern travel"
-      description="Carry light farther, move creatures, and clear space without leaving the dimension."
+      description="These items light distant ledges, teleport creatures, and create small explosions."
       href="./wiki/?category=items"
       linkLabel="Item reference"
     />
@@ -279,7 +279,7 @@ export const HomePage: React.FC = () => {
               Dark Caverns
             </h1>
             <p className="max-w-xl text-base leading-relaxed text-[#bbc2d1] sm:text-lg">
-              Descend beneath bedrock into a cave dimension with four biomes, specialized equipment, native creatures, and its own route home.
+              Dark Caverns adds four cave biomes below the Overworld. Its gateway links both dimensions, and the caves contain new gear and creatures.
             </p>
             <HomeActions />
           </div>
@@ -299,10 +299,10 @@ export const HomePage: React.FC = () => {
         <section className="trailer-section" aria-labelledby="trailer-heading">
           <div className="max-w-md space-y-3">
             <h2 id="trailer-heading" className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">
-              See the dimension in motion
+              Watch the trailer
             </h2>
             <p className="text-sm text-[#a0a7ba] sm:text-base">
-              The trailer shows the gateway, cavern scale, biomes, creatures, and equipment progression.
+              See the gateway, each biome, the native creatures, and the gear system.
             </p>
           </div>
           <div className="mc-box aspect-video min-w-0 overflow-hidden p-1 sm:p-1.5">
@@ -317,7 +317,7 @@ export const HomePage: React.FC = () => {
 
         <section className="home-final-cta mc-box" aria-labelledby="final-cta-heading">
           <h2 id="final-cta-heading" className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">
-            Ready to explore?
+            Enter the Dark Caverns
           </h2>
           <HomeActions />
         </section>

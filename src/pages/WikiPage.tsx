@@ -182,7 +182,7 @@ export const WikiPage: React.FC = () => {
             aria-label="Wiki navigation"
           >
             <div className="mc-panel-header -mx-4 -mt-4 p-3 border-b-2 border-black flex items-center justify-between">
-              <span className="font-pixel text-xs sm:text-sm text-white">Wiki database</span>
+              <span className="font-pixel text-xs sm:text-sm text-white">Wiki</span>
               <span className="text-[11px] font-mono text-[#55ffaf]">
                 {filteredEntries.length} {filteredEntries.length === 1 ? 'item' : 'items'}
               </span>
@@ -195,7 +195,7 @@ export const WikiPage: React.FC = () => {
               />
               <input
                 type="search"
-                placeholder="Search wiki..."
+                placeholder="Search the wiki"
                 aria-label="Search wiki entries"
                 value={searchQuery}
                 onChange={(event) => changeSearchQuery(event.target.value)}
@@ -292,7 +292,7 @@ export const WikiPage: React.FC = () => {
                     </button>
                   )}
                   <button type="button" onClick={showEverything} className="mc-btn min-h-11 px-3 text-xs">
-                    Show everything
+                    Show all entries
                   </button>
                 </div>
               </div>
@@ -433,10 +433,10 @@ export const WikiPage: React.FC = () => {
             <section className="hidden min-w-0 md:col-span-8 mc-box p-8 md:block" aria-live="polite">
               <h1 className="font-pixel text-2xl text-white mc-shadow">No matching wiki entry</h1>
               <p className="mt-3 text-sm text-[#a0a7ba]">
-                Clear the search or show every category to return to the reference.
+                Clear the search or show all entries.
               </p>
               <button type="button" onClick={showEverything} className="mc-btn mt-5 min-h-11 px-4 text-sm">
-                Show everything
+                Show all entries
               </button>
             </section>
           )}

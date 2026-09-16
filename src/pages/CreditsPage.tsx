@@ -11,11 +11,11 @@ interface Contributor {
 const CONTRIBUTORS: Contributor[] = [
   {
     name: 'ShroomTheShroom',
-    contribution: 'Created several textures, mobs, and music tracks.'
+    contribution: 'ShroomTheShroom made several textures and mobs, and composed music for the mod.'
   },
   {
     name: 'Samuel Arden',
-    contribution: 'Composed 2 music tracks for the mod.'
+    contribution: 'Samuel Arden composed two music tracks for the mod.'
   }
 ];
 
@@ -30,9 +30,6 @@ export const CreditsPage: React.FC = () => {
             <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold">
               Credits
             </h1>
-            <p className="mt-2 text-sm text-[#a0a7ba]">
-              The people who contributed art, creatures, and music to the mod.
-            </p>
           </div>
 
           <div className="space-y-6">
@@ -52,7 +49,7 @@ export const CreditsPage: React.FC = () => {
           </div>
 
           <div className="flex flex-col gap-3 border-t border-[#232630] pt-5 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs text-[#9ba2b5]">Built for Minecraft 1.21.1 with NeoForge and GeckoLib.</p>
+            <p className="text-xs text-[#9ba2b5]">Dark Caverns runs on Minecraft 1.21.1 with NeoForge and GeckoLib.</p>
             <a
               href="https://github.com/freeeranger/dark-caverns"
               target="_blank"

@@ -40,7 +40,7 @@ export const DownloadPage: React.FC = () => {
           </div>
 
           <p className="border-t border-[#232630] pt-5 text-sm text-[#aeb5c5]">
-            Minecraft 1.21.1 with NeoForge. Requires{' '}
+            Dark Caverns runs on Minecraft 1.21.1 with NeoForge and requires{' '}
             <a
               href="https://modrinth.com/mod/geckolib"
               target="_blank"
@@ -50,7 +50,7 @@ export const DownloadPage: React.FC = () => {
             >
               <span>GeckoLib</span>
               <PixelIcon name="external-link" className="h-3 w-3" />
-            </a>
+            </a>.
           </p>
         </section>
       </main>
