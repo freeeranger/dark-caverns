@@ -6,12 +6,10 @@ import { Footer } from '../components/Footer';
 import { WIKI_ENTRIES, WikiEntry } from '../data/modData';
 import { CraftingGrid } from '../components/CraftingGrid';
 import { SmithingTable } from '../components/SmithingTable';
-import { MinecraftTooltip } from '../components/MinecraftTooltip';
 import { PixelIcon } from '../components/PixelIcon';
 import { getTextureUrl, getGithubSourceUrl } from '../utils/assets';
 
 const CATEGORIES = ['all', 'biomes', 'materials', 'gear', 'items', 'mobs'] as const;
-type WikiCategory = typeof CATEGORIES[number];
 
 export const WikiPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useQueryState(
@@ -73,11 +71,11 @@ export const WikiPage: React.FC = () => {
     <div className="min-h-screen bg-[#121316] text-[#d6dae5] font-sans flex flex-col antialiased">
       <Navbar currentPath="/wiki/" />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
-        <div className="grid md:grid-cols-12 gap-6 items-start">
+      <main className="flex-1 min-w-0 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+        <div className="grid min-w-0 md:grid-cols-12 gap-6 items-start">
           {/* Sidebar */}
           <aside
-            className="md:col-span-4 mc-box p-4 space-y-4 md:sticky md:top-20"
+            className="min-w-0 md:col-span-4 mc-box p-4 space-y-4 md:sticky md:top-20"
             aria-label="Wiki navigation"
           >
             <div className="mc-panel-header -mx-4 -mt-4 p-3 border-b-2 border-black flex items-center justify-between">
@@ -119,7 +117,7 @@ export const WikiPage: React.FC = () => {
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
                   aria-pressed={activeCategory === cat}
-                  className={`mc-btn text-xs py-1.5 px-1 capitalize min-h-[32px] ${
+                  className={`mc-btn min-w-0 text-xs py-1.5 px-1 capitalize min-h-[32px] ${
                     activeCategory === cat ? 'mc-btn-active' : ''
                   }`}
                 >
@@ -163,12 +161,12 @@ export const WikiPage: React.FC = () => {
 
           {/* Active Article Content */}
           <article
-            className="md:col-span-8 mc-box p-6 sm:p-8 space-y-6"
+            className="min-w-0 md:col-span-8 mc-box p-6 sm:p-8 space-y-6"
             aria-label={selectedItem.name}
           >
             {/* Header */}
-            <div className="flex items-start justify-between gap-4 border-b border-[#232630] pb-5">
-              <div className="flex items-center gap-4">
+            <div className="flex min-w-0 flex-col items-start justify-between gap-4 border-b border-[#232630] pb-5 sm:flex-row">
+              <div className="flex min-w-0 items-center gap-4">
                 <a
                   href={getGithubSourceUrl(selectedItem.texture)}
                   target="_blank"
@@ -182,12 +180,12 @@ export const WikiPage: React.FC = () => {
                     className="w-8 h-8 pixel-art group-hover:scale-105 transition-transform"
                   />
                 </a>
-                <div>
-                  <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold">
+                <div className="min-w-0">
+                  <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold break-words">
                     {selectedItem.name}
                   </h1>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-xs font-mono text-[#8e95a8]">
+                  <div className="flex min-w-0 flex-wrap items-center gap-2 mt-0.5">
+                    <span className="min-w-0 break-all text-xs font-mono text-[#8e95a8]">
                       dark_caverns:{selectedItem.id}
                     </span>
                     <span className="text-[#3c4150]">,</span>

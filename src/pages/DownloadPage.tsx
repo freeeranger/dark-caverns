@@ -38,7 +38,7 @@ export const DownloadPage: React.FC = () => {
           </div>
 
           <div className="pt-3 border-t border-[#232630] text-xs text-[#8e95a8]">
-            Requires{' '}
+            For Minecraft 1.21.1 with NeoForge. Requires{' '}
             <a
               href="https://modrinth.com/mod/geckolib"
               target="_blank"

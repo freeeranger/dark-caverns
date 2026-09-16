@@ -16,11 +16,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
 
   return (
     <header className="border-b-2 border-black bg-[#1c1d22] sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 py-2 sm:py-0 sm:h-16 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 sm:gap-4">
         {/* Brand */}
         <a
           href={prefix}
-          className="flex items-center gap-2 sm:gap-3 text-left group no-underline shrink-0"
+          className="flex w-full sm:w-auto items-center gap-2 sm:gap-3 text-left group no-underline shrink-0"
           aria-label="Dark Caverns Home"
         >
           <div className="w-7 h-7 sm:w-8 sm:h-8 mc-slot shrink-0">
@@ -38,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
         </a>
 
         {/* Navigation links */}
-        <nav className="flex items-center gap-1 sm:gap-2" aria-label="Main Navigation">
+        <nav className="grid w-full min-w-0 grid-cols-4 gap-1 sm:flex sm:w-auto sm:items-center sm:gap-2" aria-label="Main Navigation">
           {links.map((link) => {
             const isActive =
               (link.label === 'Overview' && currentPath === '/') ||
@@ -49,7 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
               <a
                 key={link.label}
                 href={link.href}
-                className={`mc-btn text-xs sm:text-sm py-1.5 px-2 sm:px-3.5 ${
+                className={`mc-btn min-w-0 text-xs sm:text-sm py-1.5 px-1 sm:px-3.5 ${
                   isActive ? 'mc-btn-active' : ''
                 }`}
                 aria-current={isActive ? 'page' : undefined}
@@ -61,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
 
           <a
             href={`${prefix}download/`}
-            className={`mc-btn mc-btn-luminite text-xs sm:text-sm py-1.5 px-2.5 sm:px-4 ${
+            className={`mc-btn mc-btn-luminite min-w-0 text-xs sm:text-sm py-1.5 px-1 sm:px-4 ${
               currentPath === '/download/' ? 'mc-btn-active' : ''
             }`}
             aria-current={currentPath === '/download/' ? 'page' : undefined}

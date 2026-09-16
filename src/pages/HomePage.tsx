@@ -108,8 +108,8 @@ export const HomePage: React.FC = () => {
                   },
                   {
                     step: 'Step 4',
-                    title: 'Ignite gateway',
-                    desc: 'Use the key to activate the gateway and jump in!',
+                    title: 'Open the gateway',
+                    desc: 'Use the key on cracked bedrock, then step onto the gateway.',
                     texture: 'textures/block/gateway_to_the_caverns.png',
                     alt: 'Gateway to the Caverns',
                     highlight: true
@@ -170,13 +170,13 @@ export const HomePage: React.FC = () => {
                     name: 'Rocky Caverns',
                     color: 'text-white',
                     texture: 'textures/block/carfstone.png',
-                    desc: 'Dense stone caverns with stalactites, natural bridges, and platinum ore.'
+                    desc: 'Layered Carfstone caverns with large chambers, natural bridges, and exposed Luminite.'
                   },
                   {
                     name: 'Molten Depths',
                     color: 'text-[#ff9970]',
                     texture: 'textures/block/molten_carfstone.png',
-                    desc: 'Volcanic caves with lava flows, magma shelves, and Hellstone deposits.'
+                    desc: 'Hot caves with lava springs, ash patches, magma, and Hellstone deposits.'
                   },
                   {
                     name: 'Glimmershroom Forest',
@@ -188,7 +188,7 @@ export const HomePage: React.FC = () => {
                     name: 'Tangled Hallow',
                     color: 'text-[#55ffaf]',
                     texture: 'textures/block/twistwood_log.png',
-                    desc: 'Underground Twistwood groves with teal cavern lakes and ambient tracks.'
+                    desc: 'Dense Twistwood groves with teal surface lakes, Water Sproutlets, and their own music.'
                   }
                 ].map((biome) => (
                   <div
@@ -241,7 +241,7 @@ export const HomePage: React.FC = () => {
                     name: 'Platinum',
                     titleColor: 'text-white',
                     texture: 'textures/item/platinum_sword.png',
-                    desc: 'Stats between Diamond and Netherite, with high enchantability.'
+                    desc: 'Fast post-Diamond tools with 20 enchantability. Upgrade them with Hellstone or Shroomstone.'
                   },
                   {
                     name: 'Hellstone',
@@ -294,7 +294,7 @@ export const HomePage: React.FC = () => {
                     Cavern utilities
                   </h3>
                   <p className="text-xs sm:text-sm text-[#8e95a8] mt-0.5">
-                    Tools for subterranean navigation, lighting, and combat
+                    Light sources and throwable items for cavern travel and combat
                   </p>
                 </div>
                 <a
@@ -309,9 +309,9 @@ export const HomePage: React.FC = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 {[
                   {
-                    name: 'Cavern Compass',
-                    texture: 'textures/item/cavern_compass.png',
-                    desc: 'Points directly back to your nearest Bedrock Gateway.'
+                    name: 'Luminite Helmet',
+                    texture: 'textures/item/luminite_helmet.png',
+                    desc: 'Creates dynamic light around its wearer without placing blocks.'
                   },
                   {
                     name: 'Throwable Luminite Torch',
@@ -321,12 +321,12 @@ export const HomePage: React.FC = () => {
                   {
                     name: 'Corrupted Pearl',
                     texture: 'textures/item/corrupted_pearl.png',
-                    desc: 'Teleports the nearest hostile mob to where the pearl lands.'
+                    desc: 'Teleports the nearest non-player creature to where the pearl lands.'
                   },
                   {
                     name: 'Shroombomb',
                     texture: 'textures/item/shroombomb.png',
-                    desc: 'Blasts stone and deepslate without destroying exposed ore blocks.'
+                    desc: 'Creates a small, configurable explosion as soon as it hits.'
                   }
                 ].map((tool) => (
                   <div

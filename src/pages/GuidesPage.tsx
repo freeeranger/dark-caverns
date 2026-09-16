@@ -3,7 +3,6 @@ import { useQueryState, parseAsString } from 'nuqs';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GUIDES } from '../data/modData';
-import { CraftingGrid } from '../components/CraftingGrid';
 import { SmithingTable } from '../components/SmithingTable';
 
 export const GuidesPage: React.FC = () => {
@@ -30,11 +29,11 @@ export const GuidesPage: React.FC = () => {
     <div className="min-h-screen bg-[#121316] text-[#d6dae5] font-sans flex flex-col antialiased">
       <Navbar currentPath="/guides/" />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
-        <div className="grid md:grid-cols-12 gap-6 items-start">
+      <main className="flex-1 min-w-0 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+        <div className="grid min-w-0 md:grid-cols-12 gap-6 items-start">
           {/* Sidebar */}
           <aside
-            className="md:col-span-4 mc-box p-4 space-y-3 md:sticky md:top-20"
+            className="min-w-0 md:col-span-4 mc-box p-4 space-y-3 md:sticky md:top-20"
             aria-label="Guide chapters"
           >
             <div className="mc-panel-header -mx-4 -mt-4 p-3 border-b-2 border-black">
@@ -65,12 +64,12 @@ export const GuidesPage: React.FC = () => {
 
           {/* Active Guide Content */}
           <article
-            className="md:col-span-8 mc-box p-6 sm:p-8 space-y-6"
+            className="min-w-0 md:col-span-8 mc-box p-6 sm:p-8 space-y-6"
             role="tabpanel"
             aria-label={activeGuide.title}
           >
             <div className="border-b border-[#232630] pb-4">
-              <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold">
+              <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold break-words">
                 {activeGuide.title}
               </h1>
               <p className="text-xs sm:text-sm text-[#a0a7ba] mt-1.5 leading-relaxed">
@@ -88,29 +87,6 @@ export const GuidesPage: React.FC = () => {
                   <p className="text-xs sm:text-sm text-[#a0a7ba] leading-relaxed">
                     {step.body}
                   </p>
-
-                  {/* Inline visual for Cavern Compass guide */}
-                  {activeGuide.id === 'cavern-compass-navigation' && idx === 1 && (
-                    <div className="pt-2">
-                      <div className="font-pixel text-xs text-white pb-1">Crafting recipe</div>
-                      <CraftingGrid
-                        recipe={{
-                          slots: [
-                            { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
-                            { name: 'Platinum Piece', texture: 'textures/item/platinum_piece.png' },
-                            { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
-                            { name: 'Platinum Piece', texture: 'textures/item/platinum_piece.png' },
-                            { name: 'Compass', texture: 'textures/item/compass.png' },
-                            { name: 'Platinum Piece', texture: 'textures/item/platinum_piece.png' },
-                            { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' },
-                            { name: 'Platinum Piece', texture: 'textures/item/platinum_piece.png' },
-                            { name: 'Luminite Dust', texture: 'textures/item/luminite_dust.png' }
-                          ],
-                          output: { name: 'Cavern Compass', texture: 'textures/item/cavern_compass.png', count: 1 }
-                        }}
-                      />
-                    </div>
-                  )}
 
                   {/* Inline visual for Smithing guide */}
                   {activeGuide.id === 'smithing-and-gear-progression' && idx === 2 && (

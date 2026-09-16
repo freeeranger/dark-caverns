@@ -61,7 +61,7 @@ export const SmithingTable: React.FC<SmithingTableProps> = ({ recipe }) => {
             )}
           </div>
         </MinecraftTooltip>
-        <span className="text-[10px] font-mono text-[#787f90]">Ingot</span>
+        <span className="text-[10px] font-mono text-[#787f90]">Material</span>
       </div>
 
       <div className="text-[#828898] flex items-center justify-center px-1">
