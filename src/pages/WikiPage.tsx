@@ -348,7 +348,7 @@ export const WikiPage: React.FC = () => {
               <button
                 type="button"
                 onClick={showNavigation}
-                className="mc-btn min-h-11 gap-2 px-3 text-xs md:hidden"
+                className="mc-btn min-h-11 gap-2 px-3 text-xs md:!hidden"
               >
                 <PixelIcon name="arrow-left" className="h-4 w-4" />
                 <span>Back to wiki</span>

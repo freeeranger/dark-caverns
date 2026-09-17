@@ -17,11 +17,6 @@ const WIKI_ENTRY_ID_BY_NAME = new Map(
 );
 const GUIDE_CATEGORIES = ['Start here', 'Explore', 'Progression'] as const;
 
-function wikiHrefForName(name: string, fallbackId: string): string {
-  const id = WIKI_ENTRY_ID_BY_NAME.get(name.toLocaleLowerCase()) ?? fallbackId;
-  return `../wiki/?entry=${encodeURIComponent(id)}`;
-}
-
 function getRecipeEntries(ids: string[] | undefined): WikiEntry[] {
   return (ids ?? [])
     .map((id) => WIKI_ENTRY_BY_ID.get(resolveWikiEntryId(id)))
@@ -140,7 +135,7 @@ export const GuidesPage: React.FC = () => {
             <button
               type="button"
               onClick={showChapterList}
-              className="mc-btn min-h-11 gap-2 px-3 text-xs md:hidden"
+              className="mc-btn min-h-11 gap-2 px-3 text-xs md:!hidden"
             >
               <PixelIcon name="arrow-left" className="h-4 w-4" />
               <span>Back to guides</span>
@@ -148,7 +143,7 @@ export const GuidesPage: React.FC = () => {
             <div className="border-b border-[#232630] pb-4">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold break-words">
-                  <WikiText text={activeGuide.title} hrefPrefix="../wiki/?entry=" />
+                  {activeGuide.title}
                 </h1>
                 <span className="mc-tag shrink-0">
                   {activeGuide.steps.length} {activeGuide.steps.length === 1 ? 'step' : 'steps'}
@@ -168,7 +163,7 @@ export const GuidesPage: React.FC = () => {
                     <div className="guide-step-heading">
                       <span className="guide-step-number" aria-hidden="true">{idx + 1}</span>
                       <h2 className="font-pixel text-sm sm:text-base text-white">
-                        <WikiText text={step.title} hrefPrefix="../wiki/?entry=" />
+                        {step.title}
                       </h2>
                     </div>
                     <p className="guide-step-body text-xs sm:text-sm text-[#a0a7ba] leading-relaxed">
@@ -181,10 +176,8 @@ export const GuidesPage: React.FC = () => {
                           entry.recipe ? (
                             <section key={`${entry.id}-crafting`} className="guide-recipe mc-inset">
                               <div className="guide-recipe-heading">
-                                <h3 className="font-pixel text-xs">
-                                  <a className="text-white hover:text-[#ffffa0]" href={wikiHrefForName(entry.recipe.output.name, entry.id)}>
-                                    {entry.recipe.output.name}
-                                  </a>
+                                <h3 className="font-pixel text-xs text-white">
+                                  {entry.recipe.output.name}
                                 </h3>
                                 <span className="mc-tag">Crafting recipe</span>
                               </div>
@@ -194,10 +187,8 @@ export const GuidesPage: React.FC = () => {
                           entry.smithing ? (
                             <section key={`${entry.id}-smithing`} className="guide-recipe mc-inset">
                               <div className="guide-recipe-heading">
-                                <h3 className="font-pixel text-xs">
-                                  <a className="text-white hover:text-[#ffffa0]" href={wikiHrefForName(entry.smithing.output.name, entry.id)}>
-                                    {entry.smithing.output.name}
-                                  </a>
+                                <h3 className="font-pixel text-xs text-white">
+                                  {entry.smithing.output.name}
                                 </h3>
                                 <span className="mc-tag">Smithing table</span>
                               </div>
