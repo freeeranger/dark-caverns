@@ -38,25 +38,25 @@ const BIOMES = [
     name: 'Rocky Caverns',
     color: 'text-white',
     texture: 'textures/block/carfstone.png',
-    description: 'Rocky Caverns has layered Carfstone chambers, stone bridges, exposed Luminite, and tall formations.'
+    description: 'A miners dream. Tall stone formations, exposed luminite, an tons of ores hidden in the caves.'
   },
   {
     name: 'Molten Depths',
     color: 'text-[#ff9970]',
     texture: 'textures/block/molten_carfstone.png',
-    description: 'Molten Depths has lava springs, ash patches, magma, Hellstone, and hostile Scorchlings.'
+    description: 'Covered in lava springs, magma and ash patches, this biome is home to some of the caverns most feared creatures.'
   },
   {
     name: 'Glimmershroom Forest',
     color: 'text-[#7dd3fc]',
     texture: 'textures/block/glimmershroom.png',
-    description: 'Giant glimmershrooms cast blue light over Shroomie traders and neutral Shroomlings.'
+    description: 'Giant glimmershrooms cast blue light over the biome. Home to the shroomies.'
   },
   {
     name: 'Tangled Hallow',
     color: 'text-[#55ffaf]',
-    texture: 'textures/block/twistwood_log.png',
-    description: 'Dense Twistwood Logs and Twistwood Leaves surround teal surface lakes covered with Water Sproutlets.'
+    texture: 'textures/block/twistwood_leaves.png',
+    description: 'Twistwood trees and dense vegetation everywhere, with the occasional lake...',
   }
 ];
 
@@ -65,7 +65,7 @@ const GEAR = [
     name: 'Platinum',
     color: 'text-white',
     texture: 'textures/item/platinum_sword.png',
-    description: 'Platinum tools mine faster than Netherite tools and have 20 enchantability.'
+    description: 'Sligtly stronger than netherite, and the base for the other gear.'
   },
   {
     name: 'Hellstone',
@@ -142,7 +142,7 @@ const GatewayJourney: React.FC = () => (
     <SectionHeading
       id="gateway-heading"
       title="Break through bedrock"
-      description="An Expert Cartographer sells the Forgotten Tower map. The tower holds the key that opens Cracked Bedrock."
+      description="The tower holds the key that opens the cracked bedrock and opens the passage to the caverns."
       href="./guides/?guide=getting-to-the-caverns"
       linkLabel="Gateway guide"
     />
@@ -150,7 +150,7 @@ const GatewayJourney: React.FC = () => (
       {GATEWAY_STEPS.map((item) => (
         <li
           key={item.step}
-          className="flex min-w-0 flex-col gap-3 p-5 border-b border-[#2a2c34] last:border-b-0 sm:border-b sm:[&:nth-child(odd)]:border-r sm:[&:nth-last-child(-n+2)]:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
+          className="flex min-w-0 flex-col gap-3 p-5 border-b border-[#2a2c34] last:border-b-0 sm:border-b sm:odd:border-r sm:nth-last-[-n+2]:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
         >
           <div className="flex items-center justify-between gap-3">
             <span className="font-pixel text-xs text-[#8e95a8]">{item.step}</span>
@@ -178,8 +178,8 @@ const BiomeOverview: React.FC = () => (
   <section className="space-y-5" aria-labelledby="biomes-heading">
     <SectionHeading
       id="biomes-heading"
-      title="Four biomes in one dimension"
-      description="Each biome has its own stone, plants, water, ore, and creatures."
+      title="Many biomes to explore"
+      description="Each biome has its own challenges to overcome and unique loot to acquire!"
       href="./wiki/?category=biomes"
       linkLabel="Biome reference"
     />
@@ -351,7 +351,7 @@ export const HomePage: React.FC = () => {
 
         <section className="mc-box flex flex-col sm:p-8 md:flex-row items-start md:items-center justify-between gap-6 p-6 border-[#0c433f] shadow-[inset_2px_2px_0_#1e4e49,inset_-2px_-2px_0_#0c0d0f]" aria-labelledby="final-cta-heading">
           <h2 id="final-cta-heading" className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">
-            Enter the Dark Caverns
+            Enter the Dark Caverns!
           </h2>
           <HomeActions />
         </section>
