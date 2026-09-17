@@ -372,48 +372,42 @@ export const WikiPage: React.FC = () => {
                     />
                   </a>
                   <div className="min-w-0">
-                    <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold break-words">
+                    <h1 className="font-pixel text-2xl sm:text-3xl text-white mc-shadow font-bold wrap-break-word">
                       {selectedItem.name}
                     </h1>
                     <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 mt-0.5">
-                      {registryId && <code className="registry-id min-w-0 break-all text-xs font-mono text-[#8e95a8]">
-                        {registryId}
-                      </code>}
-                      {registryId && <button
-                        type="button"
-                        onClick={copyRegistryId}
-                        className={`inline-flex min-h-11 items-center gap-1 px-1.5 text-[11px] font-pixel sm:min-h-8 ${
-                          copyStatus === 'copied'
-                            ? 'text-[#55ffaf]'
-                            : copyStatus === 'error'
-                              ? 'text-[#ff9970]'
-                              : 'text-[#8e95a8] hover:text-white'
-                        }`}
-                        aria-label={`Copy registry ID ${registryId}`}
-                        title={copyStatus === 'error' ? 'Copy failed. Select the ID instead.' : 'Copy registry ID'}
-                      >
-                        <PixelIcon
-                          name={copyStatus === 'copied' ? 'check' : 'copy'}
-                          className="w-3 h-3"
-                        />
-                        <span aria-live="polite">
-                          {copyStatus === 'copied'
-                            ? 'Copied'
-                            : copyStatus === 'error'
-                              ? 'Select ID'
-                              : 'Copy ID'}
-                        </span>
-                      </button>}
-                      <a
-                        href={getGithubSourceUrl(selectedItem.texture)}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex min-h-11 items-center gap-1 text-[11px] font-pixel text-[#55ffaf] hover:text-[#ffffa0] sm:min-h-8"
-                        aria-label="View texture source on GitHub in a new tab"
-                      >
-                        <span>GitHub source</span>
-                        <PixelIcon name="external-link" className="w-3 h-3" />
-                      </a>
+                      <div className="flex items-center h-4 mt-2 gap-2">
+                        {registryId && <code className="h-full registry-id min-w-0 break-all text-xs text-[#8e95a8] font-pixel">
+                          {registryId}
+                        </code>}
+
+                        {registryId && <button
+                          type="button"
+                          onClick={copyRegistryId}
+                          className={`cursor-pointer inline-flex items-end gap-1 px-1.5 py-1 text-[11px] font-pixel ${
+                            copyStatus === 'copied'
+                              ? 'text-[#55ffaf]'
+                              : copyStatus === 'error'
+                                ? 'text-[#ff9970]'
+                                : 'text-[#8e95a8] hover:text-white'
+                          }`}
+                          aria-label={`Copy registry ID ${registryId}`}
+                          title={copyStatus === 'error' ? 'Copy failed. Select the ID instead.' : 'Copy registry ID'}
+                        >
+                          <PixelIcon
+                            name={copyStatus === 'copied' ? 'check' : 'copy'}
+                            className="w-3 h-3"
+                          />
+                          <span aria-live="polite">
+                            {copyStatus === 'copied'
+                              ? 'Copied'
+                              : copyStatus === 'error'
+                                ? 'Select ID'
+                                : 'Copy ID'}
+                          </span>
+                        </button>}
+                      </div>
+                      
                       {selectedItem.relatedItems?.map((relatedItem) => (
                         <span key={relatedItem.id} className="inline-flex min-w-0 basis-full flex-wrap items-center gap-x-1.5 text-[11px]">
                           <span className="font-pixel text-[#8e95a8]">{relatedItem.name}</span>
