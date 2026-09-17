@@ -312,7 +312,7 @@ export const HomePage: React.FC = () => {
               Dark Caverns
             </h1>
             <p className="max-w-xl text-base leading-relaxed text-[#bbc2d1] sm:text-lg">
-              Dark Caverns adds four cave biomes below the Overworld. Its gateway links both dimensions, and the caves contain new gear and creatures.
+              Dark Caverns adds a dark cave dimension hidden below bedrock, filled with huge caverns, great danger and great treasure.
             </p>
             <HomeActions />
           </div>
