@@ -11,7 +11,7 @@ export const DownloadPage: React.FC = () => {
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-12 sm:px-6 sm:py-20">
         <section className="space-y-6" aria-labelledby="download-heading">
           <header>
-            <h1 id="download-heading" className="font-pixel text-3xl font-bold text-white mc-shadow sm:text-4xl">
+            <h1 id="download-heading" className="font-pixel text-3xl font-bold text-white mc-shadow sm:text-4xl text-center">
               Download Dark Caverns
             </h1>
           </header>
@@ -39,13 +39,13 @@ export const DownloadPage: React.FC = () => {
             </a>
           </div>
 
-          <p className="border-t border-[#232630] pt-5 text-sm text-[#aeb5c5]">
-            Dark Caverns runs on Minecraft 1.21.1 with NeoForge and requires{' '}
+          <p className="text-sm text-center text-[#aeb5c5]">
+            Dark Caverns is available for 1.21.1 NeoForge and requires{' '}
             <a
               href="https://modrinth.com/mod/geckolib"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-11 items-center gap-1 font-pixel text-[#55ffaf] hover:text-[#ffffa0]"
+              className="ml-1 inline-flex min-h-11 items-center gap-1 font-pixel text-[#55ffaf] hover:text-[#ffffa0]"
               aria-label="GeckoLib on Modrinth, opens in a new tab"
             >
               <span>GeckoLib</span>

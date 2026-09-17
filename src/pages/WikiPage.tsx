@@ -6,23 +6,13 @@ import { Footer } from '../components/Footer';
 import { MasterDetailLayout } from '../components/MasterDetailLayout';
 import { SidebarNavGroup } from '../components/SidebarNavGroup';
 import { SidebarNavButton } from '../components/SidebarNavButton';
-import { ArticleHeader } from '../components/ArticleHeader';
-import { RecipeCard } from '../components/RecipeCard';
+import { WikiDetailArticle } from '../components/WikiDetailArticle';
 import { PixelIcon } from '../components/PixelIcon';
-import { TextureImage } from '../components/TextureImage';
-import { WikiText } from '../components/WikiText';
 import { resolveWikiEntryId, WIKI_ENTRIES, WikiEntry } from '../data/modData';
-import { getGithubSourceUrl } from '../utils/assets';
 
 const CATEGORIES = ['all', 'biomes', 'blocks', 'materials', 'gear', 'items', 'mobs'] as const;
 const ENTRY_CATEGORIES = CATEGORIES.filter((category) => category !== 'all');
 type WikiCategory = typeof CATEGORIES[number];
-type CopyStatus = 'copied' | 'error';
-
-interface CopyFeedback {
-  registryId: string;
-  status: CopyStatus;
-}
 
 function filterWikiEntries(
   query: string,
@@ -53,7 +43,6 @@ export const WikiPage: React.FC = () => {
     parseAsString.withDefault(WIKI_ENTRIES[0].id)
   );
   const [searchQuery, setSearchQuery] = useState('');
-  const [copyFeedback, setCopyFeedback] = useState<CopyFeedback | null>(null);
   const [mobileDetailOpen, setMobileDetailOpen] = useState(() => {
     if (typeof window === 'undefined') {
       return false;
@@ -61,8 +50,31 @@ export const WikiPage: React.FC = () => {
 
     return new URLSearchParams(window.location.search).has('entry') || window.location.hash.length > 1;
   });
+
   const navigationRef = useRef<HTMLElement>(null);
   const articleRef = useRef<HTMLElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Keyboard shortcut: Press '/' to focus search, 'Escape' to blur
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const activeEl = document.activeElement;
+      const isTyping = activeEl instanceof HTMLInputElement ||
+        activeEl instanceof HTMLTextAreaElement ||
+        activeEl?.getAttribute('contenteditable') === 'true';
+
+      if (event.key === '/' && !isTyping) {
+        event.preventDefault();
+        searchInputRef.current?.focus();
+        searchInputRef.current?.select();
+      } else if (event.key === 'Escape' && activeEl === searchInputRef.current) {
+        searchInputRef.current?.blur();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   useEffect(() => {
     const hash = resolveWikiEntryId(window.location.hash.replace('#', ''));
@@ -106,23 +118,6 @@ export const WikiPage: React.FC = () => {
       setActiveCategory('all');
     }
   }, [activeEntryId, resolvedActiveEntryId, setActiveCategory, setActiveEntryId]);
-
-  const registryId = selectedItem?.registryId === null
-    ? ''
-    : selectedItem?.registryId ?? (selectedItem ? `dark_caverns:${selectedItem.id}` : '');
-  const textureLabel = selectedItem?.relatedItems?.find((item) => item.texture === selectedItem.texture)?.name
-    ?? selectedItem?.name
-    ?? '';
-  const copyStatus = copyFeedback?.registryId === registryId ? copyFeedback.status : null;
-
-  useEffect(() => {
-    if (!copyFeedback) {
-      return;
-    }
-
-    const timeout = window.setTimeout(() => setCopyFeedback(null), 2000);
-    return () => window.clearTimeout(timeout);
-  }, [copyFeedback]);
 
   useEffect(() => {
     if (!mobileDetailOpen || !selectedItem || !window.matchMedia('(max-width: 767px)').matches) {
@@ -181,19 +176,6 @@ export const WikiPage: React.FC = () => {
     window.requestAnimationFrame(() => navigationRef.current?.focus());
   };
 
-  const copyRegistryId = async () => {
-    if (!registryId) {
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(registryId);
-      setCopyFeedback({ registryId, status: 'copied' });
-    } catch {
-      setCopyFeedback({ registryId, status: 'error' });
-    }
-  };
-
   const entryGroups = useMemo(() => {
     if (activeCategory === 'all' && !searchQuery.trim()) {
       return ENTRY_CATEGORIES.map((category) => ({
@@ -212,14 +194,15 @@ export const WikiPage: React.FC = () => {
           className="w-3.5 h-3.5 text-[#8e95a8] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
         />
         <input
+          ref={searchInputRef}
           type="search"
-          placeholder="Search the wiki"
-          aria-label="Search wiki entries"
+          placeholder="Search the wiki (/)"
+          aria-label="Search wiki entries (press / to focus)"
           value={searchQuery}
           onChange={(event) => changeSearchQuery(event.target.value)}
           className="w-full min-h-11 mc-inset pl-9 pr-12 py-2 text-base sm:text-sm text-white placeholder-[#8e95a8]"
         />
-        {searchQuery && (
+        {searchQuery ? (
           <button
             type="button"
             onClick={clearSearch}
@@ -229,6 +212,10 @@ export const WikiPage: React.FC = () => {
           >
             <PixelIcon name="close" className="w-3.5 h-3.5" />
           </button>
+        ) : (
+          <kbd className="hidden sm:inline-flex absolute right-3 top-1/2 -translate-y-1/2 items-center justify-center w-5 h-5 font-pixel text-[11px] text-[#6b7280] bg-[#1a1c22] border border-[#2a2c34] pointer-events-none" aria-hidden="true">
+            /
+          </kbd>
         )}
       </div>
 
@@ -248,16 +235,16 @@ export const WikiPage: React.FC = () => {
         ))}
       </select>
 
-      <div className="hidden grid-cols-2 gap-1.5 md:grid" role="group" aria-label="Filter by category">
+      <div className="hidden grid-cols-4 gap-1 md:grid" role="group" aria-label="Filter entries by category">
         {CATEGORIES.map((category) => (
           <button
             key={category}
             type="button"
             onClick={() => changeCategory(category)}
-            aria-pressed={activeCategory === category}
             className={`mc-btn min-w-0 min-h-11 text-xs py-1.5 px-1 capitalize ${
               activeCategory === category ? 'mc-btn-active' : ''
             }`}
+            aria-pressed={activeCategory === category}
           >
             {category}
           </button>
@@ -265,17 +252,20 @@ export const WikiPage: React.FC = () => {
       </div>
 
       {filteredEntries.length > 0 ? (
-        <nav aria-label="Wiki entries">
-          <div className="max-h-[55vh] space-y-3 overflow-y-auto pr-1">
+        <nav aria-label="Wiki entries" className="space-y-4">
+          <div className="space-y-4">
             {entryGroups.map((group) => (
-              <SidebarNavGroup key={group.category ?? 'results'} title={group.category ?? undefined}>
-                {group.entries.map((entry) => (
-                  <li key={entry.id}>
+              <SidebarNavGroup
+                key={group.category ?? 'results'}
+                title={group.category ?? undefined}
+              >
+                {group.entries.map((item) => (
+                  <li key={item.id}>
                     <SidebarNavButton
-                      label={entry.name}
-                      texture={entry.texture}
-                      isSelected={selectedItem?.id === entry.id}
-                      onClick={() => selectItem(entry)}
+                      label={item.name}
+                      isSelected={item.id === selectedItem?.id}
+                      onClick={() => selectItem(item)}
+                      texture={item.texture}
                     />
                   </li>
                 ))}
@@ -339,129 +329,7 @@ export const WikiPage: React.FC = () => {
         sidebarContent={sidebarContent}
         emptyState={emptyState}
       >
-        {selectedItem && (
-          <>
-            <ArticleHeader
-              title={selectedItem.name}
-              badge={<span className="mc-tag uppercase">{selectedItem.category}</span>}
-              icon={
-                <a
-                  href={getGithubSourceUrl(selectedItem.texture)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mc-slot mc-slot-output shrink-0 group hover:border-[#55ffaf] transition-colors"
-                  aria-label={`View the ${textureLabel} texture on GitHub in a new tab`}
-                >
-                  <TextureImage
-                    texture={selectedItem.texture}
-                    alt={textureLabel}
-                    className="w-8 h-8 pixel-art group-hover:scale-105 transition-transform"
-                    width={32}
-                    height={32}
-                  />
-                </a>
-              }
-              subtitle={
-                <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 mt-0.5">
-                  {registryId && (
-                    <div className="flex items-center h-4 mt-2 gap-2">
-                      <code className="h-full select-text cursor-text min-w-0 break-all text-xs text-[#8e95a8] font-pixel">
-                        {registryId}
-                      </code>
-                      <button
-                        type="button"
-                        onClick={copyRegistryId}
-                        className={`cursor-pointer inline-flex items-end gap-1 px-1.5 py-1 text-[11px] font-pixel ${
-                          copyStatus === 'copied'
-                            ? 'text-[#55ffaf]'
-                            : copyStatus === 'error'
-                              ? 'text-[#ff9970]'
-                              : 'text-[#8e95a8] hover:text-white'
-                        }`}
-                        aria-label={`Copy registry ID ${registryId}`}
-                        title={copyStatus === 'error' ? 'Copy failed. Select the ID instead.' : 'Copy registry ID'}
-                      >
-                        <PixelIcon
-                          name={copyStatus === 'copied' ? 'check' : 'copy'}
-                          className="w-3 h-3"
-                        />
-                        <span aria-live="polite">
-                          {copyStatus === 'copied'
-                            ? 'Copied'
-                            : copyStatus === 'error'
-                              ? 'Select ID'
-                              : 'Copy ID'}
-                        </span>
-                      </button>
-                    </div>
-                  )}
-
-                  {selectedItem.relatedItems?.map((relatedItem) => (
-                    <span key={relatedItem.id} className="inline-flex min-w-0 basis-full flex-wrap items-center gap-x-1.5 text-[11px]">
-                      <span className="font-pixel text-[#8e95a8]">{relatedItem.name}</span>
-                      <code className="break-all font-mono text-[#b8bdcb]">dark_caverns:{relatedItem.id}</code>
-                    </span>
-                  ))}
-                </div>
-              }
-            />
-
-            <div className="space-y-3 text-sm leading-relaxed text-[#c6cbe0]">
-              <p className="text-base text-white">
-                <WikiText text={selectedItem.description} hrefPrefix="?entry=" excludeEntryId={selectedItem.id} />
-              </p>
-              <p className="text-xs sm:text-sm text-[#a0a7ba]">
-                <WikiText text={selectedItem.details} hrefPrefix="?entry=" excludeEntryId={selectedItem.id} />
-              </p>
-            </div>
-
-            {selectedItem.stats && selectedItem.stats.length > 0 && (
-              <div className="space-y-2.5 pt-3 border-t border-[#232630]">
-                <h2 className="font-pixel text-xs text-white">Properties</h2>
-                <div className="border border-[#232630] overflow-hidden">
-                  <table className="w-full text-xs text-left border-collapse">
-                    <tbody>
-                      {selectedItem.stats.map((stat, index) => (
-                        <tr
-                          key={stat.label}
-                          className={`border-b border-[#1f222a] last:border-b-0 ${
-                            index % 2 === 0 ? 'bg-[#141519]' : 'bg-[#181920]'
-                          }`}
-                        >
-                          <th
-                            scope="row"
-                            className="py-2 px-3 text-[#8e95a8] font-mono text-[11px] font-normal w-1/3 sm:w-1/4 border-r border-[#1f222a] align-top"
-                          >
-                            {stat.label}
-                          </th>
-                          <td className="py-2 px-3 text-[#e0e3ec] align-top">
-                            <WikiText text={stat.value} hrefPrefix="?entry=" excludeEntryId={selectedItem.id} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-
-            {selectedItem.recipe && (
-              <RecipeCard
-                title="Crafting recipe"
-                crafting={selectedItem.recipe}
-                variant="section"
-              />
-            )}
-
-            {selectedItem.smithing && (
-              <RecipeCard
-                title="Smithing table recipe"
-                smithing={selectedItem.smithing}
-                variant="section"
-              />
-            )}
-          </>
-        )}
+        {selectedItem && <WikiDetailArticle item={selectedItem} />}
       </MasterDetailLayout>
 
       <Footer currentPath="/wiki/" />

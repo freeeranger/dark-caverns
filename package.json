@@ -11,13 +11,10 @@
   "dependencies": {
     "@floating-ui/react": "^0.27.20",
     "@south-paw/typeface-minecraft": "^1.0.0",
-    "clsx": "^2.1.1",
     "fuse.js": "^7.5.0",
-    "lucide-react": "^0.475.0",
     "nuqs": "^2.10.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.0.1"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.0",
