@@ -8,6 +8,7 @@ import com.freeranger.dark_caverns.generation.CavernRouteFeature;
 import com.freeranger.dark_caverns.generation.CrackedBedrockFeature;
 import com.freeranger.dark_caverns.generation.HallowClutterFeature;
 import com.freeranger.dark_caverns.generation.HallowLakeFeature;
+import com.freeranger.dark_caverns.generation.HallowMudFeature;
 import com.freeranger.dark_caverns.generation.SpikeFeature;
 import com.freeranger.dark_caverns.generation.TwistwoodTreeFeature;
 import net.minecraft.core.registries.Registries;
@@ -48,6 +49,9 @@ public final class CustomFeatures {
 
     public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>>
             HALLOW_CLUTTER = FEATURES.register("hallow_clutter", HallowClutterFeature::new);
+
+    public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>> HALLOW_MUD =
+            FEATURES.register("hallow_mud", HallowMudFeature::new);
 
     public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>>
             CAVERN_ROUTES = FEATURES.register("cavern_routes", CavernRouteFeature::new);

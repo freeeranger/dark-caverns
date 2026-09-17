@@ -127,8 +127,45 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
         water.forEach(pos -> level.setBlock(pos, Blocks.WATER.defaultBlockState(), 2));
         water.forEach(
                 pos -> level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level)));
+        placeShoreMud(level, surfaceWater, random);
         placeSproutlets(level, center, surfaceWater, random);
         return true;
+    }
+
+    private static void placeShoreMud(
+            WorldGenLevel level,
+            Set<BlockPos> surfaceWater,
+            net.minecraft.util.RandomSource random) {
+        Set<BlockPos> shore = new LinkedHashSet<>();
+        for (BlockPos water : surfaceWater) {
+            for (Direction direction : Direction.Plane.HORIZONTAL) {
+                BlockPos ground = water.relative(direction);
+                if (!surfaceWater.contains(ground) && mudGround(level, ground)) shore.add(ground);
+            }
+        }
+        Set<BlockPos> mud = new LinkedHashSet<>();
+        for (BlockPos ground : shore) if (random.nextFloat() < .68F) mud.add(ground);
+        if (mud.isEmpty() && !shore.isEmpty()) mud.add(shore.iterator().next());
+
+        Set<BlockPos> lobes = new LinkedHashSet<>();
+        for (BlockPos ground : mud) {
+            for (Direction direction : Direction.Plane.HORIZONTAL) {
+                BlockPos farther = ground.relative(direction);
+                if (!surfaceWater.contains(farther)
+                        && !shore.contains(farther)
+                        && mudGround(level, farther)
+                        && random.nextFloat() < .18F) lobes.add(farther);
+            }
+        }
+        mud.addAll(lobes);
+        mud.forEach(pos -> level.setBlock(pos, Blocks.MUD.defaultBlockState(), 2));
+    }
+
+    private static boolean mudGround(WorldGenLevel level, BlockPos ground) {
+        return level.ensureCanWrite(ground)
+                && level.getBiome(ground).is(DarkCaverns.id("tangled_hallow"))
+                && level.getBlockState(ground).is(CustomBlocks.OVERGROWN_CARFSTONE.get())
+                && level.getBlockState(ground.above()).isAir();
     }
 
     private static boolean safeExposedFloor(WorldGenLevel level, BlockPos surface) {
@@ -175,6 +212,7 @@ public final class HallowLakeFeature extends Feature<NoneFeatureConfiguration> {
 
     private static boolean natural(BlockState state) {
         return state.is(CustomBlocks.CARFSTONE.get())
-                || state.is(CustomBlocks.OVERGROWN_CARFSTONE.get());
+                || state.is(CustomBlocks.OVERGROWN_CARFSTONE.get())
+                || state.is(Blocks.MUD);
     }
 }

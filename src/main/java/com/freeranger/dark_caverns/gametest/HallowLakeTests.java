@@ -51,13 +51,16 @@ public final class HallowLakeTests {
                 place(room(helper, repeated, false, false), ORIGIN) && first.equals(repeated),
                 "Lake is not deterministic");
         Set<BlockPos> water = new HashSet<>();
+        Set<BlockPos> mud = new HashSet<>();
         Set<BlockPos> sproutlets = new HashSet<>();
         first.forEach(
                 (pos, state) -> {
                     if (state.is(Blocks.WATER)) water.add(pos);
+                    if (state.is(Blocks.MUD)) mud.add(pos);
                     if (state.is(CustomBlocks.WATER_SPROUTLETS.get())) sproutlets.add(pos);
                 });
         helper.assertTrue(water.size() > 30, "Lake is too small to read as a basin");
+        helper.assertTrue(mud.size() > 10, "Lake generated without a visible muddy shore");
         helper.assertTrue(!sproutlets.isEmpty(), "Lake generated without Water Sproutlets");
         helper.assertTrue(
                 first.values().stream().noneMatch(state -> state.is(Blocks.LILY_PAD)),
@@ -74,11 +77,24 @@ public final class HallowLakeTests {
                 BlockState neighbor = read(first, pos.relative(direction));
                 helper.assertTrue(
                         neighbor.is(Blocks.WATER)
+                                || neighbor.is(Blocks.MUD)
                                 || neighbor.is(CustomBlocks.CARFSTONE.get())
                                 || neighbor.is(CustomBlocks.OVERGROWN_CARFSTONE.get()),
                         "Lake has an open retaining wall");
             }
         }
+        for (BlockPos pos : mud)
+            helper.assertTrue(
+                    water.stream()
+                            .anyMatch(
+                                    waterPos ->
+                                            waterPos.getY() == pos.getY()
+                                                    && Math.abs(waterPos.getX() - pos.getX())
+                                                                    + Math.abs(
+                                                                            waterPos.getZ()
+                                                                                    - pos.getZ())
+                                                            <= 2),
+                    "Lake mud escaped the shoreline");
         for (BlockState obstacle :
                 new BlockState[] {
                     Blocks.CHEST.defaultBlockState(),
@@ -249,8 +265,12 @@ public final class HallowLakeTests {
         g.drawString("Center cross-section", 250, 20);
         for (int x = -10; x <= 10; x++)
             for (int z = -10; z <= 10; z++) {
-                boolean water = read(edits, new BlockPos(x, 38, z)).is(Blocks.WATER);
-                g.setColor(new Color(water ? 0x367e88 : 0x819744));
+                BlockState state = read(edits, new BlockPos(x, 39, z));
+                g.setColor(
+                        new Color(
+                                state.is(Blocks.WATER)
+                                        ? 0x367e88
+                                        : state.is(Blocks.MUD) ? 0x5b493c : 0x819744));
                 g.fillRect(16 + (x + 10) * 10, 36 + (z + 10) * 10, 9, 9);
             }
         for (int x = -10; x <= 10; x++)
@@ -262,9 +282,14 @@ public final class HallowLakeTests {
                                         ? 0x101723
                                         : state.is(Blocks.WATER)
                                                 ? 0x367e88
-                                                : state.is(CustomBlocks.OVERGROWN_CARFSTONE.get())
-                                                        ? 0x819744
-                                                        : 0x85899b));
+                                                : state.is(Blocks.MUD)
+                                                        ? 0x5b493c
+                                                        : state.is(
+                                                                        CustomBlocks
+                                                                                .OVERGROWN_CARFSTONE
+                                                                                .get())
+                                                                ? 0x819744
+                                                                : 0x85899b));
                 g.fillRect(250 + (x + 10) * 10, 70 + (44 - y) * 10, 9, 9);
             }
         g.dispose();

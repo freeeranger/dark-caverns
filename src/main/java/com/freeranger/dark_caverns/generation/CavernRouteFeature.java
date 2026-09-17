@@ -160,7 +160,8 @@ public final class CavernRouteFeature extends Feature<NoneFeatureConfiguration> 
                 || state.is(CustomBlocks.MOLTEN_CARFSTONE.get())
                 || state.is(CustomBlocks.ASHY_MOLTEN_CARFSTONE.get())
                 || state.is(CustomBlocks.GLIMMERGRASS_BLOCK.get())
-                || state.is(CustomBlocks.OVERGROWN_CARFSTONE.get());
+                || state.is(CustomBlocks.OVERGROWN_CARFSTONE.get())
+                || state.is(Blocks.MUD);
     }
 
     private static final class Grid {

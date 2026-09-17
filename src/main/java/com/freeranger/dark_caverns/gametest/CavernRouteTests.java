@@ -160,7 +160,8 @@ public final class CavernRouteTests {
                                 || old.is(CustomBlocks.CARFSTONE.get())
                                 || old.is(CustomBlocks.MOLTEN_CARFSTONE.get())
                                 || old.is(CustomBlocks.GLIMMERGRASS_BLOCK.get())
-                                || old.is(CustomBlocks.OVERGROWN_CARFSTONE.get()),
+                                || old.is(CustomBlocks.OVERGROWN_CARFSTONE.get())
+                                || old.is(Blocks.MUD),
                         "Route overwrote protected decoration, ore, or fluid");
                 volume.set(entry.getKey(), entry.getValue());
             }
