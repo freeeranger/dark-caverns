@@ -202,11 +202,9 @@ public final class TangledHallowTests {
                 volume.featureWrites.values().stream()
                         .filter(s -> s.is(CustomBlocks.WATER_SPROUTLETS.get()))
                         .count();
-        long lakeMud = volume.featureWrites.values().stream().filter(s -> s.is(Blocks.MUD)).count();
         helper.assertTrue(
                 water > 500 && water < 6000,
                 "Surface lakes are missing or overwhelm Tangled Hallow: " + water);
-        helper.assertTrue(lakeMud > 100, "Tangled Hallow lakes lack muddy shores: " + lakeMud);
         helper.assertTrue(
                 sproutlets >= 20, "Surface lakes generated without enough Water Sproutlets");
         helper.assertTrue(
@@ -346,16 +344,11 @@ public final class TangledHallowTests {
                         + clutterLostFloors
                         + "/"
                         + clutterFloors);
-        long afterDeadwoodMud =
-                volume.featureWrites.values().stream().filter(s -> s.is(Blocks.MUD)).count();
-        long deadwoodMud = afterDeadwoodMud - lakeMud;
-        helper.assertTrue(
-                deadwoodMud > 0, "Fallen timber and stumps generated without additional mud");
         volume.feature("hallow_mud", GenerationStep.Decoration.VEGETAL_DECORATION, 2);
         long mud = volume.featureWrites.values().stream().filter(s -> s.is(Blocks.MUD)).count();
         helper.assertTrue(
-                mud > afterDeadwoodMud + 100 && mud < originalFloors * .10,
-                "Open-shelf mud is missing or too dense: " + mud);
+                mud > 200 && mud < originalFloors * .10,
+                "Hallow mud patches are missing or too dense: " + mud);
         volume.feature("undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 8);
         long plants =
                 volume.featureWrites.values().stream()
@@ -376,16 +369,14 @@ public final class TangledHallowTests {
                 terrainStats.largestWalk,
                 oldStats.largestWalk);
         DarkCaverns.LOGGER.info(
-                "Tangled Hallow: logs={}, leaves={}, plants={}, mud={} ({} lake, {} deadwood),"
-                        + " clutterLogs={} ({} horizontal, {} vertical), clutterLeaves={},"
+                "Tangled Hallow: logs={}, leaves={}, plants={}, mud={}, clutterLogs={} ({}"
+                        + " horizontal, {} vertical), clutterLeaves={},"
                         + " clutterLost={}/{}, lostFloors={}/{},"
                         + " added={}, largestWalk={}->{}->{}, routeHeight={}",
                 logs,
                 leaves,
                 plants,
                 mud,
-                lakeMud,
-                deadwoodMud,
                 clutterLogs,
                 horizontalClutterLogs,
                 verticalClutterLogs,
@@ -409,10 +400,6 @@ public final class TangledHallowTests {
                         + water
                         + "\nmud="
                         + mud
-                        + "\nlake_mud="
-                        + lakeMud
-                        + "\ndeadwood_mud="
-                        + deadwoodMud
                         + "\nsproutlets="
                         + sproutlets
                         + "\nlakes="

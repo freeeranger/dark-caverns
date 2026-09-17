@@ -1,4 +1,22 @@
 {
-  "type": "dark_caverns:hallow_mud",
-  "config": {}
+  "type": "minecraft:disk",
+  "config": {
+    "half_height": 0,
+    "radius": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 4,
+      "max_inclusive": 7
+    },
+    "state_provider": {
+      "fallback": {
+        "type": "minecraft:simple_state_provider",
+        "state": { "Name": "minecraft:mud" }
+      },
+      "rules": []
+    },
+    "target": {
+      "type": "minecraft:matching_blocks",
+      "blocks": "dark_caverns:overgrown_carfstone"
+    }
+  }
 }

@@ -2,14 +2,12 @@ package com.freeranger.dark_caverns.generation;
 
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -46,40 +44,7 @@ public final class HallowClutterFeature extends Feature<NoneFeatureConfiguration
         }
         if (cluster.isEmpty()) return false;
         cluster.forEach((pos, state) -> level.setBlock(pos, state, 2));
-        placeDeadwoodMud(level, cluster, random);
         return true;
-    }
-
-    private static void placeDeadwoodMud(
-            WorldGenLevel level, Map<BlockPos, BlockState> cluster, RandomSource random) {
-        var mud = new LinkedHashMap<BlockPos, BlockState>();
-        for (var entry : cluster.entrySet()) {
-            BlockState state = entry.getValue();
-            if (!state.is(CustomBlocks.TWISTWOOD_LOG.get())) continue;
-            float chance =
-                    state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? .45F : .70F;
-            BlockPos ground = entry.getKey().below();
-            if (random.nextFloat() < chance && mudBase(level, ground))
-                mud.put(ground, Blocks.MUD.defaultBlockState());
-        }
-        for (BlockPos ground : new ArrayList<>(mud.keySet())) {
-            for (Direction direction : HORIZONTAL) {
-                BlockPos nearby = ground.relative(direction);
-                if (random.nextFloat() < .14F && mudGround(level, nearby))
-                    mud.put(nearby, Blocks.MUD.defaultBlockState());
-            }
-        }
-        mud.forEach((pos, state) -> level.setBlock(pos, state, 2));
-    }
-
-    private static boolean mudGround(WorldGenLevel level, BlockPos ground) {
-        return mudBase(level, ground) && level.getBlockState(ground.above()).isAir();
-    }
-
-    private static boolean mudBase(WorldGenLevel level, BlockPos ground) {
-        return level.ensureCanWrite(ground)
-                && level.getBiome(ground).is(DarkCaverns.id("tangled_hallow"))
-                && level.getBlockState(ground).is(CustomBlocks.OVERGROWN_CARFSTONE.get());
     }
 
     private static Map<BlockPos, BlockState> piece(
