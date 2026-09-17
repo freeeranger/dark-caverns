@@ -55,12 +55,16 @@ export interface GuideChapter {
   steps: GuideStep[];
 }
 
-function spawnEgg(mobId: string, mobName: string): RelatedWikiItem {
+function relatedItem(id: string, name: string): RelatedWikiItem {
   return {
-    id: `${mobId}_spawn_egg`,
-    name: `${mobName} Spawn Egg`,
-    texture: `textures/item/${mobId}_spawn_egg.png`
+    id,
+    name,
+    texture: `textures/item/${id}.png`
   };
+}
+
+function spawnEgg(mobId: string, mobName: string): RelatedWikiItem {
+  return relatedItem(`${mobId}_spawn_egg`, `${mobName} Spawn Egg`);
 }
 
 const CURATED_WIKI_ENTRIES: WikiEntry[] = [
@@ -222,24 +226,31 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
 
   // Materials
   {
-    id: 'luminite_dust',
-    name: 'Luminite Dust',
+    id: 'luminite',
+    name: 'Luminite',
     category: 'materials',
+    registryId: null,
     texture: 'textures/item/luminite_dust.png',
-    description: 'Use Luminite Dust in the template slot for every Cavern gear upgrade.',
-    details: 'Carfstone Luminite Ore generates throughout the Dark Caverns and on exposed Carfstone formations. Put Luminite Dust in the template slot of a Smithing Table for Platinum, Hellstone, Shroomstone, and Scorchsteel upgrades.',
+    relatedItems: [relatedItem('luminite_dust', 'Luminite Dust')],
+    description: 'Luminite is the light-producing mineral used throughout Dark Caverns equipment and utilities.',
+    details: 'Carfstone Luminite Ore generates throughout the dimension and on exposed Carfstone formations. It drops Luminite Dust, the template item for Platinum, Hellstone, Shroomstone, and Scorchsteel upgrades.',
     stats: [
       { label: 'Smithing role', value: 'Template item' },
       { label: 'Ore source', value: 'Carfstone Luminite Ore' }
     ]
   },
   {
-    id: 'platinum_ingot',
-    name: 'Platinum Ingot',
+    id: 'platinum',
+    name: 'Platinum',
     category: 'materials',
+    registryId: null,
     texture: 'textures/item/platinum_ingot.png',
-    description: 'Platinum Ingot is the upgrade material for Platinum equipment.',
-    details: 'Carfstone Platinum Ore generates below Y = 80 throughout the Dark Caverns and drops Platinum Pieces. Use a Platinum Ingot with Luminite Dust at a Smithing Table to upgrade Diamond gear.',
+    relatedItems: [
+      relatedItem('platinum_piece', 'Platinum Piece'),
+      relatedItem('platinum_ingot', 'Platinum Ingot')
+    ],
+    description: 'Platinum is the first material tier in Dark Caverns equipment progression.',
+    details: 'Carfstone Platinum Ore generates below Y = 80 and drops Platinum Pieces. Craft the pieces into Platinum Ingots, then use an ingot with Luminite Dust to upgrade Diamond equipment.',
     stats: [{ label: 'Ore height', value: 'Below Y = 80' }],
     recipe: {
       slots: [
@@ -262,6 +273,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Hellstone',
     category: 'materials',
     texture: 'textures/item/hellstone.png',
+    relatedItems: [relatedItem('hellstone_rock', 'Hellstone Rock')],
     description: 'Hellstone is the upgrade material for fire-resistant equipment.',
     details: 'Hellstone Rock drops from Hellstone Ore in the Molten Depths and does not burn in fire or lava. Use Hellstone at a Smithing Table to upgrade Platinum equipment into Hellstone gear.',
     stats: [{ label: 'Item fire resistance', value: 'Does not burn' }],
@@ -286,6 +298,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Shroomstone',
     category: 'materials',
     texture: 'textures/item/shroomstone.png',
+    relatedItems: [relatedItem('shroomstone_piece', 'Shroomstone Piece')],
     description: 'Shroomstone is the upgrade material for movement-focused equipment.',
     details: 'Shroomies trade 2 Shroomstone Pieces for 1 Diamond. Use Shroomstone at a Smithing Table to upgrade Platinum equipment into Shroomstone gear.',
     stats: [{ label: 'Piece source', value: 'Shroomie trade' }],
@@ -306,12 +319,17 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     }
   },
   {
-    id: 'scorchsteel_ingot',
-    name: 'Scorchsteel Ingot',
+    id: 'scorchsteel',
+    name: 'Scorchsteel',
     category: 'materials',
+    registryId: null,
     texture: 'textures/item/scorchsteel_ingot.png',
-    description: 'Scorchsteel Ingot is the upgrade material for concealment armor.',
-    details: 'Use the ingot with Luminite Dust at a Smithing Table to upgrade Platinum armor into Scorchsteel armor.',
+    relatedItems: [
+      relatedItem('scorchling_tail', 'Scorchling Tail'),
+      relatedItem('scorchsteel_ingot', 'Scorchsteel Ingot')
+    ],
+    description: 'Scorchsteel is the material used to make concealment armor.',
+    details: 'Scorchlings drop Scorchling Tails. Craft the tails into Scorchsteel Ingots, then use an ingot with Luminite Dust to upgrade Platinum armor.',
     recipe: {
       slots: [
         { name: 'Scorchling Tail', texture: 'textures/item/scorchling_tail.png' },
@@ -335,7 +353,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Platinum Armor and Tools',
     category: 'gear',
     registryId: null,
-    aliases: ['Platinum gear'],
+    aliases: ['Platinum gear', 'Platinum armor', 'Platinum tools', 'Platinum equipment'],
     texture: 'textures/item/platinum_sword.png',
     description: 'Use Platinum Ingots to upgrade Diamond gear at a Smithing Table.',
     details: 'Platinum tools mine faster than Netherite tools. Their durability and damage fall between Diamond and Netherite. Platinum armor has 2.5 toughness, and every Platinum item has 20 enchantability. Upgrade Platinum gear to Hellstone or Shroomstone. You can also upgrade Platinum armor to Scorchsteel.',
@@ -357,7 +375,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Hellstone Armor and Tools',
     category: 'gear',
     registryId: null,
-    aliases: ['Hellstone gear'],
+    aliases: ['Hellstone gear', 'Hellstone armor', 'Hellstone tools', 'Hellstone equipment'],
     texture: 'textures/item/hellstone_sword.png',
     description: 'Use Hellstone to upgrade Platinum gear. A full armor set blocks fire and lava damage.',
     details: 'Each armor piece cuts fire and lava damage by 25%. The full set blocks all fire and lava damage. Fully charged attacks set targets on fire for 8 seconds.',
@@ -378,7 +396,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Shroomstone Armor and Tools',
     category: 'gear',
     registryId: null,
-    aliases: ['Shroomstone gear'],
+    aliases: ['Shroomstone gear', 'Shroomstone armor', 'Shroomstone tools', 'Shroomstone equipment'],
     texture: 'textures/item/shroomstone_sword.png',
     description: 'Use Shroomstone to upgrade Platinum gear. A full armor set grants Jump Boost II and blocks fall damage.',
     details: 'Each armor piece cuts fall damage by 25%. The full set grants Jump Boost II and blocks all fall damage. Fully charged attacks launch targets into the air.',
@@ -662,7 +680,7 @@ export const GUIDES: GuideChapter[] = [
       {
         title: 'Platinum gear',
         body: 'Craft a Platinum Ingot, then use it with Luminite Dust to upgrade Diamond gear at a Smithing Table. Platinum tools have 1,843 durability, 10 mining speed, and 20 enchantability.',
-        recipeEntryIds: ['platinum_ingot', 'platinum_gear']
+        recipeEntryIds: ['platinum', 'platinum_gear']
       },
       {
         title: 'Hellstone gear',
@@ -677,7 +695,7 @@ export const GUIDES: GuideChapter[] = [
       {
         title: 'Scorchsteel armor',
         body: 'Craft a Scorchsteel Ingot, then use it with Luminite Dust to upgrade Platinum armor at a Smithing Table. The full set conceals you from hostile monsters after you stand still for 1 second.',
-        recipeEntryIds: ['scorchsteel_ingot', 'scorchsteel_armor']
+        recipeEntryIds: ['scorchsteel', 'scorchsteel_armor']
       }
     ]
   },
@@ -698,7 +716,7 @@ export const GUIDES: GuideChapter[] = [
       {
         title: 'Craft Scorchsteel armor',
         body: 'Defeat Scorchlings for Scorchling Tails and craft a Scorchsteel Ingot. Then use it with Luminite Dust to upgrade Platinum armor at a Smithing Table.',
-        recipeEntryIds: ['scorchsteel_ingot', 'scorchsteel_armor']
+        recipeEntryIds: ['scorchsteel', 'scorchsteel_armor']
       }
     ]
   },

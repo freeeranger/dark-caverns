@@ -107,7 +107,9 @@ export const WikiPage: React.FC = () => {
   const registryId = selectedItem?.registryId === null
     ? ''
     : selectedItem?.registryId ?? (selectedItem ? `dark_caverns:${selectedItem.id}` : '');
-  const textureLabel = selectedItem?.relatedItems?.[0]?.name ?? selectedItem?.name ?? '';
+  const textureLabel = selectedItem?.relatedItems?.find((item) => item.texture === selectedItem.texture)?.name
+    ?? selectedItem?.name
+    ?? '';
   const copyStatus = copyFeedback?.registryId === registryId ? copyFeedback.status : null;
 
   useEffect(() => {

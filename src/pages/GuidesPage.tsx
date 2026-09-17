@@ -6,10 +6,15 @@ import { CraftingGrid } from '../components/CraftingGrid';
 import { SmithingTable } from '../components/SmithingTable';
 import { PixelIcon } from '../components/PixelIcon';
 import { WikiText } from '../components/WikiText';
-import { GUIDES, WIKI_ENTRIES, WikiEntry } from '../data/modData';
+import { GUIDES, resolveWikiEntryId, WIKI_ENTRIES, WikiEntry } from '../data/modData';
 
 const WIKI_ENTRY_BY_ID = new Map(WIKI_ENTRIES.map((entry) => [entry.id, entry]));
-const WIKI_ENTRY_ID_BY_NAME = new Map(WIKI_ENTRIES.map((entry) => [entry.name.toLocaleLowerCase(), entry.id]));
+const WIKI_ENTRY_ID_BY_NAME = new Map(
+  WIKI_ENTRIES.flatMap((entry) => [
+    [entry.name.toLocaleLowerCase(), entry.id] as const,
+    ...(entry.relatedItems ?? []).map((item) => [item.name.toLocaleLowerCase(), entry.id] as const)
+  ])
+);
 const GUIDE_CATEGORIES = ['Start here', 'Explore', 'Progression'] as const;
 
 function wikiHrefForName(name: string, fallbackId: string): string {
@@ -19,7 +24,7 @@ function wikiHrefForName(name: string, fallbackId: string): string {
 
 function getRecipeEntries(ids: string[] | undefined): WikiEntry[] {
   return (ids ?? [])
-    .map((id) => WIKI_ENTRY_BY_ID.get(id))
+    .map((id) => WIKI_ENTRY_BY_ID.get(resolveWikiEntryId(id)))
     .filter((entry): entry is WikiEntry => Boolean(entry));
 }
 

@@ -126,6 +126,16 @@ const ITEM_DEFINITIONS: ItemDefinition[] = [
   ['scorchsteel_ingot', 'Scorchsteel Ingot', 'materials', 'The upgrade material for Scorchsteel armor.', 'Use it with Luminite Dust to upgrade Platinum armor at a Smithing Table.']
 ];
 
+const CONSOLIDATED_MATERIAL_ITEM_IDS = new Set([
+  'luminite_dust',
+  'platinum_piece',
+  'platinum_ingot',
+  'hellstone_rock',
+  'shroomstone_piece',
+  'scorchling_tail',
+  'scorchsteel_ingot'
+]);
+
 type Tier = 'platinum' | 'hellstone' | 'shroomstone';
 type Tool = 'sword' | 'axe' | 'pickaxe' | 'shovel' | 'hoe';
 type ArmorPiece = 'helmet' | 'chestplate' | 'leggings' | 'boots';
@@ -221,7 +231,7 @@ export const MOD_ITEM_IDS = [
 export const BLOCK_WIKI_ENTRIES = BLOCK_DEFINITIONS.map(block);
 
 export const ITEM_WIKI_ENTRIES: WikiEntry[] = [
-  ...ITEM_DEFINITIONS.map(item),
+  ...ITEM_DEFINITIONS.filter(([id]) => !CONSOLIDATED_MATERIAL_ITEM_IDS.has(id)).map(item),
   ...(['platinum', 'hellstone', 'shroomstone'] as const).flatMap((tier) =>
     (['sword', 'axe', 'pickaxe', 'shovel', 'hoe'] as const).map((tool) => toolEntry(tier, tool))
   ),
