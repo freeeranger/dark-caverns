@@ -94,14 +94,14 @@ export const CraftingGrid: React.FC<CraftingGridProps> = ({ recipe }) => {
         </div>
 
         <MinecraftTooltip content={recipe.output.name}>
-          <div className="mc-slot mc-slot-output relative">
+          <div className="mc-slot relative">
             {recipe.output.texture && (
               <TextureImage
                 texture={recipe.output.texture}
                 alt={recipe.output.name}
-                className="w-8 h-8 pixel-art"
-                width={32}
-                height={32}
+                className="w-6 h-6 pixel-art"
+                width={24}
+                height={24}
               />
             )}
             {(recipe.output.count ?? 1) > 1 && (

@@ -55,6 +55,15 @@
     outline-offset: 1px;
   }
 
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+  }
+
   html {
     overflow-y: scroll;
     scrollbar-gutter: stable;
@@ -142,11 +151,6 @@
   & img {
     @apply object-cover object-top;
   }
-}
-
-@utility mc-slot-output {
-  @apply w-[52px] h-[52px] bg-[#22242a];
-  border-color: #0d0e11 #454957 #454957 #0d0e11;
 }
 
 /* Crafting Grid Table */

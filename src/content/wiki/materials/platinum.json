@@ -4,18 +4,6 @@
   "category": "materials",
   "registryId": null,
   "texture": "textures/item/platinum_ingot.png",
-  "relatedItems": [
-    {
-      "id": "platinum_piece",
-      "name": "Platinum Piece",
-      "texture": "textures/item/platinum_piece.png"
-    },
-    {
-      "id": "platinum_ingot",
-      "name": "Platinum Ingot",
-      "texture": "textures/item/platinum_ingot.png"
-    }
-  ],
   "description": "Platinum is the first material tier in Dark Caverns equipment progression.",
   "details": "Carfstone Platinum Ore generates below Y = 80 and drops Platinum Pieces. Craft the pieces into Platinum Ingots, then use an ingot with Luminite Dust to upgrade Diamond equipment.",
   "stats": [

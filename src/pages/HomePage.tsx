@@ -180,9 +180,9 @@ const BiomeOverview: React.FC = () => (
       {BIOMES.map((biome) => (
         <article
           key={biome.name}
-          className="flex min-w-0 gap-4 p-5 border-b border-[#2a2c34] last:border-b-0 sm:border-b sm:[&:nth-child(odd)]:border-r sm:[&:nth-last-child(-n+2)]:border-b-0"
+          className="flex min-w-0 gap-4 p-5 border-b border-[#2a2c34] last:border-b-0 sm:border-b sm:odd:border-r sm:nth-last-[-n+2]:border-b-0"
         >
-          <span className="mc-slot mc-slot-output shrink-0">
+          <span className="mc-slot shrink-0">
             <TextureImage
               texture={biome.texture}
               alt={biome.name}

@@ -4,18 +4,6 @@
   "category": "materials",
   "registryId": null,
   "texture": "textures/item/scorchsteel_ingot.png",
-  "relatedItems": [
-    {
-      "id": "scorchling_tail",
-      "name": "Scorchling Tail",
-      "texture": "textures/item/scorchling_tail.png"
-    },
-    {
-      "id": "scorchsteel_ingot",
-      "name": "Scorchsteel Ingot",
-      "texture": "textures/item/scorchsteel_ingot.png"
-    }
-  ],
   "description": "Scorchsteel is the material used to make concealment armor.",
   "details": "Scorchlings drop Scorchling Tails. Craft the tails into Scorchsteel Ingots, then use an ingot with Luminite Dust to upgrade Platinum armor.",
   "recipe": {

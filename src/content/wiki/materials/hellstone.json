@@ -3,13 +3,6 @@
   "name": "Hellstone",
   "category": "materials",
   "texture": "textures/item/hellstone.png",
-  "relatedItems": [
-    {
-      "id": "hellstone_rock",
-      "name": "Hellstone Rock",
-      "texture": "textures/item/hellstone_rock.png"
-    }
-  ],
   "description": "Hellstone is the upgrade material for fire-resistant equipment.",
   "details": "Hellstone Rock drops from Hellstone Ore in the Molten Depths and does not burn in fire or lava. Use Hellstone at a Smithing Table to upgrade Platinum equipment into Hellstone gear.",
   "stats": [

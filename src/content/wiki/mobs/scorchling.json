@@ -3,13 +3,6 @@
   "name": "Scorchling",
   "category": "mobs",
   "texture": "textures/item/scorchling_spawn_egg.png",
-  "relatedItems": [
-    {
-      "id": "scorchling_spawn_egg",
-      "name": "Scorchling Spawn Egg",
-      "texture": "textures/item/scorchling_spawn_egg.png"
-    }
-  ],
   "description": "Scorchlings are hostile creatures that hunt players in the Molten Depths.",
   "details": "They leap at players and drop the Scorchling Tails used to make Scorchsteel Ingots.",
   "stats": [

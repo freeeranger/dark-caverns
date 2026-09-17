@@ -91,9 +91,7 @@ export const WikiPage: React.FC = () => {
         { name: 'description', weight: 0.15 },
         { name: 'details', weight: 0.1 },
         { name: 'stats.value', weight: 0.1 },
-        { name: 'aliases', weight: 0.1 },
-        { name: 'relatedItems.name', weight: 0.2 },
-        { name: 'relatedItems.id', weight: 0.15 }
+        { name: 'aliases', weight: 0.1 }
       ],
       threshold: 0.35,
       ignoreLocation: true,
@@ -196,11 +194,13 @@ export const WikiPage: React.FC = () => {
         <input
           ref={searchInputRef}
           type="search"
+          autoComplete="off"
+          spellCheck={false}
           placeholder="Search the wiki (/)"
           aria-label="Search wiki entries (press / to focus)"
           value={searchQuery}
           onChange={(event) => changeSearchQuery(event.target.value)}
-          className="w-full min-h-11 mc-inset pl-9 pr-12 py-2 text-base sm:text-sm text-white placeholder-[#8e95a8]"
+          className="w-full min-h-11 mc-inset pl-9 pr-12 py-2 text-base sm:text-sm text-white placeholder-[#8e95a8] [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
         />
         {searchQuery ? (
           <button
@@ -314,11 +314,6 @@ export const WikiPage: React.FC = () => {
 
       <MasterDetailLayout
         sidebarTitle="Wiki"
-        sidebarHeaderRight={
-          <span className="text-[11px] font-mono text-[#55ffaf]">
-            {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'}
-          </span>
-        }
         sidebarAriaLabel="Wiki navigation"
         sidebarRef={navigationRef}
         articleRef={articleRef}

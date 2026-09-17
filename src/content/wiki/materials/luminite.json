@@ -4,13 +4,6 @@
   "category": "materials",
   "registryId": null,
   "texture": "textures/item/luminite_dust.png",
-  "relatedItems": [
-    {
-      "id": "luminite_dust",
-      "name": "Luminite Dust",
-      "texture": "textures/item/luminite_dust.png"
-    }
-  ],
   "description": "Luminite is the light-producing mineral used throughout Dark Caverns equipment and utilities.",
   "details": "Carfstone Luminite Ore generates throughout the dimension and on exposed Carfstone formations. It drops Luminite Dust, the template item for Platinum, Hellstone, Shroomstone, and Scorchsteel upgrades.",
   "stats": [

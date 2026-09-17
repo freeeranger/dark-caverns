@@ -3,13 +3,6 @@
   "name": "Camorock",
   "category": "mobs",
   "texture": "textures/item/camorock_spawn_egg.png",
-  "relatedItems": [
-    {
-      "id": "camorock_spawn_egg",
-      "name": "Camorock Spawn Egg",
-      "texture": "textures/item/camorock_spawn_egg.png"
-    }
-  ],
   "description": "Camorocks are timid Carfstone creatures that flee nearby players.",
   "details": "Camorocks wander the Rocky Caverns and Tangled Hallow. They can drop Carfstone, Raw Iron, Gold Nuggets, Luminite Dust, or a rare Diamond.",
   "stats": [

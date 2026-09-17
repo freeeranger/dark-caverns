@@ -3,13 +3,6 @@
   "name": "Shroomstone",
   "category": "materials",
   "texture": "textures/item/shroomstone.png",
-  "relatedItems": [
-    {
-      "id": "shroomstone_piece",
-      "name": "Shroomstone Piece",
-      "texture": "textures/item/shroomstone_piece.png"
-    }
-  ],
   "description": "Shroomstone is the upgrade material for movement-focused equipment.",
   "details": "Shroomies trade 2 Shroomstone Pieces for 1 Diamond. Use Shroomstone at a Smithing Table to upgrade Platinum equipment into Shroomstone gear.",
   "stats": [

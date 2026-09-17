@@ -3,13 +3,6 @@
   "name": "Shroomie",
   "category": "mobs",
   "texture": "textures/item/shroomie_spawn_egg.png",
-  "relatedItems": [
-    {
-      "id": "shroomie_spawn_egg",
-      "name": "Shroomie Spawn Egg",
-      "texture": "textures/item/shroomie_spawn_egg.png"
-    }
-  ],
   "description": "Shroomies are peaceful traders in the Glimmershroom Forest.",
   "details": "Each Shroomie offers five common trades, one guaranteed Shroomstone Piece trade, and one rare trade. Their prices use Luminite Dust, Iron Ingots, Gold Ingots, Diamonds, Ender Pearls, or Emeralds, depending on the offer.",
   "stats": [

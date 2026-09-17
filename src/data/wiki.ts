@@ -19,9 +19,6 @@ for (const entry of [...curatedWikiEntries, ...BLOCK_WIKI_ENTRIES, ...ITEM_WIKI_
 export const WIKI_ENTRIES: WikiEntry[] = [...wikiEntriesById.values()];
 
 export const WIKI_ENTRY_REDIRECTS = new Map<string, string>([
-  ...WIKI_ENTRIES.flatMap((entry) =>
-    (entry.relatedItems ?? []).map((relatedItem): [string, string] => [relatedItem.id, entry.id])
-  ),
   ['scorchling_hound', 'scorchling']
 ]);
 

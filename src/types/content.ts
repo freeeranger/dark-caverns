@@ -17,12 +17,6 @@ export interface SmithingRecipe {
   output: RecipeSlot;
 }
 
-export interface RelatedWikiItem {
-  id: string;
-  name: string;
-  texture: string;
-}
-
 export type WikiCategory = 'biomes' | 'blocks' | 'materials' | 'gear' | 'items' | 'mobs';
 
 export interface WikiEntry {
@@ -37,7 +31,6 @@ export interface WikiEntry {
   smithing?: SmithingRecipe;
   aliases?: string[];
   registryId?: string | null;
-  relatedItems?: RelatedWikiItem[];
 }
 
 export interface GuideStep {

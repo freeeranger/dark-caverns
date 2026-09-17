@@ -3,13 +3,6 @@
   "name": "Scorchhound",
   "category": "mobs",
   "texture": "textures/item/scorchhound_spawn_egg.png",
-  "relatedItems": [
-    {
-      "id": "scorchhound_spawn_egg",
-      "name": "Scorchhound Spawn Egg",
-      "texture": "textures/item/scorchhound_spawn_egg.png"
-    }
-  ],
   "description": "Scorchhounds are powerful hostile creatures in the Molten Depths.",
   "details": "They have 40 health, and their melee attacks throw players through the air. Scorchhounds drop Scorched Meat.",
   "stats": [

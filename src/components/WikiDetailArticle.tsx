@@ -20,8 +20,7 @@ export const WikiDetailArticle: React.FC<WikiDetailArticleProps> = ({ item }) =>
     ? ''
     : item.registryId ?? `dark_caverns:${item.id}`;
 
-  const textureLabel = item.relatedItems?.find((rel) => rel.texture === item.texture)?.name
-    ?? item.name;
+  const textureLabel = item.name;
 
   useEffect(() => {
     if (!copyStatus) {
@@ -55,7 +54,7 @@ export const WikiDetailArticle: React.FC<WikiDetailArticleProps> = ({ item }) =>
             href={getGithubSourceUrl(item.texture)}
             target="_blank"
             rel="noreferrer"
-            className="mc-slot mc-slot-output shrink-0 group hover:border-[#55ffaf] transition-colors"
+            className="mc-slot shrink-0 group hover:border-[#55ffaf] transition-colors"
             aria-label={`View the ${textureLabel} texture on GitHub in a new tab`}
           >
             <TextureImage
@@ -68,47 +67,38 @@ export const WikiDetailArticle: React.FC<WikiDetailArticleProps> = ({ item }) =>
           </a>
         }
         subtitle={
-          <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 mt-0.5">
-            {registryId && (
-              <div className="flex items-center h-4 mt-2 gap-2">
-                <code className="h-full select-text cursor-text min-w-0 break-all text-xs text-[#8e95a8] font-pixel">
-                  {registryId}
-                </code>
-                <button
-                  type="button"
-                  onClick={copyRegistryId}
-                  className={`cursor-pointer inline-flex items-end gap-1 px-1.5 py-1 text-[11px] font-pixel ${
-                    copyStatus === 'copied'
-                      ? 'text-[#55ffaf]'
-                      : copyStatus === 'error'
-                        ? 'text-[#ff9970]'
-                        : 'text-[#8e95a8] hover:text-white'
-                  }`}
-                  aria-label={`Copy registry ID ${registryId}`}
-                  title={copyStatus === 'error' ? 'Copy failed. Select the ID instead.' : 'Copy registry ID'}
-                >
-                  <PixelIcon
-                    name={copyStatus === 'copied' ? 'check' : 'copy'}
-                    className="w-3 h-3"
-                  />
-                  <span aria-live="polite">
-                    {copyStatus === 'copied'
-                      ? 'Copied'
-                      : copyStatus === 'error'
-                        ? 'Select ID'
-                        : 'Copy ID'}
-                  </span>
-                </button>
-              </div>
-            )}
-
-            {item.relatedItems?.map((relatedItem) => (
-              <span key={relatedItem.id} className="inline-flex min-w-0 basis-full flex-wrap items-center gap-x-1.5 text-[11px]">
-                <span className="font-pixel text-[#8e95a8]">{relatedItem.name}</span>
-                <code className="break-all font-mono text-[#b8bdcb]">dark_caverns:{relatedItem.id}</code>
-              </span>
-            ))}
-          </div>
+          registryId ? (
+            <div className="flex items-center h-4 mt-2 gap-2">
+              <code className="h-full select-text cursor-text min-w-0 break-all text-xs text-[#8e95a8] font-pixel">
+                {registryId}
+              </code>
+              <button
+                type="button"
+                onClick={copyRegistryId}
+                className={`cursor-pointer inline-flex items-end gap-1 px-1.5 py-1 text-[11px] font-pixel ${
+                  copyStatus === 'copied'
+                    ? 'text-[#55ffaf]'
+                    : copyStatus === 'error'
+                      ? 'text-[#ff9970]'
+                      : 'text-[#8e95a8] hover:text-white'
+                }`}
+                aria-label={`Copy registry ID ${registryId}`}
+                title={copyStatus === 'error' ? 'Copy failed. Select the ID instead.' : 'Copy registry ID'}
+              >
+                <PixelIcon
+                  name={copyStatus === 'copied' ? 'check' : 'copy'}
+                  className="w-3 h-3"
+                />
+                <span aria-live="polite">
+                  {copyStatus === 'copied'
+                    ? 'Copied'
+                    : copyStatus === 'error'
+                      ? 'Select ID'
+                      : 'Copy ID'}
+                </span>
+              </button>
+            </div>
+          ) : undefined
         }
       />
 
