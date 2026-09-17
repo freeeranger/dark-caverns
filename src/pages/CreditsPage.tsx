@@ -48,7 +48,7 @@ const ContributorAvatar: React.FC<ContributorAvatarProps> = ({ avatarUrl }) => {
           alt=""
           loading="lazy"
           onError={() => setHasError(true)}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover block max-w-full max-h-full"
         />
       ) : (
         <PixelIcon
