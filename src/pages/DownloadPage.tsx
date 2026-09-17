@@ -3,6 +3,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/Button';
 import { PixelIcon } from '../components/PixelIcon';
+import { LINKS } from '../utils/constants';
 
 export const DownloadPage: React.FC = () => {
   return (
@@ -22,22 +23,22 @@ export const DownloadPage: React.FC = () => {
 
                   <div className="grid gap-3 sm:grid-cols-2">
                       <Button
-                          href="https://www.curseforge.com/minecraft/mc-mods/dark-caverns"
+                          href={LINKS.curseforge}
                           variant="curseforge"
                           size="lg"
                           className="text-center"
                           aria-label="Download Dark Caverns from CurseForge, opens in a new tab"
-                          icon={<PixelIcon name="download" className="w-4 h-4" />}
+                          icon="download"
                       >
                           CurseForge
                       </Button>
                       <Button
-                          href="https://modrinth.com/mod/dark-caverns"
-                          variant="luminite"
+                          href={LINKS.modrinth}
+                          variant="modrinth"
                           size="lg"
                           className="text-center"
                           aria-label="Download Dark Caverns from Modrinth, opens in a new tab"
-                          icon={<PixelIcon name="download" className="w-4 h-4" />}
+                          icon="download"
                       >
                           Modrinth
                       </Button>
@@ -46,7 +47,7 @@ export const DownloadPage: React.FC = () => {
                   <p className="text-sm text-center text-[#aeb5c5]">
                       Dark Caverns is available for 1.21.1 NeoForge and requires{" "}
                       <a
-                          href="https://modrinth.com/mod/geckolib"
+                          href={LINKS.geckolib}
                           target="_blank"
                           rel="noreferrer"
                           className="ml-1 inline-flex min-h-11 items-center gap-1 font-pixel text-[#55ffaf] hover:text-[#ffffa0]"

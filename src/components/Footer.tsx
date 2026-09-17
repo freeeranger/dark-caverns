@@ -1,5 +1,6 @@
 import React from 'react';
 import { PixelIcon } from './PixelIcon';
+import { LINKS } from '../utils/constants';
 
 interface FooterProps {
   basePrefix?: string;
@@ -7,10 +8,10 @@ interface FooterProps {
 }
 
 const EXTERNAL_LINKS = [
-  { label: 'Discord', href: 'https://discord.gg/ZaBswMUQgx', hoverColor: 'hover:text-[#7289da]' },
-  { label: 'CurseForge', href: 'https://www.curseforge.com/minecraft/mc-mods/dark-caverns', hoverColor: 'hover:text-[#ff9970]' },
-  { label: 'Modrinth', href: 'https://modrinth.com/mod/dark-caverns', hoverColor: 'hover:text-[#55ffaf]' },
-  { label: 'GitHub', href: 'https://github.com/freeeranger/dark-caverns', hoverColor: 'hover:text-white' }
+  { label: 'Discord', href: LINKS.discord, hoverColor: 'hover:text-[#7289da]' },
+  { label: 'CurseForge', href: LINKS.curseforge, hoverColor: 'hover:text-[#ff9970]' },
+  { label: 'Modrinth', href: LINKS.modrinth, hoverColor: 'hover:text-[#55ffaf]' },
+  { label: 'GitHub', href: LINKS.github, hoverColor: 'hover:text-white' }
 ];
 
 export const Footer: React.FC<FooterProps> = ({ basePrefix, currentPath }) => {

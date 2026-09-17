@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArticleHeader } from './ArticleHeader';
 import { RecipeCard } from './RecipeCard';
-import { PixelIcon } from './PixelIcon';
+import { Button } from './Button';
 import { TextureImage } from './TextureImage';
 import { WikiText } from './WikiText';
 import type { WikiEntry } from '../data/modData';
@@ -60,7 +60,7 @@ export const WikiDetailArticle: React.FC<WikiDetailArticleProps> = ({ item }) =>
             <TextureImage
               texture={item.texture}
               alt={textureLabel}
-              className="w-8 h-8 pixel-art group-hover:scale-105 transition-transform"
+              className="w-8 h-8 pixel-art group-hover:scale-105 transition-transform object-cover object-top"
               width={32}
               height={32}
             />
@@ -72,10 +72,11 @@ export const WikiDetailArticle: React.FC<WikiDetailArticleProps> = ({ item }) =>
               <code className="h-full select-text cursor-text min-w-0 break-all text-xs text-[#8e95a8] font-pixel">
                 {registryId}
               </code>
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="none"
                 onClick={copyRegistryId}
-                className={`cursor-pointer inline-flex items-end gap-1 px-1.5 py-1 text-[11px] font-pixel ${
+                className={`items-end gap-1 px-1.5 py-1 text-[11px] font-pixel ${
                   copyStatus === 'copied'
                     ? 'text-[#55ffaf]'
                     : copyStatus === 'error'
@@ -84,11 +85,8 @@ export const WikiDetailArticle: React.FC<WikiDetailArticleProps> = ({ item }) =>
                 }`}
                 aria-label={`Copy registry ID ${registryId}`}
                 title={copyStatus === 'error' ? 'Copy failed. Select the ID instead.' : 'Copy registry ID'}
+                icon={copyStatus === 'copied' ? 'check' : 'copy'}
               >
-                <PixelIcon
-                  name={copyStatus === 'copied' ? 'check' : 'copy'}
-                  className="w-3 h-3"
-                />
                 <span aria-live="polite">
                   {copyStatus === 'copied'
                     ? 'Copied'
@@ -96,7 +94,7 @@ export const WikiDetailArticle: React.FC<WikiDetailArticleProps> = ({ item }) =>
                       ? 'Select ID'
                       : 'Copy ID'}
                 </span>
-              </button>
+              </Button>
             </div>
           ) : undefined
         }

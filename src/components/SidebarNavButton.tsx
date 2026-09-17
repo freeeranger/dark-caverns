@@ -29,7 +29,7 @@ export const SidebarNavButton: React.FC<SidebarNavButtonProps> = ({
         <TextureImage
           texture={texture}
           alt=""
-          className="w-5 h-5 pixel-art shrink-0"
+          className="w-5 h-5 pixel-art shrink-0 object-cover object-top"
           width={20}
           height={20}
         />

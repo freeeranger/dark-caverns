@@ -1,9 +1,11 @@
+import { LINKS, MOD_BRANCH } from './constants';
+
 const GITHUB_RAW_BASE =
-  'https://raw.githubusercontent.com/freeeranger/dark-caverns/1.21.1-neoforge/src/main/resources/assets/dark_caverns/';
+  `https://raw.githubusercontent.com/freeeranger/dark-caverns/${MOD_BRANCH}/src/main/resources/assets/dark_caverns/`;
 const MC_ASSETS_BASE =
   'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.1/assets/minecraft/';
 const GITHUB_BLOB_BASE =
-  'https://github.com/freeeranger/dark-caverns/blob/1.21.1-neoforge/src/main/resources/assets/dark_caverns/';
+  `${LINKS.github}/blob/${MOD_BRANCH}/src/main/resources/assets/dark_caverns/`;
 
 const VANILLA_MAPPING: Record<string, string> = {
   'textures/item/compass.png': 'textures/item/compass_16.png',
@@ -48,7 +50,7 @@ export function getTextureUrl(texturePath?: string): string {
  */
 export function getGithubSourceUrl(texturePath?: string): string {
   if (!texturePath) {
-    return 'https://github.com/freeeranger/dark-caverns/tree/1.21.1-neoforge';
+    return `${LINKS.github}/tree/${MOD_BRANCH}`;
   }
   const clean = texturePath.replace(/^\.?\//, '');
   if (VANILLA_MAPPING[clean]) {

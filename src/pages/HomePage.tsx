@@ -2,9 +2,9 @@ import React from 'react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/Button';
-import { PixelIcon } from '../components/PixelIcon';
 import { TextureImage } from '../components/TextureImage';
 import { TrailerEmbed } from '../components/TrailerEmbed';
+import { LINKS } from '../utils/constants';
 
 const GATEWAY_STEPS = [
   {
@@ -129,7 +129,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({ id, title, description,
       size="sm"
       className="shrink-0"
       aria-label={linkLabel}
-      icon={<PixelIcon name="arrow-right" className="h-4 w-4" />}
+      icon="arrow-right"
       iconPosition="right"
     >
       {linkLabel}
@@ -285,15 +285,15 @@ const HomeActions: React.FC = () => (
       href="./download/"
       variant="luminite"
       className="min-w-0 px-3 sm:px-5"
-      icon={<PixelIcon name="download" className="h-4 w-4" />}
+      icon="download"
     >
       Download
     </Button>
     <Button
-      href="https://discord.gg/ZaBswMUQgx"
+      href={LINKS.discord}
       className="min-w-0 px-3 sm:px-5"
       aria-label="Join Discord, opens in a new tab"
-      icon={<PixelIcon name="discord" className="h-4 w-4" />}
+      icon="discord"
     >
       Join Discord
     </Button>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from './Button';
-import { PixelIcon } from './PixelIcon';
 
 interface MasterDetailLayoutProps {
   sidebarTitle: string;
@@ -66,7 +65,7 @@ export const MasterDetailLayout: React.FC<MasterDetailLayoutProps> = ({
               onClick={onBack}
               size="sm"
               className="md:hidden"
-              icon={<PixelIcon name="arrow-left" className="h-4 w-4" />}
+              icon="arrow-left"
             >
               {backLabel}
             </Button>

@@ -1,13 +1,15 @@
 import React from 'react';
+import { PixelIcon, PixelIconName } from './PixelIcon';
 
-export type ButtonVariant = 'default' | 'luminite' | 'curseforge' | 'icon';
+export type ButtonVariant = 'default' | 'luminite' | 'modrinth' | 'curseforge' | 'icon' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'none';
 
 interface BaseButtonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   isActive?: boolean;
-  icon?: React.ReactNode;
+  icon?: PixelIconName | React.ReactNode;
+  iconSize?: string;
   iconPosition?: 'left' | 'right';
   className?: string;
   children?: React.ReactNode;
@@ -41,15 +43,20 @@ export const Button: ButtonComponent = React.forwardRef<
     size = 'md',
     isActive = false,
     icon,
+    iconSize,
     iconPosition = 'left',
     className = '',
     children,
     ...rest
   } = props;
 
+  const isGhost = variant === 'ghost';
+
   const variantClass =
     variant === 'luminite'
       ? 'mc-btn-luminite'
+      : variant === 'modrinth'
+      ? 'mc-btn-modrinth'
       : variant === 'curseforge'
       ? 'mc-btn-curseforge'
       : variant === 'icon'
@@ -67,24 +74,47 @@ export const Button: ButtonComponent = React.forwardRef<
 
   const activeClass = isActive ? 'mc-btn-active' : '';
 
+  const baseClass = isGhost
+    ? 'inline-flex items-center justify-center select-none cursor-pointer transition-none focus:outline-none focus-visible:outline-2 focus-visible:outline-[#55ffaf]'
+    : 'mc-btn min-h-11 gap-2';
+
   const combinedClasses = [
-    'mc-btn min-h-11 gap-2',
+    baseClass,
     variantClass,
-    sizeClass,
+    !isGhost && sizeClass,
     activeClass,
     className
   ]
     .filter(Boolean)
     .join(' ');
 
+  const renderIcon = (iconProp: PixelIconName | React.ReactNode) => {
+    if (!iconProp) return null;
+    if (typeof iconProp === 'string') {
+      const defaultIconClass =
+        iconSize ??
+        (variant === 'icon'
+          ? 'w-5 h-5'
+          : size === 'sm'
+          ? 'w-4 h-4'
+          : size === 'none'
+          ? 'w-3 h-3'
+          : 'w-4 h-4');
+      return <PixelIcon name={iconProp as PixelIconName} className={defaultIconClass} />;
+    }
+    return iconProp;
+  };
+
+  const renderedIcon = renderIcon(icon);
+
   const content =
     variant === 'icon' ? (
-      children ?? icon
+      children ?? renderedIcon
     ) : (
       <>
-        {icon && iconPosition === 'left' && icon}
+        {renderedIcon && iconPosition === 'left' && renderedIcon}
         {children && <span>{children}</span>}
-        {icon && iconPosition === 'right' && icon}
+        {renderedIcon && iconPosition === 'right' && renderedIcon}
       </>
     );
 

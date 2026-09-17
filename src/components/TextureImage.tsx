@@ -35,7 +35,7 @@ export const TextureImage: React.FC<TextureImageProps> = ({
     <img
       src={source}
       alt={alt}
-      className={className}
+      className={`object-cover object-top ${className}`.trim()}
       loading={loading}
       decoding="async"
       onError={(event) => {

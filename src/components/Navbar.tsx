@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from './Button';
-import { PixelIcon } from './PixelIcon';
 
 interface NavbarProps {
   currentPath: '/' | '/guides/' | '/wiki/' | '/download/' | '/credits/';
@@ -63,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
           aria-controls="mobile-navigation"
           aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           onClick={() => setIsMenuOpen((open) => !open)}
-          icon={<PixelIcon name={isMenuOpen ? 'close' : 'menu'} className="h-5 w-5" />}
+          icon={isMenuOpen ? 'close' : 'menu'}
         />
 
         <nav className="ml-auto hidden items-center gap-2 md:flex" aria-label="Main navigation">
@@ -90,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
             className="px-4 py-1.5 text-sm"
             aria-current={currentPath === '/download/' ? 'page' : undefined}
             aria-label="Download"
-            icon={<PixelIcon name="download" className="h-3.5 w-3.5" />}
+            icon="download"
           >
             Download
           </Button>
@@ -126,7 +125,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
             isActive={currentPath === '/download/'}
             className="justify-start w-full px-4 text-sm"
             aria-current={currentPath === '/download/' ? 'page' : undefined}
-            icon={<PixelIcon name="download" className="h-4 w-4" />}
+            icon="download"
           >
             Download
           </Button>

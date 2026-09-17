@@ -222,15 +222,14 @@ export const WikiPage: React.FC = () => {
           className="w-full min-h-11 mc-inset pl-9 pr-12 py-2 text-base sm:text-sm text-white placeholder-[#8e95a8] [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
         />
         {searchQuery ? (
-          <button
-            type="button"
+          <Button
+            variant="ghost"
             onClick={clearSearch}
-            className="absolute right-0 top-0 inline-flex h-11 w-11 items-center justify-center text-[#8e95a8] hover:text-white"
+            className="absolute right-0 top-0 h-11 w-11 text-[#8e95a8] hover:text-white"
             title="Clear search"
             aria-label="Clear wiki search"
-          >
-            <PixelIcon name="close" className="w-3.5 h-3.5" />
-          </button>
+            icon="close"
+          />
         ) : (
           <kbd className="hidden sm:inline-flex absolute right-3 top-1/2 -translate-y-1/2 items-center justify-center w-5 h-5 font-pixel text-[11px] text-[#6b7280] bg-[#1a1c22] border border-[#2a2c34] pointer-events-none" aria-hidden="true">
             /

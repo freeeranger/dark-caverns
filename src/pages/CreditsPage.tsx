@@ -3,6 +3,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/Button';
 import { PixelIcon } from '../components/PixelIcon';
+import { LINKS } from '../utils/constants';
 
 interface Contributor {
   name: string;
@@ -96,9 +97,9 @@ export const CreditsPage: React.FC = () => {
           <div className="flex flex-col gap-3 border-t border-[#232630] pt-5 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-[#9ba2b5]">Want to help out yourself? Join our discord server and let us know!</p>
             <Button
-              href="https://discord.gg/ZaBswMUQgx"
+              href={LINKS.discord}
               size="sm"
-              icon={<PixelIcon name="discord" className="h-4 w-4" />}
+              icon="discord"
               aria-label="Join our Discord server, opens in a new tab"
             >
               Join Discord
