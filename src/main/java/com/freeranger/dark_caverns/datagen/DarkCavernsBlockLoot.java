@@ -54,6 +54,9 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
                 block -> createSingleItemTableWithSilkTouch(block, CustomBlocks.CARFSTONE.get()));
         add(CustomBlocks.UNDERSPROUTS.get(), block -> createShearsOnlyDrop(block));
         add(
+                CustomBlocks.TALL_UNDERSPROUTS.get(),
+                block -> createDoublePlantShearsDrop(CustomBlocks.UNDERSPROUTS.get()));
+        add(
                 CustomBlocks.TWISTWOOD_LEAVES.get(),
                 block ->
                         createLeavesDrops(
@@ -140,6 +143,7 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
     private boolean hasSpecialDrop(Block block) {
         return block == CustomBlocks.OVERGROWN_CARFSTONE.get()
                 || block == CustomBlocks.UNDERSPROUTS.get()
+                || block == CustomBlocks.TALL_UNDERSPROUTS.get()
                 || block == CustomBlocks.TWISTWOOD_LEAVES.get()
                 || block == CustomBlocks.TWISTWOOD_DOOR.get()
                 || block == CustomBlocks.CARFSTONE_COAL_ORE.get()

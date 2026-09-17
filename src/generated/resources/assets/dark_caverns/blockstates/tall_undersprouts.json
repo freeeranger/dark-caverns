@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "dark_caverns:block/tall_undersprouts_bottom"
+    },
+    "half=upper": {
+      "model": "dark_caverns:block/tall_undersprouts_top"
+    }
+  }
+}

@@ -3,15 +3,18 @@ package com.freeranger.dark_caverns.datagen;
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import java.util.List;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -130,8 +133,9 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                 CustomBlocks.TWISTWOOD_TRAPDOOR.get(),
                 models().getExistingFile(modLoc("block/twistwood_trapdoor_bottom")));
         crossBlock(CustomBlocks.UNDERSPROUTS.get());
+        doublePlantBlock(CustomBlocks.TALL_UNDERSPROUTS.get());
         crossBlock(CustomBlocks.TWISTWOOD_SAPLING.get());
-        for (String plant : List.of("undersprouts", "twistwood_sapling"))
+        for (String plant : List.of("undersprouts", "tall_undersprouts", "twistwood_sapling"))
             itemModels()
                     .withExistingParent(plant, mcLoc("item/generated"))
                     .texture("layer0", modLoc("block/" + plant));
@@ -148,6 +152,50 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
         itemModels()
                 .withExistingParent("twistwood_door", mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/twistwood_door"));
+    }
+
+    private void doublePlantBlock(DoublePlantBlock block) {
+        ModelFile upper = tallPlantHalf("tall_undersprouts_top", 0.0F, 8.0F);
+        ModelFile lower = tallPlantHalf("tall_undersprouts_bottom", 8.0F, 16.0F);
+        getVariantBuilder(block)
+                .forAllStates(
+                        state ->
+                                ConfiguredModel.builder()
+                                        .modelFile(
+                                                state.getValue(DoublePlantBlock.HALF)
+                                                                == DoubleBlockHalf.UPPER
+                                                        ? upper
+                                                        : lower)
+                                        .build());
+    }
+
+    private ModelFile tallPlantHalf(String modelName, float minV, float maxV) {
+        var model =
+                models().getBuilder(modelName)
+                        .texture("cross", modLoc("block/tall_undersprouts"))
+                        .texture("particle", "#cross")
+                        .ao(false)
+                        .renderType(CUTOUT);
+
+        var northSouth = model.element().from(0.8F, 0.0F, 8.0F).to(15.2F, 16.0F, 8.0F).shade(false);
+        northSouth
+                .rotation()
+                .origin(8.0F, 8.0F, 8.0F)
+                .axis(Direction.Axis.Y)
+                .angle(45.0F)
+                .rescale(true);
+        northSouth.face(Direction.NORTH).uvs(0.0F, minV, 16.0F, maxV).texture("#cross");
+        northSouth.face(Direction.SOUTH).uvs(0.0F, minV, 16.0F, maxV).texture("#cross");
+
+        var eastWest = model.element().from(8.0F, 0.0F, 0.8F).to(8.0F, 16.0F, 15.2F).shade(false);
+        eastWest.rotation()
+                .origin(8.0F, 8.0F, 8.0F)
+                .axis(Direction.Axis.Y)
+                .angle(45.0F)
+                .rescale(true);
+        eastWest.face(Direction.WEST).uvs(0.0F, minV, 16.0F, maxV).texture("#cross");
+        eastWest.face(Direction.EAST).uvs(0.0F, minV, 16.0F, maxV).texture("#cross");
+        return model;
     }
 
     private void registerStoneFamilies() {

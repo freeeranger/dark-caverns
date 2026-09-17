@@ -28,9 +28,11 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -43,6 +45,48 @@ public final class TangledHallowTests {
     private static final BlockPos ORIGIN = new BlockPos(0, 40, 0);
 
     private TangledHallowTests() {}
+
+    @GameTest(template = "sacred_torch")
+    public static void undersproutsGrowAndBreakLikeTallGrass(GameTestHelper helper) {
+        var level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 3, 2));
+        level.setBlock(pos.below(), CustomBlocks.OVERGROWN_CARFSTONE.get().defaultBlockState(), 3);
+        BlockState shortPlant = CustomBlocks.UNDERSPROUTS.get().defaultBlockState();
+        level.setBlock(pos, shortPlant, 3);
+
+        CustomBlocks.UNDERSPROUTS
+                .get()
+                .performBonemeal(level, RandomSource.create(7), pos, shortPlant);
+        BlockState lower = level.getBlockState(pos);
+        BlockState upper = level.getBlockState(pos.above());
+        helper.assertTrue(
+                lower.is(CustomBlocks.TALL_UNDERSPROUTS.get())
+                        && lower.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.LOWER
+                        && upper.is(CustomBlocks.TALL_UNDERSPROUTS.get())
+                        && upper.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER,
+                "Bone meal did not grow undersprouts into a linked tall plant");
+
+        var drops =
+                net.minecraft.world.level.block.Block.getDrops(
+                        upper,
+                        level,
+                        pos.above(),
+                        null,
+                        null,
+                        new net.minecraft.world.item.ItemStack(
+                                net.minecraft.world.item.Items.SHEARS));
+        helper.assertTrue(
+                drops.size() == 1
+                        && drops.getFirst().is(CustomBlocks.UNDERSPROUTS.get().asItem())
+                        && drops.getFirst().getCount() == 2,
+                "Shearing tall undersprouts should return two regular undersprouts");
+
+        level.destroyBlock(pos.above(), false);
+        helper.assertTrue(
+                level.getBlockState(pos).isAir() && level.getBlockState(pos.above()).isAir(),
+                "Breaking one tall-undersprouts half left the other behind");
+        helper.succeed();
+    }
 
     @GameTest(template = "sacred_torch")
     public static void twistwoodSupportsRenewalStrippingAndHarvesting(GameTestHelper helper) {
@@ -349,7 +393,26 @@ public final class TangledHallowTests {
         helper.assertTrue(
                 mud > 200 && mud < originalFloors * .10,
                 "Hallow mud patches are missing or too dense: " + mud);
-        volume.feature("undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 8);
+        volume.feature("tall_undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 8);
+        long tallPlants =
+                volume.featureWrites.values().stream()
+                        .filter(
+                                state ->
+                                        state.is(CustomBlocks.TALL_UNDERSPROUTS.get())
+                                                && state.getValue(DoublePlantBlock.HALF)
+                                                        == DoubleBlockHalf.LOWER)
+                        .count();
+        long tallPlantBlocks =
+                volume.featureWrites.values().stream()
+                        .filter(state -> state.is(CustomBlocks.TALL_UNDERSPROUTS.get()))
+                        .count();
+        helper.assertTrue(
+                tallPlants > 100 && tallPlantBlocks == tallPlants * 2,
+                "Tangled Hallow tall undersprouts are sparse or unpaired: plants="
+                        + tallPlants
+                        + ", blocks="
+                        + tallPlantBlocks);
+        volume.feature("undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 9);
         long plants =
                 volume.featureWrites.values().stream()
                         .filter(s -> s.is(CustomBlocks.UNDERSPROUTS.get()))

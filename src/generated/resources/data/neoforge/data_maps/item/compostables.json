@@ -18,6 +18,9 @@
     "dark_caverns:scorched_berries": {
       "chance": 0.3
     },
+    "dark_caverns:tall_undersprouts": {
+      "chance": 0.5
+    },
     "dark_caverns:twistwood_leaves": {
       "chance": 0.3
     },

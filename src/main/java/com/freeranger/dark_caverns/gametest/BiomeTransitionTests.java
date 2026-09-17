@@ -25,7 +25,9 @@ import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.FeatureSorter;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
@@ -211,6 +213,7 @@ public final class BiomeTransitionTests {
                         "shroom_patch",
                         "charred_grass_patch",
                         "scorched_berry_bush_patch",
+                        "tall_undersprouts_patch",
                         "undersprouts_patch"
                     }) {
                 var placed =
@@ -239,10 +242,15 @@ public final class BiomeTransitionTests {
                 boolean molten =
                         block.is(CustomBlocks.CHARRED_GRASS.get())
                                 || block.is(CustomBlocks.SCORCHED_BERRY_BUSH.get());
-                boolean hallow = block.is(CustomBlocks.UNDERSPROUTS.get());
+                boolean tallHallow = block.is(CustomBlocks.TALL_UNDERSPROUTS.get());
+                boolean hallow = block.is(CustomBlocks.UNDERSPROUTS.get()) || tallHallow;
                 if (!forest && !molten && !hallow) continue;
                 plants++;
-                BlockState ground = volume.get(entry.getKey().below());
+                BlockPos groundPos = entry.getKey().below();
+                if (tallHallow && block.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
+                    groundPos = groundPos.below();
+                }
+                BlockState ground = volume.get(groundPos);
                 helper.assertTrue(
                         ground.is(
                                 hallow

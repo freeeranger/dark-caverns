@@ -173,6 +173,7 @@ public final class TwistwoodTreeFeature extends Feature<NoneFeatureConfiguration
         return state.getFluidState().isEmpty()
                 && (state.isAir()
                         || state.is(CustomBlocks.UNDERSPROUTS.get())
+                        || state.is(CustomBlocks.TALL_UNDERSPROUTS.get())
                         || state.is(CustomBlocks.TWISTWOOD_SAPLING.get()));
     }
 }

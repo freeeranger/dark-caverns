@@ -9,8 +9,10 @@ import com.freeranger.dark_caverns.blocks.GlimmershroomBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
 import com.freeranger.dark_caverns.blocks.ScorchedBerryBushBlock;
+import com.freeranger.dark_caverns.blocks.TallUndersproutsBlock;
 import com.freeranger.dark_caverns.blocks.TwistwoodLogBlock;
 import com.freeranger.dark_caverns.blocks.TwistwoodSaplingBlock;
+import com.freeranger.dark_caverns.blocks.UndersproutsBlock;
 import java.util.Optional;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
@@ -232,13 +234,21 @@ public final class CustomBlocks {
 
     public static final DeferredBlock<Block> OVERGROWN_CARFSTONE =
             register("overgrown_carfstone", () -> new Block(stone(4.0F)));
-    public static final DeferredBlock<CustomPlantBlock> UNDERSPROUTS =
+    public static final DeferredBlock<TallUndersproutsBlock> TALL_UNDERSPROUTS =
+            register(
+                    "tall_undersprouts",
+                    () ->
+                            new TallUndersproutsBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS),
+                                    OVERGROWN_CARFSTONE));
+    public static final DeferredBlock<UndersproutsBlock> UNDERSPROUTS =
             register(
                     "undersprouts",
                     () ->
-                            new CustomPlantBlock(
+                            new UndersproutsBlock(
                                     BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS),
-                                    OVERGROWN_CARFSTONE));
+                                    OVERGROWN_CARFSTONE,
+                                    TALL_UNDERSPROUTS));
     public static final DeferredBlock<WaterlilyBlock> WATER_SPROUTLETS =
             register(
                     "water_sproutlets",
