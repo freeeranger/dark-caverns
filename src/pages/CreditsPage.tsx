@@ -10,12 +10,16 @@ interface Contributor {
 
 const CONTRIBUTORS: Contributor[] = [
   {
+    name: "Freeranger",
+    contribution: "Owner and lead developer"
+  },
+  {
     name: 'ShroomTheShroom',
-    contribution: 'ShroomTheShroom made several textures and mobs, and composed music for the mod.'
+    contribution: 'Texture artist, music, and mod design'
   },
   {
     name: 'Samuel Arden',
-    contribution: 'Samuel Arden composed two music tracks for the mod.'
+    contribution: 'Composed two music tracks'
   }
 ];
 
