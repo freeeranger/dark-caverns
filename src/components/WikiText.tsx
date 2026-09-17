@@ -26,7 +26,8 @@ const LINK_TARGETS = (() => {
   const byLabel = new Map<string, LinkTarget>();
 
   for (const entry of WIKI_ENTRIES) {
-    const labels = [entry.name, pluralize(entry.name), ...(entry.aliases ?? [])];
+    const relatedItemLabels = (entry.relatedItems ?? []).flatMap((item) => [item.name, pluralize(item.name)]);
+    const labels = [entry.name, pluralize(entry.name), ...(entry.aliases ?? []), ...relatedItemLabels];
     for (const label of labels) {
       const key = label.toLocaleLowerCase();
       if (!byLabel.has(key)) byLabel.set(key, { id: entry.id, label });

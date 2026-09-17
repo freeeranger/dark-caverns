@@ -19,6 +19,12 @@ export interface SmithingRecipe {
   output: RecipeSlot;
 }
 
+export interface RelatedWikiItem {
+  id: string;
+  name: string;
+  texture: string;
+}
+
 export interface WikiEntry {
   id: string;
   name: string;
@@ -31,6 +37,7 @@ export interface WikiEntry {
   smithing?: SmithingRecipe;
   aliases?: string[];
   registryId?: string | null;
+  relatedItems?: RelatedWikiItem[];
 }
 
 export interface GuideStep {
@@ -46,6 +53,14 @@ export interface GuideChapter {
   summary: string;
   category: 'Start here' | 'Explore' | 'Progression';
   steps: GuideStep[];
+}
+
+function spawnEgg(mobId: string, mobName: string): RelatedWikiItem {
+  return {
+    id: `${mobId}_spawn_egg`,
+    name: `${mobName} Spawn Egg`,
+    texture: `textures/item/${mobId}_spawn_egg.png`
+  };
 }
 
 const CURATED_WIKI_ENTRIES: WikiEntry[] = [
@@ -430,6 +445,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Shroomie',
     category: 'mobs',
     texture: 'textures/item/shroomie_spawn_egg.png',
+    relatedItems: [spawnEgg('shroomie', 'Shroomie')],
     description: 'Shroomies are peaceful traders in the Glimmershroom Forest.',
     details: 'Each Shroomie offers five common trades, one guaranteed Shroomstone Piece trade, and one rare trade. Their prices use Luminite Dust, Iron Ingots, Gold Ingots, Diamonds, Ender Pearls, or Emeralds, depending on the offer.',
     stats: [
@@ -444,6 +460,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Camorock',
     category: 'mobs',
     texture: 'textures/item/camorock_spawn_egg.png',
+    relatedItems: [spawnEgg('camorock', 'Camorock')],
     description: 'Camorocks are timid Carfstone creatures that flee nearby players.',
     details: 'Camorocks wander the Rocky Caverns and Tangled Hallow. They can drop Carfstone, Raw Iron, Gold Nuggets, Luminite Dust, or a rare Diamond.',
     stats: [
@@ -453,18 +470,32 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     ]
   },
   {
-    id: 'scorchling_hound',
-    name: 'Scorchling and Scorchhound',
+    id: 'scorchling',
+    name: 'Scorchling',
     category: 'mobs',
-    registryId: null,
-    aliases: ['Scorchling', 'Scorchlings', 'Scorchhound', 'Scorchhounds'],
-    texture: 'textures/item/scorchhound_spawn_egg.png',
-    description: 'Scorchlings and Scorchhounds hunt players in the Molten Depths.',
-    details: 'Scorchlings leap at players and drop the tails used to craft Scorchsteel. Scorchhounds have 40 health. Their melee attacks throw players, and they drop Scorched Meat.',
+    texture: 'textures/item/scorchling_spawn_egg.png',
+    relatedItems: [spawnEgg('scorchling', 'Scorchling')],
+    description: 'Scorchlings are hostile creatures that hunt players in the Molten Depths.',
+    details: 'They leap at players and drop the Scorchling Tails used to make Scorchsteel Ingots.',
     stats: [
       { label: 'Behavior', value: 'Hostile' },
       { label: 'Location', value: 'Molten Depths' },
-      { label: 'Key drops', value: 'Scorchling Tails, Scorched Meat' }
+      { label: 'Drop', value: 'Scorchling Tail' }
+    ]
+  },
+  {
+    id: 'scorchhound',
+    name: 'Scorchhound',
+    category: 'mobs',
+    texture: 'textures/item/scorchhound_spawn_egg.png',
+    relatedItems: [spawnEgg('scorchhound', 'Scorchhound')],
+    description: 'Scorchhounds are powerful hostile creatures in the Molten Depths.',
+    details: 'They have 40 health, and their melee attacks throw players through the air. Scorchhounds drop Scorched Meat.',
+    stats: [
+      { label: 'Behavior', value: 'Hostile' },
+      { label: 'Location', value: 'Molten Depths' },
+      { label: 'Health', value: '40' },
+      { label: 'Drop', value: 'Scorched Meat' }
     ]
   },
   {
@@ -472,6 +503,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Luminite Fox',
     category: 'mobs',
     texture: 'textures/item/luminite_fox_spawn_egg.png',
+    relatedItems: [spawnEgg('luminite_fox', 'Luminite Fox')],
     description: 'Luminite Foxes are passive creatures in Rocky Caverns and Tangled Hallow.',
     details: 'Luminite Dust attracts Luminite Foxes. When a player kills one, it has a 25% chance to drop one Luminite Dust.',
     stats: [
@@ -485,6 +517,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Luminite Golem',
     category: 'mobs',
     texture: 'textures/item/luminite_golem_spawn_egg.png',
+    relatedItems: [spawnEgg('luminite_golem', 'Luminite Golem')],
     description: 'The Luminite Golem is a slow, armored monster in Rocky Caverns and Tangled Hallow.',
     details: 'It has 40 health, 10 armor, strong knockback resistance, and a heavy attack that launches its target. It drops 3 to 6 Luminite Dust and 1 to 3 Carfstone.',
     stats: [
@@ -498,6 +531,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Shroomling',
     category: 'mobs',
     texture: 'textures/item/shroomling_spawn_egg.png',
+    relatedItems: [spawnEgg('shroomling', 'Shroomling')],
     description: 'Shroomlings are neutral creatures in the Glimmershroom Forest.',
     details: 'Shroomlings attack players who provoke them and alert nearby Shroomlings. They drop 1 to 3 Glimmershrooms before Looting bonuses.',
     stats: [
@@ -511,6 +545,7 @@ const CURATED_WIKI_ENTRIES: WikiEntry[] = [
     name: 'Moltener',
     category: 'mobs',
     texture: 'textures/item/moltener_spawn_egg.png',
+    relatedItems: [spawnEgg('moltener', 'Moltener')],
     description: 'Molteners are passive creatures in the Molten Depths.',
     details: 'Scorched Berries attract Molteners. They can drop Fire Charges or Gold Nuggets.',
     stats: [
@@ -530,6 +565,17 @@ for (const entry of [...CURATED_WIKI_ENTRIES, ...BLOCK_WIKI_ENTRIES, ...ITEM_WIK
 }
 
 export const WIKI_ENTRIES = [...wikiEntriesById.values()];
+
+export const WIKI_ENTRY_REDIRECTS = new Map<string, string>([
+  ...WIKI_ENTRIES.flatMap((entry) =>
+    (entry.relatedItems ?? []).map((relatedItem): [string, string] => [relatedItem.id, entry.id])
+  ),
+  ['scorchling_hound', 'scorchling']
+]);
+
+export function resolveWikiEntryId(id: string): string {
+  return WIKI_ENTRY_REDIRECTS.get(id) ?? id;
+}
 
 export const GUIDES: GuideChapter[] = [
   {

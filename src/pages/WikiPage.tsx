@@ -3,7 +3,7 @@ import { useQueryState, parseAsString, parseAsStringLiteral } from 'nuqs';
 import Fuse from 'fuse.js';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { WIKI_ENTRIES, WikiEntry } from '../data/modData';
+import { resolveWikiEntryId, WIKI_ENTRIES, WikiEntry } from '../data/modData';
 import { CraftingGrid } from '../components/CraftingGrid';
 import { SmithingTable } from '../components/SmithingTable';
 import { PixelIcon } from '../components/PixelIcon';
@@ -62,7 +62,7 @@ export const WikiPage: React.FC = () => {
   const articleRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
+    const hash = resolveWikiEntryId(window.location.hash.replace('#', ''));
     if (hash && WIKI_ENTRIES.some((item) => item.id === hash)) {
       setActiveEntryId(hash);
     }
@@ -76,7 +76,9 @@ export const WikiPage: React.FC = () => {
         { name: 'description', weight: 0.15 },
         { name: 'details', weight: 0.1 },
         { name: 'stats.value', weight: 0.1 },
-        { name: 'aliases', weight: 0.1 }
+        { name: 'aliases', weight: 0.1 },
+        { name: 'relatedItems.name', weight: 0.2 },
+        { name: 'relatedItems.id', weight: 0.15 }
       ],
       threshold: 0.35,
       ignoreLocation: true,
@@ -89,13 +91,23 @@ export const WikiPage: React.FC = () => {
     [searchQuery, activeCategory, fuse]
   );
 
+  const resolvedActiveEntryId = resolveWikiEntryId(activeEntryId);
+
   const selectedItem = useMemo(() => {
-    return filteredEntries.find((item) => item.id === activeEntryId) || filteredEntries[0] || null;
-  }, [activeEntryId, filteredEntries]);
+    return filteredEntries.find((item) => item.id === resolvedActiveEntryId) || filteredEntries[0] || null;
+  }, [resolvedActiveEntryId, filteredEntries]);
+
+  useEffect(() => {
+    if (resolvedActiveEntryId !== activeEntryId) {
+      setActiveEntryId(resolvedActiveEntryId);
+      setActiveCategory('all');
+    }
+  }, [activeEntryId, resolvedActiveEntryId, setActiveCategory, setActiveEntryId]);
 
   const registryId = selectedItem?.registryId === null
     ? ''
     : selectedItem?.registryId ?? (selectedItem ? `dark_caverns:${selectedItem.id}` : '');
+  const textureLabel = selectedItem?.relatedItems?.[0]?.name ?? selectedItem?.name ?? '';
   const copyStatus = copyFeedback?.registryId === registryId ? copyFeedback.status : null;
 
   useEffect(() => {
@@ -124,7 +136,7 @@ export const WikiPage: React.FC = () => {
   }, [mobileDetailOpen, selectedItem]);
 
   const preserveVisibleSelection = (entries: WikiEntry[]) => {
-    if (entries.length > 0 && !entries.some((entry) => entry.id === activeEntryId)) {
+    if (entries.length > 0 && !entries.some((entry) => entry.id === resolvedActiveEntryId)) {
       setActiveEntryId(entries[0].id);
     }
 
@@ -347,11 +359,11 @@ export const WikiPage: React.FC = () => {
                     target="_blank"
                     rel="noreferrer"
                     className="mc-slot mc-slot-output shrink-0 group hover:border-[#55ffaf] transition-colors"
-                    aria-label={`View the ${selectedItem.name} texture on GitHub in a new tab`}
+                    aria-label={`View the ${textureLabel} texture on GitHub in a new tab`}
                   >
                     <TextureImage
                       texture={selectedItem.texture}
-                      alt={selectedItem.name}
+                      alt={textureLabel}
                       className="w-8 h-8 pixel-art group-hover:scale-105 transition-transform"
                       width={32}
                       height={32}
@@ -400,6 +412,12 @@ export const WikiPage: React.FC = () => {
                         <span>GitHub source</span>
                         <PixelIcon name="external-link" className="w-3 h-3" />
                       </a>
+                      {selectedItem.relatedItems?.map((relatedItem) => (
+                        <span key={relatedItem.id} className="inline-flex min-w-0 basis-full flex-wrap items-center gap-x-1.5 text-[11px]">
+                          <span className="font-pixel text-[#8e95a8]">{relatedItem.name}</span>
+                          <code className="break-all font-mono text-[#b8bdcb]">dark_caverns:{relatedItem.id}</code>
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>

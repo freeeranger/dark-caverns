@@ -204,19 +204,6 @@ const armorEntry = (tier: keyof typeof ARMOR_EFFECTS, piece: ArmorPiece): WikiEn
   };
 };
 
-const spawnEggEntry = (id: string, mob: string): WikiEntry => ({
-  id: `${id}_spawn_egg`,
-  name: `${mob} Spawn Egg`,
-  category: 'items',
-  texture: `textures/item/${id}_spawn_egg.png`,
-  description: `A Creative-mode spawn egg for the ${mob}.`,
-  details: `Using the egg creates a ${mob}. The creature has its own Wiki entry with behavior, habitat, and drop information.`,
-  stats: [
-    { label: 'Spawns', value: mob },
-    { label: 'Registry type', value: 'Item' }
-  ]
-});
-
 export const MOD_BLOCK_IDS = BLOCK_DEFINITIONS.map(([id]) => id);
 export const MOD_ITEM_IDS = [
   ...ITEM_DEFINITIONS.map(([id]) => id),
@@ -241,16 +228,6 @@ export const ITEM_WIKI_ENTRIES: WikiEntry[] = [
   ...(['platinum', 'hellstone', 'shroomstone', 'scorchsteel'] as const).flatMap((tier) =>
     (['helmet', 'chestplate', 'leggings', 'boots'] as const).map((piece) => armorEntry(tier, piece))
   ),
-  ...[
-    ['scorchling', 'Scorchling'],
-    ['luminite_golem', 'Luminite Golem'],
-    ['shroomling', 'Shroomling'],
-    ['shroomie', 'Shroomie'],
-    ['luminite_fox', 'Luminite Fox'],
-    ['camorock', 'Camorock'],
-    ['scorchhound', 'Scorchhound'],
-    ['moltener', 'Moltener']
-  ].map(([id, mob]) => spawnEggEntry(id, mob)),
   {
     id: 'luminite_helmet',
     name: 'Luminite Helmet',
