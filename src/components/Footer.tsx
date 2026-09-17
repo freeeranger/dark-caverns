@@ -6,6 +6,13 @@ interface FooterProps {
   currentPath?: string;
 }
 
+const EXTERNAL_LINKS = [
+  { label: 'Discord', href: 'https://discord.gg/ZaBswMUQgx', hoverColor: 'hover:text-[#7289da]' },
+  { label: 'CurseForge', href: 'https://www.curseforge.com/minecraft/mc-mods/dark-caverns', hoverColor: 'hover:text-[#ff9970]' },
+  { label: 'Modrinth', href: 'https://modrinth.com/mod/dark-caverns', hoverColor: 'hover:text-[#55ffaf]' },
+  { label: 'GitHub', href: 'https://github.com/freeeranger/dark-caverns', hoverColor: 'hover:text-white' }
+];
+
 export const Footer: React.FC<FooterProps> = ({ basePrefix, currentPath }) => {
   const isRoot = currentPath === '/';
   const prefix = basePrefix ?? (isRoot ? './' : '../');
@@ -24,46 +31,19 @@ export const Footer: React.FC<FooterProps> = ({ basePrefix, currentPath }) => {
           >
             Credits
           </a>
-          <a
-            href="https://discord.gg/ZaBswMUQgx"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-h-11 items-center gap-1 hover:text-[#7289da]"
-            aria-label="Discord, opens in a new tab"
-          >
-            <span>Discord</span>
-            <PixelIcon name="external-link" className="w-3 h-3 opacity-70" />
-          </a>
-          <a
-            href="https://www.curseforge.com/minecraft/mc-mods/dark-caverns"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-h-11 items-center gap-1 hover:text-[#ff9970]"
-            aria-label="CurseForge, opens in a new tab"
-          >
-            <span>CurseForge</span>
-            <PixelIcon name="external-link" className="w-3 h-3 opacity-70" />
-          </a>
-          <a
-            href="https://modrinth.com/mod/dark-caverns"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-h-11 items-center gap-1 hover:text-[#55ffaf]"
-            aria-label="Modrinth, opens in a new tab"
-          >
-            <span>Modrinth</span>
-            <PixelIcon name="external-link" className="w-3 h-3 opacity-70" />
-          </a>
-          <a
-            href="https://github.com/freeeranger/dark-caverns"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-h-11 items-center gap-1 hover:text-white"
-            aria-label="GitHub, opens in a new tab"
-          >
-            <span>GitHub</span>
-            <PixelIcon name="external-link" className="w-3 h-3 opacity-70" />
-          </a>
+          {EXTERNAL_LINKS.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className={`inline-flex min-h-11 items-center gap-1 ${link.hoverColor}`}
+              aria-label={`${link.label}, opens in a new tab`}
+            >
+              <span>{link.label}</span>
+              <PixelIcon name="external-link" className="w-3 h-3 opacity-70" />
+            </a>
+          ))}
         </nav>
       </div>
     </footer>

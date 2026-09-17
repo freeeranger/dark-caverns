@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Button } from './Button';
 import { PixelIcon } from './PixelIcon';
 
 interface NavbarProps {
@@ -53,47 +54,46 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
           </div>
         </a>
 
-        <button
+        <Button
           ref={menuButtonRef}
-          type="button"
-          className={`mc-btn mc-btn-icon md:hidden ml-auto ${isMenuOpen ? 'mc-btn-active' : ''}`}
+          variant="icon"
+          className="md:hidden ml-auto"
+          isActive={isMenuOpen}
           aria-expanded={isMenuOpen}
           aria-controls="mobile-navigation"
           aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           onClick={() => setIsMenuOpen((open) => !open)}
-        >
-          <PixelIcon name={isMenuOpen ? 'close' : 'menu'} className="h-5 w-5" />
-        </button>
+          icon={<PixelIcon name={isMenuOpen ? 'close' : 'menu'} className="h-5 w-5" />}
+        />
 
         <nav className="ml-auto hidden items-center gap-2 md:flex" aria-label="Main navigation">
           {links.map((link) => {
             const isActive = currentPath === link.path;
 
             return (
-              <a
+              <Button
                 key={link.label}
                 href={link.href}
-                className={`mc-btn min-h-11 px-3.5 py-1.5 text-sm ${
-                  isActive ? 'mc-btn-active' : ''
-                }`}
+                isActive={isActive}
+                className="px-3.5 py-1.5 text-sm"
                 aria-current={isActive ? 'page' : undefined}
               >
                 {link.label}
-              </a>
+              </Button>
             );
           })}
 
-          <a
+          <Button
             href={`${prefix}download/`}
-            className={`mc-btn mc-btn-luminite min-h-11 gap-2 px-4 py-1.5 text-sm ${
-              currentPath === '/download/' ? 'mc-btn-active' : ''
-            }`}
+            variant="luminite"
+            isActive={currentPath === '/download/'}
+            className="px-4 py-1.5 text-sm"
             aria-current={currentPath === '/download/' ? 'page' : undefined}
             aria-label="Download"
+            icon={<PixelIcon name="download" className="h-3.5 w-3.5" />}
           >
-            <PixelIcon name="download" className="h-3.5 w-3.5" />
-            <span>Download</span>
-          </a>
+            Download
+          </Button>
         </nav>
       </div>
 
@@ -107,30 +107,29 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
             const isActive = currentPath === link.path;
 
             return (
-              <a
+              <Button
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsMenuOpen(false)}
-                className={`mc-btn justify-start min-h-11 w-full px-4 text-sm ${
-                  isActive ? 'mc-btn-active' : ''
-                }`}
+                isActive={isActive}
+                className="justify-start w-full px-4 text-sm"
                 aria-current={isActive ? 'page' : undefined}
               >
                 {link.label}
-              </a>
+              </Button>
             );
           })}
-          <a
+          <Button
             href={`${prefix}download/`}
+            variant="luminite"
             onClick={() => setIsMenuOpen(false)}
-            className={`mc-btn mc-btn-luminite justify-start min-h-11 w-full gap-2 px-4 text-sm ${
-              currentPath === '/download/' ? 'mc-btn-active' : ''
-            }`}
+            isActive={currentPath === '/download/'}
+            className="justify-start w-full px-4 text-sm"
             aria-current={currentPath === '/download/' ? 'page' : undefined}
+            icon={<PixelIcon name="download" className="h-4 w-4" />}
           >
-            <PixelIcon name="download" className="h-4 w-4" />
-            <span>Download</span>
-          </a>
+            Download
+          </Button>
         </div>
       </nav>
     </header>

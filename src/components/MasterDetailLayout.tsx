@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from './Button';
 import { PixelIcon } from './PixelIcon';
 
 interface MasterDetailLayoutProps {
@@ -61,14 +62,14 @@ export const MasterDetailLayout: React.FC<MasterDetailLayoutProps> = ({
             } min-w-0 scroll-mt-32 md:col-span-8 mc-box p-6 sm:p-8 space-y-6 md:block md:scroll-mt-20 focus:outline-none outline-none`}
             aria-label={articleAriaLabel}
           >
-            <button
-              type="button"
+            <Button
               onClick={onBack}
-              className="mc-btn min-h-11 gap-2 px-3 text-xs md:hidden"
+              size="sm"
+              className="md:hidden"
+              icon={<PixelIcon name="arrow-left" className="h-4 w-4" />}
             >
-              <PixelIcon name="arrow-left" className="h-4 w-4" />
-              <span>{backLabel}</span>
-            </button>
+              {backLabel}
+            </Button>
             {children}
           </article>
         ) : (

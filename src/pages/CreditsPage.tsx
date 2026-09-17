@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { Button } from '../components/Button';
 import { PixelIcon } from '../components/PixelIcon';
 
 interface Contributor {
@@ -36,10 +37,7 @@ const ContributorAvatar: React.FC<ContributorAvatarProps> = ({ avatarUrl }) => {
 
   return (
     <div
-      className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 bg-[#16171c] border-2 border-black flex items-center justify-center relative select-none overflow-hidden"
-      style={{
-        boxShadow: 'inset 1px 1px 0px #2d303a, inset -1px -1px 0px #0c0d0f'
-      }}
+      className="w-12 h-12 sm:w-14 sm:h-14 mc-avatar-frame"
       aria-hidden="true"
     >
       {avatarUrl && !hasError ? (
@@ -97,16 +95,14 @@ export const CreditsPage: React.FC = () => {
 
           <div className="flex flex-col gap-3 border-t border-[#232630] pt-5 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-[#9ba2b5]">Want to help out yourself? Join our discord server and let us know!</p>
-            <a
+            <Button
               href="https://discord.gg/ZaBswMUQgx"
-              target="_blank"
-              rel="noreferrer"
-              className="mc-btn min-h-11 gap-2 px-4 text-xs"
+              size="sm"
+              icon={<PixelIcon name="discord" className="h-4 w-4" />}
               aria-label="Join our Discord server, opens in a new tab"
             >
-              <PixelIcon name="discord" className="h-4 w-4" />
-              <span>Join Discord</span>
-            </a>
+              Join Discord
+            </Button>
           </div>
         </div>
       </main>

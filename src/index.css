@@ -165,6 +165,12 @@
   }
 }
 
+/* Contributor Avatar Frame */
+@utility mc-avatar-frame {
+  @apply shrink-0 bg-[#16171c] border-2 border-black flex items-center justify-center relative select-none overflow-hidden;
+  box-shadow: inset 1px 1px 0px #2d303a, inset -1px -1px 0px #0c0d0f;
+}
+
 /* Crafting Grid Table */
 @utility mc-crafting-grid {
   @apply inline-grid gap-0.5 bg-[#101114] p-1 border-2 border-black select-none;

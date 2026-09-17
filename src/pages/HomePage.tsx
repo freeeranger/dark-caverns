@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { Button } from '../components/Button';
 import { PixelIcon } from '../components/PixelIcon';
 import { TextureImage } from '../components/TextureImage';
 import { TrailerEmbed } from '../components/TrailerEmbed';
@@ -123,10 +124,16 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({ id, title, description,
       <h2 id={id} className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">{title}</h2>
       <p className="mt-1 max-w-2xl text-sm text-[#a0a7ba]">{description}</p>
     </div>
-    <a href={href} className="mc-btn min-h-11 shrink-0 gap-2 px-4 text-xs" aria-label={linkLabel}>
-      <span>{linkLabel}</span>
-      <PixelIcon name="arrow-right" className="h-4 w-4" />
-    </a>
+    <Button
+      href={href}
+      size="sm"
+      className="shrink-0"
+      aria-label={linkLabel}
+      icon={<PixelIcon name="arrow-right" className="h-4 w-4" />}
+      iconPosition="right"
+    >
+      {linkLabel}
+    </Button>
   </div>
 );
 
@@ -274,20 +281,22 @@ const UtilityLoadout: React.FC = () => (
 
 const HomeActions: React.FC = () => (
   <div className="grid w-full max-w-[24rem] grid-cols-2 gap-3">
-    <a href="./download/" className="mc-btn mc-btn-luminite min-h-11 min-w-0 gap-2 px-3 text-xs sm:px-5 sm:text-sm">
-      <PixelIcon name="download" className="h-4 w-4" />
-      <span>Download</span>
-    </a>
-    <a
-      href="https://discord.gg/ZaBswMUQgx"
-      target="_blank"
-      rel="noreferrer"
-      className="mc-btn min-h-11 min-w-0 gap-2 px-3 text-xs sm:px-5 sm:text-sm"
-      aria-label="Join Discord, opens in a new tab"
+    <Button
+      href="./download/"
+      variant="luminite"
+      className="min-w-0 px-3 sm:px-5"
+      icon={<PixelIcon name="download" className="h-4 w-4" />}
     >
-      <PixelIcon name="discord" className="h-4 w-4" />
-      <span>Join Discord</span>
-    </a>
+      Download
+    </Button>
+    <Button
+      href="https://discord.gg/ZaBswMUQgx"
+      className="min-w-0 px-3 sm:px-5"
+      aria-label="Join Discord, opens in a new tab"
+      icon={<PixelIcon name="discord" className="h-4 w-4" />}
+    >
+      Join Discord
+    </Button>
   </div>
 );
 

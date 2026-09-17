@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { Button } from '../components/Button';
 import { PixelIcon } from '../components/PixelIcon';
 
 export const DownloadPage: React.FC = () => {
@@ -20,26 +21,26 @@ export const DownloadPage: React.FC = () => {
                   </header>
 
                   <div className="grid gap-3 sm:grid-cols-2">
-                      <a
+                      <Button
                           href="https://www.curseforge.com/minecraft/mc-mods/dark-caverns"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="mc-btn mc-btn-curseforge min-h-11 gap-2 px-4 py-3 text-center text-sm sm:text-base"
+                          variant="curseforge"
+                          size="lg"
+                          className="text-center"
                           aria-label="Download Dark Caverns from CurseForge, opens in a new tab"
+                          icon={<PixelIcon name="download" className="w-4 h-4" />}
                       >
-                          <PixelIcon name="download" className="w-4 h-4" />
-                          <span>CurseForge</span>
-                      </a>
-                      <a
+                          CurseForge
+                      </Button>
+                      <Button
                           href="https://modrinth.com/mod/dark-caverns"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="mc-btn mc-btn-luminite min-h-11 gap-2 px-4 py-3 text-center text-sm sm:text-base"
+                          variant="luminite"
+                          size="lg"
+                          className="text-center"
                           aria-label="Download Dark Caverns from Modrinth, opens in a new tab"
+                          icon={<PixelIcon name="download" className="w-4 h-4" />}
                       >
-                          <PixelIcon name="download" className="w-4 h-4" />
-                          <span>Modrinth</span>
-                      </a>
+                          Modrinth
+                      </Button>
                   </div>
 
                   <p className="text-sm text-center text-[#aeb5c5]">

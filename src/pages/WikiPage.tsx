@@ -3,6 +3,7 @@ import { useQueryState, parseAsString, parseAsStringLiteral } from 'nuqs';
 import Fuse from 'fuse.js';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { Button } from '../components/Button';
 import { MasterDetailLayout } from '../components/MasterDetailLayout';
 import { SidebarNavGroup } from '../components/SidebarNavGroup';
 import { SidebarNavButton } from '../components/SidebarNavButton';
@@ -255,17 +256,16 @@ export const WikiPage: React.FC = () => {
 
       <div className="hidden grid-cols-4 gap-1 md:grid shrink-0" role="group" aria-label="Filter entries by category">
         {CATEGORIES.map((category) => (
-          <button
+          <Button
             key={category}
-            type="button"
+            size="none"
+            isActive={activeCategory === category}
             onClick={() => changeCategory(category)}
-            className={`mc-btn min-w-0 min-h-11 text-xs py-1.5 px-1 capitalize ${
-              activeCategory === category ? 'mc-btn-active' : ''
-            }`}
+            className="min-w-0 text-xs py-1.5 px-1 capitalize"
             aria-pressed={activeCategory === category}
           >
             {category}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -301,13 +301,13 @@ export const WikiPage: React.FC = () => {
           </div>
           <div className="flex flex-col gap-2 sm:flex-row md:flex-col">
             {searchQuery && (
-              <button type="button" onClick={clearSearch} className="mc-btn min-h-11 px-3 text-xs">
+              <Button onClick={clearSearch} size="sm">
                 Clear search
-              </button>
+              </Button>
             )}
-            <button type="button" onClick={showEverything} className="mc-btn min-h-11 px-3 text-xs">
+            <Button onClick={showEverything} size="sm">
               Show all entries
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -320,9 +320,9 @@ export const WikiPage: React.FC = () => {
       <p className="mt-3 text-sm text-[#a0a7ba]">
         Clear the search or show all entries.
       </p>
-      <button type="button" onClick={showEverything} className="mc-btn mt-5 min-h-11 px-4 text-sm">
+      <Button onClick={showEverything} className="mt-5" size="md">
         Show all entries
-      </button>
+      </Button>
     </section>
   );
 
