@@ -61,7 +61,7 @@ export const CraftingGrid: React.FC<CraftingGridProps> = ({ recipe }) => {
     : ingredients;
 
   return (
-    <figure className="max-w-full space-y-2">
+    <figure className="max-w-full">
       <div className="flex max-w-full flex-wrap items-center gap-4 py-2 select-none" aria-label={summary}>
         <div className="mc-crafting-grid">
           {GRID_POSITIONS.map((position, index) => {
@@ -113,7 +113,6 @@ export const CraftingGrid: React.FC<CraftingGridProps> = ({ recipe }) => {
           </div>
         </MinecraftTooltip>
       </div>
-      <figcaption className="recipe-summary">{summary}</figcaption>
     </figure>
   );
 };

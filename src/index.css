@@ -361,16 +361,6 @@ html {
   font-size: 0.75rem;
 }
 
-.recipe-summary {
-  max-width: 70ch;
-  color: #a0a7ba;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  line-height: 1.5;
-  -webkit-user-select: text;
-  user-select: text;
-}
-
 .guide-steps {
   display: grid;
   gap: 1.5rem;

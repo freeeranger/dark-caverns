@@ -41,7 +41,7 @@ export const SmithingTable: React.FC<SmithingTableProps> = ({ recipe }) => {
   const summary = `Use ${recipe.template.name} with ${recipe.base.name} and ${recipe.addition.name} to make ${recipe.output.name}.`;
 
   return (
-    <figure className="max-w-full space-y-2">
+    <figure className="max-w-full">
       <div className="max-w-full overflow-x-auto pb-1">
         <div className="inline-flex min-w-max items-center gap-2 select-none py-2" aria-label={summary}>
           <SmithingSlot label="Template" name={recipe.template.name} texture={recipe.template.texture} />
@@ -60,7 +60,6 @@ export const SmithingTable: React.FC<SmithingTableProps> = ({ recipe }) => {
           />
         </div>
       </div>
-      <figcaption className="recipe-summary">{summary}</figcaption>
     </figure>
   );
 };
