@@ -56,7 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
         <button
           ref={menuButtonRef}
           type="button"
-          className={`mc-btn mc-btn-icon mobile-menu-toggle ml-auto ${isMenuOpen ? 'mc-btn-active' : ''}`}
+          className={`mc-btn mc-btn-icon md:hidden ml-auto ${isMenuOpen ? 'mc-btn-active' : ''}`}
           aria-expanded={isMenuOpen}
           aria-controls="mobile-navigation"
           aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -111,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsMenuOpen(false)}
-                className={`mc-btn mobile-nav-link min-h-11 w-full px-4 text-sm ${
+                className={`mc-btn justify-start min-h-11 w-full px-4 text-sm ${
                   isActive ? 'mc-btn-active' : ''
                 }`}
                 aria-current={isActive ? 'page' : undefined}
@@ -123,7 +123,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
           <a
             href={`${prefix}download/`}
             onClick={() => setIsMenuOpen(false)}
-            className={`mc-btn mc-btn-luminite mobile-nav-link min-h-11 w-full gap-2 px-4 text-sm ${
+            className={`mc-btn mc-btn-luminite justify-start min-h-11 w-full gap-2 px-4 text-sm ${
               currentPath === '/download/' ? 'mc-btn-active' : ''
             }`}
             aria-current={currentPath === '/download/' ? 'page' : undefined}

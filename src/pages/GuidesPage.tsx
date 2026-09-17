@@ -112,24 +112,26 @@ export const GuidesPage: React.FC = () => {
           summary={<WikiText text={activeGuide.summary} hrefPrefix="../wiki/?entry=" />}
         />
 
-        <ol className="guide-steps text-sm leading-relaxed text-[#c6cbe0]">
+        <ol className="grid gap-6 text-sm leading-relaxed text-[#c6cbe0]">
           {activeGuide.steps.map((step, idx) => {
             const recipeEntries = getRecipeEntries(step.recipeEntryIds);
 
             return (
-              <li key={step.title} className="guide-step">
-                <div className="guide-step-heading">
-                  <span className="guide-step-number" aria-hidden="true">{idx + 1}</span>
+              <li key={step.title} className="min-w-0 pb-6 border-b border-[#232630] last:border-b-0 last:pb-0">
+                <div className="grid grid-cols-[2rem_minmax(0,1fr)] items-center gap-3">
+                  <span className="inline-flex w-8 h-8 items-center justify-center bg-[#0c433f] border border-[#00ddc0] text-[#e2fff8] font-pixel text-xs mc-shadow-subtle" aria-hidden="true">
+                    {idx + 1}
+                  </span>
                   <h2 className="font-pixel text-sm sm:text-base text-white">
                     {step.title}
                   </h2>
                 </div>
-                <p className="guide-step-body text-xs sm:text-sm text-[#a0a7ba] leading-relaxed">
+                <p className="max-w-[72ch] mt-3 text-xs sm:text-sm text-[#a0a7ba] leading-relaxed">
                   <WikiText text={step.body} hrefPrefix="../wiki/?entry=" />
                 </p>
 
                 {recipeEntries.length > 0 && (
-                  <div className="guide-recipes" aria-label={`${step.title} recipes`}>
+                  <div className="grid gap-3 mt-4" aria-label={`${step.title} recipes`}>
                     {recipeEntries.flatMap((entry) => [
                       entry.recipe ? (
                         <RecipeCard
@@ -152,7 +154,7 @@ export const GuidesPage: React.FC = () => {
                 )}
 
                 {step.note && (
-                  <aside className="guide-note">
+                  <aside className="grid gap-1.5 max-w-[72ch] mt-4 p-3 bg-[#151b1b] border border-[#28655f]">
                     <span className="font-pixel text-[10px] text-[#55ffaf]">Good to know</span>
                     <p className="text-xs text-[#ffd276]"><WikiText text={step.note} hrefPrefix="../wiki/?entry=" /></p>
                   </aside>

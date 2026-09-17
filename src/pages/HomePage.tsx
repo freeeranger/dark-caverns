@@ -135,12 +135,12 @@ interface SectionHeadingProps {
 }
 
 const SectionHeading: React.FC<SectionHeadingProps> = ({ id, title, description, href, linkLabel }) => (
-  <div className="section-heading">
+  <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
     <div className="min-w-0">
       <h2 id={id} className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">{title}</h2>
       <p className="mt-1 max-w-2xl text-sm text-[#a0a7ba]"><WikiText text={description} hrefPrefix="./wiki/?entry=" /></p>
     </div>
-    <a href={href} className="mc-btn section-heading-action" aria-label={linkLabel}>
+    <a href={href} className="mc-btn min-h-11 shrink-0 gap-2 px-4 text-xs" aria-label={linkLabel}>
       <span>{linkLabel}</span>
       <PixelIcon name="arrow-right" className="h-4 w-4" />
     </a>
@@ -156,9 +156,12 @@ const GatewayJourney: React.FC = () => (
       href="./guides/?guide=getting-to-the-caverns"
       linkLabel="Gateway guide"
     />
-    <ol className="gateway-journey mc-box">
+    <ol className="mc-box grid grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-4 [content-visibility:auto] [contain-intrinsic-size:1px_420px] sm:[contain-intrinsic-size:1px_280px]">
       {GATEWAY_STEPS.map((item) => (
-        <li key={item.step} className="gateway-step">
+        <li
+          key={item.step}
+          className="flex min-w-0 flex-col gap-3 p-5 border-b border-[#2a2c34] last:border-b-0 sm:border-b sm:[&:nth-child(odd)]:border-r sm:[&:nth-last-child(-n+2)]:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
+        >
           <div className="flex items-center justify-between gap-3">
             <span className="font-pixel text-xs text-[#8e95a8]">{item.step}</span>
             <span className="mc-slot shrink-0">
@@ -190,9 +193,12 @@ const BiomeOverview: React.FC = () => (
       href="./wiki/?category=biomes"
       linkLabel="Biome reference"
     />
-    <div className="biome-list mc-box">
+    <div className="mc-box overflow-hidden sm:grid sm:grid-cols-2 [content-visibility:auto] [contain-intrinsic-size:1px_420px] sm:[contain-intrinsic-size:1px_280px]">
       {BIOMES.map((biome) => (
-        <article key={biome.name} className="biome-row">
+        <article
+          key={biome.name}
+          className="flex min-w-0 gap-4 p-5 border-b border-[#2a2c34] last:border-b-0 sm:border-b sm:[&:nth-child(odd)]:border-r sm:[&:nth-last-child(-n+2)]:border-b-0"
+        >
           <span className="mc-slot mc-slot-output shrink-0">
             <TextureImage
               texture={biome.texture}
@@ -223,9 +229,12 @@ const EquipmentPath: React.FC = () => (
       href="./guides/?guide=smithing-and-gear-progression"
       linkLabel="Smithing guide"
     />
-    <div className="equipment-path mc-box">
+    <div className="mc-box grid grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-4 [content-visibility:auto] [contain-intrinsic-size:1px_420px] sm:[contain-intrinsic-size:1px_280px]">
       {GEAR.map((tier) => (
-        <article key={tier.name} className="equipment-tier">
+        <article
+          key={tier.name}
+          className="grid grid-cols-[44px_minmax(0,1fr)] content-start items-start gap-4 min-w-0 p-5 border-b border-[#2a2c34] last:border-b-0 sm:border-b sm:[&:nth-child(odd)]:border-r sm:[&:nth-last-child(-n+2)]:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
+        >
           <span className="mc-slot shrink-0">
             <TextureImage
               texture={tier.texture}
@@ -256,9 +265,9 @@ const UtilityLoadout: React.FC = () => (
       href="./wiki/?category=items"
       linkLabel="Item reference"
     />
-    <div className="utility-list">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 [content-visibility:auto] [contain-intrinsic-size:1px_420px] sm:[contain-intrinsic-size:1px_280px]">
       {UTILITIES.map((item) => (
-        <article key={item.name} className="utility-row">
+        <article key={item.name} className="flex min-w-0 gap-4 p-4 bg-[#17181c] border border-[#2a2c34]">
           <span className="mc-slot shrink-0">
             <TextureImage
               texture={item.texture}
@@ -281,7 +290,7 @@ const UtilityLoadout: React.FC = () => (
 );
 
 const HomeActions: React.FC = () => (
-  <div className="home-actions">
+  <div className="grid w-full max-w-[22rem] grid-cols-2 gap-3">
     <a href="./download/" className="mc-btn mc-btn-luminite min-h-11 min-w-0 gap-2 px-3 text-xs sm:px-5 sm:text-sm">
       <PixelIcon name="download" className="h-4 w-4" />
       <span>Download</span>
@@ -298,8 +307,8 @@ export const HomePage: React.FC = () => {
       <Navbar currentPath="/" />
 
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-14 sm:space-y-20">
-        <section className="home-hero mc-box" aria-labelledby="home-title">
-          <div className="home-hero-copy">
+        <section className="mc-box grid overflow-hidden md:grid-cols-[minmax(0,0.85fr)_minmax(24rem,1.15fr)]" aria-labelledby="home-title">
+          <div className="flex flex-col justify-center gap-5 p-6 sm:p-9">
             <h1 id="home-title" className="font-pixel text-4xl text-white mc-shadow font-bold sm:text-6xl">
               Dark Caverns
             </h1>
@@ -309,10 +318,11 @@ export const HomePage: React.FC = () => {
             <HomeActions />
           </div>
 
-          <div className="home-hero-media">
+          <div className="min-w-0 overflow-hidden aspect-video md:aspect-auto bg-[#0c0d10] border-t-2 md:border-t-0 md:border-l-2 border-black">
             <img
               src="https://media.forgecdn.net/attachments/383/120/2021-07-26_09.png"
               alt="A wide view across jagged Dark Caverns formations with glowing ore in the rock"
+              className="block w-full h-full object-cover object-[center_58%]"
               width="1920"
               height="1080"
               loading="eager"
@@ -321,7 +331,7 @@ export const HomePage: React.FC = () => {
           </div>
         </section>
 
-        <section className="trailer-section" aria-labelledby="trailer-heading">
+        <section className="grid md:grid-cols-[minmax(0,0.65fr)_minmax(24rem,1.35fr)] items-center gap-6 md:gap-8" aria-labelledby="trailer-heading">
           <div className="max-w-md space-y-3">
             <h2 id="trailer-heading" className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">
               Watch the trailer
@@ -340,7 +350,7 @@ export const HomePage: React.FC = () => {
         <EquipmentPath />
         <UtilityLoadout />
 
-        <section className="home-final-cta mc-box" aria-labelledby="final-cta-heading">
+        <section className="mc-box flex flex-col sm:p-8 md:flex-row items-start md:items-center justify-between gap-6 p-6 border-[#0c433f] shadow-[inset_2px_2px_0_#1e4e49,inset_-2px_-2px_0_#0c0d0f]" aria-labelledby="final-cta-heading">
           <h2 id="final-cta-heading" className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">
             Enter the Dark Caverns
           </h2>

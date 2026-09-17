@@ -284,7 +284,7 @@ export const WikiPage: React.FC = () => {
           </div>
         </nav>
       ) : (
-        <div className="wiki-empty" role="status">
+        <div className="flex flex-col gap-4 p-4 bg-[#141519] border border-[#2a2c34]" role="status">
           <div className="space-y-1">
             <p className="font-pixel text-sm text-white">No matching entries</p>
             <p className="text-xs text-[#a0a7ba]">
@@ -365,7 +365,7 @@ export const WikiPage: React.FC = () => {
                 <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 mt-0.5">
                   {registryId && (
                     <div className="flex items-center h-4 mt-2 gap-2">
-                      <code className="h-full registry-id min-w-0 break-all text-xs text-[#8e95a8] font-pixel">
+                      <code className="h-full select-text cursor-text min-w-0 break-all text-xs text-[#8e95a8] font-pixel">
                         {registryId}
                       </code>
                       <button

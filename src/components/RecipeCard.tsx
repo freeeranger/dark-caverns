@@ -35,9 +35,9 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
   }
 
   return (
-    <section className="guide-recipe mc-inset">
+    <section className="min-w-0 p-4 mc-inset">
       {(title || badge) && (
-        <div className="guide-recipe-heading">
+        <div className="flex items-center justify-between gap-3 pb-2 border-b border-[#232630]">
           {title && <h3 className="font-pixel text-xs text-white">{title}</h3>}
           {badge && <span className="mc-tag">{badge}</span>}
         </div>
