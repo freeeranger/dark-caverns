@@ -4,31 +4,36 @@ import { Footer } from '../components/Footer';
 import { PixelIcon } from '../components/PixelIcon';
 import { TextureImage } from '../components/TextureImage';
 import { TrailerEmbed } from '../components/TrailerEmbed';
+import { WikiText } from '../components/WikiText';
 
 const GATEWAY_STEPS = [
   {
     step: 'Step 1',
     title: 'Buy the map',
     description: 'Trade with an Expert Cartographer for the Forgotten Tower explorer map.',
-    texture: 'textures/item/map.png'
+    texture: 'textures/item/map.png',
+    wikiId: null
   },
   {
     step: 'Step 2',
     title: 'Claim the key',
     description: 'Defeat the Illagers and take the Key to the Caverns from the top chest.',
-    texture: 'textures/item/key_to_the_caverns.png'
+    texture: 'textures/item/key_to_the_caverns.png',
+    wikiId: 'key_to_the_caverns'
   },
   {
     step: 'Step 3',
     title: 'Find cracked bedrock',
     description: 'Mine to the Overworld floor and locate Cracked Bedrock in the bottom layer.',
-    texture: 'textures/block/cracked_bedrock.png'
+    texture: 'textures/block/cracked_bedrock.png',
+    wikiId: 'cracked_bedrock'
   },
   {
     step: 'Step 4',
     title: 'Open the gateway',
     description: 'Use the key on Cracked Bedrock, then step onto the permanent gateway.',
-    texture: 'textures/block/gateway_to_the_caverns.png'
+    texture: 'textures/block/gateway_to_the_caverns.png',
+    wikiId: 'gateway_to_the_caverns'
   }
 ];
 
@@ -37,25 +42,29 @@ const BIOMES = [
     name: 'Rocky Caverns',
     color: 'text-white',
     texture: 'textures/block/carfstone.png',
+    wikiId: 'rocky_caverns',
     description: 'Rocky Caverns has layered Carfstone chambers, stone bridges, exposed Luminite, and tall formations.'
   },
   {
     name: 'Molten Depths',
     color: 'text-[#ff9970]',
     texture: 'textures/block/molten_carfstone.png',
+    wikiId: 'molten_depths',
     description: 'Molten Depths has lava springs, ash patches, magma, Hellstone, and hostile Scorchlings.'
   },
   {
     name: 'Glimmershroom Forest',
     color: 'text-[#7dd3fc]',
     texture: 'textures/block/glimmershroom.png',
+    wikiId: 'glimmershroom_forest',
     description: 'Giant glimmershrooms cast blue light over Shroomie traders and neutral Shroomlings.'
   },
   {
     name: 'Tangled Hallow',
     color: 'text-[#55ffaf]',
     texture: 'textures/block/twistwood_log.png',
-    description: 'Dense Twistwood surrounds teal surface lakes covered with Water Sproutlets.'
+    wikiId: 'tangled_hallow',
+    description: 'Dense Twistwood Logs and Twistwood Leaves surround teal surface lakes covered with Water Sproutlets.'
   }
 ];
 
@@ -64,24 +73,28 @@ const GEAR = [
     name: 'Platinum',
     color: 'text-white',
     texture: 'textures/item/platinum_sword.png',
+    wikiId: 'platinum_gear',
     description: 'Platinum tools mine faster than Netherite tools and have 20 enchantability.'
   },
   {
     name: 'Hellstone',
     color: 'text-[#ff9970]',
     texture: 'textures/item/hellstone_sword.png',
+    wikiId: 'hellstone_gear',
     description: 'A full armor set blocks fire and lava damage.'
   },
   {
     name: 'Shroomstone',
     color: 'text-[#c084fc]',
     texture: 'textures/item/shroomstone_sword.png',
+    wikiId: 'shroomstone_gear',
     description: 'A full set grants Jump Boost II and blocks fall damage.'
   },
   {
     name: 'Scorchsteel',
     color: 'text-[#55ffaf]',
     texture: 'textures/item/scorchsteel_chestplate.png',
+    wikiId: 'scorchsteel_armor',
     description: 'A full set conceals you from monsters while you stand still.'
   }
 ];
@@ -90,21 +103,25 @@ const UTILITIES = [
   {
     name: 'Luminite Helmet',
     texture: 'textures/item/luminite_helmet.png',
+    wikiId: 'luminite_helmet',
     description: 'The helmet creates client-side dynamic light around its wearer.'
   },
   {
     name: 'Throwable Luminite Torch',
     texture: 'textures/item/throwable_luminite_torch.png',
+    wikiId: 'throwable_luminite_torch',
     description: 'The throwable torch places light on distant walls and ledges.'
   },
   {
     name: 'Corrupted Pearl',
     texture: 'textures/item/corrupted_pearl.png',
+    wikiId: 'corrupted_pearl',
     description: 'The pearl moves the nearest non-player creature to its landing point.'
   },
   {
     name: 'Shroombomb',
     texture: 'textures/item/shroombomb.png',
+    wikiId: 'shroombomb',
     description: 'The bomb creates a small configurable explosion on impact.'
   }
 ];
@@ -121,7 +138,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({ id, title, description,
   <div className="section-heading">
     <div className="min-w-0">
       <h2 id={id} className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">{title}</h2>
-      <p className="mt-1 max-w-2xl text-sm text-[#a0a7ba]">{description}</p>
+      <p className="mt-1 max-w-2xl text-sm text-[#a0a7ba]"><WikiText text={description} hrefPrefix="./wiki/?entry=" /></p>
     </div>
     <a href={href} className="mc-btn section-heading-action" aria-label={linkLabel}>
       <span>{linkLabel}</span>
@@ -154,8 +171,10 @@ const GatewayJourney: React.FC = () => (
               />
             </span>
           </div>
-          <h3 className="font-pixel text-base text-white">{item.title}</h3>
-          <p className="text-sm text-[#aeb5c5]">{item.description}</p>
+          <h3 className="font-pixel text-base text-white">
+            {item.wikiId ? <a href={`./wiki/?entry=${item.wikiId}`} className="hover:text-[#ffffa0]">{item.title}</a> : item.title}
+          </h3>
+          <p className="text-sm text-[#aeb5c5]"><WikiText text={item.description} hrefPrefix="./wiki/?entry=" /></p>
         </li>
       ))}
     </ol>
@@ -184,8 +203,10 @@ const BiomeOverview: React.FC = () => (
             />
           </span>
           <div className="min-w-0">
-            <h3 className={`font-pixel text-base sm:text-lg ${biome.color}`}>{biome.name}</h3>
-            <p className="mt-1 text-sm text-[#aeb5c5]">{biome.description}</p>
+            <h3 className={`font-pixel text-base sm:text-lg ${biome.color}`}>
+              <a href={`./wiki/?entry=${biome.wikiId}`} className="hover:text-[#ffffa0]">{biome.name}</a>
+            </h3>
+            <p className="mt-1 text-sm text-[#aeb5c5]"><WikiText text={biome.description} hrefPrefix="./wiki/?entry=" /></p>
           </div>
         </article>
       ))}
@@ -215,8 +236,10 @@ const EquipmentPath: React.FC = () => (
             />
           </span>
           <div className="min-w-0 pt-0.5">
-            <h3 className={`font-pixel text-base leading-tight ${tier.color}`}>{tier.name}</h3>
-            <p className="mt-2 text-sm text-[#aeb5c5]">{tier.description}</p>
+            <h3 className={`font-pixel text-base leading-tight ${tier.color}`}>
+              <a href={`./wiki/?entry=${tier.wikiId}`} className="hover:text-[#ffffa0]">{tier.name}</a>
+            </h3>
+            <p className="mt-2 text-sm text-[#aeb5c5]"><WikiText text={tier.description} hrefPrefix="./wiki/?entry=" /></p>
           </div>
         </article>
       ))}
@@ -246,8 +269,10 @@ const UtilityLoadout: React.FC = () => (
             />
           </span>
           <div className="min-w-0">
-            <h3 className="font-pixel text-sm text-white sm:text-base">{item.name}</h3>
-            <p className="mt-1 text-sm text-[#aeb5c5]">{item.description}</p>
+            <h3 className="font-pixel text-sm text-white sm:text-base">
+              <a href={`./wiki/?entry=${item.wikiId}`} className="hover:text-[#ffffa0]">{item.name}</a>
+            </h3>
+            <p className="mt-1 text-sm text-[#aeb5c5]"><WikiText text={item.description} hrefPrefix="./wiki/?entry=" /></p>
           </div>
         </article>
       ))}
@@ -279,7 +304,7 @@ export const HomePage: React.FC = () => {
               Dark Caverns
             </h1>
             <p className="max-w-xl text-base leading-relaxed text-[#bbc2d1] sm:text-lg">
-              Dark Caverns adds four cave biomes below the Overworld. Its gateway links both dimensions, and the caves contain new gear and creatures.
+              <WikiText text="Dark Caverns adds four cave biomes below the Overworld. Its gateway links both dimensions, and the caves contain new gear and creatures." hrefPrefix="./wiki/?entry=" />
             </p>
             <HomeActions />
           </div>

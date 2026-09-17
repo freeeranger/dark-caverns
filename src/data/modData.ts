@@ -1,3 +1,5 @@
+import { BLOCK_WIKI_ENTRIES, ITEM_WIKI_ENTRIES } from './wikiCatalog';
+
 export interface RecipeSlot {
   name: string;
   texture?: string;
@@ -20,13 +22,15 @@ export interface SmithingRecipe {
 export interface WikiEntry {
   id: string;
   name: string;
-  category: 'biomes' | 'materials' | 'gear' | 'items' | 'mobs';
+  category: 'biomes' | 'blocks' | 'materials' | 'gear' | 'items' | 'mobs';
   texture: string;
   description: string;
   details: string;
   stats?: { label: string; value: string }[];
   recipe?: CraftingRecipe;
   smithing?: SmithingRecipe;
+  aliases?: string[];
+  registryId?: string | null;
 }
 
 export interface GuideStep {
@@ -40,10 +44,11 @@ export interface GuideChapter {
   id: string;
   title: string;
   summary: string;
+  category: 'Start here' | 'Explore' | 'Progression';
   steps: GuideStep[];
 }
 
-export const WIKI_ENTRIES: WikiEntry[] = [
+const CURATED_WIKI_ENTRIES: WikiEntry[] = [
   // Biomes
   {
     id: 'rocky_caverns',
@@ -91,7 +96,7 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     category: 'biomes',
     texture: 'textures/block/twistwood_log.png',
     description: 'Tangled Hallow is a subterranean forest with Overgrown Carfstone, twisted Twistwood trees, and teal surface lakes.',
-    details: 'Water Sproutlets grow across the lakes. Twistwood saplings grow without sunlight, so you can farm logs and planks inside the Dark Caverns.',
+    details: 'Water Sproutlets grow across the lakes. Twistwood Saplings grow without sunlight, so you can farm Twistwood Logs and Twistwood Planks inside the Dark Caverns.',
     stats: [
       { label: 'Flora', value: 'Twistwood Trees, Undersprouts, Water Sproutlets' },
       { label: 'Ground', value: 'Overgrown Carfstone' },
@@ -109,8 +114,7 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     details: 'A normal Compass spins in the Dark Caverns. The Cavern Compass points to your linked gateway instead. Use it on a Lodestone if you want the needle to track that block.',
     stats: [
       { label: 'Cavern target', value: 'Your linked gateway' },
-      { label: 'Lodestone binding', value: 'Supported' },
-      { label: 'Recipe', value: '4 Luminite Dust, 4 Platinum Pieces, 1 Compass' }
+      { label: 'Lodestone binding', value: 'Supported' }
     ],
     recipe: {
       slots: [
@@ -219,12 +223,9 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Platinum Ingot',
     category: 'materials',
     texture: 'textures/item/platinum_ingot.png',
-    description: 'Combine 4 Platinum Pieces and 4 Iron Ingots to craft a Platinum Ingot.',
+    description: 'Platinum Ingot is the upgrade material for Platinum equipment.',
     details: 'Carfstone Platinum Ore generates below Y = 80 throughout the Dark Caverns and drops Platinum Pieces. Use a Platinum Ingot with Luminite Dust at a Smithing Table to upgrade Diamond gear.',
-    stats: [
-      { label: 'Recipe', value: '4 Platinum Pieces and 4 Iron Ingots' },
-      { label: 'Ore height', value: 'Below Y = 80' }
-    ],
+    stats: [{ label: 'Ore height', value: 'Below Y = 80' }],
     recipe: {
       slots: [
         { name: 'Platinum Piece', texture: 'textures/item/platinum_piece.png' },
@@ -246,12 +247,9 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Hellstone',
     category: 'materials',
     texture: 'textures/item/hellstone.png',
-    description: 'Combine 4 Hellstone Rocks and 4 Diamonds to craft Hellstone.',
+    description: 'Hellstone is the upgrade material for fire-resistant equipment.',
     details: 'Hellstone Rock drops from Hellstone Ore in the Molten Depths and does not burn in fire or lava. Use Hellstone at a Smithing Table to upgrade Platinum equipment into Hellstone gear.',
-    stats: [
-      { label: 'Recipe', value: '4 Hellstone Rocks and 4 Diamonds' },
-      { label: 'Item fire resistance', value: 'Does not burn' }
-    ],
+    stats: [{ label: 'Item fire resistance', value: 'Does not burn' }],
     recipe: {
       slots: [
         { name: 'Hellstone Rock', texture: 'textures/item/hellstone_rock.png' },
@@ -273,12 +271,9 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Shroomstone',
     category: 'materials',
     texture: 'textures/item/shroomstone.png',
-    description: 'Combine 4 Shroomstone Pieces and 4 Emeralds to craft Shroomstone.',
+    description: 'Shroomstone is the upgrade material for movement-focused equipment.',
     details: 'Shroomies trade 2 Shroomstone Pieces for 1 Diamond. Use Shroomstone at a Smithing Table to upgrade Platinum equipment into Shroomstone gear.',
-    stats: [
-      { label: 'Piece source', value: 'Shroomie trade' },
-      { label: 'Recipe', value: '4 Shroomstone Pieces and 4 Emeralds' }
-    ],
+    stats: [{ label: 'Piece source', value: 'Shroomie trade' }],
     recipe: {
       slots: [
         { name: 'Shroomstone Piece', texture: 'textures/item/shroomstone_piece.png' },
@@ -300,11 +295,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     name: 'Scorchsteel Ingot',
     category: 'materials',
     texture: 'textures/item/scorchsteel_ingot.png',
-    description: 'Combine 4 Scorchling Tails and 4 Iron Ingots to craft a Scorchsteel Ingot.',
+    description: 'Scorchsteel Ingot is the upgrade material for concealment armor.',
     details: 'Use the ingot with Luminite Dust at a Smithing Table to upgrade Platinum armor into Scorchsteel armor.',
-    stats: [
-      { label: 'Recipe', value: '4 Scorchling Tails and 4 Iron Ingots' }
-    ],
     recipe: {
       slots: [
         { name: 'Scorchling Tail', texture: 'textures/item/scorchling_tail.png' },
@@ -327,6 +319,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     id: 'platinum_gear',
     name: 'Platinum Armor and Tools',
     category: 'gear',
+    registryId: null,
+    aliases: ['Platinum gear'],
     texture: 'textures/item/platinum_sword.png',
     description: 'Use Platinum Ingots to upgrade Diamond gear at a Smithing Table.',
     details: 'Platinum tools mine faster than Netherite tools. Their durability and damage fall between Diamond and Netherite. Platinum armor has 2.5 toughness, and every Platinum item has 20 enchantability. Upgrade Platinum gear to Hellstone or Shroomstone. You can also upgrade Platinum armor to Scorchsteel.',
@@ -347,6 +341,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     id: 'hellstone_gear',
     name: 'Hellstone Armor and Tools',
     category: 'gear',
+    registryId: null,
+    aliases: ['Hellstone gear'],
     texture: 'textures/item/hellstone_sword.png',
     description: 'Use Hellstone to upgrade Platinum gear. A full armor set blocks fire and lava damage.',
     details: 'Each armor piece cuts fire and lava damage by 25%. The full set blocks all fire and lava damage. Fully charged attacks set targets on fire for 8 seconds.',
@@ -366,6 +362,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     id: 'shroomstone_gear',
     name: 'Shroomstone Armor and Tools',
     category: 'gear',
+    registryId: null,
+    aliases: ['Shroomstone gear'],
     texture: 'textures/item/shroomstone_sword.png',
     description: 'Use Shroomstone to upgrade Platinum gear. A full armor set grants Jump Boost II and blocks fall damage.',
     details: 'Each armor piece cuts fall damage by 25%. The full set grants Jump Boost II and blocks all fall damage. Fully charged attacks launch targets into the air.',
@@ -385,9 +383,10 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     id: 'scorchsteel_armor',
     name: 'Scorchsteel Armor',
     category: 'gear',
+    registryId: null,
     texture: 'textures/item/scorchsteel_chestplate.png',
     description: 'Use a Scorchsteel Ingot to upgrade Platinum armor. Stand still to hide from monsters.',
-    details: 'At a Smithing Table, combine Luminite Dust, a piece of Platinum armor, and a Scorchsteel Ingot. After you stand still for 1 second, the full set makes you invisible and causes hostile monsters to lose their target. Moving, attacking, or taking damage ends the effect.',
+    details: 'After you stand still for 1 second, the full set makes you invisible and causes hostile monsters to lose their target. Moving, attacking, or taking damage ends the effect.',
     stats: [
       { label: 'Full set bonus', value: 'Hostile monsters lose their target' },
       { label: 'Delay', value: '1.0 second standing still' },
@@ -406,10 +405,9 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     category: 'gear',
     texture: 'textures/item/luminite_helmet.png',
     description: 'The Luminite Helmet lights the area around you while worn.',
-    details: 'Craft it with 5 Luminite Dust or buy it from a Shroomie for 10 Iron Ingots. The helmet creates client-side dynamic light while worn. You can disable the effect in the client config.',
+    details: 'The helmet creates client-side dynamic light while worn. You can disable the effect in the client config. Shroomies also sell it for 10 Iron Ingots.',
     stats: [
       { label: 'Light source', value: 'Dynamic light while worn' },
-      { label: 'Recipe', value: '5 Luminite Dust' },
       { label: 'Trade', value: '10 Iron Ingots' }
     ],
     recipe: {
@@ -458,6 +456,8 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     id: 'scorchling_hound',
     name: 'Scorchling and Scorchhound',
     category: 'mobs',
+    registryId: null,
+    aliases: ['Scorchling', 'Scorchlings', 'Scorchhound', 'Scorchhounds'],
     texture: 'textures/item/scorchhound_spawn_egg.png',
     description: 'Scorchlings and Scorchhounds hunt players in the Molten Depths.',
     details: 'Scorchlings leap at players and drop the tails used to craft Scorchsteel. Scorchhounds have 40 health. Their melee attacks throw players, and they drop Scorched Meat.',
@@ -521,11 +521,22 @@ export const WIKI_ENTRIES: WikiEntry[] = [
   }
 ];
 
+const wikiEntriesById = new Map<string, WikiEntry>();
+
+for (const entry of [...CURATED_WIKI_ENTRIES, ...BLOCK_WIKI_ENTRIES, ...ITEM_WIKI_ENTRIES]) {
+  if (!wikiEntriesById.has(entry.id)) {
+    wikiEntriesById.set(entry.id, entry);
+  }
+}
+
+export const WIKI_ENTRIES = [...wikiEntriesById.values()];
+
 export const GUIDES: GuideChapter[] = [
   {
     id: 'getting-to-the-caverns',
     title: 'Getting to the caverns',
     summary: 'Buy the Forgotten Tower map, take the key from the tower, and use it on Cracked Bedrock.',
+    category: 'Start here',
     steps: [
       {
         title: 'Buy the Forgotten Tower map',
@@ -550,14 +561,15 @@ export const GUIDES: GuideChapter[] = [
     id: 'cavern-compass-navigation',
     title: 'Cavern Compass navigation',
     summary: 'Craft a Cavern Compass so you can find your linked gateway while exploring.',
+    category: 'Start here',
     steps: [
       {
         title: 'Gather the materials',
-        body: 'Bring a Compass into the Dark Caverns. Mine Luminite Dust and Platinum Pieces until you have 4 of each.'
+        body: 'Bring a Compass into the Dark Caverns, then mine Luminite Dust and Platinum Pieces.'
       },
       {
         title: 'Craft the Cavern Compass',
-        body: 'Place the Compass in the center of a Crafting Table. Put Luminite Dust in the four corners and Platinum Pieces in the four remaining slots.',
+        body: 'Craft the Cavern Compass at a Crafting Table using the recipe shown below.',
         recipeEntryIds: ['cavern_compass']
       },
       {
@@ -571,6 +583,7 @@ export const GUIDES: GuideChapter[] = [
     id: 'exploring-the-tangled-hallow',
     title: 'Exploring the Tangled Hallow',
     summary: 'Find the lakes and harvest Twistwood. Bring light for hostile mobs.',
+    category: 'Explore',
     steps: [
       {
         title: 'Find the forest floor',
@@ -582,7 +595,7 @@ export const GUIDES: GuideChapter[] = [
       },
       {
         title: 'Farm Twistwood underground',
-        body: 'Twistwood saplings grow without sunlight. Replant them to farm logs and planks inside the dimension. You can also craft Twistwood doors and trapdoors.'
+        body: 'Twistwood Saplings grow without sunlight. Replant them to farm Twistwood Logs and Twistwood Planks inside the dimension. You can also craft Twistwood Doors and Twistwood Trapdoors.'
       },
       {
         title: 'Watch for golems',
@@ -594,6 +607,7 @@ export const GUIDES: GuideChapter[] = [
     id: 'smithing-and-gear-progression',
     title: 'Smithing and gear progression',
     summary: 'Use Luminite Dust to upgrade Diamond gear to Platinum. Then upgrade Platinum with Hellstone, Shroomstone, or Scorchsteel.',
+    category: 'Progression',
     steps: [
       {
         title: 'Use Luminite Dust as the template',
@@ -601,22 +615,22 @@ export const GUIDES: GuideChapter[] = [
       },
       {
         title: 'Platinum gear',
-        body: 'Craft a Platinum Ingot from 4 Platinum Pieces and 4 Iron Ingots. Use it with Luminite Dust to upgrade Diamond gear at a Smithing Table. Platinum tools have 1,843 durability, 10 mining speed, and 20 enchantability.',
+        body: 'Craft a Platinum Ingot, then use it with Luminite Dust to upgrade Diamond gear at a Smithing Table. Platinum tools have 1,843 durability, 10 mining speed, and 20 enchantability.',
         recipeEntryIds: ['platinum_ingot', 'platinum_gear']
       },
       {
         title: 'Hellstone gear',
-        body: 'Mine Hellstone Ore for Hellstone Rock. Combine 4 rocks with 4 Diamonds to craft Hellstone. Use it with Luminite Dust to upgrade Platinum gear at a Smithing Table. A full armor set blocks all fire and lava damage.',
+        body: 'Mine Hellstone Ore for Hellstone Rock and craft Hellstone. Use it with Luminite Dust to upgrade Platinum gear at a Smithing Table. A full armor set blocks all fire and lava damage.',
         recipeEntryIds: ['hellstone', 'hellstone_gear']
       },
       {
         title: 'Shroomstone gear',
-        body: 'Trade with Shroomies for Shroomstone Pieces. Combine 4 pieces with 4 Emeralds to craft Shroomstone. Use it with Luminite Dust to upgrade Platinum gear at a Smithing Table. A full armor set grants Jump Boost II and blocks all fall damage.',
+        body: 'Trade with Shroomies for Shroomstone Pieces and craft Shroomstone. Use it with Luminite Dust to upgrade Platinum gear at a Smithing Table. A full armor set grants Jump Boost II and blocks all fall damage.',
         recipeEntryIds: ['shroomstone', 'shroomstone_gear']
       },
       {
         title: 'Scorchsteel armor',
-        body: 'Craft a Scorchsteel Ingot from 4 Scorchling Tails and 4 Iron Ingots. Use it with Luminite Dust to upgrade Platinum armor at a Smithing Table. The full set conceals you from hostile monsters after you stand still for 1 second.',
+        body: 'Craft a Scorchsteel Ingot, then use it with Luminite Dust to upgrade Platinum armor at a Smithing Table. The full set conceals you from hostile monsters after you stand still for 1 second.',
         recipeEntryIds: ['scorchsteel_ingot', 'scorchsteel_armor']
       }
     ]
@@ -625,6 +639,7 @@ export const GUIDES: GuideChapter[] = [
     id: 'surviving-the-molten-depths',
     title: 'Surviving the Molten Depths',
     summary: 'Mine Hellstone, collect Scorched Berries, and hunt Scorchlings for armor materials.',
+    category: 'Explore',
     steps: [
       {
         title: 'Eat Scorched Berries for Fire Resistance',
@@ -636,7 +651,7 @@ export const GUIDES: GuideChapter[] = [
       },
       {
         title: 'Craft Scorchsteel armor',
-        body: 'Defeat Scorchlings for Scorchling Tails. Combine 4 tails with 4 Iron Ingots for a Scorchsteel Ingot, then use it with Luminite Dust to upgrade Platinum armor at a Smithing Table.',
+        body: 'Defeat Scorchlings for Scorchling Tails and craft a Scorchsteel Ingot. Then use it with Luminite Dust to upgrade Platinum armor at a Smithing Table.',
         recipeEntryIds: ['scorchsteel_ingot', 'scorchsteel_armor']
       }
     ]
@@ -645,6 +660,7 @@ export const GUIDES: GuideChapter[] = [
     id: 'shroomie-trading-and-settlements',
     title: 'Shroomie trading and settlements',
     summary: 'Find Shroomie Houses and trade for Shroomstone Pieces or a Corrupted Pearl.',
+    category: 'Explore',
     steps: [
       {
         title: 'Find the Glimmershroom Forest',

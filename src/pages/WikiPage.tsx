@@ -8,9 +8,11 @@ import { CraftingGrid } from '../components/CraftingGrid';
 import { SmithingTable } from '../components/SmithingTable';
 import { PixelIcon } from '../components/PixelIcon';
 import { TextureImage } from '../components/TextureImage';
+import { WikiText } from '../components/WikiText';
 import { getGithubSourceUrl } from '../utils/assets';
 
-const CATEGORIES = ['all', 'biomes', 'materials', 'gear', 'items', 'mobs'] as const;
+const CATEGORIES = ['all', 'biomes', 'blocks', 'materials', 'gear', 'items', 'mobs'] as const;
+const ENTRY_CATEGORIES = CATEGORIES.filter((category) => category !== 'all');
 type WikiCategory = typeof CATEGORIES[number];
 type CopyStatus = 'copied' | 'error';
 
@@ -25,8 +27,9 @@ function filterWikiEntries(
   fuse: Fuse<WikiEntry>
 ): WikiEntry[] {
   let pool = WIKI_ENTRIES;
+  const hasQuery = query.trim().length > 0;
 
-  if (query.trim().length > 0) {
+  if (hasQuery) {
     pool = fuse.search(query.trim()).map((result) => result.item);
   }
 
@@ -34,7 +37,7 @@ function filterWikiEntries(
     pool = pool.filter((item) => item.category === category);
   }
 
-  return pool;
+  return hasQuery ? pool : [...pool].sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export const WikiPage: React.FC = () => {
@@ -70,7 +73,10 @@ export const WikiPage: React.FC = () => {
       keys: [
         { name: 'name', weight: 0.6 },
         { name: 'id', weight: 0.25 },
-        { name: 'description', weight: 0.15 }
+        { name: 'description', weight: 0.15 },
+        { name: 'details', weight: 0.1 },
+        { name: 'stats.value', weight: 0.1 },
+        { name: 'aliases', weight: 0.1 }
       ],
       threshold: 0.35,
       ignoreLocation: true,
@@ -87,7 +93,9 @@ export const WikiPage: React.FC = () => {
     return filteredEntries.find((item) => item.id === activeEntryId) || filteredEntries[0] || null;
   }, [activeEntryId, filteredEntries]);
 
-  const registryId = selectedItem ? `dark_caverns:${selectedItem.id}` : '';
+  const registryId = selectedItem?.registryId === null
+    ? ''
+    : selectedItem?.registryId ?? (selectedItem ? `dark_caverns:${selectedItem.id}` : '');
   const copyStatus = copyFeedback?.registryId === registryId ? copyFeedback.status : null;
 
   useEffect(() => {
@@ -184,7 +192,7 @@ export const WikiPage: React.FC = () => {
             <div className="mc-panel-header -mx-4 -mt-4 p-3 border-b-2 border-black flex items-center justify-between">
               <span className="font-pixel text-xs sm:text-sm text-white">Wiki</span>
               <span className="text-[11px] font-mono text-[#55ffaf]">
-                {filteredEntries.length} {filteredEntries.length === 1 ? 'item' : 'items'}
+                {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'}
               </span>
             </div>
 
@@ -230,7 +238,7 @@ export const WikiPage: React.FC = () => {
               ))}
             </select>
 
-            <div className="hidden grid-cols-3 gap-1.5 md:grid" role="group" aria-label="Filter by category">
+            <div className="hidden grid-cols-2 gap-1.5 md:grid" role="group" aria-label="Filter by category">
               {CATEGORIES.map((category) => (
                 <button
                   key={category}
@@ -248,34 +256,51 @@ export const WikiPage: React.FC = () => {
 
             {filteredEntries.length > 0 ? (
               <nav aria-label="Wiki entries">
-                <ul className="max-h-[380px] overflow-y-auto space-y-1 pr-1">
-                  {filteredEntries.map((entry) => {
-                    const isSelected = selectedItem?.id === entry.id;
-                    return (
-                      <li key={entry.id}>
-                        <button
-                          type="button"
-                          aria-current={isSelected ? 'page' : undefined}
-                          onClick={() => selectItem(entry)}
-                          className={`w-full min-h-11 text-left px-2.5 py-2 text-xs flex items-center gap-2.5 transition-none cursor-pointer ${
-                            isSelected
-                              ? 'bg-[#22252d] text-[#ffffa0] border border-[#55ffaf]'
-                              : 'bg-[#15161a] text-[#b0b6c6] border border-[#202228] hover:bg-[#1b1d23]'
-                          }`}
-                        >
-                          <TextureImage
-                            texture={entry.texture}
-                            alt=""
-                            className="w-5 h-5 pixel-art shrink-0"
-                            width={20}
-                            height={20}
-                          />
-                          <span className="font-pixel truncate">{entry.name}</span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
+                <div className="max-h-[55vh] space-y-3 overflow-y-auto pr-1">
+                  {(activeCategory === 'all' && !searchQuery.trim()
+                    ? ENTRY_CATEGORIES.map((category) => ({
+                        category,
+                        entries: filteredEntries.filter((entry) => entry.category === category)
+                      })).filter((group) => group.entries.length > 0)
+                    : [{ category: null, entries: filteredEntries }]
+                  ).map((group) => (
+                    <section key={group.category ?? 'results'}>
+                      {group.category && (
+                        <h2 className="mb-1.5 px-1 font-pixel text-[10px] uppercase tracking-wide text-[#8e95a8]">
+                          {group.category}
+                        </h2>
+                      )}
+                      <ul className="space-y-1">
+                        {group.entries.map((entry) => {
+                          const isSelected = selectedItem?.id === entry.id;
+                          return (
+                            <li key={entry.id}>
+                              <button
+                                type="button"
+                                aria-current={isSelected ? 'page' : undefined}
+                                onClick={() => selectItem(entry)}
+                                className={`w-full min-h-11 text-left px-2.5 py-2 text-xs flex items-center gap-2.5 transition-none cursor-pointer ${
+                                  isSelected
+                                    ? 'bg-[#22252d] text-[#ffffa0] border border-[#55ffaf]'
+                                    : 'bg-[#15161a] text-[#b0b6c6] border border-[#202228] hover:bg-[#1b1d23]'
+                                }`}
+                              >
+                                <TextureImage
+                                  texture={entry.texture}
+                                  alt=""
+                                  className="w-5 h-5 pixel-art shrink-0"
+                                  width={20}
+                                  height={20}
+                                />
+                                <span className="font-pixel truncate">{entry.name}</span>
+                              </button>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </section>
+                  ))}
+                </div>
               </nav>
             ) : (
               <div className="wiki-empty" role="status">
@@ -337,10 +362,10 @@ export const WikiPage: React.FC = () => {
                       {selectedItem.name}
                     </h1>
                     <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 mt-0.5">
-                      <code className="registry-id min-w-0 break-all text-xs font-mono text-[#8e95a8]">
+                      {registryId && <code className="registry-id min-w-0 break-all text-xs font-mono text-[#8e95a8]">
                         {registryId}
-                      </code>
-                      <button
+                      </code>}
+                      {registryId && <button
                         type="button"
                         onClick={copyRegistryId}
                         className={`inline-flex min-h-11 items-center gap-1 px-1.5 text-[11px] font-pixel sm:min-h-8 ${
@@ -364,7 +389,7 @@ export const WikiPage: React.FC = () => {
                               ? 'Select ID'
                               : 'Copy ID'}
                         </span>
-                      </button>
+                      </button>}
                       <a
                         href={getGithubSourceUrl(selectedItem.texture)}
                         target="_blank"
@@ -383,8 +408,8 @@ export const WikiPage: React.FC = () => {
               </div>
 
               <div className="space-y-3 text-sm leading-relaxed text-[#c6cbe0]">
-                <p className="text-base text-white">{selectedItem.description}</p>
-                <p className="text-xs sm:text-sm text-[#a0a7ba]">{selectedItem.details}</p>
+                <p className="text-base text-white"><WikiText text={selectedItem.description} hrefPrefix="?entry=" excludeEntryId={selectedItem.id} /></p>
+                <p className="text-xs sm:text-sm text-[#a0a7ba]"><WikiText text={selectedItem.details} hrefPrefix="?entry=" excludeEntryId={selectedItem.id} /></p>
               </div>
 
               {selectedItem.stats && selectedItem.stats.length > 0 && (
@@ -406,7 +431,7 @@ export const WikiPage: React.FC = () => {
                             >
                               {stat.label}
                             </th>
-                            <td className="py-2 px-3 text-[#e0e3ec] align-top">{stat.value}</td>
+                            <td className="py-2 px-3 text-[#e0e3ec] align-top"><WikiText text={stat.value} hrefPrefix="?entry=" excludeEntryId={selectedItem.id} /></td>
                           </tr>
                         ))}
                       </tbody>
