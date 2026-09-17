@@ -1,0 +1,22 @@
+{
+  "id": "glimmershroom_forest",
+  "name": "Glimmershroom Forest",
+  "category": "biomes",
+  "texture": "textures/block/glimmershroom.png",
+  "description": "Tall glimmershrooms and glimmergrass light this fungal cave biome.",
+  "details": "No native monsters spawn here. Shroomies trade blocks and gear materials. Shroomlings remain neutral until provoked.",
+  "stats": [
+    {
+      "label": "Flora",
+      "value": "Glimmershrooms, Glimmergrass"
+    },
+    {
+      "label": "Settlements",
+      "value": "Shroomie Houses"
+    },
+    {
+      "label": "Fauna",
+      "value": "Shroomies, Shroomlings"
+    }
+  ]
+}

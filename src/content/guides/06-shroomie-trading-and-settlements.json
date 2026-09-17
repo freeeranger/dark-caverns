@@ -1,0 +1,20 @@
+{
+  "id": "shroomie-trading-and-settlements",
+  "title": "Shroomie trading and settlements",
+  "summary": "Find Shroomie Houses and trade for Shroomstone Pieces or a Corrupted Pearl.",
+  "category": "Explore",
+  "steps": [
+    {
+      "title": "Find the Glimmershroom Forest",
+      "body": "Follow glowing cyan mushrooms through the caves until you reach glimmergrass. Shroomie Houses generate among giant glimmershrooms."
+    },
+    {
+      "title": "Trade with Shroomies",
+      "body": "Each Shroomie has five common offers and one rare offer. All Shroomies trade 2 Shroomstone Pieces for 1 Diamond. The Corrupted Pearl trade costs 4 Ender Pearls."
+    },
+    {
+      "title": "Build an underground base",
+      "body": "No native monsters spawn in the Glimmershroom Forest. Monsters from nearby biomes and structures can enter it. Shroomlings remain neutral until provoked."
+    }
+  ]
+}

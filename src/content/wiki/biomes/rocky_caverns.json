@@ -1,0 +1,22 @@
+{
+  "id": "rocky_caverns",
+  "name": "Rocky Caverns",
+  "category": "biomes",
+  "texture": "textures/block/carfstone.png",
+  "description": "Rocky Caverns has Carfstone chambers, layered passages, stone bridges, stalactites, and stalagmites.",
+  "details": "Luminite Ore appears throughout the biome and on exposed Carfstone formations. Platinum and the six Overworld ores also generate here.",
+  "stats": [
+    {
+      "label": "Stone",
+      "value": "Carfstone"
+    },
+    {
+      "label": "Ores",
+      "value": "Luminite, Platinum, Coal, Iron, Gold, Redstone, Lapis, Diamond"
+    },
+    {
+      "label": "Fauna",
+      "value": "Camorocks, Luminite Foxes, Luminite Golems"
+    }
+  ]
+}

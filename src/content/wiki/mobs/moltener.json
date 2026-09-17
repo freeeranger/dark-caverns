@@ -1,0 +1,29 @@
+{
+  "id": "moltener",
+  "name": "Moltener",
+  "category": "mobs",
+  "texture": "textures/item/moltener_spawn_egg.png",
+  "relatedItems": [
+    {
+      "id": "moltener_spawn_egg",
+      "name": "Moltener Spawn Egg",
+      "texture": "textures/item/moltener_spawn_egg.png"
+    }
+  ],
+  "description": "Molteners are passive creatures in the Molten Depths.",
+  "details": "Scorched Berries attract Molteners. They can drop Fire Charges or Gold Nuggets.",
+  "stats": [
+    {
+      "label": "Behavior",
+      "value": "Passive"
+    },
+    {
+      "label": "Location",
+      "value": "Molten Depths"
+    },
+    {
+      "label": "Tempt item",
+      "value": "Scorched Berries"
+    }
+  ]
+}

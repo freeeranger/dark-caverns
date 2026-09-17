@@ -1,0 +1,52 @@
+{
+  "id": "shroombomb",
+  "name": "Shroombomb",
+  "category": "items",
+  "texture": "textures/item/shroombomb.png",
+  "description": "A Shroombomb explodes when it hits a block or creature.",
+  "details": "Its default explosion power is 2.5. TNT has an explosion power of 4.0. Server owners can change the Shroombomb value in the config.",
+  "stats": [
+    {
+      "label": "Detonation",
+      "value": "On impact"
+    },
+    {
+      "label": "Crafting yield",
+      "value": "2 Shroombombs"
+    }
+  ],
+  "recipe": {
+    "slots": [
+      {
+        "name": "Mushroom",
+        "texture": "textures/block/glimmershroom.png"
+      },
+      {
+        "name": "Mushroom",
+        "texture": "textures/block/glimmershroom.png"
+      },
+      {
+        "name": "Gunpowder",
+        "texture": "textures/item/gunpowder.png"
+      },
+      {
+        "name": "Gunpowder",
+        "texture": "textures/item/gunpowder.png"
+      },
+      {
+        "name": "Gunpowder",
+        "texture": "textures/item/gunpowder.png"
+      },
+      null,
+      null,
+      null,
+      null
+    ],
+    "output": {
+      "name": "Shroombomb",
+      "texture": "textures/item/shroombomb.png",
+      "count": 2
+    },
+    "shapeless": true
+  }
+}

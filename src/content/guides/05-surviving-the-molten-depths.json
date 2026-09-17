@@ -1,0 +1,24 @@
+{
+  "id": "surviving-the-molten-depths",
+  "title": "Surviving the Molten Depths",
+  "summary": "Mine Hellstone, collect Scorched Berries, and hunt Scorchlings for armor materials.",
+  "category": "Explore",
+  "steps": [
+    {
+      "title": "Eat Scorched Berries for Fire Resistance",
+      "body": "Harvest Scorched Berries from bushes on Molten Carfstone. Eating one grants 5 seconds of Fire Resistance."
+    },
+    {
+      "title": "Mine Hellstone",
+      "body": "Hellstone Ore generates inside Molten Carfstone. Mine it with a Diamond Pickaxe or better to collect Hellstone Rock. Hellstone Rock does not burn in fire or lava."
+    },
+    {
+      "title": "Craft Scorchsteel armor",
+      "body": "Defeat Scorchlings for Scorchling Tails and craft a Scorchsteel Ingot. Then use it with Luminite Dust to upgrade Platinum armor at a Smithing Table.",
+      "recipeEntryIds": [
+        "scorchsteel",
+        "scorchsteel_armor"
+      ]
+    }
+  ]
+}

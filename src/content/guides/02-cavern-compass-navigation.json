@@ -1,0 +1,24 @@
+{
+  "id": "cavern-compass-navigation",
+  "title": "Cavern Compass navigation",
+  "summary": "Craft a Cavern Compass so you can find your linked gateway while exploring.",
+  "category": "Start here",
+  "steps": [
+    {
+      "title": "Gather the materials",
+      "body": "Bring a Compass into the Dark Caverns, then mine Luminite Dust and Platinum Pieces."
+    },
+    {
+      "title": "Craft the Cavern Compass",
+      "body": "Craft the Cavern Compass at a Crafting Table using the recipe shown below.",
+      "recipeEntryIds": [
+        "cavern_compass"
+      ]
+    },
+    {
+      "title": "Follow it back to your gateway",
+      "body": "The needle points to your linked gateway in the Dark Caverns. A normal Compass spins here, so keep the Cavern Compass with you on long trips.",
+      "note": "Use the Cavern Compass on a Lodestone to make the needle track that block instead."
+    }
+  ]
+}

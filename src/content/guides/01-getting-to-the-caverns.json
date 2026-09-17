@@ -1,0 +1,25 @@
+{
+  "id": "getting-to-the-caverns",
+  "title": "Getting to the caverns",
+  "summary": "Buy the Forgotten Tower map, take the key from the tower, and use it on Cracked Bedrock.",
+  "category": "Start here",
+  "steps": [
+    {
+      "title": "Buy the Forgotten Tower map",
+      "body": "Trade with an Expert Cartographer in the Overworld for an explorer map to a nearby Illager tower."
+    },
+    {
+      "title": "Defeat the Illagers and claim the key",
+      "body": "Follow the map to the tower, defeat the Illagers, and loot the Key to the Caverns from the top chest."
+    },
+    {
+      "title": "Dig down to bedrock",
+      "body": "Mine down to the Overworld bedrock floor and look for Cracked Bedrock. Small veins appear throughout the bottom bedrock layer."
+    },
+    {
+      "title": "Open the gateway",
+      "body": "Use the Key on Cracked Bedrock to replace that block with a permanent gateway, then step onto it.",
+      "note": "The return gateway is in the Dark Caverns ceiling. Follow the lights down the enclosed ladder shaft. To return, jump into the gateway overhead."
+    }
+  ]
+}

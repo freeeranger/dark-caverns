@@ -1,0 +1,41 @@
+{
+  "id": "scorchsteel_armor",
+  "name": "Scorchsteel Armor",
+  "category": "gear",
+  "registryId": null,
+  "texture": "textures/item/scorchsteel_chestplate.png",
+  "description": "Use a Scorchsteel Ingot to upgrade Platinum armor. Stand still to hide from monsters.",
+  "details": "After you stand still for 1 second, the full set makes you invisible and causes hostile monsters to lose their target. Moving, attacking, or taking damage ends the effect.",
+  "stats": [
+    {
+      "label": "Full set bonus",
+      "value": "Hostile monsters lose their target"
+    },
+    {
+      "label": "Delay",
+      "value": "1.0 second standing still"
+    },
+    {
+      "label": "Breaks on",
+      "value": "Moving, attacking, or taking damage"
+    }
+  ],
+  "smithing": {
+    "template": {
+      "name": "Luminite Dust",
+      "texture": "textures/item/luminite_dust.png"
+    },
+    "base": {
+      "name": "Platinum Chestplate",
+      "texture": "textures/item/platinum_chestplate.png"
+    },
+    "addition": {
+      "name": "Scorchsteel Ingot",
+      "texture": "textures/item/scorchsteel_ingot.png"
+    },
+    "output": {
+      "name": "Scorchsteel Chestplate",
+      "texture": "textures/item/scorchsteel_chestplate.png"
+    }
+  }
+}

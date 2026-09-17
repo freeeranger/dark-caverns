@@ -1,0 +1,47 @@
+{
+  "id": "hellstone_gear",
+  "name": "Hellstone Armor and Tools",
+  "category": "gear",
+  "registryId": null,
+  "aliases": [
+    "Hellstone gear",
+    "Hellstone armor",
+    "Hellstone tools",
+    "Hellstone equipment"
+  ],
+  "texture": "textures/item/hellstone_sword.png",
+  "description": "Use Hellstone to upgrade Platinum gear. A full armor set blocks fire and lava damage.",
+  "details": "Each armor piece cuts fire and lava damage by 25%. The full set blocks all fire and lava damage. Fully charged attacks set targets on fire for 8 seconds.",
+  "stats": [
+    {
+      "label": "Armor bonus",
+      "value": "25% less fire and lava damage per piece"
+    },
+    {
+      "label": "Full set bonus",
+      "value": "Blocks all fire and lava damage"
+    },
+    {
+      "label": "Tool trait",
+      "value": "Fully charged attacks set targets on fire for 8 seconds"
+    }
+  ],
+  "smithing": {
+    "template": {
+      "name": "Luminite Dust",
+      "texture": "textures/item/luminite_dust.png"
+    },
+    "base": {
+      "name": "Platinum Sword",
+      "texture": "textures/item/platinum_sword.png"
+    },
+    "addition": {
+      "name": "Hellstone",
+      "texture": "textures/item/hellstone.png"
+    },
+    "output": {
+      "name": "Hellstone Sword",
+      "texture": "textures/item/hellstone_sword.png"
+    }
+  }
+}

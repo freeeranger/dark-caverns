@@ -1,0 +1,29 @@
+{
+  "id": "luminite_fox",
+  "name": "Luminite Fox",
+  "category": "mobs",
+  "texture": "textures/item/luminite_fox_spawn_egg.png",
+  "relatedItems": [
+    {
+      "id": "luminite_fox_spawn_egg",
+      "name": "Luminite Fox Spawn Egg",
+      "texture": "textures/item/luminite_fox_spawn_egg.png"
+    }
+  ],
+  "description": "Luminite Foxes are passive creatures in Rocky Caverns and Tangled Hallow.",
+  "details": "Luminite Dust attracts Luminite Foxes. When a player kills one, it has a 25% chance to drop one Luminite Dust.",
+  "stats": [
+    {
+      "label": "Behavior",
+      "value": "Passive"
+    },
+    {
+      "label": "Location",
+      "value": "Rocky Caverns, Tangled Hallow"
+    },
+    {
+      "label": "Tempt item",
+      "value": "Luminite Dust"
+    }
+  ]
+}

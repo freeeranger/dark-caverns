@@ -1,0 +1,47 @@
+{
+  "id": "shroomstone_gear",
+  "name": "Shroomstone Armor and Tools",
+  "category": "gear",
+  "registryId": null,
+  "aliases": [
+    "Shroomstone gear",
+    "Shroomstone armor",
+    "Shroomstone tools",
+    "Shroomstone equipment"
+  ],
+  "texture": "textures/item/shroomstone_sword.png",
+  "description": "Use Shroomstone to upgrade Platinum gear. A full armor set grants Jump Boost II and blocks fall damage.",
+  "details": "Each armor piece cuts fall damage by 25%. The full set grants Jump Boost II and blocks all fall damage. Fully charged attacks launch targets into the air.",
+  "stats": [
+    {
+      "label": "Armor bonus",
+      "value": "25% less fall damage per piece"
+    },
+    {
+      "label": "Full set bonus",
+      "value": "Jump Boost II and no fall damage"
+    },
+    {
+      "label": "Tool trait",
+      "value": "Fully charged attacks launch targets upward"
+    }
+  ],
+  "smithing": {
+    "template": {
+      "name": "Luminite Dust",
+      "texture": "textures/item/luminite_dust.png"
+    },
+    "base": {
+      "name": "Platinum Sword",
+      "texture": "textures/item/platinum_sword.png"
+    },
+    "addition": {
+      "name": "Shroomstone",
+      "texture": "textures/item/shroomstone.png"
+    },
+    "output": {
+      "name": "Shroomstone Sword",
+      "texture": "textures/item/shroomstone_sword.png"
+    }
+  }
+}

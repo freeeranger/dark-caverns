@@ -1,4 +1,4 @@
-import type { WikiEntry } from './modData';
+import type { WikiEntry } from '../types/content';
 
 type BlockDefinition = readonly [id: string, name: string, texture: string, description: string];
 type ItemDefinition = readonly [id: string, name: string, category: 'materials' | 'items', description: string, details: string];

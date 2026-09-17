@@ -1,0 +1,26 @@
+{
+  "id": "molten_depths",
+  "name": "Molten Depths",
+  "category": "biomes",
+  "texture": "textures/block/molten_carfstone.png",
+  "description": "Molten Depths has Molten Carfstone, ash patches, magma, and lava springs.",
+  "details": "Hellstone Ore replaces only Molten Carfstone. Scorched Berries grant short Fire Resistance. Scorchlings and Scorchhounds attack on open ground.",
+  "stats": [
+    {
+      "label": "Stone",
+      "value": "Molten Carfstone, Ashy Molten Carfstone"
+    },
+    {
+      "label": "Native ore",
+      "value": "Hellstone Ore"
+    },
+    {
+      "label": "Plants",
+      "value": "Scorched Berries, Charred Grass, Ashy Charred Grass"
+    },
+    {
+      "label": "Fauna",
+      "value": "Scorchlings, Scorchhounds, Molteners"
+    }
+  ]
+}

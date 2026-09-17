@@ -1,0 +1,63 @@
+{
+  "id": "cavern_compass",
+  "name": "Cavern Compass",
+  "category": "items",
+  "texture": "textures/item/cavern_compass.png",
+  "description": "The Cavern Compass points back to your gateway while you explore the Dark Caverns.",
+  "details": "A normal Compass spins in the Dark Caverns. The Cavern Compass points to your linked gateway instead. Use it on a Lodestone if you want the needle to track that block.",
+  "stats": [
+    {
+      "label": "Cavern target",
+      "value": "Your linked gateway"
+    },
+    {
+      "label": "Lodestone binding",
+      "value": "Supported"
+    }
+  ],
+  "recipe": {
+    "slots": [
+      {
+        "name": "Luminite Dust",
+        "texture": "textures/item/luminite_dust.png"
+      },
+      {
+        "name": "Platinum Piece",
+        "texture": "textures/item/platinum_piece.png"
+      },
+      {
+        "name": "Luminite Dust",
+        "texture": "textures/item/luminite_dust.png"
+      },
+      {
+        "name": "Platinum Piece",
+        "texture": "textures/item/platinum_piece.png"
+      },
+      {
+        "name": "Compass",
+        "texture": "textures/item/compass.png"
+      },
+      {
+        "name": "Platinum Piece",
+        "texture": "textures/item/platinum_piece.png"
+      },
+      {
+        "name": "Luminite Dust",
+        "texture": "textures/item/luminite_dust.png"
+      },
+      {
+        "name": "Platinum Piece",
+        "texture": "textures/item/platinum_piece.png"
+      },
+      {
+        "name": "Luminite Dust",
+        "texture": "textures/item/luminite_dust.png"
+      }
+    ],
+    "output": {
+      "name": "Cavern Compass",
+      "texture": "textures/item/cavern_compass.png",
+      "count": 1
+    }
+  }
+}

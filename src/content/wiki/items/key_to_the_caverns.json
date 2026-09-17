@@ -1,0 +1,22 @@
+{
+  "id": "key_to_the_caverns",
+  "name": "Key to the Caverns",
+  "category": "items",
+  "texture": "textures/item/key_to_the_caverns.png",
+  "description": "Use the key on Cracked Bedrock in the Overworld floor to open a gateway into the Dark Caverns.",
+  "details": "The Forgotten Tower's top chest contains the key. The key replaces one Cracked Bedrock block with a permanent gateway. A linked return gateway appears in the Dark Caverns ceiling above a lit ladder shaft that reaches safe cave ground.",
+  "stats": [
+    {
+      "label": "Source",
+      "value": "Forgotten Tower chest"
+    },
+    {
+      "label": "Target",
+      "value": "Cracked Bedrock"
+    },
+    {
+      "label": "Use",
+      "value": "Consumed on gateway creation"
+    }
+  ]
+}

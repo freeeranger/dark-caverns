@@ -1,0 +1,44 @@
+{
+  "id": "smithing-and-gear-progression",
+  "title": "Smithing and gear progression",
+  "summary": "Use Luminite Dust to upgrade Diamond gear to Platinum. Then upgrade Platinum with Hellstone, Shroomstone, or Scorchsteel.",
+  "category": "Progression",
+  "steps": [
+    {
+      "title": "Use Luminite Dust as the template",
+      "body": "Put Luminite Dust in the template slot of a standard Smithing Table. Dark Caverns gear does not use Netherite Upgrade Smithing Templates."
+    },
+    {
+      "title": "Platinum gear",
+      "body": "Craft a Platinum Ingot, then use it with Luminite Dust to upgrade Diamond gear at a Smithing Table. Platinum tools have 1,843 durability, 10 mining speed, and 20 enchantability.",
+      "recipeEntryIds": [
+        "platinum",
+        "platinum_gear"
+      ]
+    },
+    {
+      "title": "Hellstone gear",
+      "body": "Mine Hellstone Ore for Hellstone Rock and craft Hellstone. Use it with Luminite Dust to upgrade Platinum gear at a Smithing Table. A full armor set blocks all fire and lava damage.",
+      "recipeEntryIds": [
+        "hellstone",
+        "hellstone_gear"
+      ]
+    },
+    {
+      "title": "Shroomstone gear",
+      "body": "Trade with Shroomies for Shroomstone Pieces and craft Shroomstone. Use it with Luminite Dust to upgrade Platinum gear at a Smithing Table. A full armor set grants Jump Boost II and blocks all fall damage.",
+      "recipeEntryIds": [
+        "shroomstone",
+        "shroomstone_gear"
+      ]
+    },
+    {
+      "title": "Scorchsteel armor",
+      "body": "Craft a Scorchsteel Ingot, then use it with Luminite Dust to upgrade Platinum armor at a Smithing Table. The full set conceals you from hostile monsters after you stand still for 1 second.",
+      "recipeEntryIds": [
+        "scorchsteel",
+        "scorchsteel_armor"
+      ]
+    }
+  ]
+}

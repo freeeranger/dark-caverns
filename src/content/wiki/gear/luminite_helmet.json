@@ -1,0 +1,51 @@
+{
+  "id": "luminite_helmet",
+  "name": "Luminite Helmet",
+  "category": "gear",
+  "texture": "textures/item/luminite_helmet.png",
+  "description": "The Luminite Helmet lights the area around you while worn.",
+  "details": "The helmet creates client-side dynamic light while worn. You can disable the effect in the client config. Shroomies also sell it for 10 Iron Ingots.",
+  "stats": [
+    {
+      "label": "Light source",
+      "value": "Dynamic light while worn"
+    },
+    {
+      "label": "Trade",
+      "value": "10 Iron Ingots"
+    }
+  ],
+  "recipe": {
+    "slots": [
+      {
+        "name": "Luminite Dust",
+        "texture": "textures/item/luminite_dust.png"
+      },
+      {
+        "name": "Luminite Dust",
+        "texture": "textures/item/luminite_dust.png"
+      },
+      {
+        "name": "Luminite Dust",
+        "texture": "textures/item/luminite_dust.png"
+      },
+      {
+        "name": "Luminite Dust",
+        "texture": "textures/item/luminite_dust.png"
+      },
+      null,
+      {
+        "name": "Luminite Dust",
+        "texture": "textures/item/luminite_dust.png"
+      },
+      null,
+      null,
+      null
+    ],
+    "output": {
+      "name": "Luminite Helmet",
+      "texture": "textures/item/luminite_helmet.png",
+      "count": 1
+    }
+  }
+}

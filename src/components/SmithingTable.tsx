@@ -6,7 +6,6 @@ import { TextureImage } from './TextureImage';
 
 interface SmithingTableProps {
   recipe: SmithingRecipe;
-  basePrefix?: string;
 }
 
 interface SmithingSlotProps {

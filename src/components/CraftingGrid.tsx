@@ -6,7 +6,6 @@ import { TextureImage } from './TextureImage';
 
 interface CraftingGridProps {
   recipe: CraftingRecipe;
-  basePrefix?: string;
 }
 
 const GRID_POSITIONS = ['top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right'];

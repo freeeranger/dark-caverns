@@ -1,0 +1,29 @@
+{
+  "id": "luminite_golem",
+  "name": "Luminite Golem",
+  "category": "mobs",
+  "texture": "textures/item/luminite_golem_spawn_egg.png",
+  "relatedItems": [
+    {
+      "id": "luminite_golem_spawn_egg",
+      "name": "Luminite Golem Spawn Egg",
+      "texture": "textures/item/luminite_golem_spawn_egg.png"
+    }
+  ],
+  "description": "The Luminite Golem is a slow, armored monster in Rocky Caverns and Tangled Hallow.",
+  "details": "It has 40 health, 10 armor, strong knockback resistance, and a heavy attack that launches its target. It drops 3 to 6 Luminite Dust and 1 to 3 Carfstone.",
+  "stats": [
+    {
+      "label": "Behavior",
+      "value": "Hostile"
+    },
+    {
+      "label": "Location",
+      "value": "Rocky Caverns, Tangled Hallow"
+    },
+    {
+      "label": "Drops",
+      "value": "Luminite Dust, Carfstone"
+    }
+  ]
+}

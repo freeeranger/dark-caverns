@@ -1,0 +1,51 @@
+{
+  "id": "platinum_gear",
+  "name": "Platinum Armor and Tools",
+  "category": "gear",
+  "registryId": null,
+  "aliases": [
+    "Platinum gear",
+    "Platinum armor",
+    "Platinum tools",
+    "Platinum equipment"
+  ],
+  "texture": "textures/item/platinum_sword.png",
+  "description": "Use Platinum Ingots to upgrade Diamond gear at a Smithing Table.",
+  "details": "Platinum tools mine faster than Netherite tools. Their durability and damage fall between Diamond and Netherite. Platinum armor has 2.5 toughness, and every Platinum item has 20 enchantability. Upgrade Platinum gear to Hellstone or Shroomstone. You can also upgrade Platinum armor to Scorchsteel.",
+  "stats": [
+    {
+      "label": "Tool durability",
+      "value": "1,843"
+    },
+    {
+      "label": "Mining speed",
+      "value": "10"
+    },
+    {
+      "label": "Enchantability",
+      "value": "20"
+    },
+    {
+      "label": "Smithing item",
+      "value": "Luminite Dust"
+    }
+  ],
+  "smithing": {
+    "template": {
+      "name": "Luminite Dust",
+      "texture": "textures/item/luminite_dust.png"
+    },
+    "base": {
+      "name": "Diamond Sword",
+      "texture": "textures/item/diamond_sword.png"
+    },
+    "addition": {
+      "name": "Platinum Ingot",
+      "texture": "textures/item/platinum_ingot.png"
+    },
+    "output": {
+      "name": "Platinum Sword",
+      "texture": "textures/item/platinum_sword.png"
+    }
+  }
+}

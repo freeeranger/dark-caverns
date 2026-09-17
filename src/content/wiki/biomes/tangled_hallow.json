@@ -1,0 +1,22 @@
+{
+  "id": "tangled_hallow",
+  "name": "Tangled Hallow",
+  "category": "biomes",
+  "texture": "textures/block/twistwood_log.png",
+  "description": "Tangled Hallow is a subterranean forest with Overgrown Carfstone, twisted Twistwood trees, and teal surface lakes.",
+  "details": "Water Sproutlets grow across the lakes. Twistwood Saplings grow without sunlight, so you can farm Twistwood Logs and Twistwood Planks inside the Dark Caverns.",
+  "stats": [
+    {
+      "label": "Flora",
+      "value": "Twistwood Trees, Undersprouts, Water Sproutlets"
+    },
+    {
+      "label": "Ground",
+      "value": "Overgrown Carfstone"
+    },
+    {
+      "label": "Fauna",
+      "value": "Camorocks, Luminite Foxes, Luminite Golems"
+    }
+  ]
+}

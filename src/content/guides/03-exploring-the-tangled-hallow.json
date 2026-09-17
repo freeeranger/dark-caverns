@@ -1,0 +1,24 @@
+{
+  "id": "exploring-the-tangled-hallow",
+  "title": "Exploring the Tangled Hallow",
+  "summary": "Find the lakes and harvest Twistwood. Bring light for hostile mobs.",
+  "category": "Explore",
+  "steps": [
+    {
+      "title": "Find the forest floor",
+      "body": "Overgrown Carfstone, Undersprouts, and dense Twistwood trees mark the biome. Its water is teal, and it has its own music."
+    },
+    {
+      "title": "Search the surface lakes",
+      "body": "Surface lakes cut into open cavern floors. Water Sproutlets grow on the water and replace Lily Pads in this biome."
+    },
+    {
+      "title": "Farm Twistwood underground",
+      "body": "Twistwood Saplings grow without sunlight. Replant them to farm Twistwood Logs and Twistwood Planks inside the dimension. You can also craft Twistwood Doors and Twistwood Trapdoors."
+    },
+    {
+      "title": "Watch for golems",
+      "body": "Camorocks and Luminite Foxes are passive, but Luminite Golems and Skeletons also spawn here. Keep the forest floor lit while you gather wood or build."
+    }
+  ]
+}

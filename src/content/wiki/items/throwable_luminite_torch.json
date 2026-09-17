@@ -1,0 +1,55 @@
+{
+  "id": "throwable_luminite_torch",
+  "name": "Throwable Luminite Torch",
+  "category": "items",
+  "texture": "textures/item/throwable_luminite_torch.png",
+  "description": "Throw this Luminite Torch to place it where it lands.",
+  "details": "It travels like a snowball and places a Luminite Torch on the top or side of a valid block. If placement fails, the item drops instead.",
+  "stats": [
+    {
+      "label": "Type",
+      "value": "Throwable Luminite Torch"
+    },
+    {
+      "label": "Placement",
+      "value": "Places Luminite Torch on impact"
+    },
+    {
+      "label": "Crafting yield",
+      "value": "4 Throwable Luminite Torches"
+    }
+  ],
+  "recipe": {
+    "slots": [
+      null,
+      {
+        "name": "Luminite Torch",
+        "texture": "textures/block/luminite_torch.png"
+      },
+      null,
+      {
+        "name": "Luminite Torch",
+        "texture": "textures/block/luminite_torch.png"
+      },
+      {
+        "name": "Slimeball",
+        "texture": "textures/item/slime_ball.png"
+      },
+      {
+        "name": "Luminite Torch",
+        "texture": "textures/block/luminite_torch.png"
+      },
+      null,
+      {
+        "name": "Luminite Torch",
+        "texture": "textures/block/luminite_torch.png"
+      },
+      null
+    ],
+    "output": {
+      "name": "Throwable Luminite Torch",
+      "texture": "textures/item/throwable_luminite_torch.png",
+      "count": 4
+    }
+  }
+}

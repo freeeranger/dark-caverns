@@ -1,0 +1,29 @@
+{
+  "id": "shroomling",
+  "name": "Shroomling",
+  "category": "mobs",
+  "texture": "textures/item/shroomling_spawn_egg.png",
+  "relatedItems": [
+    {
+      "id": "shroomling_spawn_egg",
+      "name": "Shroomling Spawn Egg",
+      "texture": "textures/item/shroomling_spawn_egg.png"
+    }
+  ],
+  "description": "Shroomlings are neutral creatures in the Glimmershroom Forest.",
+  "details": "Shroomlings attack players who provoke them and alert nearby Shroomlings. They drop 1 to 3 Glimmershrooms before Looting bonuses.",
+  "stats": [
+    {
+      "label": "Behavior",
+      "value": "Neutral"
+    },
+    {
+      "label": "Location",
+      "value": "Glimmershroom Forest"
+    },
+    {
+      "label": "Drops",
+      "value": "Glimmershrooms"
+    }
+  ]
+}
