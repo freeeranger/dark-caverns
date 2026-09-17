@@ -44,6 +44,7 @@ export type GuideCategory = 'Start here' | 'Explore' | 'Progression';
 
 export interface GuideChapter {
   id: string;
+  order?: number;
   title: string;
   summary: string;
   category: GuideCategory;

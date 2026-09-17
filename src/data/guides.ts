@@ -5,9 +5,8 @@ const guideModules = import.meta.glob<GuideChapter>('../content/guides/*.json', 
   import: 'default'
 });
 
-export const GUIDES: GuideChapter[] = Object.entries(guideModules)
-  .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
-  .map(([, guide]) => guide);
+export const GUIDES: GuideChapter[] = Object.values(guideModules)
+  .sort((a, b) => (a.order ?? 999) - (b.order ?? 999) || a.title.localeCompare(b.title));
 
 export const GUIDE_CATEGORIES: readonly GuideCategory[] = [
   'Start here',

@@ -1,12 +1,13 @@
 {
   "id": "shroomie-trading-and-settlements",
+  "order": 6,
   "title": "Shroomie trading and settlements",
   "summary": "Find Shroomie Houses and trade for Shroomstone Pieces or a Corrupted Pearl.",
   "category": "Explore",
   "steps": [
     {
       "title": "Find the Glimmershroom Forest",
-      "body": "Follow glowing cyan mushrooms through the caves until you reach glimmergrass. Shroomie Houses generate among giant glimmershrooms."
+      "body": "Follow glowing cyan glimmershrooms through the caves until you reach glimmergrass. Shroomie Houses generate among giant glimmershrooms."
     },
     {
       "title": "Trade with Shroomies",

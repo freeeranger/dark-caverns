@@ -11,18 +11,22 @@ interface CraftingGridProps {
 const GRID_POSITIONS = ['top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right'];
 
 const ITEM_PLURALS: Record<string, string> = {
+  Compass: 'Compasses',
   Diamond: 'Diamonds',
   Emerald: 'Emeralds',
+  Glimmershroom: 'Glimmershrooms',
   Gunpowder: 'Gunpowder',
   'Hellstone Rock': 'Hellstone Rocks',
   'Iron Ingot': 'Iron Ingots',
   'Luminite Dust': 'Luminite Dust',
   'Luminite Torch': 'Luminite Torches',
-  Mushroom: 'Mushrooms',
+  'Platinum Ingot': 'Platinum Ingots',
   'Platinum Piece': 'Platinum Pieces',
   'Scorchling Tail': 'Scorchling Tails',
+  'Scorchsteel Ingot': 'Scorchsteel Ingots',
   Shroombomb: 'Shroombombs',
   'Shroomstone Piece': 'Shroomstone Pieces',
+  Slimeball: 'Slimeballs',
   'Throwable Luminite Torch': 'Throwable Luminite Torches'
 };
 

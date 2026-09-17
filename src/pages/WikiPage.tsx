@@ -117,21 +117,27 @@ export const WikiPage: React.FC = () => {
     }
   }, [activeEntryId, resolvedActiveEntryId, setActiveCategory, setActiveEntryId]);
 
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
-    if (!mobileDetailOpen || !selectedItem || !window.matchMedia('(max-width: 767px)').matches) {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (!selectedItem) {
       return;
     }
 
     const frame = window.requestAnimationFrame(() => {
       articleRef.current?.focus({ preventScroll: true });
-      articleRef.current?.scrollIntoView({
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-        block: 'start'
+      window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
       });
     });
 
     return () => window.cancelAnimationFrame(frame);
-  }, [mobileDetailOpen, selectedItem]);
+  }, [selectedItem?.id, mobileDetailOpen]);
 
   const preserveVisibleSelection = (entries: WikiEntry[]) => {
     if (entries.length > 0 && !entries.some((entry) => entry.id === resolvedActiveEntryId)) {
@@ -167,11 +173,20 @@ export const WikiPage: React.FC = () => {
   const selectItem = (item: WikiEntry) => {
     setActiveEntryId(item.id);
     setMobileDetailOpen(true);
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    });
+    articleRef.current?.focus({ preventScroll: true });
   };
 
   const showNavigation = () => {
     setMobileDetailOpen(false);
-    window.requestAnimationFrame(() => navigationRef.current?.focus());
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    });
+    window.requestAnimationFrame(() => navigationRef.current?.focus({ preventScroll: true }));
   };
 
   const entryGroups = useMemo(() => {
@@ -185,8 +200,8 @@ export const WikiPage: React.FC = () => {
   }, [activeCategory, searchQuery, filteredEntries]);
 
   const sidebarContent = (
-    <div className="space-y-4">
-      <div className="relative">
+    <div className="flex flex-col min-h-0 flex-1 space-y-3">
+      <div className="relative shrink-0">
         <PixelIcon
           name="search"
           className="w-3.5 h-3.5 text-[#8e95a8] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
@@ -226,7 +241,7 @@ export const WikiPage: React.FC = () => {
         id="wiki-category"
         value={activeCategory}
         onChange={(event) => changeCategory(event.target.value as WikiCategory)}
-        className="mc-inset min-h-11 w-full px-3 text-base text-white md:hidden"
+        className="mc-inset min-h-11 w-full px-3 text-base text-white md:hidden shrink-0"
       >
         {CATEGORIES.map((category) => (
           <option key={category} value={category} className="bg-[#101114] capitalize">
@@ -235,7 +250,7 @@ export const WikiPage: React.FC = () => {
         ))}
       </select>
 
-      <div className="hidden grid-cols-4 gap-1 md:grid" role="group" aria-label="Filter entries by category">
+      <div className="hidden grid-cols-4 gap-1 md:grid shrink-0" role="group" aria-label="Filter entries by category">
         {CATEGORIES.map((category) => (
           <button
             key={category}
@@ -252,8 +267,8 @@ export const WikiPage: React.FC = () => {
       </div>
 
       {filteredEntries.length > 0 ? (
-        <nav aria-label="Wiki entries" className="space-y-4">
-          <div className="space-y-4">
+        <nav aria-label="Wiki entries" className="flex-1 min-h-0 overflow-y-auto overscroll-contain pr-1.5">
+          <div className="space-y-4 pt-1 pb-1">
             {entryGroups.map((group) => (
               <SidebarNavGroup
                 key={group.category ?? 'results'}
@@ -274,7 +289,7 @@ export const WikiPage: React.FC = () => {
           </div>
         </nav>
       ) : (
-        <div className="flex flex-col gap-4 p-4 bg-[#141519] border border-[#2a2c34]" role="status">
+        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain flex flex-col gap-4 p-4 bg-[#141519] border border-[#2a2c34]" role="status">
           <div className="space-y-1">
             <p className="font-pixel text-sm text-white">No matching entries</p>
             <p className="text-xs text-[#a0a7ba]">

@@ -1,5 +1,6 @@
 {
   "id": "smithing-and-gear-progression",
+  "order": 4,
   "title": "Smithing and gear progression",
   "summary": "Use Luminite Dust to upgrade Diamond gear to Platinum. Then upgrade Platinum with Hellstone, Shroomstone, or Scorchsteel.",
   "category": "Progression",

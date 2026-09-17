@@ -13,6 +13,8 @@
   *::after {
     box-sizing: border-box;
     caret-color: #55ffaf;
+    scrollbar-width: thin;
+    scrollbar-color: #2b2d35 #111215;
   }
 
   p {

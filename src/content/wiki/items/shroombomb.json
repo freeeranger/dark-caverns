@@ -18,11 +18,11 @@
   "recipe": {
     "slots": [
       {
-        "name": "Mushroom",
+        "name": "Glimmershroom",
         "texture": "textures/block/glimmershroom.png"
       },
       {
-        "name": "Mushroom",
+        "name": "Glimmershroom",
         "texture": "textures/block/glimmershroom.png"
       },
       {

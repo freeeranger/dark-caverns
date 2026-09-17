@@ -38,15 +38,17 @@ export const MasterDetailLayout: React.FC<MasterDetailLayoutProps> = ({
           ref={sidebarRef}
           tabIndex={-1}
           className={`${
-            mobileDetailOpen ? 'hidden' : 'block'
-          } min-w-0 md:col-span-4 mc-box p-4 space-y-3 md:sticky md:top-20 md:block`}
+            mobileDetailOpen ? 'hidden' : 'flex flex-col'
+          } min-w-0 md:col-span-4 mc-box p-4 md:sticky md:top-20 md:flex md:flex-col md:max-h-[calc(100dvh-7rem)]`}
           aria-label={sidebarAriaLabel}
         >
-          <div className="mc-panel-header -mx-4 -mt-4 p-3 border-b-2 border-black flex items-center justify-between">
+          <div className="mc-panel-header -mx-4 -mt-4 p-3 border-b-2 border-black flex items-center justify-between shrink-0">
             <span className="font-pixel text-xs sm:text-sm text-white">{sidebarTitle}</span>
             {sidebarHeaderRight}
           </div>
-          {sidebarContent}
+          <div className="flex flex-col min-h-0 flex-1 pt-3">
+            {sidebarContent}
+          </div>
         </aside>
 
         {/* Detail Article or Empty State */}

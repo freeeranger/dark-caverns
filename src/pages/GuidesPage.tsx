@@ -41,16 +41,19 @@ export const GuidesPage: React.FC = () => {
 
   const activeGuide = GUIDES.find((g) => g.id === guideParam) || GUIDES[0];
 
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
-    if (!mobileDetailOpen || !window.matchMedia('(max-width: 767px)').matches) {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
       return;
     }
 
     const frame = window.requestAnimationFrame(() => {
       articleRef.current?.focus({ preventScroll: true });
-      articleRef.current?.scrollIntoView({
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-        block: 'start'
+      window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
       });
     });
 
@@ -60,16 +63,25 @@ export const GuidesPage: React.FC = () => {
   const selectGuide = (id: string) => {
     setGuideParam(id);
     setMobileDetailOpen(true);
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    });
+    articleRef.current?.focus({ preventScroll: true });
   };
 
   const showChapterList = () => {
     setMobileDetailOpen(false);
-    window.requestAnimationFrame(() => chapterNavRef.current?.focus());
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    });
+    window.requestAnimationFrame(() => chapterNavRef.current?.focus({ preventScroll: true }));
   };
 
   const sidebarContent = (
-    <nav aria-label="Choose a guide">
-      <div className="space-y-4 pt-1">
+    <nav aria-label="Choose a guide" className="flex-1 min-h-0 overflow-y-auto overscroll-contain pr-1.5">
+      <div className="space-y-4 pt-1 pb-1">
         {GUIDE_CATEGORIES.map((category) => (
           <SidebarNavGroup key={category} title={category}>
             {GUIDES.filter((guide) => guide.category === category).map((guide) => (
@@ -104,11 +116,6 @@ export const GuidesPage: React.FC = () => {
       >
         <ArticleHeader
           title={activeGuide.title}
-          badge={
-            <span className="mc-tag">
-              {activeGuide.steps.length} {activeGuide.steps.length === 1 ? 'step' : 'steps'}
-            </span>
-          }
           summary={<WikiText text={activeGuide.summary} hrefPrefix="../wiki/?entry=" />}
         />
 

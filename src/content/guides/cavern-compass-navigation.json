@@ -1,5 +1,6 @@
 {
   "id": "cavern-compass-navigation",
+  "order": 2,
   "title": "Cavern Compass navigation",
   "summary": "Craft a Cavern Compass so you can find your linked gateway while exploring.",
   "category": "Start here",

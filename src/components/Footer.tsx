@@ -25,16 +25,6 @@ export const Footer: React.FC<FooterProps> = ({ basePrefix, currentPath }) => {
             Credits
           </a>
           <a
-            href="https://modrinth.com/mod/dark-caverns"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-h-11 items-center gap-1 hover:text-[#55ffaf]"
-            aria-label="Modrinth, opens in a new tab"
-          >
-            <span>Modrinth</span>
-            <PixelIcon name="external-link" className="w-3 h-3 opacity-70" />
-          </a>
-          <a
             href="https://www.curseforge.com/minecraft/mc-mods/dark-caverns"
             target="_blank"
             rel="noreferrer"
@@ -42,6 +32,16 @@ export const Footer: React.FC<FooterProps> = ({ basePrefix, currentPath }) => {
             aria-label="CurseForge, opens in a new tab"
           >
             <span>CurseForge</span>
+            <PixelIcon name="external-link" className="w-3 h-3 opacity-70" />
+          </a>
+          <a
+            href="https://modrinth.com/mod/dark-caverns"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-11 items-center gap-1 hover:text-[#55ffaf]"
+            aria-label="Modrinth, opens in a new tab"
+          >
+            <span>Modrinth</span>
             <PixelIcon name="external-link" className="w-3 h-3 opacity-70" />
           </a>
           <a
