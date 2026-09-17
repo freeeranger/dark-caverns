@@ -39,7 +39,7 @@ export const MasterDetailLayout: React.FC<MasterDetailLayoutProps> = ({
           tabIndex={-1}
           className={`${
             mobileDetailOpen ? 'hidden' : 'flex flex-col'
-          } min-w-0 md:col-span-4 mc-box p-4 md:sticky md:top-20 md:flex md:flex-col md:max-h-[calc(100dvh-7rem)]`}
+          } min-w-0 md:col-span-4 mc-box p-4 md:sticky md:top-20 md:flex md:flex-col md:max-h-[calc(100dvh-7rem)] focus:outline-none outline-none`}
           aria-label={sidebarAriaLabel}
         >
           <div className="mc-panel-header -mx-4 -mt-4 p-3 border-b-2 border-black flex items-center justify-between shrink-0">
@@ -58,7 +58,7 @@ export const MasterDetailLayout: React.FC<MasterDetailLayoutProps> = ({
             tabIndex={-1}
             className={`${
               mobileDetailOpen ? 'block' : 'hidden'
-            } min-w-0 scroll-mt-32 md:col-span-8 mc-box p-6 sm:p-8 space-y-6 md:block md:scroll-mt-20`}
+            } min-w-0 scroll-mt-32 md:col-span-8 mc-box p-6 sm:p-8 space-y-6 md:block md:scroll-mt-20 focus:outline-none outline-none`}
             aria-label={articleAriaLabel}
           >
             <button

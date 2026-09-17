@@ -16,13 +16,23 @@ export const Footer: React.FC<FooterProps> = ({ basePrefix, currentPath }) => {
         <div>
           <span className="text-white font-pixel">Dark Caverns</span>
         </div>
-        <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-pixel text-xs" aria-label="Project links">
+        <nav className="flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-7 gap-y-2 font-pixel text-xs" aria-label="Project links">
           <a
             href={`${prefix}credits/`}
             className="inline-flex min-h-11 items-center hover:text-white"
             aria-current={currentPath === '/credits/' ? 'page' : undefined}
           >
             Credits
+          </a>
+          <a
+            href="https://discord.gg/ZaBswMUQgx"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-11 items-center gap-1 hover:text-[#7289da]"
+            aria-label="Discord, opens in a new tab"
+          >
+            <span>Discord</span>
+            <PixelIcon name="external-link" className="w-3 h-3 opacity-70" />
           </a>
           <a
             href="https://www.curseforge.com/minecraft/mc-mods/dark-caverns"

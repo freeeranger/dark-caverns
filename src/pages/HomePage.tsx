@@ -273,13 +273,20 @@ const UtilityLoadout: React.FC = () => (
 );
 
 const HomeActions: React.FC = () => (
-  <div className="grid w-full max-w-[22rem] grid-cols-2 gap-3">
+  <div className="grid w-full max-w-[24rem] grid-cols-2 gap-3">
     <a href="./download/" className="mc-btn mc-btn-luminite min-h-11 min-w-0 gap-2 px-3 text-xs sm:px-5 sm:text-sm">
       <PixelIcon name="download" className="h-4 w-4" />
       <span>Download</span>
     </a>
-    <a href="./guides/" className="mc-btn min-h-11 min-w-0 px-3 text-xs sm:px-5 sm:text-sm">
-      Browse guides
+    <a
+      href="https://discord.gg/ZaBswMUQgx"
+      target="_blank"
+      rel="noreferrer"
+      className="mc-btn min-h-11 min-w-0 gap-2 px-3 text-xs sm:px-5 sm:text-sm"
+      aria-label="Join Discord, opens in a new tab"
+    >
+      <PixelIcon name="discord" className="h-4 w-4" />
+      <span>Join Discord</span>
     </a>
   </div>
 );

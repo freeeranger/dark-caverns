@@ -50,7 +50,9 @@ export const GuidesPage: React.FC = () => {
     }
 
     const frame = window.requestAnimationFrame(() => {
-      articleRef.current?.focus({ preventScroll: true });
+      if (mobileDetailOpen && window.matchMedia('(max-width: 767px)').matches) {
+        articleRef.current?.focus({ preventScroll: true });
+      }
       window.scrollTo({
         top: 0,
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
@@ -67,7 +69,6 @@ export const GuidesPage: React.FC = () => {
       top: 0,
       behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
     });
-    articleRef.current?.focus({ preventScroll: true });
   };
 
   const showChapterList = () => {
@@ -76,7 +77,9 @@ export const GuidesPage: React.FC = () => {
       top: 0,
       behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
     });
-    window.requestAnimationFrame(() => chapterNavRef.current?.focus({ preventScroll: true }));
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      window.requestAnimationFrame(() => chapterNavRef.current?.focus({ preventScroll: true }));
+    }
   };
 
   const sidebarContent = (

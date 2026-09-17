@@ -19,7 +19,7 @@ export const SidebarNavButton: React.FC<SidebarNavButtonProps> = ({
       type="button"
       aria-current={isSelected ? 'page' : undefined}
       onClick={onClick}
-      className={`w-full min-h-11 text-left px-3 py-2 text-xs flex items-center gap-2.5 border transition-none cursor-pointer font-pixel ${
+      className={`w-full min-h-11 text-left px-3 py-2 text-xs flex items-center gap-2.5 border transition-none cursor-pointer font-pixel focus:outline-none focus-visible:outline-2 focus-visible:outline-[#55ffaf] ${
         isSelected
           ? 'bg-[#22252d] border-[#55ffaf] text-[#ffffa0]'
           : 'bg-[#15161a] border-[#202228] text-[#b0b6c6] hover:bg-[#1b1d23] hover:text-white'

@@ -11,7 +11,12 @@ export type PixelIconName =
   | 'check'
   | 'menu'
   | 'close'
-  | 'chevron-right';
+  | 'chevron-right'
+  | 'user'
+  | 'profile'
+  | 'discord'
+  | 'home'
+  | 'house';
 
 interface PixelIconProps extends React.SVGProps<SVGSVGElement> {
   name: PixelIconName;
@@ -73,6 +78,15 @@ export const PixelIcon: React.FC<PixelIconProps> = ({ name, className = 'w-4 h-4
       )}
       {name === 'chevron-right' && (
         <path d="M16 13v-2h-2v2h2Zm-2-2V9h-2v2h2Zm0 4v-2h-2v2h2Zm-2-6V7h-2v2h2Zm0 8v-2h-2v2h2ZM10 7V5H8v2h2Zm0 12v-2H8v2h2Z" />
+      )}
+      {(name === 'user' || name === 'profile') && (
+        <path d="M9 2h6v2H9zm0 8h6v2H9zm6-6h2v6h-2zM7 4h2v6H7zM4 18h2v4H4zm14 0h2v4h-2zM8 14h8v2H8zm-2 2h2v2H6zm10 0h2v2h-2z" />
+      )}
+      {name === 'discord' && (
+        <path d="M9 21H5v-2h4v2Zm10 0h-4v-2h4v2ZM5 19H3v-2h2v2Zm12-2h-2v2h-2v-2h-2v2H9v-2H7v-2h10v2Zm4 2h-2v-2h2v2ZM3 17H1V7h2v10Zm20 0h-2V7h2v10Zm-12-4H8v-3h3v3Zm5 0h-3v-3h3v3ZM5 7H3V5h2v2Zm10 0H9V5h6v2Zm6 0h-2V5h2v2ZM9 5H5V3h4v2Zm10 0h-4V3h4v2Z" />
+      )}
+      {(name === 'home' || name === 'house') && (
+        <path d="M4 20h16v2H4zm16-10h2v10h-2zM2 10h2v10H2zm2-2h2v2H4zm2-2h2v2H6zm2-2h2v2H8zm2-2h4v2h-4zm4 2h2v2h-2zm2 2h2v2h-2zm2 2h2v2h-2zM8 14h2v6H8zm2-2h4v2h-4zm4 2h2v6h-2z" />
       )}
     </svg>
   );
