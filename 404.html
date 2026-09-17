@@ -16,6 +16,29 @@
             return;
           }
         }
+
+        var isDarkCaverns = path.startsWith('/dark-caverns');
+        var base = isDarkCaverns ? '/dark-caverns/' : '/';
+
+        function updateBase() {
+          var links = document.querySelectorAll('nav[aria-label="Page recovery"] a');
+          for (var j = 0; j < links.length; j++) {
+            var subPath = links[j].getAttribute('data-path');
+            if (subPath !== null) {
+              links[j].href = base + subPath;
+            }
+          }
+          var iconImg = document.querySelector('.mc-icon img');
+          if (iconImg) iconImg.src = base + 'favicon.png';
+          var favLink = document.querySelector('link[rel="icon"]');
+          if (favLink) favLink.href = base + 'favicon.png';
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', updateBase);
+        } else {
+          updateBase();
+        }
       })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -119,10 +142,10 @@
         <h1 id="missing-title">You fell out of the world!</h1>
         <p>There is no page at this address. Return home or use one of the links below.</p>
         <nav aria-label="Page recovery">
-          <a href="/dark-caverns/" class="primary">Respawn at home</a>
-          <a href="/dark-caverns/guides/">Guides</a>
-          <a href="/dark-caverns/wiki/">Wiki</a>
-          <a href="/dark-caverns/download/">Download</a>
+          <a href="/dark-caverns/" data-path="" class="primary">Respawn at home</a>
+          <a href="/dark-caverns/guides/" data-path="guides/">Guides</a>
+          <a href="/dark-caverns/wiki/" data-path="wiki/">Wiki</a>
+          <a href="/dark-caverns/download/" data-path="download/">Download</a>
         </nav>
       </section>
     </main>
