@@ -213,6 +213,7 @@ public final class BiomeTransitionTests {
                         "shroom_patch",
                         "charred_grass_patch",
                         "scorched_berry_bush_patch",
+                        "mighty_undersprouts_patch",
                         "tall_undersprouts_patch",
                         "undersprouts_patch"
                     }) {
@@ -243,7 +244,10 @@ public final class BiomeTransitionTests {
                         block.is(CustomBlocks.CHARRED_GRASS.get())
                                 || block.is(CustomBlocks.SCORCHED_BERRY_BUSH.get());
                 boolean tallHallow = block.is(CustomBlocks.TALL_UNDERSPROUTS.get());
-                boolean hallow = block.is(CustomBlocks.UNDERSPROUTS.get()) || tallHallow;
+                boolean hallow =
+                        block.is(CustomBlocks.UNDERSPROUTS.get())
+                                || block.is(CustomBlocks.MIGHTY_UNDERSPROUTS.get())
+                                || tallHallow;
                 if (!forest && !molten && !hallow) continue;
                 plants++;
                 BlockPos groundPos = entry.getKey().below();

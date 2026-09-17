@@ -3,9 +3,11 @@ package com.freeranger.dark_caverns.datagen;
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import java.util.List;
+import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.HugeMushroomBlock;
@@ -134,6 +136,12 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                 models().getExistingFile(modLoc("block/twistwood_trapdoor_bottom")));
         crossBlock(CustomBlocks.UNDERSPROUTS.get());
         doublePlantBlock(CustomBlocks.TALL_UNDERSPROUTS.get());
+        Block mightyUndersprouts = CustomBlocks.MIGHTY_UNDERSPROUTS.get();
+        simpleBlock(
+                mightyUndersprouts,
+                models().getBuilder(name(mightyUndersprouts))
+                        .texture("particle", modLoc("block/mighty_undersprouts")));
+        mightyUndersproutsItem();
         crossBlock(CustomBlocks.TWISTWOOD_SAPLING.get());
         for (String plant : List.of("undersprouts", "tall_undersprouts", "twistwood_sapling"))
             itemModels()
@@ -152,6 +160,53 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
         itemModels()
                 .withExistingParent("twistwood_door", mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/twistwood_door"));
+    }
+
+    private void mightyUndersproutsItem() {
+        var model =
+                itemModels()
+                        .getBuilder("mighty_undersprouts")
+                        .texture("plant", modLoc("block/mighty_undersprouts"))
+                        .ao(false)
+                        .guiLight(GuiLight.FRONT);
+        var plane = model.element().from(1.0F, 4.5F, 8.0F).to(15.0F, 11.5F, 8.0F).shade(false);
+        plane.face(Direction.NORTH).uvs(0.0F, 2.0F, 12.0F, 8.0F).texture("#plant");
+        plane.face(Direction.SOUTH).uvs(0.0F, 2.0F, 12.0F, 8.0F).texture("#plant");
+
+        var transforms = model.transforms();
+        transforms
+                .transform(ItemDisplayContext.GROUND)
+                .translation(0.0F, 2.0F, 0.0F)
+                .scale(0.5F)
+                .end();
+        transforms
+                .transform(ItemDisplayContext.HEAD)
+                .rotation(0.0F, 180.0F, 0.0F)
+                .translation(0.0F, 13.0F, 7.0F)
+                .end();
+        transforms
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
+                .translation(0.0F, 3.0F, 1.0F)
+                .scale(0.55F)
+                .end();
+        transforms
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
+                .translation(0.0F, 3.0F, 1.0F)
+                .scale(0.55F)
+                .end();
+        transforms
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
+                .rotation(0.0F, -90.0F, 25.0F)
+                .translation(1.13F, 3.2F, 1.13F)
+                .scale(0.68F)
+                .end();
+        transforms
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
+                .rotation(0.0F, 90.0F, -25.0F)
+                .translation(1.13F, 3.2F, 1.13F)
+                .scale(0.68F)
+                .end();
+        transforms.transform(ItemDisplayContext.FIXED).rotation(0.0F, 180.0F, 0.0F).end();
     }
 
     private void doublePlantBlock(DoublePlantBlock block) {

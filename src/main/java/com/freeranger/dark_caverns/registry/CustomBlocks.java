@@ -8,6 +8,7 @@ import com.freeranger.dark_caverns.blocks.GatewayToTheOverworldBlock;
 import com.freeranger.dark_caverns.blocks.GlimmershroomBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
+import com.freeranger.dark_caverns.blocks.MightyUndersproutsBlock;
 import com.freeranger.dark_caverns.blocks.ScorchedBerryBushBlock;
 import com.freeranger.dark_caverns.blocks.TallUndersproutsBlock;
 import com.freeranger.dark_caverns.blocks.TwistwoodLogBlock;
@@ -249,6 +250,15 @@ public final class CustomBlocks {
                                     BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS),
                                     OVERGROWN_CARFSTONE,
                                     TALL_UNDERSPROUTS));
+    public static final DeferredBlock<MightyUndersproutsBlock> MIGHTY_UNDERSPROUTS =
+            register(
+                    "mighty_undersprouts",
+                    () ->
+                            new MightyUndersproutsBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS)
+                                            .offsetType(BlockBehaviour.OffsetType.NONE)
+                                            .noOcclusion(),
+                                    OVERGROWN_CARFSTONE));
     public static final DeferredBlock<WaterlilyBlock> WATER_SPROUTLETS =
             register(
                     "water_sproutlets",

@@ -303,6 +303,7 @@ public final class CavernArrival {
                 || state.is(CustomBlocks.ASHY_CHARRED_GRASS.get())
                 || state.is(CustomBlocks.UNDERSPROUTS.get())
                 || state.is(CustomBlocks.TALL_UNDERSPROUTS.get())
+                || state.is(CustomBlocks.MIGHTY_UNDERSPROUTS.get())
                 || state.is(CustomBlocks.GLIMMERSHROOM.get());
     }
 

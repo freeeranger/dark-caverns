@@ -79,10 +79,10 @@ public final class PortSmokeTests {
     @GameTest(template = "sacred_torch")
     public static void registriesLoad(GameTestHelper helper) {
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.BLOCK) == 66, "Expected all 66 block IDs");
+                countModEntries(BuiltInRegistries.BLOCK) == 67, "Expected all 67 block IDs");
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.ITEM) == 119,
-                "Expected 63 block items plus 56 standalone item IDs");
+                countModEntries(BuiltInRegistries.ITEM) == 120,
+                "Expected 64 block items plus 56 standalone item IDs");
         helper.assertTrue(
                 countModEntries(BuiltInRegistries.SOUND_EVENT) == 28, "Expected all 28 sound IDs");
         helper.assertTrue(
@@ -92,9 +92,10 @@ public final class PortSmokeTests {
                 countModEntries(NeoForgeRegistries.ATTACHMENT_TYPES) == 2,
                 "Expected gateway cooldown and Scorchsteel state attachment IDs");
         verifyRegistryCount(helper, Registries.BIOME, 4, "biome definitions");
+        verifyRegistryCount(helper, Registries.BLOCK_ENTITY_TYPE, 1, "block entity type");
         verifyRegistryCount(helper, Registries.CONFIGURED_CARVER, 1, "configured carver");
-        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 33, "configured features");
-        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 32, "placed features");
+        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 34, "configured features");
+        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 33, "placed features");
         verifyRegistryCount(helper, Registries.NOISE, 14, "noise definitions");
         verifyRegistryCount(helper, Registries.DENSITY_FUNCTION, 12, "terrain density functions");
         verifyRegistryCount(helper, Registries.NOISE_SETTINGS, 1, "noise settings");
@@ -372,6 +373,7 @@ public final class PortSmokeTests {
         verifyCompostChance(helper, CustomBlocks.GLIMMERGRASS.get().asItem(), 0.30F);
         verifyCompostChance(helper, CustomBlocks.UNDERSPROUTS.get().asItem(), 0.30F);
         verifyCompostChance(helper, CustomBlocks.TALL_UNDERSPROUTS.get().asItem(), 0.50F);
+        verifyCompostChance(helper, CustomBlocks.MIGHTY_UNDERSPROUTS.get().asItem(), 0.65F);
         verifyCompostChance(helper, CustomBlocks.WATER_SPROUTLETS.get().asItem(), 0.65F);
         verifyCompostChance(helper, CustomBlocks.CHARRED_GRASS.get().asItem(), 0.30F);
         verifyCompostChance(helper, CustomBlocks.ASHY_CHARRED_GRASS.get().asItem(), 0.30F);

@@ -187,7 +187,9 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
 
     private void addVanillaBehaviorTags() {
         Block[] undersprouts = {
-            CustomBlocks.UNDERSPROUTS.get(), CustomBlocks.TALL_UNDERSPROUTS.get()
+            CustomBlocks.UNDERSPROUTS.get(),
+            CustomBlocks.TALL_UNDERSPROUTS.get(),
+            CustomBlocks.MIGHTY_UNDERSPROUTS.get()
         };
         tag(BlockTags.MINEABLE_WITH_AXE).add(undersprouts);
         tag(BlockTags.REPLACEABLE).add(undersprouts);

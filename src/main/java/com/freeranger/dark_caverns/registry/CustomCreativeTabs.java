@@ -49,6 +49,7 @@ public final class CustomCreativeTabs {
                     CustomBlocks.OVERGROWN_CARFSTONE,
                     CustomBlocks.UNDERSPROUTS,
                     CustomBlocks.TALL_UNDERSPROUTS,
+                    CustomBlocks.MIGHTY_UNDERSPROUTS,
                     CustomBlocks.WATER_SPROUTLETS,
                     CustomBlocks.TWISTWOOD_LOG,
                     CustomBlocks.TWISTWOOD_WOOD,

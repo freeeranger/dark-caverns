@@ -7,6 +7,7 @@ import com.freeranger.dark_caverns.datagen.DarkCavernsDataGenerators;
 import com.freeranger.dark_caverns.generation.GatewayChunkLoading;
 import com.freeranger.dark_caverns.registry.CustomArmorMaterials;
 import com.freeranger.dark_caverns.registry.CustomAttachments;
+import com.freeranger.dark_caverns.registry.CustomBlockEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomCreativeTabs;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
@@ -38,6 +39,7 @@ public final class DarkCaverns {
 
     public DarkCaverns(IEventBus modBus, ModContainer modContainer) {
         CustomBlocks.register(modBus);
+        CustomBlockEntityTypes.register(modBus);
         CustomArmorMaterials.register(modBus);
         CustomAttachments.register(modBus);
         CustomEntityTypes.register(modBus);

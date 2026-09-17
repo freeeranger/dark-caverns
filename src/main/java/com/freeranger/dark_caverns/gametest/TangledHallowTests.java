@@ -47,6 +47,49 @@ public final class TangledHallowTests {
     private TangledHallowTests() {}
 
     @GameTest(template = "sacred_torch")
+    public static void mightyUndersproutsUseTightPlantBounds(GameTestHelper helper) {
+        var level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 3, 2));
+        level.setBlock(pos.below(), CustomBlocks.OVERGROWN_CARFSTONE.get().defaultBlockState(), 3);
+        BlockState plant = CustomBlocks.MIGHTY_UNDERSPROUTS.get().defaultBlockState();
+        level.setBlock(pos, plant, 3);
+
+        helper.assertTrue(
+                level.getBlockEntity(pos)
+                        instanceof
+                        com.freeranger.dark_caverns.blockentity.MightyUndersproutsBlockEntity,
+                "Mighty Undersprouts did not create their renderer block entity");
+        var bounds = plant.getShape(level, pos).bounds();
+        helper.assertTrue(
+                bounds.minX == -0.25
+                        && bounds.minZ == -0.25
+                        && bounds.maxX == 1.25
+                        && bounds.maxY == 1.25
+                        && bounds.maxZ == 1.25,
+                "Mighty Undersprouts do not use their tight selection bounds");
+
+        var drops =
+                net.minecraft.world.level.block.Block.getDrops(
+                        plant,
+                        level,
+                        pos,
+                        null,
+                        null,
+                        new net.minecraft.world.item.ItemStack(
+                                net.minecraft.world.item.Items.SHEARS));
+        helper.assertTrue(
+                drops.size() == 1
+                        && drops.getFirst().is(CustomBlocks.MIGHTY_UNDERSPROUTS.get().asItem()),
+                "Shears should harvest Mighty Undersprouts");
+
+        level.setBlock(pos.below(), Blocks.AIR.defaultBlockState(), 3);
+        helper.assertTrue(
+                level.getBlockState(pos).isAir(),
+                "Mighty Undersprouts remained after their Hallow ground was removed");
+        helper.succeed();
+    }
+
+    @GameTest(template = "sacred_torch")
     public static void undersproutsGrowAndBreakLikeTallGrass(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos pos = helper.absolutePos(new BlockPos(2, 3, 2));
@@ -393,7 +436,13 @@ public final class TangledHallowTests {
         helper.assertTrue(
                 mud > 200 && mud < originalFloors * .10,
                 "Hallow mud patches are missing or too dense: " + mud);
-        volume.feature("tall_undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 8);
+        volume.feature(
+                "mighty_undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 8);
+        long mightyPlants =
+                volume.featureWrites.values().stream()
+                        .filter(state -> state.is(CustomBlocks.MIGHTY_UNDERSPROUTS.get()))
+                        .count();
+        volume.feature("tall_undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 9);
         long tallPlants =
                 volume.featureWrites.values().stream()
                         .filter(
@@ -412,7 +461,13 @@ public final class TangledHallowTests {
                         + tallPlants
                         + ", blocks="
                         + tallPlantBlocks);
-        volume.feature("undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 9);
+        helper.assertTrue(
+                mightyPlants > 0 && mightyPlants < tallPlants,
+                "Mighty undersprouts did not generate below tall undersprout frequency: mighty="
+                        + mightyPlants
+                        + ", tall="
+                        + tallPlants);
+        volume.feature("undersprouts_patch", GenerationStep.Decoration.VEGETAL_DECORATION, 10);
         long plants =
                 volume.featureWrites.values().stream()
                         .filter(s -> s.is(CustomBlocks.UNDERSPROUTS.get()))

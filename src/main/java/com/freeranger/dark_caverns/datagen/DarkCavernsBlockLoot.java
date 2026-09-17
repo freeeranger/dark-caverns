@@ -56,6 +56,7 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
         add(
                 CustomBlocks.TALL_UNDERSPROUTS.get(),
                 block -> createDoublePlantShearsDrop(CustomBlocks.UNDERSPROUTS.get()));
+        add(CustomBlocks.MIGHTY_UNDERSPROUTS.get(), block -> createShearsOnlyDrop(block));
         add(
                 CustomBlocks.TWISTWOOD_LEAVES.get(),
                 block ->
@@ -144,6 +145,7 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
         return block == CustomBlocks.OVERGROWN_CARFSTONE.get()
                 || block == CustomBlocks.UNDERSPROUTS.get()
                 || block == CustomBlocks.TALL_UNDERSPROUTS.get()
+                || block == CustomBlocks.MIGHTY_UNDERSPROUTS.get()
                 || block == CustomBlocks.TWISTWOOD_LEAVES.get()
                 || block == CustomBlocks.TWISTWOOD_DOOR.get()
                 || block == CustomBlocks.CARFSTONE_COAL_ORE.get()
