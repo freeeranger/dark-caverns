@@ -48,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
               className="h-6 w-6 pixel-art"
             />
           </div>
-          <div className="font-pixel text-base leading-tight text-white mc-shadow group-hover:text-[#ffffa0] md:text-2xl">
+          <div className="pb-1 font-pixel text-base leading-tight text-white mc-shadow group-hover:text-[#ffffa0] md:text-2xl">
             Dark Caverns
           </div>
         </a>
