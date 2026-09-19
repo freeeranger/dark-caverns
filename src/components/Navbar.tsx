@@ -12,7 +12,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath }) => {
   const prefix = isRoot ? './' : '../';
 
   const links = [
-    { label: 'Overview', href: prefix, path: '/' },
+    { label: 'Home', href: prefix, path: '/' },
     { label: 'Guides', href: `${prefix}guides/`, path: '/guides/' },
     { label: 'Wiki', href: `${prefix}wiki/`, path: '/wiki/' }
   ];

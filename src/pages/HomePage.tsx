@@ -37,13 +37,13 @@ const BIOMES = [
   {
     name: 'Rocky Caverns',
     color: 'text-white',
-    texture: 'textures/block/carfstone.png',
+    texture: 'textures/block/carfstone_luminite_ore.png',
     description: 'A miners dream. Tall stone formations, exposed luminite, an tons of ores hidden in the caves.'
   },
   {
     name: 'Molten Depths',
     color: 'text-[#ff9970]',
-    texture: 'textures/block/molten_carfstone.png',
+    texture: 'textures/block/hellstone_ore.png',
     description: 'Covered in lava springs, magma and ash patches, this biome is home to some of the caverns most feared creatures.'
   },
   {
@@ -65,19 +65,19 @@ const GEAR = [
     name: 'Platinum',
     color: 'text-white',
     texture: 'textures/item/platinum_sword.png',
-    description: 'Sligtly stronger than netherite, and the base for the other gear.'
+    description: 'Sligtly stronger than diamond, and the base for the other gear.'
   },
   {
     name: 'Hellstone',
     color: 'text-[#ff9970]',
     texture: 'textures/item/hellstone_sword.png',
-    description: 'A full armor set blocks fire and lava damage.'
+    description: 'A specialized set focused on the mastery of fire.'
   },
   {
     name: 'Shroomstone',
     color: 'text-[#c084fc]',
     texture: 'textures/item/shroomstone_sword.png',
-    description: 'A full set grants Jump Boost II and blocks fall damage.'
+    description: 'A specialized set focused on mobility and traversal.'
   },
   {
     name: 'Scorchsteel',
@@ -91,7 +91,7 @@ const UTILITIES = [
   {
     name: 'Luminite Helmet',
     texture: 'textures/item/luminite_helmet.png',
-    description: 'The helmet creates client-side dynamic light around its wearer.'
+    description: 'The helmet creates light up the area around its wearer.'
   },
   {
     name: 'Throwable Luminite Torch',
@@ -179,7 +179,7 @@ const BiomeOverview: React.FC = () => (
     <SectionHeading
       id="biomes-heading"
       title="Many biomes to explore"
-      description="Each biome has its own challenges to overcome and unique loot to acquire!"
+      description="Each biome has its own challenges to overcome, and unique loot to acquire!"
       href="./wiki/?category=biomes"
       linkLabel="Biome reference"
     />
@@ -312,7 +312,7 @@ export const HomePage: React.FC = () => {
               Dark Caverns
             </h1>
             <p className="max-w-xl text-base leading-relaxed text-[#bbc2d1] sm:text-lg">
-              Dark Caverns adds a dark cave dimension hidden below bedrock, filled with huge caverns, great danger and great treasure.
+              Dark Caverns adds a dark cave dimension hidden below bedrock, filled with huge caverns, great danger as well as great treasure.
             </p>
             <HomeActions />
           </div>
@@ -336,7 +336,7 @@ export const HomePage: React.FC = () => {
               Watch the trailer
             </h2>
             <p className="text-sm text-[#a0a7ba] sm:text-base">
-              See the gateway, each biome, the native creatures, and the gear system.
+              Get a small glimpse of what lies deep in the caverns...
             </p>
           </div>
           <div className="mc-box aspect-video min-w-0 overflow-hidden p-1 sm:p-1.5">
@@ -351,7 +351,7 @@ export const HomePage: React.FC = () => {
 
         <section className="mc-box flex flex-col sm:p-8 md:flex-row items-start md:items-center justify-between gap-6 p-6 border-[#0c433f] shadow-[inset_2px_2px_0_#1e4e49,inset_-2px_-2px_0_#0c0d0f]" aria-labelledby="final-cta-heading">
           <h2 id="final-cta-heading" className="font-pixel text-2xl text-white mc-shadow sm:text-3xl">
-            Enter the Dark Caverns!
+            Ready to enter the caverns?
           </h2>
           <HomeActions />
         </section>
