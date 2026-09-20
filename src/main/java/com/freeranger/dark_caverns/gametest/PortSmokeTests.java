@@ -21,6 +21,7 @@ import com.freeranger.dark_caverns.registry.CustomBlockTags;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomEquipment;
+import com.freeranger.dark_caverns.registry.CustomFeatures;
 import com.freeranger.dark_caverns.registry.CustomItemTiers;
 import com.freeranger.dark_caverns.registry.CustomItems;
 import com.freeranger.dark_caverns.registry.CustomSpawnEggs;
@@ -28,6 +29,7 @@ import com.mojang.authlib.GameProfile;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -45,6 +47,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -59,10 +62,13 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
@@ -102,7 +108,7 @@ public final class PortSmokeTests {
                 countModEntries(NeoForgeRegistries.ATTACHMENT_TYPES) == 2,
                 "Expected gateway cooldown and Scorchsteel state attachment IDs");
         verifyRegistryCount(helper, Registries.BIOME, 4, "biome definitions");
-        verifyRegistryCount(helper, Registries.BLOCK_ENTITY_TYPE, 1, "block entity type");
+        verifyRegistryCount(helper, Registries.BLOCK_ENTITY_TYPE, 0, "block entity type");
         verifyRegistryCount(helper, Registries.CONFIGURED_CARVER, 1, "configured carver");
         verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 34, "configured features");
         verifyRegistryCount(helper, Registries.PLACED_FEATURE, 33, "placed features");
@@ -372,6 +378,56 @@ public final class PortSmokeTests {
                 teleportEvent.getEntity() == teleportTarget
                         && teleportEvent.getPearlOwner() == serverPlayer,
                 "Corrupted Pearl event should expose its target and owner separately");
+
+        // Verify CrackedBedrockFeature generates on the surface of the bedrock stratum
+        // (even under deepslate) and never replaces bedrock buried under other bedrock.
+        BlockPos testOrigin = helper.absolutePos(new BlockPos(4, 0, 4));
+        int testMinY = helper.getLevel().getMinBuildHeight();
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                pos.set(testOrigin.getX() + x, testMinY + 5, testOrigin.getZ() + z);
+                helper.getLevel().setBlock(pos, Blocks.DEEPSLATE.defaultBlockState(), 3);
+                pos.set(testOrigin.getX() + x, testMinY + 4, testOrigin.getZ() + z);
+                helper.getLevel().setBlock(pos, Blocks.BEDROCK.defaultBlockState(), 3);
+                pos.set(testOrigin.getX() + x, testMinY + 3, testOrigin.getZ() + z);
+                helper.getLevel().setBlock(pos, Blocks.BEDROCK.defaultBlockState(), 3);
+            }
+        }
+
+        boolean generated =
+                CustomFeatures.CRACKED_BEDROCK
+                        .get()
+                        .place(
+                                new FeaturePlaceContext<>(
+                                        Optional.empty(),
+                                        helper.getLevel(),
+                                        helper.getLevel().getChunkSource().getGenerator(),
+                                        RandomSource.create(42L),
+                                        testOrigin,
+                                        NoneFeatureConfiguration.INSTANCE));
+
+        helper.assertTrue(
+                generated,
+                "CrackedBedrockFeature should generate on surface bedrock covered by deepslate");
+
+        int crackedCount = 0;
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                pos.set(testOrigin.getX() + x, testMinY + 4, testOrigin.getZ() + z);
+                if (helper.getLevel().getBlockState(pos).is(CustomBlocks.CRACKED_BEDROCK.get())) {
+                    crackedCount++;
+                }
+                pos.set(testOrigin.getX() + x, testMinY + 3, testOrigin.getZ() + z);
+                helper.assertTrue(
+                        helper.getLevel().getBlockState(pos).is(Blocks.BEDROCK),
+                        "Bedrock buried underneath other bedrock must never be replaced with"
+                                + " cracked bedrock");
+            }
+        }
+        helper.assertTrue(
+                crackedCount > 0,
+                "Expected cracked bedrock to generate on the top bedrock surface under deepslate");
 
         helper.succeed();
     }
@@ -780,8 +836,8 @@ public final class PortSmokeTests {
                 EquipmentSlot.LEGS, new ItemStack(CustomEquipment.SHROOMSTONE_LEGGINGS.get()));
         NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(shroomPlayer));
         helper.assertTrue(
-                Math.abs(shroomPlayer.getAttributeValue(Attributes.JUMP_STRENGTH) - 0.52) < 0.0001,
-                "The Shroomstone leggings should match Jump Boost I");
+                Math.abs(shroomPlayer.getAttributeValue(Attributes.JUMP_STRENGTH) - 0.57) < 0.0001,
+                "The Shroomstone leggings should allow jumping 2 blocks high");
         shroomPlayer.setItemSlot(
                 EquipmentSlot.FEET, new ItemStack(CustomEquipment.SHROOMSTONE_BOOTS.get()));
         var negatedFallDamage =
@@ -827,6 +883,25 @@ public final class PortSmokeTests {
         helper.assertTrue(
                 hotFloorDamage.isCanceled(),
                 "The Hellstone boots should prevent damage from hot blocks");
+
+        BlockPos lavaTestPos = new BlockPos(1, 2, 1);
+        helper.setBlock(lavaTestPos, Blocks.LAVA.defaultBlockState());
+        hellstonePlayer.setPos(Vec3.atCenterOf(helper.absolutePos(lavaTestPos)));
+        hellstonePlayer.setDeltaMovement(0.01, 0.01, 0.0);
+        NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(hellstonePlayer));
+        helper.assertTrue(
+                hellstonePlayer.getDeltaMovement().x > 0.01,
+                "Hellstone leggings should actively boost horizontal movement in lava");
+        helper.assertTrue(
+                hellstonePlayer.getDeltaMovement().y >= 0.15,
+                "Hellstone leggings should boost upward swimming in lava");
+        hellstonePlayer.setDeltaMovement(0.0, 0.0, 0.0);
+        hellstonePlayer.setShiftKeyDown(true);
+        NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(hellstonePlayer));
+        helper.assertTrue(
+                hellstonePlayer.getDeltaMovement().y <= -0.14,
+                "Hellstone leggings should allow fast diving when sneaking in lava");
+        hellstonePlayer.setShiftKeyDown(false);
 
         var scorchsteelPlayer = helper.makeMockPlayer(GameType.SURVIVAL);
         var zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(6, 2, 2));

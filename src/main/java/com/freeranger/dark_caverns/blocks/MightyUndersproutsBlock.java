@@ -1,6 +1,5 @@
 package com.freeranger.dark_caverns.blocks;
 
-import com.freeranger.dark_caverns.blockentity.MightyUndersproutsBlockEntity;
 import com.mojang.serialization.MapCodec;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
@@ -8,15 +7,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public final class MightyUndersproutsBlock extends BushBlock implements EntityBlock {
+public final class MightyUndersproutsBlock extends BushBlock {
     private static final VoxelShape SHAPE = Block.box(-4.0, 0.0, -4.0, 20.0, 20.0, 20.0);
 
     private final Supplier<? extends Block> baseBlock;
@@ -38,19 +34,9 @@ public final class MightyUndersproutsBlock extends BushBlock implements EntityBl
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.INVISIBLE;
-    }
-
-    @Override
     protected VoxelShape getShape(
             BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
-    }
-
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new MightyUndersproutsBlockEntity(pos, state);
     }
 
     @Override

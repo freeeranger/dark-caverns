@@ -136,11 +136,7 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                 models().getExistingFile(modLoc("block/twistwood_trapdoor_bottom")));
         crossBlock(CustomBlocks.UNDERSPROUTS.get());
         doublePlantBlock(CustomBlocks.TALL_UNDERSPROUTS.get());
-        Block mightyUndersprouts = CustomBlocks.MIGHTY_UNDERSPROUTS.get();
-        simpleBlock(
-                mightyUndersprouts,
-                models().getBuilder(name(mightyUndersprouts))
-                        .texture("particle", modLoc("block/mighty_undersprouts")));
+        mightyUndersproutsBlock(CustomBlocks.MIGHTY_UNDERSPROUTS.get());
         mightyUndersproutsItem();
         crossBlock(CustomBlocks.TWISTWOOD_SAPLING.get());
         for (String plant : List.of("undersprouts", "tall_undersprouts", "twistwood_sapling"))
@@ -160,6 +156,81 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
         itemModels()
                 .withExistingParent("twistwood_door", mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/twistwood_door"));
+    }
+
+    private void mightyUndersproutsBlock(Block block) {
+        var builder =
+                models().getBuilder(name(block))
+                        .ao(false)
+                        .renderType(CUTOUT)
+                        .texture("particle", modLoc("block/mighty_undersprouts"))
+                        .texture("texture", modLoc("block/mighty_undersprouts"));
+
+        builder.element()
+                .from(-16.0F, 0.0F, 8.0F)
+                .to(32.0F, 32.0F, 8.0F)
+                .shade(false)
+                .face(Direction.NORTH)
+                .uvs(0.0F, 0.0F, 12.0F, 8.0F)
+                .texture("#texture")
+                .end()
+                .face(Direction.SOUTH)
+                .uvs(12.0F, 0.0F, 0.0F, 8.0F)
+                .texture("#texture")
+                .end();
+
+        builder.element()
+                .from(8.0F, 0.0F, -16.0F)
+                .to(8.0F, 32.0F, 32.0F)
+                .shade(false)
+                .face(Direction.WEST)
+                .uvs(0.0F, 0.0F, 12.0F, 8.0F)
+                .texture("#texture")
+                .end()
+                .face(Direction.EAST)
+                .uvs(12.0F, 0.0F, 0.0F, 8.0F)
+                .texture("#texture")
+                .end();
+
+        builder.element()
+                .from(-16.0F, 0.0F, 8.0F)
+                .to(32.0F, 32.0F, 8.0F)
+                .shade(false)
+                .rotation()
+                .origin(8.0F, 0.0F, 8.0F)
+                .axis(Direction.Axis.Y)
+                .angle(45.0F)
+                .rescale(false)
+                .end()
+                .face(Direction.NORTH)
+                .uvs(0.0F, 0.0F, 12.0F, 8.0F)
+                .texture("#texture")
+                .end()
+                .face(Direction.SOUTH)
+                .uvs(12.0F, 0.0F, 0.0F, 8.0F)
+                .texture("#texture")
+                .end();
+
+        builder.element()
+                .from(-16.0F, 0.0F, 8.0F)
+                .to(32.0F, 32.0F, 8.0F)
+                .shade(false)
+                .rotation()
+                .origin(8.0F, 0.0F, 8.0F)
+                .axis(Direction.Axis.Y)
+                .angle(-45.0F)
+                .rescale(false)
+                .end()
+                .face(Direction.NORTH)
+                .uvs(0.0F, 0.0F, 12.0F, 8.0F)
+                .texture("#texture")
+                .end()
+                .face(Direction.SOUTH)
+                .uvs(12.0F, 0.0F, 0.0F, 8.0F)
+                .texture("#texture")
+                .end();
+
+        simpleBlock(block, builder);
     }
 
     private void mightyUndersproutsItem() {

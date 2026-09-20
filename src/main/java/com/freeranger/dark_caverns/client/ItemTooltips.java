@@ -30,14 +30,6 @@ public final class ItemTooltips {
                             Component.translatable("tooltip.dark_caverns." + tooltip)
                                     .withStyle(ChatFormatting.GRAY));
         }
-
-        String setTooltip = setTooltipFor(path);
-        if (setTooltip != null) {
-            event.getToolTip()
-                    .add(
-                            Component.translatable("tooltip.dark_caverns." + setTooltip)
-                                    .withStyle(ChatFormatting.DARK_GRAY));
-        }
     }
 
     private static String tooltipFor(String path) {
@@ -76,22 +68,11 @@ public final class ItemTooltips {
         };
     }
 
-    private static String setTooltipFor(String path) {
-        return null;
-    }
-
     private static boolean isTool(String path) {
         return path.endsWith("_sword")
                 || path.endsWith("_axe")
                 || path.endsWith("_pickaxe")
                 || path.endsWith("_shovel")
                 || path.endsWith("_hoe");
-    }
-
-    private static boolean isArmor(String path) {
-        return path.endsWith("_helmet")
-                || path.endsWith("_chestplate")
-                || path.endsWith("_leggings")
-                || path.endsWith("_boots");
     }
 }

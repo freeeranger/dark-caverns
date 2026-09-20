@@ -1,5 +1,160 @@
 {
+  "ambientocclusion": false,
+  "elements": [
+    {
+      "faces": {
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            0.0,
+            0.0,
+            12.0,
+            8.0
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            12.0,
+            0.0,
+            0.0,
+            8.0
+          ]
+        }
+      },
+      "from": [
+        -16,
+        0,
+        8
+      ],
+      "shade": false,
+      "to": [
+        32,
+        32,
+        8
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            12.0,
+            0.0,
+            0.0,
+            8.0
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            0.0,
+            0.0,
+            12.0,
+            8.0
+          ]
+        }
+      },
+      "from": [
+        8,
+        0,
+        -16
+      ],
+      "shade": false,
+      "to": [
+        8,
+        32,
+        32
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            0.0,
+            0.0,
+            12.0,
+            8.0
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            12.0,
+            0.0,
+            0.0,
+            8.0
+          ]
+        }
+      },
+      "from": [
+        -16,
+        0,
+        8
+      ],
+      "rotation": {
+        "angle": 45.0,
+        "axis": "y",
+        "origin": [
+          8,
+          0,
+          8
+        ]
+      },
+      "shade": false,
+      "to": [
+        32,
+        32,
+        8
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            0.0,
+            0.0,
+            12.0,
+            8.0
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            12.0,
+            0.0,
+            0.0,
+            8.0
+          ]
+        }
+      },
+      "from": [
+        -16,
+        0,
+        8
+      ],
+      "rotation": {
+        "angle": -45.0,
+        "axis": "y",
+        "origin": [
+          8,
+          0,
+          8
+        ]
+      },
+      "shade": false,
+      "to": [
+        32,
+        32,
+        8
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "dark_caverns:block/mighty_undersprouts"
+    "particle": "dark_caverns:block/mighty_undersprouts",
+    "texture": "dark_caverns:block/mighty_undersprouts"
   }
 }

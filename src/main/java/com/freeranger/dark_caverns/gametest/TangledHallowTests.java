@@ -30,6 +30,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -55,10 +56,9 @@ public final class TangledHallowTests {
         level.setBlock(pos, plant, 3);
 
         helper.assertTrue(
-                level.getBlockEntity(pos)
-                        instanceof
-                        com.freeranger.dark_caverns.blockentity.MightyUndersproutsBlockEntity,
-                "Mighty Undersprouts did not create their renderer block entity");
+                level.getBlockEntity(pos) == null && plant.getRenderShape() == RenderShape.MODEL,
+                "Mighty Undersprouts should use a standard baked block model without a block"
+                        + " entity");
         var bounds = plant.getShape(level, pos).bounds();
         helper.assertTrue(
                 bounds.minX == -0.25

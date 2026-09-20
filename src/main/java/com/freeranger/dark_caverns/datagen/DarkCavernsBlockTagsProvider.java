@@ -162,10 +162,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                 .add(
                         CustomBlocks.SCORCHED_BERRY_BUSH.get(),
                         CustomBlocks.GLIMMERSHROOM.get(),
-                        CustomBlocks.GLIMMERSHROOM_BLOCK.get(),
-                        CustomBlocks.GLIMMERGRASS.get(),
-                        CustomBlocks.CHARRED_GRASS.get());
-        tag(BlockTags.MINEABLE_WITH_AXE).add(CustomBlocks.ASHY_CHARRED_GRASS.get());
+                        CustomBlocks.GLIMMERSHROOM_BLOCK.get());
 
         tag(BlockTags.NEEDS_STONE_TOOL).add(CustomBlocks.CARFSTONE_IRON_ORE.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
@@ -186,15 +183,17 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
     }
 
     private void addVanillaBehaviorTags() {
-        Block[] undersprouts = {
+        Block[] caveFoliage = {
+            CustomBlocks.GLIMMERGRASS.get(),
+            CustomBlocks.CHARRED_GRASS.get(),
+            CustomBlocks.ASHY_CHARRED_GRASS.get(),
             CustomBlocks.UNDERSPROUTS.get(),
             CustomBlocks.TALL_UNDERSPROUTS.get(),
             CustomBlocks.MIGHTY_UNDERSPROUTS.get()
         };
-        tag(BlockTags.MINEABLE_WITH_AXE).add(undersprouts);
-        tag(BlockTags.REPLACEABLE).add(undersprouts);
-        tag(BlockTags.REPLACEABLE_BY_TREES).add(undersprouts);
-        tag(BlockTags.SWORD_EFFICIENT).add(undersprouts);
+        tag(BlockTags.REPLACEABLE).add(caveFoliage);
+        tag(BlockTags.REPLACEABLE_BY_TREES).add(caveFoliage);
+        tag(BlockTags.SWORD_EFFICIENT).add(caveFoliage);
 
         tag(BlockTags.BEACON_BASE_BLOCKS)
                 .add(

@@ -44,12 +44,12 @@ public final class ServerConfig {
                         .define("generateForgottenTower", true);
         crackedBedrockVeinCount =
                 builder.comment(
-                                "Number of Cracked Bedrock veins attempted per chunk in the"
-                                        + " Overworld bedrock layer.")
-                        .defineInRange("crackedBedrockVeinCount", 4, 1, 32);
+                                "Number of Cracked Bedrock patches attempted per chunk on the"
+                                        + " exposed Overworld bedrock floor.")
+                        .defineInRange("crackedBedrockVeinCount", 8, 1, 32);
         crackedBedrockVeinSize =
-                builder.comment("Maximum size of Cracked Bedrock veins.")
-                        .defineInRange("crackedBedrockVeinSize", 4, 1, 16);
+                builder.comment("Maximum size of Cracked Bedrock patches.")
+                        .defineInRange("crackedBedrockVeinSize", 5, 1, 16);
         builder.pop();
 
         builder.push("gameplay");

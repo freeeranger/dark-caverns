@@ -1,6 +1,5 @@
 package com.freeranger.dark_caverns.client;
 
-import com.freeranger.dark_caverns.registry.CustomBlockEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomParticles;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -17,13 +16,6 @@ public final class ClientModEvents {
     public static void register(IEventBus modBus) {
         modBus.addListener(ClientModEvents::registerParticleProviders);
         modBus.addListener(ClientModEvents::registerEntityRenderers);
-        modBus.addListener(ClientModEvents::registerBlockEntityRenderers);
-    }
-
-    private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(
-                CustomBlockEntityTypes.MIGHTY_UNDERSPROUTS.get(),
-                context -> new MightyUndersproutsRenderer());
     }
 
     private static void registerParticleProviders(RegisterParticleProvidersEvent event) {

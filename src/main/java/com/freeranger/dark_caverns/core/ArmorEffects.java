@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -46,7 +47,6 @@ import org.jetbrains.annotations.Nullable;
 
 public final class ArmorEffects {
     private static final float FORTY_PERCENT_REDUCTION_MULTIPLIER = 0.6F;
-    private static final double LAVA_DRAG_COMPENSATION = 4.0 / 3.0;
     private static final double SCORCHSTEEL_VISIBILITY_MULTIPLIER = 0.65;
     private static final double SCORCHSTEEL_POUNCE_FORWARD = 0.6;
     private static final double SCORCHSTEEL_POUNCE_UP = 0.1;
@@ -58,7 +58,7 @@ public final class ArmorEffects {
     private static final AttributeModifier SHROOMSTONE_JUMP_HEIGHT =
             new AttributeModifier(
                     DarkCaverns.id("shroomstone_jump_height"),
-                    0.1,
+                    0.15,
                     AttributeModifier.Operation.ADD_VALUE);
     private static final AttributeModifier HELLSTONE_LAVA_SWIM_SPEED =
             new AttributeModifier(
@@ -185,29 +185,60 @@ public final class ArmorEffects {
 
     private static void applyHellstoneLavaMovement(Player player) {
         boolean active =
-                player.isInLava()
+                !player.isSpectator()
+                        && !player.isPassenger()
+                        && isPlayerInLava(player)
                         && wearing(
                                 player,
                                 EquipmentSlot.LEGS,
                                 CustomEquipment.HELLSTONE_LEGGINGS.get());
         setTransientModifier(player, NeoForgeMod.SWIM_SPEED, HELLSTONE_LAVA_SWIM_SPEED, active);
-        if (active) {
-            Vec3 movement = player.getDeltaMovement();
-            player.setDeltaMovement(
-                    movement.x * LAVA_DRAG_COMPENSATION,
-                    movement.y,
-                    movement.z * LAVA_DRAG_COMPENSATION);
+        if (!active) {
+            return;
         }
+
+        Vec3 delta = player.getDeltaMovement();
+        double hSpeed = Math.sqrt(delta.x * delta.x + delta.z * delta.z);
+        boolean hasInput = player.xxa != 0.0F || player.zza != 0.0F;
+        boolean shouldBoostHorizontal =
+                hasInput || (!player.level().isClientSide() && hSpeed > 0.005);
+
+        double newX = delta.x;
+        double newZ = delta.z;
+        if (shouldBoostHorizontal && hSpeed > 0.001) {
+            double maxSpeed = player.isSprinting() ? 0.28 : 0.20;
+            double targetSpeed = Math.min(maxSpeed, Math.max(hSpeed * 2.5, 0.12));
+            double scale = targetSpeed / hSpeed;
+            newX = delta.x * scale;
+            newZ = delta.z * scale;
+        }
+
+        double newY = delta.y;
+        if (delta.y > 0.001) {
+            newY = Math.min(0.18, Math.max(delta.y * 3.0, 0.15));
+        } else if (player.isShiftKeyDown()) {
+            newY = -0.14;
+        }
+
+        player.setDeltaMovement(newX, newY, newZ);
     }
 
     private static void shortenHellstoneBurnTime(Player player) {
         if (player.getRemainingFireTicks() <= 0
-                || player.isInLava()
+                || isPlayerInLava(player)
                 || isTouchingFire(player)
                 || !wearing(player, EquipmentSlot.HEAD, CustomEquipment.HELLSTONE_HELMET.get())) {
             return;
         }
         player.setRemainingFireTicks(Math.max(0, player.getRemainingFireTicks() - 1));
+    }
+
+    private static boolean isPlayerInLava(Player player) {
+        return player.isInLava()
+                || player.isEyeInFluidType(NeoForgeMod.LAVA_TYPE.value())
+                || player.level().getFluidState(player.blockPosition()).is(FluidTags.LAVA)
+                || BlockPos.betweenClosedStream(player.getBoundingBox().deflate(1.0E-6))
+                        .anyMatch(pos -> player.level().getFluidState(pos).is(FluidTags.LAVA));
     }
 
     private static void setTransientModifier(
@@ -300,6 +331,17 @@ public final class ArmorEffects {
         if (mob.getLastHurtByMob() == player) {
             return;
         }
+
+        ScorchsteelStealthState stealth =
+                player.getExistingDataOrNull(CustomAttachments.SCORCHSTEEL_STEALTH);
+        if (stealth != null && stealth.isActive()) {
+            event.setNewAboutToBeSetTarget(null);
+            return;
+        }
+
+        if (!wearing(player, EquipmentSlot.HEAD, CustomEquipment.SCORCHSTEEL_HELMET.get())) {
+            return;
+        }
         double followRange = mob.getAttributeValue(Attributes.FOLLOW_RANGE);
         double maxDistance = followRange * SCORCHSTEEL_VISIBILITY_MULTIPLIER;
         if (player.isCrouching() || player.isShiftKeyDown()) {
@@ -336,7 +378,20 @@ public final class ArmorEffects {
         player.hurtMarked = true;
         player.hasImpulse = true;
 
-        if (player.level() instanceof ServerLevel serverLevel) {
+        if (player.level().isClientSide()) {
+            for (int i = 0; i < 6; i++) {
+                player.level()
+                        .addParticle(
+                                ParticleTypes.SMOKE,
+                                player.getRandomX(0.4),
+                                player.getY() + 0.2,
+                                player.getRandomZ(0.4),
+                                0.0,
+                                0.02,
+                                0.0);
+            }
+            player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 0.5F, 1.4F);
+        } else if (player.level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(
                     ParticleTypes.SMOKE,
                     player.getX(),
