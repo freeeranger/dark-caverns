@@ -52,12 +52,7 @@ public final class CavernFormationTests {
                 helper.assertTrue(
                         ceilingHeight >= 17 && floorHeight == 0,
                         "Stalactite must attach to the actual ceiling");
-            if (mode == 0)
-                helper.assertTrue(
-                        room.edits.values().stream()
-                                .noneMatch(state -> state.is(CustomBlocks.LUMINITE_ORE.get())),
-                        "Floor stalagmites must not receive surface Luminite");
-            if (mode == 1) {
+            if (mode <= 1) {
                 var surfaceOre =
                         room.edits.entrySet().stream()
                                 .filter(
@@ -67,7 +62,9 @@ public final class CavernFormationTests {
                                 .toList();
                 helper.assertTrue(
                         !surfaceOre.isEmpty(),
-                        "Carfstone stalactites should receive common surface Luminite");
+                        "Carfstone "
+                                + names[mode]
+                                + " formations should receive common surface Luminite");
                 helper.assertTrue(
                         surfaceOre.stream()
                                 .allMatch(
@@ -80,7 +77,7 @@ public final class CavernFormationTests {
                                                                                                 .relative(
                                                                                                         direction))
                                                                                 .isAir())),
-                        "Stalactite Luminite must remain exposed to cavern air");
+                        "Formation Luminite must remain exposed to cavern air");
             }
             if (mode == 2)
                 helper.assertTrue(

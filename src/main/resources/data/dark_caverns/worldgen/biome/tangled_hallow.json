@@ -88,12 +88,6 @@
         "maxCount": 1,
         "minCount": 1,
         "weight": 25
-      },
-      {
-        "type": "minecraft:skeleton",
-        "maxCount": 3,
-        "minCount": 1,
-        "weight": 10
       }
     ],
     "underground_water_creature": [],

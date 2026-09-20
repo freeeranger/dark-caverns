@@ -101,12 +101,6 @@
         "maxCount": 1,
         "minCount": 1,
         "weight": 30
-      },
-      {
-        "type": "minecraft:blaze",
-        "maxCount": 3,
-        "minCount": 1,
-        "weight": 5
       }
     ],
     "underground_water_creature": [],

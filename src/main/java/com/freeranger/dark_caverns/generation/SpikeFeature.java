@@ -144,8 +144,7 @@ public final class SpikeFeature extends Feature<CavernFormationConfiguration> {
             RandomSource random) {
         BlockState material = config.state();
         if (height < 1 || !isAnchor(level, anchor, material)) return false;
-        boolean decorateSurface =
-                direction < 0 && config.surfaceOre().isPresent() && config.surfaceOreChance() > 0;
+        boolean decorateSurface = config.surfaceOre().isPresent() && config.surfaceOreChance() > 0;
         List<BlockPos> formationBlocks = decorateSurface ? new ArrayList<>() : List.of();
         double phase = random.nextDouble() * Math.PI * 2;
         boolean placed = false;
