@@ -61,8 +61,8 @@ public final class ServerConfig {
         scorchsteelStealthStandstillTicks =
                 builder.comment(
                                 "Ticks of standing still required to trigger Scorchsteel"
-                                        + " full-set concealment (20 ticks = 1s).")
-                        .defineInRange("scorchsteelStealthStandstillTicks", 20, 0, 200);
+                                        + " Chestplate concealment (20 ticks = 1s).")
+                        .defineInRange("scorchsteelStealthStandstillTicks", 40, 0, 200);
         corruptedPearlScanRadius =
                 builder.comment(
                                 "Radius around the player used to find a Corrupted Pearl"

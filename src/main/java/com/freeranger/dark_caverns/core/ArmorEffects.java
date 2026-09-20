@@ -6,7 +6,11 @@ import com.freeranger.dark_caverns.registry.CustomAttachments;
 import com.freeranger.dark_caverns.registry.CustomEquipment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -15,6 +19,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -22,20 +27,29 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.event.PlayLevelSoundEvent;
+import net.neoforged.neoforge.event.VanillaGameEvent;
+import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.level.ExplosionKnockbackEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import org.jetbrains.annotations.Nullable;
 
 public final class ArmorEffects {
     private static final float FORTY_PERCENT_REDUCTION_MULTIPLIER = 0.6F;
     private static final double LAVA_DRAG_COMPENSATION = 4.0 / 3.0;
+    private static final double SCORCHSTEEL_VISIBILITY_MULTIPLIER = 0.65;
+    private static final double SCORCHSTEEL_POUNCE_FORWARD = 0.6;
+    private static final double SCORCHSTEEL_POUNCE_UP = 0.1;
     private static final AttributeModifier SHROOMSTONE_SPRINT_SPEED =
             new AttributeModifier(
                     DarkCaverns.id("shroomstone_sprint_speed"),
@@ -62,6 +76,11 @@ public final class ArmorEffects {
         gameBus.addListener(ArmorEffects::onExplosionKnockback);
         gameBus.addListener(ArmorEffects::onMonsterTick);
         gameBus.addListener(ArmorEffects::onAttackEntity);
+        gameBus.addListener(ArmorEffects::onLivingVisibility);
+        gameBus.addListener(ArmorEffects::onLivingChangeTarget);
+        gameBus.addListener(ArmorEffects::onLivingJump);
+        gameBus.addListener(ArmorEffects::onVanillaGameEvent);
+        gameBus.addListener(ArmorEffects::onPlayLevelSound);
     }
 
     private static void onPlayerTick(PlayerTickEvent.Post event) {
@@ -213,14 +232,7 @@ public final class ArmorEffects {
     }
 
     private static void applyScorchsteelBonus(Player player) {
-        int pieces =
-                countArmor(
-                        player,
-                        CustomEquipment.SCORCHSTEEL_HELMET.get(),
-                        CustomEquipment.SCORCHSTEEL_CHESTPLATE.get(),
-                        CustomEquipment.SCORCHSTEEL_LEGGINGS.get(),
-                        CustomEquipment.SCORCHSTEEL_BOOTS.get());
-        if (pieces != 4) {
+        if (!wearing(player, EquipmentSlot.CHEST, CustomEquipment.SCORCHSTEEL_CHESTPLATE.get())) {
             breakScorchsteelStealth(player);
             player.removeData(CustomAttachments.SCORCHSTEEL_STEALTH);
             return;
@@ -272,14 +284,136 @@ public final class ArmorEffects {
                         1.4F);
     }
 
-    private static int countArmor(
-            Player player, Item helmet, Item chestplate, Item leggings, Item boots) {
-        int count = 0;
-        count += wearing(player, EquipmentSlot.HEAD, helmet) ? 1 : 0;
-        count += wearing(player, EquipmentSlot.CHEST, chestplate) ? 1 : 0;
-        count += wearing(player, EquipmentSlot.LEGS, leggings) ? 1 : 0;
-        count += wearing(player, EquipmentSlot.FEET, boots) ? 1 : 0;
-        return count;
+    private static void onLivingVisibility(LivingEvent.LivingVisibilityEvent event) {
+        if (event.getEntity() instanceof Player player
+                && wearing(player, EquipmentSlot.HEAD, CustomEquipment.SCORCHSTEEL_HELMET.get())) {
+            event.modifyVisibility(SCORCHSTEEL_VISIBILITY_MULTIPLIER);
+        }
+    }
+
+    private static void onLivingChangeTarget(LivingChangeTargetEvent event) {
+        if (!(event.getEntity() instanceof Mob mob)
+                || !(event.getNewAboutToBeSetTarget() instanceof Player player)
+                || !wearing(player, EquipmentSlot.HEAD, CustomEquipment.SCORCHSTEEL_HELMET.get())) {
+            return;
+        }
+        if (mob.getLastHurtByMob() == player) {
+            return;
+        }
+        double followRange = mob.getAttributeValue(Attributes.FOLLOW_RANGE);
+        double maxDistance = followRange * SCORCHSTEEL_VISIBILITY_MULTIPLIER;
+        if (player.isCrouching() || player.isShiftKeyDown()) {
+            maxDistance *= 0.8;
+        }
+        if (mob.distanceTo(player) > maxDistance) {
+            event.setNewAboutToBeSetTarget(null);
+        }
+    }
+
+    private static void onLivingJump(LivingEvent.LivingJumpEvent event) {
+        if (!(event.getEntity() instanceof Player player)
+                || (!player.isCrouching() && !player.isShiftKeyDown())
+                || !wearing(
+                        player, EquipmentSlot.LEGS, CustomEquipment.SCORCHSTEEL_LEGGINGS.get())) {
+            return;
+        }
+
+        Vec3 look = player.getLookAngle();
+        Vec3 horizontal = new Vec3(look.x, 0.0, look.z);
+        if (horizontal.lengthSqr() < 1.0E-4) {
+            float yRot = player.getYRot();
+            float f = -((float) Math.toRadians(yRot));
+            horizontal = new Vec3(Math.sin(f), 0.0, Math.cos(f));
+        } else {
+            horizontal = horizontal.normalize();
+        }
+
+        Vec3 movement = player.getDeltaMovement();
+        player.setDeltaMovement(
+                movement.x + horizontal.x * SCORCHSTEEL_POUNCE_FORWARD,
+                movement.y + SCORCHSTEEL_POUNCE_UP,
+                movement.z + horizontal.z * SCORCHSTEEL_POUNCE_FORWARD);
+        player.hurtMarked = true;
+        player.hasImpulse = true;
+
+        if (player.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(
+                    ParticleTypes.SMOKE,
+                    player.getX(),
+                    player.getY() + 0.2,
+                    player.getZ(),
+                    6,
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.02);
+            player.level()
+                    .playSound(
+                            null,
+                            player.blockPosition(),
+                            SoundEvents.PLAYER_ATTACK_SWEEP,
+                            SoundSource.PLAYERS,
+                            0.5F,
+                            1.4F);
+        }
+    }
+
+    private static void onVanillaGameEvent(VanillaGameEvent event) {
+        if (!(event.getCause() instanceof Player player)
+                || !wearing(player, EquipmentSlot.FEET, CustomEquipment.SCORCHSTEEL_BOOTS.get())) {
+            return;
+        }
+        if (event.getVanillaEvent().is(GameEvent.STEP.key())
+                || event.getVanillaEvent().is(GameEvent.HIT_GROUND.key())) {
+            event.setCanceled(true);
+        }
+    }
+
+    private static void onPlayLevelSound(PlayLevelSoundEvent event) {
+        if (event.getSource() != SoundSource.PLAYERS || !isStepOrFallSound(event.getSound())) {
+            return;
+        }
+        if (event instanceof PlayLevelSoundEvent.AtEntity atEntity) {
+            if (atEntity.getEntity() instanceof Player player
+                    && wearing(
+                            player, EquipmentSlot.FEET, CustomEquipment.SCORCHSTEEL_BOOTS.get())) {
+                event.setCanceled(true);
+            }
+            return;
+        }
+        if (event instanceof PlayLevelSoundEvent.AtPosition atPosition) {
+            Vec3 pos = atPosition.getPosition();
+            for (Player player : event.getLevel().players()) {
+                if (wearing(player, EquipmentSlot.FEET, CustomEquipment.SCORCHSTEEL_BOOTS.get())
+                        && player.position().distanceToSqr(pos) <= 1.0) {
+                    event.setCanceled(true);
+                    return;
+                }
+            }
+        }
+    }
+
+    private static boolean isStepOrFallSound(@Nullable Holder<SoundEvent> soundHolder) {
+        if (soundHolder == null) {
+            return false;
+        }
+        ResourceLocation location =
+                soundHolder
+                        .unwrapKey()
+                        .map(key -> key.location())
+                        .orElseGet(
+                                () -> {
+                                    try {
+                                        return soundHolder.value().getLocation();
+                                    } catch (Exception e) {
+                                        return null;
+                                    }
+                                });
+        if (location == null) {
+            return false;
+        }
+        String path = location.getPath();
+        return path.endsWith(".step") || path.endsWith(".fall") || path.contains("step");
     }
 
     private static boolean wearing(Player player, EquipmentSlot slot, Item item) {

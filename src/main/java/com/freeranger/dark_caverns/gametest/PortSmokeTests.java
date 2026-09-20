@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -41,6 +42,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
@@ -59,10 +62,14 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
+import net.neoforged.neoforge.event.PlayLevelSoundEvent;
+import net.neoforged.neoforge.event.VanillaGameEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
@@ -674,13 +681,13 @@ public final class PortSmokeTests {
                 helper,
                 CustomArmorMaterials.SCORCHSTEEL.get(),
                 "scorchsteel",
-                2,
-                7,
+                3,
+                8,
                 6,
-                2,
-                10,
-                1.0F,
-                0.0F,
+                3,
+                15,
+                3.0F,
+                0.1F,
                 CustomItems.SCORCHSTEEL_INGOT.get());
 
         helper.assertTrue(
@@ -822,31 +829,29 @@ public final class PortSmokeTests {
                 "The Hellstone boots should prevent damage from hot blocks");
 
         var scorchsteelPlayer = helper.makeMockPlayer(GameType.SURVIVAL);
+        var zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(6, 2, 2));
+
+        // Helmet: 35% smaller mob detection range
         scorchsteelPlayer.setItemSlot(
                 EquipmentSlot.HEAD, new ItemStack(CustomEquipment.SCORCHSTEEL_HELMET.get()));
-        for (int tick = 0; tick <= 20; tick++) {
-            NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(scorchsteelPlayer));
-        }
-        helper.assertFalse(
-                scorchsteelPlayer.hasEffect(MobEffects.INVISIBILITY),
-                "A partial Scorchsteel set should not grant concealment");
+        var visibilityEvent = new LivingEvent.LivingVisibilityEvent(scorchsteelPlayer, zombie, 1.0);
+        NeoForge.EVENT_BUS.post(visibilityEvent);
+        helper.assertTrue(
+                Math.abs(visibilityEvent.getVisibilityModifier() - 0.65) < 0.0001,
+                "The Scorchsteel helmet should reduce mob visibility by 35%");
+
+        // Chestplate: Invisibility after standing still for 2 seconds (40 ticks)
         scorchsteelPlayer.setItemSlot(
                 EquipmentSlot.CHEST, new ItemStack(CustomEquipment.SCORCHSTEEL_CHESTPLATE.get()));
-        scorchsteelPlayer.setItemSlot(
-                EquipmentSlot.LEGS, new ItemStack(CustomEquipment.SCORCHSTEEL_LEGGINGS.get()));
-        scorchsteelPlayer.setItemSlot(
-                EquipmentSlot.FEET, new ItemStack(CustomEquipment.SCORCHSTEEL_BOOTS.get()));
-        for (int tick = 0; tick <= 20; tick++) {
+        for (int tick = 0; tick <= 40; tick++) {
             NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(scorchsteelPlayer));
         }
         helper.assertTrue(
                 scorchsteelPlayer.hasEffect(MobEffects.INVISIBILITY),
-                "A stationary full Scorchsteel set should grant concealment after the configured"
-                        + " delay");
+                "A stationary player wearing the Scorchsteel chestplate should gain invisibility");
         helper.assertTrue(
                 scorchsteelPlayer.hasData(CustomAttachments.SCORCHSTEEL_STEALTH),
                 "Scorchsteel standstill tracking should use its registered data attachment");
-        var zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(6, 2, 2));
         zombie.setTarget(scorchsteelPlayer);
         NeoForge.EVENT_BUS.post(new EntityTickEvent.Post(zombie));
         helper.assertTrue(
@@ -856,11 +861,58 @@ public final class PortSmokeTests {
         helper.assertFalse(
                 scorchsteelPlayer.hasEffect(MobEffects.INVISIBILITY),
                 "Attacking should immediately break Scorchsteel concealment");
-        scorchsteelPlayer.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+        scorchsteelPlayer.setItemSlot(EquipmentSlot.CHEST, ItemStack.EMPTY);
         NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(scorchsteelPlayer));
         helper.assertFalse(
                 scorchsteelPlayer.hasData(CustomAttachments.SCORCHSTEEL_STEALTH),
-                "Scorchsteel standstill state should be removed when no pieces are equipped");
+                "Scorchsteel standstill state should be removed when chestplate is unequipped");
+
+        // Leggings: Pounce forward on sneak-jump
+        scorchsteelPlayer.setPos(Vec3.atCenterOf(helper.absolutePos(new BlockPos(2, 2, 2))));
+        scorchsteelPlayer.setItemSlot(
+                EquipmentSlot.LEGS, new ItemStack(CustomEquipment.SCORCHSTEEL_LEGGINGS.get()));
+        scorchsteelPlayer.setShiftKeyDown(true);
+        scorchsteelPlayer.setDeltaMovement(Vec3.ZERO);
+        scorchsteelPlayer.setYRot(0.0F);
+        NeoForge.EVENT_BUS.post(new LivingEvent.LivingJumpEvent(scorchsteelPlayer));
+        helper.assertTrue(
+                scorchsteelPlayer.getDeltaMovement().z > 0.5,
+                "Sneak-jumping with Scorchsteel leggings should pounce forward");
+
+        // Boots: Silent footsteps and sculk vibration negation
+        scorchsteelPlayer.setItemSlot(
+                EquipmentSlot.FEET, new ItemStack(CustomEquipment.SCORCHSTEEL_BOOTS.get()));
+        var stepGameEvent =
+                new VanillaGameEvent(
+                        helper.getLevel(),
+                        GameEvent.STEP,
+                        scorchsteelPlayer.position(),
+                        new GameEvent.Context(scorchsteelPlayer, null));
+        NeoForge.EVENT_BUS.post(stepGameEvent);
+        helper.assertTrue(
+                stepGameEvent.isCanceled(),
+                "The Scorchsteel boots should cancel footstep game events for sculk");
+        var hitGroundGameEvent =
+                new VanillaGameEvent(
+                        helper.getLevel(),
+                        GameEvent.HIT_GROUND,
+                        scorchsteelPlayer.position(),
+                        new GameEvent.Context(scorchsteelPlayer, null));
+        NeoForge.EVENT_BUS.post(hitGroundGameEvent);
+        helper.assertTrue(
+                hitGroundGameEvent.isCanceled(),
+                "The Scorchsteel boots should cancel hit-ground game events for sculk");
+        var stepSoundEvent =
+                new PlayLevelSoundEvent.AtEntity(
+                        scorchsteelPlayer,
+                        Holder.direct(SoundEvents.STONE_STEP),
+                        SoundSource.PLAYERS,
+                        1.0F,
+                        1.0F);
+        NeoForge.EVENT_BUS.post(stepSoundEvent);
+        helper.assertTrue(
+                stepSoundEvent.isCanceled(),
+                "The Scorchsteel boots should cancel player footstep sounds");
 
         helper.succeed();
     }
