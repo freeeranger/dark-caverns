@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
@@ -34,7 +35,9 @@ import net.minecraft.world.level.block.WaterlilyBlock;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -266,36 +269,20 @@ public final class CustomBlocks {
                             new WaterlilyBlock(
                                     BlockBehaviour.Properties.ofFullCopy(Blocks.LILY_PAD)));
     public static final DeferredBlock<RotatedPillarBlock> STRIPPED_TWISTWOOD_LOG =
-            register(
-                    "stripped_twistwood_log",
-                    () ->
-                            new RotatedPillarBlock(
-                                    BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_OAK_LOG)));
+            register("stripped_twistwood_log", () -> new RotatedPillarBlock(twistwood(2.0F, 8.0F)));
     public static final DeferredBlock<RotatedPillarBlock> STRIPPED_TWISTWOOD_WOOD =
             register(
-                    "stripped_twistwood_wood",
-                    () ->
-                            new RotatedPillarBlock(
-                                    BlockBehaviour.Properties.ofFullCopy(
-                                            Blocks.STRIPPED_OAK_WOOD)));
+                    "stripped_twistwood_wood", () -> new RotatedPillarBlock(twistwood(2.0F, 8.0F)));
     public static final DeferredBlock<TwistwoodLogBlock> TWISTWOOD_LOG =
             register(
                     "twistwood_log",
-                    () ->
-                            new TwistwoodLogBlock(
-                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG),
-                                    STRIPPED_TWISTWOOD_LOG));
+                    () -> new TwistwoodLogBlock(twistwood(2.0F, 8.0F), STRIPPED_TWISTWOOD_LOG));
     public static final DeferredBlock<TwistwoodLogBlock> TWISTWOOD_WOOD =
             register(
                     "twistwood_wood",
-                    () ->
-                            new TwistwoodLogBlock(
-                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD),
-                                    STRIPPED_TWISTWOOD_WOOD));
+                    () -> new TwistwoodLogBlock(twistwood(2.0F, 8.0F), STRIPPED_TWISTWOOD_WOOD));
     public static final DeferredBlock<Block> TWISTWOOD_PLANKS =
-            register(
-                    "twistwood_planks",
-                    () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)));
+            register("twistwood_planks", () -> new Block(twistwood(2.0F, 8.0F)));
     public static final DeferredBlock<LeavesBlock> TWISTWOOD_LEAVES =
             register(
                     "twistwood_leaves",
@@ -306,14 +293,20 @@ public final class CustomBlocks {
                     () ->
                             new DoorBlock(
                                     BlockSetType.OAK,
-                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR)));
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_DOOR)
+                                            .mapColor(MapColor.WOOD)
+                                            .sound(SoundType.WOOD)
+                                            .strength(3.0F, 8.0F)));
     public static final DeferredBlock<TrapDoorBlock> TWISTWOOD_TRAPDOOR =
             register(
                     "twistwood_trapdoor",
                     () ->
                             new TrapDoorBlock(
                                     BlockSetType.OAK,
-                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR)));
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_TRAPDOOR)
+                                            .mapColor(MapColor.WOOD)
+                                            .sound(SoundType.WOOD)
+                                            .strength(3.0F, 8.0F)));
     public static final DeferredBlock<TwistwoodSaplingBlock> TWISTWOOD_SAPLING =
             register(
                     "twistwood_sapling",
@@ -329,26 +322,16 @@ public final class CustomBlocks {
     private CustomBlocks() {}
 
     public static void register(IEventBus modBus) {
-        modBus.addListener(
-                (net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent event) ->
-                        event.enqueueWork(
-                                () -> {
-                                    var fire =
-                                            (net.minecraft.world.level.block.FireBlock) Blocks.FIRE;
-                                    for (var block :
-                                            java.util.List.of(
-                                                    TWISTWOOD_LOG.get(),
-                                                    TWISTWOOD_WOOD.get(),
-                                                    STRIPPED_TWISTWOOD_LOG.get(),
-                                                    STRIPPED_TWISTWOOD_WOOD.get(),
-                                                    TWISTWOOD_PLANKS.get(),
-                                                    TWISTWOOD_DOOR.get(),
-                                                    TWISTWOOD_TRAPDOOR.get()))
-                                        fire.setFlammable(block, 5, 5);
-                                    fire.setFlammable(TWISTWOOD_LEAVES.get(), 30, 60);
-                                }));
         BLOCKS.register(modBus);
         BLOCK_ITEMS.register(modBus);
+    }
+
+    private static BlockBehaviour.Properties twistwood(float hardness, float blastResistance) {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.WOOD)
+                .instrument(NoteBlockInstrument.BASS)
+                .strength(hardness, blastResistance)
+                .sound(SoundType.WOOD);
     }
 
     private static BlockBehaviour.Properties stone(float strength) {

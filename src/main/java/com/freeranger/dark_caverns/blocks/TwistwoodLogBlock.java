@@ -28,13 +28,18 @@ public final class TwistwoodLogBlock extends RotatedPillarBlock {
     }
 
     @Override
+    public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return false;
+    }
+
+    @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
-        return 5;
+        return 0;
     }
 
     @Override
     public int getFireSpreadSpeed(
             BlockState state, BlockGetter level, BlockPos pos, Direction face) {
-        return 5;
+        return 0;
     }
 }

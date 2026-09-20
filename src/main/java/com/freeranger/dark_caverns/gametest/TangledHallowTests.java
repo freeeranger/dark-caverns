@@ -272,6 +272,32 @@ public final class TangledHallowTests {
                         .defaultBlockState()
                         .canSurvive(low.world, ORIGIN),
                 "Sapling cannot grow on Hallow ground");
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_LOG.get().getExplosionResistance()
+                        > Blocks.OAK_LOG.getExplosionResistance(),
+                "Twistwood logs must be more blast resistant than regular wood");
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_PLANKS.get().getExplosionResistance()
+                        > Blocks.OAK_PLANKS.getExplosionResistance(),
+                "Twistwood planks must be more blast resistant than regular wood");
+        helper.assertFalse(
+                CustomBlocks.TWISTWOOD_LOG
+                        .get()
+                        .defaultBlockState()
+                        .isFlammable(low.world, ORIGIN, Direction.UP),
+                "Twistwood logs must not be flammable");
+        helper.assertFalse(
+                CustomBlocks.TWISTWOOD_PLANKS
+                        .get()
+                        .defaultBlockState()
+                        .isFlammable(low.world, ORIGIN, Direction.UP),
+                "Twistwood planks must not be flammable");
+        helper.assertFalse(
+                CustomBlocks.TWISTWOOD_LOG.get().defaultBlockState().ignitedByLava(),
+                "Twistwood logs must not be ignited by lava");
+        helper.assertFalse(
+                CustomBlocks.TWISTWOOD_PLANKS.get().defaultBlockState().ignitedByLava(),
+                "Twistwood planks must not be ignited by lava");
         writeGallery(low, tall);
         helper.succeed();
     }
