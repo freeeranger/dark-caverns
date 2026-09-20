@@ -57,24 +57,25 @@ public final class ItemTooltips {
                 if (path.startsWith("shroomstone_") && isTool(path)) {
                     yield "shroomstone_tool";
                 }
-                if (path.startsWith("hellstone_") && isArmor(path)) {
-                    yield "hellstone_armor";
-                }
-                if (path.startsWith("shroomstone_") && isArmor(path)) {
-                    yield "shroomstone_armor";
-                }
                 if (path.startsWith("scorchsteel_") && isArmor(path)) {
                     yield "scorchsteel_armor";
                 }
-                yield null;
+                yield switch (path) {
+                    case "shroomstone_helmet" -> "shroomstone_helmet";
+                    case "shroomstone_chestplate" -> "shroomstone_chestplate";
+                    case "shroomstone_leggings" -> "shroomstone_leggings";
+                    case "shroomstone_boots" -> "shroomstone_boots";
+                    case "hellstone_helmet" -> "hellstone_helmet";
+                    case "hellstone_chestplate" -> "hellstone_chestplate";
+                    case "hellstone_leggings" -> "hellstone_leggings";
+                    case "hellstone_boots" -> "hellstone_boots";
+                    default -> null;
+                };
             }
         };
     }
 
     private static String setTooltipFor(String path) {
-        if (path.startsWith("shroomstone_") && isArmor(path)) {
-            return "shroomstone_armor_set";
-        }
         if (path.startsWith("scorchsteel_") && isArmor(path)) {
             return "scorchsteel_armor_set";
         }

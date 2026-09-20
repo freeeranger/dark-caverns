@@ -21,6 +21,7 @@ import com.freeranger.dark_caverns.registry.CustomBlockTags;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
 import com.freeranger.dark_caverns.registry.CustomEquipment;
+import com.freeranger.dark_caverns.registry.CustomItemTiers;
 import com.freeranger.dark_caverns.registry.CustomItems;
 import com.freeranger.dark_caverns.registry.CustomSpawnEggs;
 import com.mojang.authlib.GameProfile;
@@ -62,6 +63,8 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -629,6 +632,7 @@ public final class PortSmokeTests {
                 2,
                 15,
                 0.0F,
+                0.0F,
                 CustomItems.LUMINITE_DUST.get());
         verifyArmorMaterial(
                 helper,
@@ -638,8 +642,9 @@ public final class PortSmokeTests {
                 8,
                 6,
                 3,
-                20,
+                12,
                 2.5F,
+                0.05F,
                 CustomItems.PLATINUM_INGOT.get());
         verifyArmorMaterial(
                 helper,
@@ -649,8 +654,9 @@ public final class PortSmokeTests {
                 8,
                 6,
                 3,
-                20,
-                2.5F,
+                15,
+                3.0F,
+                0.1F,
                 CustomItems.HELLSTONE.get());
         verifyArmorMaterial(
                 helper,
@@ -660,36 +666,53 @@ public final class PortSmokeTests {
                 8,
                 6,
                 3,
-                20,
-                2.5F,
+                15,
+                3.0F,
+                0.1F,
                 CustomItems.SHROOMSTONE.get());
         verifyArmorMaterial(
                 helper,
                 CustomArmorMaterials.SCORCHSTEEL.get(),
                 "scorchsteel",
-                3,
-                8,
+                2,
+                7,
                 6,
-                3,
-                20,
-                2.5F,
+                2,
+                10,
+                1.0F,
+                0.0F,
                 CustomItems.SCORCHSTEEL_INGOT.get());
 
         helper.assertTrue(
                 new ItemStack(CustomEquipment.LUMINITE_HELMET.get()).getMaxDamage() == 165,
                 "Luminite helmet durability multiplier changed");
         helper.assertTrue(
-                new ItemStack(CustomEquipment.PLATINUM_HELMET.get()).getMaxDamage() == 396,
+                new ItemStack(CustomEquipment.PLATINUM_HELMET.get()).getMaxDamage() == 385,
                 "Platinum helmet durability multiplier changed");
         helper.assertTrue(
-                new ItemStack(CustomEquipment.PLATINUM_CHESTPLATE.get()).getMaxDamage() == 576,
+                new ItemStack(CustomEquipment.PLATINUM_CHESTPLATE.get()).getMaxDamage() == 560,
                 "Platinum chestplate durability multiplier changed");
         helper.assertTrue(
-                new ItemStack(CustomEquipment.PLATINUM_LEGGINGS.get()).getMaxDamage() == 540,
+                new ItemStack(CustomEquipment.PLATINUM_LEGGINGS.get()).getMaxDamage() == 525,
                 "Platinum leggings durability multiplier changed");
         helper.assertTrue(
-                new ItemStack(CustomEquipment.PLATINUM_BOOTS.get()).getMaxDamage() == 468,
+                new ItemStack(CustomEquipment.PLATINUM_BOOTS.get()).getMaxDamage() == 455,
                 "Platinum boots durability multiplier changed");
+        helper.assertTrue(
+                CustomItemTiers.PLATINUM.getUses() == 1796
+                        && CustomItemTiers.PLATINUM.getSpeed() == 8.5F
+                        && CustomItemTiers.PLATINUM.getAttackDamageBonus() == 3.5F
+                        && CustomItemTiers.PLATINUM.getEnchantmentValue() == 12,
+                "Platinum tools should sit midway between diamond and netherite");
+        helper.assertTrue(
+                CustomItemTiers.HELLSTONE.getUses() == CustomItemTiers.SHROOMSTONE.getUses()
+                        && CustomItemTiers.HELLSTONE.getSpeed()
+                                == CustomItemTiers.SHROOMSTONE.getSpeed()
+                        && CustomItemTiers.HELLSTONE.getAttackDamageBonus()
+                                == CustomItemTiers.SHROOMSTONE.getAttackDamageBonus()
+                        && CustomItemTiers.HELLSTONE.getEnchantmentValue()
+                                == CustomItemTiers.SHROOMSTONE.getEnchantmentValue(),
+                "Hellstone and Shroomstone tools should have matching base stats");
 
         var toolUser = helper.makeMockPlayer(GameType.SURVIVAL);
         for (int tick = 0; tick < 20; tick++) {
@@ -724,33 +747,53 @@ public final class PortSmokeTests {
         var shroomPlayer = helper.makeMockPlayer(GameType.SURVIVAL);
         shroomPlayer.setItemSlot(
                 EquipmentSlot.HEAD, new ItemStack(CustomEquipment.SHROOMSTONE_HELMET.get()));
+        shroomPlayer.setSprinting(true);
+        NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(shroomPlayer));
+        helper.assertTrue(
+                shroomPlayer
+                        .getAttribute(Attributes.MOVEMENT_SPEED)
+                        .hasModifier(DarkCaverns.id("shroomstone_sprint_speed")),
+                "The Shroomstone helmet should grant 10% sprint speed");
         shroomPlayer.setItemSlot(
                 EquipmentSlot.CHEST, new ItemStack(CustomEquipment.SHROOMSTONE_CHESTPLATE.get()));
-        NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(shroomPlayer));
-        helper.assertFalse(
-                shroomPlayer.hasEffect(MobEffects.JUMP),
-                "A partial Shroomstone set should not grant the full-set jump bonus");
+        var knockback = new LivingKnockBackEvent(shroomPlayer, 1.0F, 1.0, 0.0);
+        NeoForge.EVENT_BUS.post(knockback);
+        helper.assertTrue(
+                Math.abs(knockback.getStrength() - 0.6F) < 0.0001F,
+                "The Shroomstone chestplate should reduce knockback by 40%");
         var fallDamage =
                 new LivingDamageEvent.Pre(
                         shroomPlayer,
                         new DamageContainer(helper.getLevel().damageSources().fall(), 8.0F));
         NeoForge.EVENT_BUS.post(fallDamage);
         helper.assertTrue(
-                Math.abs(fallDamage.getNewDamage() - 4.0F) < 0.0001F,
-                "Two Shroomstone pieces should halve fall damage");
+                fallDamage.getNewDamage() == 8.0F,
+                "Shroomstone armor without boots should not alter fall damage");
         shroomPlayer.setItemSlot(
                 EquipmentSlot.LEGS, new ItemStack(CustomEquipment.SHROOMSTONE_LEGGINGS.get()));
-        shroomPlayer.setItemSlot(
-                EquipmentSlot.FEET, new ItemStack(CustomEquipment.SHROOMSTONE_BOOTS.get()));
         NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(shroomPlayer));
         helper.assertTrue(
-                shroomPlayer.hasEffect(MobEffects.JUMP)
-                        && shroomPlayer.getEffect(MobEffects.JUMP).getAmplifier() == 1,
-                "A full Shroomstone set should grant Jump Boost II");
+                Math.abs(shroomPlayer.getAttributeValue(Attributes.JUMP_STRENGTH) - 0.52) < 0.0001,
+                "The Shroomstone leggings should match Jump Boost I");
+        shroomPlayer.setItemSlot(
+                EquipmentSlot.FEET, new ItemStack(CustomEquipment.SHROOMSTONE_BOOTS.get()));
+        var negatedFallDamage =
+                new LivingDamageEvent.Pre(
+                        shroomPlayer,
+                        new DamageContainer(helper.getLevel().damageSources().fall(), 8.0F));
+        NeoForge.EVENT_BUS.post(negatedFallDamage);
+        helper.assertTrue(
+                negatedFallDamage.getNewDamage() == 0.0F,
+                "The Shroomstone boots should negate fall damage");
 
         var hellstonePlayer = helper.makeMockPlayer(GameType.SURVIVAL);
         hellstonePlayer.setItemSlot(
                 EquipmentSlot.HEAD, new ItemStack(CustomEquipment.HELLSTONE_HELMET.get()));
+        hellstonePlayer.setRemainingFireTicks(100);
+        NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(hellstonePlayer));
+        helper.assertTrue(
+                hellstonePlayer.getRemainingFireTicks() == 99,
+                "The Hellstone helmet should remove an extra fire tick after leaving fire");
         hellstonePlayer.setItemSlot(
                 EquipmentSlot.CHEST, new ItemStack(CustomEquipment.HELLSTONE_CHESTPLATE.get()));
         hellstonePlayer.setItemSlot(
@@ -767,8 +810,16 @@ public final class PortSmokeTests {
                         new DamageContainer(helper.getLevel().damageSources().lava(), 8.0F));
         NeoForge.EVENT_BUS.post(fireDamage);
         helper.assertTrue(
-                fireDamage.getNewDamage() == 0.0F,
-                "A full Hellstone set should negate fire damage");
+                Math.abs(fireDamage.getNewDamage() - 4.8F) < 0.0001F,
+                "The Hellstone chestplate should reduce fire damage by 40%");
+        var hotFloorDamage =
+                new LivingIncomingDamageEvent(
+                        hellstonePlayer,
+                        new DamageContainer(helper.getLevel().damageSources().hotFloor(), 1.0F));
+        NeoForge.EVENT_BUS.post(hotFloorDamage);
+        helper.assertTrue(
+                hotFloorDamage.isCanceled(),
+                "The Hellstone boots should prevent damage from hot blocks");
 
         var scorchsteelPlayer = helper.makeMockPlayer(GameType.SURVIVAL);
         scorchsteelPlayer.setItemSlot(
@@ -1062,6 +1113,7 @@ public final class PortSmokeTests {
             int boots,
             int enchantmentValue,
             float toughness,
+            float knockbackResistance,
             net.minecraft.world.item.Item repairItem) {
         helper.assertTrue(
                 material.getDefense(ArmorItem.Type.HELMET) == helmet,
@@ -1079,6 +1131,9 @@ public final class PortSmokeTests {
                 material.enchantmentValue() == enchantmentValue,
                 textureName + " enchantability changed");
         helper.assertTrue(material.toughness() == toughness, textureName + " toughness changed");
+        helper.assertTrue(
+                material.knockbackResistance() == knockbackResistance,
+                textureName + " knockback resistance changed");
         helper.assertTrue(
                 material.repairIngredient().get().test(new ItemStack(repairItem)),
                 textureName + " repair ingredient changed");

@@ -23,7 +23,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CustomEquipment {
     private static final int LUMINITE_DURABILITY_MULTIPLIER = 15;
-    private static final int UPGRADED_DURABILITY_MULTIPLIER = 36;
+    private static final int SCORCHSTEEL_DURABILITY_MULTIPLIER = 24;
+    private static final int PLATINUM_DURABILITY_MULTIPLIER = 35;
+    private static final int CAVERN_UPGRADE_DURABILITY_MULTIPLIER = 37;
     private static final float SWORD_ATTACK_DAMAGE = 3.0F;
     private static final float SWORD_ATTACK_SPEED = -2.4F;
     private static final float AXE_ATTACK_DAMAGE = 5.0F;
@@ -48,13 +50,15 @@ public final class CustomEquipment {
     private static final ArmorSet LUMINITE_ARMOR =
             new ArmorSet(CustomArmorMaterials.LUMINITE, LUMINITE_DURABILITY_MULTIPLIER, false);
     private static final ArmorSet PLATINUM_ARMOR =
-            new ArmorSet(CustomArmorMaterials.PLATINUM, UPGRADED_DURABILITY_MULTIPLIER, false);
+            new ArmorSet(CustomArmorMaterials.PLATINUM, PLATINUM_DURABILITY_MULTIPLIER, false);
     private static final ArmorSet HELLSTONE_ARMOR =
-            new ArmorSet(CustomArmorMaterials.HELLSTONE, UPGRADED_DURABILITY_MULTIPLIER, true);
+            new ArmorSet(
+                    CustomArmorMaterials.HELLSTONE, CAVERN_UPGRADE_DURABILITY_MULTIPLIER, true);
     private static final ArmorSet SHROOMSTONE_ARMOR =
-            new ArmorSet(CustomArmorMaterials.SHROOMSTONE, UPGRADED_DURABILITY_MULTIPLIER, false);
+            new ArmorSet(
+                    CustomArmorMaterials.SHROOMSTONE, CAVERN_UPGRADE_DURABILITY_MULTIPLIER, false);
     private static final ArmorSet SCORCHSTEEL_ARMOR =
-            new ArmorSet(CustomArmorMaterials.SCORCHSTEEL, UPGRADED_DURABILITY_MULTIPLIER, true);
+            new ArmorSet(CustomArmorMaterials.SCORCHSTEEL, SCORCHSTEEL_DURABILITY_MULTIPLIER, true);
 
     public static final DeferredItem<AbilitySwordItem> PLATINUM_SWORD =
             sword("platinum_sword", PLATINUM_TOOLS);

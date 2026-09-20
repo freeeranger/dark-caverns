@@ -38,10 +38,10 @@ public final class CustomArmorMaterials {
                     8,
                     6,
                     3,
-                    20,
+                    12,
                     SoundEvents.ARMOR_EQUIP_DIAMOND,
                     2.5F,
-                    0.0F,
+                    0.05F,
                     () -> Ingredient.of(CustomItems.PLATINUM_INGOT.get()));
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> HELLSTONE =
             register(
@@ -50,10 +50,10 @@ public final class CustomArmorMaterials {
                     8,
                     6,
                     3,
-                    20,
+                    15,
                     SoundEvents.ARMOR_EQUIP_NETHERITE,
-                    2.5F,
-                    0.0F,
+                    3.0F,
+                    0.1F,
                     () -> Ingredient.of(CustomItems.HELLSTONE.get()));
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> SHROOMSTONE =
             register(
@@ -62,21 +62,21 @@ public final class CustomArmorMaterials {
                     8,
                     6,
                     3,
-                    20,
+                    15,
                     Holder.direct(SoundEvents.SLIME_BLOCK_PLACE),
-                    2.5F,
-                    0.0F,
+                    3.0F,
+                    0.1F,
                     () -> Ingredient.of(CustomItems.SHROOMSTONE.get()));
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> SCORCHSTEEL =
             register(
                     "scorchsteel",
-                    3,
-                    8,
+                    2,
+                    7,
                     6,
-                    3,
-                    20,
-                    SoundEvents.ARMOR_EQUIP_DIAMOND,
-                    2.5F,
+                    2,
+                    10,
+                    SoundEvents.ARMOR_EQUIP_IRON,
+                    1.0F,
                     0.0F,
                     () -> Ingredient.of(CustomItems.SCORCHSTEEL_INGOT.get()));
 
