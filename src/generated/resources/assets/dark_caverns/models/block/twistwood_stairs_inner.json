@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "dark_caverns:block/twistwood_planks",
+    "side": "dark_caverns:block/twistwood_planks",
+    "top": "dark_caverns:block/twistwood_planks"
+  }
+}

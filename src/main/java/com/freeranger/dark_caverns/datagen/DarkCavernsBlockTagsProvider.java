@@ -48,9 +48,30 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.STRIPPED_TWISTWOOD_LOG.get(),
                         CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get(),
                         CustomBlocks.TWISTWOOD_PLANKS.get(),
+                        CustomBlocks.TWISTWOOD_STAIRS.get(),
+                        CustomBlocks.TWISTWOOD_SLAB.get(),
+                        CustomBlocks.TWISTWOOD_FENCE.get(),
+                        CustomBlocks.TWISTWOOD_FENCE_GATE.get(),
                         CustomBlocks.TWISTWOOD_DOOR.get(),
-                        CustomBlocks.TWISTWOOD_TRAPDOOR.get());
+                        CustomBlocks.TWISTWOOD_TRAPDOOR.get(),
+                        CustomBlocks.TWISTWOOD_PRESSURE_PLATE.get(),
+                        CustomBlocks.TWISTWOOD_BUTTON.get(),
+                        CustomBlocks.TWISTWOOD_SIGN.get(),
+                        CustomBlocks.TWISTWOOD_WALL_SIGN.get(),
+                        CustomBlocks.TWISTWOOD_HANGING_SIGN.get(),
+                        CustomBlocks.TWISTWOOD_WALL_HANGING_SIGN.get());
         tag(BlockTags.PLANKS).add(CustomBlocks.TWISTWOOD_PLANKS.get());
+        tag(BlockTags.WOODEN_STAIRS).add(CustomBlocks.TWISTWOOD_STAIRS.get());
+        tag(BlockTags.WOODEN_SLABS).add(CustomBlocks.TWISTWOOD_SLAB.get());
+        tag(BlockTags.WOODEN_FENCES).add(CustomBlocks.TWISTWOOD_FENCE.get());
+        tag(BlockTags.FENCE_GATES).add(CustomBlocks.TWISTWOOD_FENCE_GATE.get());
+        tag(BlockTags.WOODEN_PRESSURE_PLATES).add(CustomBlocks.TWISTWOOD_PRESSURE_PLATE.get());
+        tag(BlockTags.WOODEN_BUTTONS).add(CustomBlocks.TWISTWOOD_BUTTON.get());
+        tag(BlockTags.STANDING_SIGNS).add(CustomBlocks.TWISTWOOD_SIGN.get());
+        tag(BlockTags.WALL_SIGNS).add(CustomBlocks.TWISTWOOD_WALL_SIGN.get());
+        tag(BlockTags.CEILING_HANGING_SIGNS).add(CustomBlocks.TWISTWOOD_HANGING_SIGN.get());
+        tag(BlockTags.WALL_HANGING_SIGNS).add(CustomBlocks.TWISTWOOD_WALL_HANGING_SIGN.get());
+        tag(BlockTags.FLOWER_POTS).add(CustomBlocks.POTTED_TWISTWOOD_SAPLING.get());
         tag(BlockTags.LEAVES).add(CustomBlocks.TWISTWOOD_LEAVES.get());
         tag(BlockTags.MINEABLE_WITH_HOE).add(CustomBlocks.TWISTWOOD_LEAVES.get());
         tag(BlockTags.SAPLINGS).add(CustomBlocks.TWISTWOOD_SAPLING.get());

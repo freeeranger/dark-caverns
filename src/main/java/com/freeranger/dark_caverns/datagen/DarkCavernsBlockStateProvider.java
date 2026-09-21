@@ -117,6 +117,38 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                 CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get(),
                 existingBlockModel(CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get()));
         simpleCubeWithItem(CustomBlocks.TWISTWOOD_PLANKS.get());
+        ResourceLocation twistwoodPlanksTexture = blockTexture(CustomBlocks.TWISTWOOD_PLANKS.get());
+        stairsBlock(CustomBlocks.TWISTWOOD_STAIRS.get(), twistwoodPlanksTexture);
+        simpleBlockItem(
+                CustomBlocks.TWISTWOOD_STAIRS.get(),
+                existingBlockModel(CustomBlocks.TWISTWOOD_STAIRS.get()));
+        slabBlock(
+                CustomBlocks.TWISTWOOD_SLAB.get(),
+                blockModel(CustomBlocks.TWISTWOOD_PLANKS.get()),
+                twistwoodPlanksTexture);
+        simpleBlockItem(
+                CustomBlocks.TWISTWOOD_SLAB.get(),
+                existingBlockModel(CustomBlocks.TWISTWOOD_SLAB.get()));
+        fenceBlock(CustomBlocks.TWISTWOOD_FENCE.get(), twistwoodPlanksTexture);
+        simpleBlockItem(
+                CustomBlocks.TWISTWOOD_FENCE.get(),
+                models().fenceInventory(
+                                name(CustomBlocks.TWISTWOOD_FENCE.get()) + "_inventory",
+                                twistwoodPlanksTexture));
+        fenceGateBlock(CustomBlocks.TWISTWOOD_FENCE_GATE.get(), twistwoodPlanksTexture);
+        simpleBlockItem(
+                CustomBlocks.TWISTWOOD_FENCE_GATE.get(),
+                existingBlockModel(CustomBlocks.TWISTWOOD_FENCE_GATE.get()));
+        pressurePlateBlock(CustomBlocks.TWISTWOOD_PRESSURE_PLATE.get(), twistwoodPlanksTexture);
+        simpleBlockItem(
+                CustomBlocks.TWISTWOOD_PRESSURE_PLATE.get(),
+                existingBlockModel(CustomBlocks.TWISTWOOD_PRESSURE_PLATE.get()));
+        buttonBlock(CustomBlocks.TWISTWOOD_BUTTON.get(), twistwoodPlanksTexture);
+        simpleBlockItem(
+                CustomBlocks.TWISTWOOD_BUTTON.get(),
+                models().buttonInventory(
+                                name(CustomBlocks.TWISTWOOD_BUTTON.get()) + "_inventory",
+                                twistwoodPlanksTexture));
         simpleBlockWithItem(
                 CustomBlocks.TWISTWOOD_LEAVES.get(),
                 models().cubeAll("twistwood_leaves", modLoc("block/twistwood_leaves"))
@@ -134,11 +166,25 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(
                 CustomBlocks.TWISTWOOD_TRAPDOOR.get(),
                 models().getExistingFile(modLoc("block/twistwood_trapdoor_bottom")));
+        signBlock(
+                CustomBlocks.TWISTWOOD_SIGN.get(),
+                CustomBlocks.TWISTWOOD_WALL_SIGN.get(),
+                twistwoodPlanksTexture);
+        hangingSignBlock(
+                CustomBlocks.TWISTWOOD_HANGING_SIGN.get(),
+                CustomBlocks.TWISTWOOD_WALL_HANGING_SIGN.get(),
+                twistwoodPlanksTexture);
         crossBlock(CustomBlocks.UNDERSPROUTS.get());
         doublePlantBlock(CustomBlocks.TALL_UNDERSPROUTS.get());
         mightyUndersproutsBlock(CustomBlocks.MIGHTY_UNDERSPROUTS.get());
         mightyUndersproutsItem();
         crossBlock(CustomBlocks.TWISTWOOD_SAPLING.get());
+        ModelFile pottedTwistwoodSapling =
+                models().withExistingParent(
+                                "potted_twistwood_sapling", mcLoc("block/flower_pot_cross"))
+                        .texture("plant", modLoc("block/twistwood_sapling"))
+                        .renderType(CUTOUT);
+        simpleBlock(CustomBlocks.POTTED_TWISTWOOD_SAPLING.get(), pottedTwistwoodSapling);
         for (String plant : List.of("undersprouts", "tall_undersprouts", "twistwood_sapling"))
             itemModels()
                     .withExistingParent(plant, mcLoc("item/generated"))

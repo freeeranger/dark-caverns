@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "dark_caverns:twistwood_chest_boat"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_twistwood_boat": {
+      "conditions": {
+        "items": [
+          {
+            "items": "dark_caverns:twistwood_boat"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_twistwood_boat"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dark_caverns:twistwood_chest_boat"
+    ]
+  }
+}

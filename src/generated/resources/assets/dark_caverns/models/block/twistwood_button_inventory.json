@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_inventory",
+  "textures": {
+    "texture": "dark_caverns:block/twistwood_planks"
+  }
+}

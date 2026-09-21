@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "chest_boat",
+  "ingredients": [
+    {
+      "item": "minecraft:chest"
+    },
+    {
+      "item": "dark_caverns:twistwood_boat"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "dark_caverns:twistwood_chest_boat"
+  }
+}

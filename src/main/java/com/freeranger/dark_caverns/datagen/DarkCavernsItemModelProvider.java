@@ -44,7 +44,9 @@ final class DarkCavernsItemModelProvider extends ItemModelProvider {
                         CustomBlocks.ASHY_CHARRED_GRASS.get().asItem(),
                         CustomBlocks.LUMINITE_LANTERN.get().asItem(),
                         CustomItems.SCORCHED_BERRIES.get(),
-                        CustomItems.LUMINITE_TORCH.get());
+                        CustomItems.LUMINITE_TORCH.get(),
+                        CustomItems.TWISTWOOD_SIGN.get(),
+                        CustomItems.TWISTWOOD_HANGING_SIGN.get());
 
         BuiltInRegistries.ITEM.stream()
                 .filter(

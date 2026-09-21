@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "hanging_sign",
+  "key": {
+    "#": [
+      {
+        "item": "dark_caverns:stripped_twistwood_log"
+      },
+      {
+        "item": "dark_caverns:stripped_twistwood_wood"
+      }
+    ],
+    "X": {
+      "item": "minecraft:chain"
+    }
+  },
+  "pattern": [
+    "X X",
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "dark_caverns:twistwood_hanging_sign"
+  }
+}

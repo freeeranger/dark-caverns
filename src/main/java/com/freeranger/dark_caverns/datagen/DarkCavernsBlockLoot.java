@@ -88,6 +88,13 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
         add(CustomBlocks.CHARRED_GRASS.get(), block -> createShearsOnlyDrop(block));
         add(CustomBlocks.ASHY_CHARRED_GRASS.get(), block -> createShearsOnlyDrop(block));
         add(CustomBlocks.SCORCHED_BERRY_BUSH.get(), this::createScorchedBerryDrops);
+        dropOther(CustomBlocks.TWISTWOOD_WALL_SIGN.get(), CustomItems.TWISTWOOD_SIGN.get());
+        dropOther(
+                CustomBlocks.TWISTWOOD_WALL_HANGING_SIGN.get(),
+                CustomItems.TWISTWOOD_HANGING_SIGN.get());
+        add(
+                CustomBlocks.POTTED_TWISTWOOD_SAPLING.get(),
+                createPotFlowerItemTable(CustomBlocks.TWISTWOOD_SAPLING.get()));
     }
 
     private LootTable.Builder createLuminiteOreDrops(Block block) {
@@ -162,7 +169,10 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
                 || block == CustomBlocks.GLIMMERGRASS.get()
                 || block == CustomBlocks.CHARRED_GRASS.get()
                 || block == CustomBlocks.ASHY_CHARRED_GRASS.get()
-                || block == CustomBlocks.SCORCHED_BERRY_BUSH.get();
+                || block == CustomBlocks.SCORCHED_BERRY_BUSH.get()
+                || block == CustomBlocks.TWISTWOOD_WALL_SIGN.get()
+                || block == CustomBlocks.TWISTWOOD_WALL_HANGING_SIGN.get()
+                || block == CustomBlocks.POTTED_TWISTWOOD_SAPLING.get();
     }
 
     @Override

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_side",
+  "textures": {
+    "texture": "dark_caverns:block/twistwood_planks"
+  }
+}

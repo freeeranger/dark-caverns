@@ -3,6 +3,7 @@ package com.freeranger.dark_caverns.gametest;
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomFeatures;
+import com.freeranger.dark_caverns.registry.CustomItems;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
@@ -298,6 +299,103 @@ public final class TangledHallowTests {
         helper.assertFalse(
                 CustomBlocks.TWISTWOOD_PLANKS.get().defaultBlockState().ignitedByLava(),
                 "Twistwood planks must not be ignited by lava");
+        for (var woodBlock :
+                java.util.List.of(
+                        CustomBlocks.TWISTWOOD_STAIRS.get(),
+                        CustomBlocks.TWISTWOOD_SLAB.get(),
+                        CustomBlocks.TWISTWOOD_FENCE.get(),
+                        CustomBlocks.TWISTWOOD_FENCE_GATE.get(),
+                        CustomBlocks.TWISTWOOD_PRESSURE_PLATE.get(),
+                        CustomBlocks.TWISTWOOD_BUTTON.get())) {
+            helper.assertTrue(
+                    woodBlock.defaultBlockState().is(BlockTags.MINEABLE_WITH_AXE),
+                    woodBlock + " must be mineable with axe");
+            helper.assertFalse(
+                    woodBlock.defaultBlockState().isFlammable(low.world, ORIGIN, Direction.UP),
+                    woodBlock + " must not be flammable");
+            helper.assertFalse(
+                    woodBlock.defaultBlockState().ignitedByLava(),
+                    woodBlock + " must not be ignited by lava");
+        }
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_STAIRS.get().defaultBlockState().is(BlockTags.WOODEN_STAIRS),
+                "Twistwood stairs missing wooden_stairs tag");
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_SLAB.get().defaultBlockState().is(BlockTags.WOODEN_SLABS),
+                "Twistwood slab missing wooden_slabs tag");
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_FENCE.get().defaultBlockState().is(BlockTags.WOODEN_FENCES),
+                "Twistwood fence missing wooden_fences tag");
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_FENCE_GATE
+                        .get()
+                        .defaultBlockState()
+                        .is(BlockTags.FENCE_GATES),
+                "Twistwood fence gate missing fence_gates tag");
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_PRESSURE_PLATE
+                        .get()
+                        .defaultBlockState()
+                        .is(BlockTags.WOODEN_PRESSURE_PLATES),
+                "Twistwood pressure plate missing wooden_pressure_plates tag");
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_BUTTON
+                        .get()
+                        .defaultBlockState()
+                        .is(BlockTags.WOODEN_BUTTONS),
+                "Twistwood button missing wooden_buttons tag");
+        for (var signBlock :
+                java.util.List.of(
+                        CustomBlocks.TWISTWOOD_SIGN.get(),
+                        CustomBlocks.TWISTWOOD_WALL_SIGN.get(),
+                        CustomBlocks.TWISTWOOD_HANGING_SIGN.get(),
+                        CustomBlocks.TWISTWOOD_WALL_HANGING_SIGN.get())) {
+            helper.assertTrue(
+                    signBlock.defaultBlockState().is(BlockTags.MINEABLE_WITH_AXE),
+                    signBlock + " must be mineable with axe");
+        }
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_SIGN.get().defaultBlockState().is(BlockTags.STANDING_SIGNS),
+                "Twistwood sign missing standing_signs tag");
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_WALL_SIGN.get().defaultBlockState().is(BlockTags.WALL_SIGNS),
+                "Twistwood wall sign missing wall_signs tag");
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_HANGING_SIGN
+                        .get()
+                        .defaultBlockState()
+                        .is(BlockTags.CEILING_HANGING_SIGNS),
+                "Twistwood hanging sign missing ceiling_hanging_signs tag");
+        helper.assertTrue(
+                CustomBlocks.TWISTWOOD_WALL_HANGING_SIGN
+                        .get()
+                        .defaultBlockState()
+                        .is(BlockTags.WALL_HANGING_SIGNS),
+                "Twistwood wall hanging sign missing wall_hanging_signs tag");
+        helper.assertTrue(
+                CustomBlocks.POTTED_TWISTWOOD_SAPLING
+                        .get()
+                        .defaultBlockState()
+                        .is(BlockTags.FLOWER_POTS),
+                "Potted twistwood sapling missing flower_pots tag");
+        helper.assertTrue(
+                CustomItems.TWISTWOOD_SIGN.get().getDefaultInstance().is(ItemTags.SIGNS),
+                "Twistwood sign item missing signs tag");
+        helper.assertTrue(
+                CustomItems.TWISTWOOD_HANGING_SIGN
+                        .get()
+                        .getDefaultInstance()
+                        .is(ItemTags.HANGING_SIGNS),
+                "Twistwood hanging sign item missing hanging_signs tag");
+        helper.assertTrue(
+                CustomItems.TWISTWOOD_BOAT.get().getDefaultInstance().is(ItemTags.BOATS),
+                "Twistwood boat item missing boats tag");
+        helper.assertTrue(
+                CustomItems.TWISTWOOD_CHEST_BOAT
+                        .get()
+                        .getDefaultInstance()
+                        .is(ItemTags.CHEST_BOATS),
+                "Twistwood chest boat item missing chest_boats tag");
         writeGallery(low, tall);
         helper.succeed();
     }

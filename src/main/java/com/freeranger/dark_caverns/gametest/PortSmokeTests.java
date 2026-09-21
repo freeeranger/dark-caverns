@@ -95,10 +95,10 @@ public final class PortSmokeTests {
     @GameTest(template = "sacred_torch")
     public static void registriesLoad(GameTestHelper helper) {
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.BLOCK) == 67, "Expected all 67 block IDs");
+                countModEntries(BuiltInRegistries.BLOCK) == 78, "Expected all 78 block IDs");
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.ITEM) == 120,
-                "Expected 64 block items plus 56 standalone item IDs");
+                countModEntries(BuiltInRegistries.ITEM) == 130,
+                "Expected 72 block items plus 58 standalone item IDs");
         helper.assertTrue(
                 countModEntries(BuiltInRegistries.SOUND_EVENT) == 28, "Expected all 28 sound IDs");
         helper.assertTrue(
@@ -150,8 +150,8 @@ public final class PortSmokeTests {
                                         advancement.id().getNamespace().equals(DarkCaverns.MOD_ID))
                         .count();
         helper.assertTrue(
-                darkCavernsAdvancements == 174,
-                "Expected 20 progression advancements and 154 recipe unlock advancements");
+                darkCavernsAdvancements == 184,
+                "Expected 20 progression advancements and 164 recipe unlock advancements");
         helper.assertTrue(
                 helper.getLevel()
                                 .getServer()
@@ -159,6 +159,53 @@ public final class PortSmokeTests {
                                 .get(DarkCaverns.id("recipes/platinum_sword"))
                         != null,
                 "Platinum sword recipe unlock advancement did not load");
+        helper.assertTrue(
+                helper.getLevel()
+                                .getServer()
+                                .getAdvancements()
+                                .get(DarkCaverns.id("recipes/twistwood_stairs"))
+                        != null,
+                "Twistwood stairs recipe unlock advancement did not load");
+        helper.assertTrue(
+                helper.getLevel()
+                                .getServer()
+                                .getAdvancements()
+                                .get(DarkCaverns.id("recipes/twistwood_sign"))
+                        != null,
+                "Twistwood sign recipe unlock advancement did not load");
+        helper.assertTrue(
+                helper.getLevel()
+                                .getServer()
+                                .getAdvancements()
+                                .get(DarkCaverns.id("recipes/twistwood_hanging_sign"))
+                        != null,
+                "Twistwood hanging sign recipe unlock advancement did not load");
+        helper.assertTrue(
+                helper.getLevel()
+                                .getServer()
+                                .getAdvancements()
+                                .get(DarkCaverns.id("recipes/twistwood_boat"))
+                        != null,
+                "Twistwood boat recipe unlock advancement did not load");
+        helper.assertTrue(
+                helper.getLevel()
+                                .getServer()
+                                .getAdvancements()
+                                .get(DarkCaverns.id("recipes/twistwood_chest_boat"))
+                        != null,
+                "Twistwood chest boat recipe unlock advancement did not load");
+        var exploreAdvancement =
+                helper.getLevel()
+                        .getServer()
+                        .getAdvancements()
+                        .get(DarkCaverns.id("explore_dark_caverns"));
+        helper.assertTrue(
+                exploreAdvancement != null
+                        && exploreAdvancement
+                                .value()
+                                .criteria()
+                                .containsKey("dark_caverns:tangled_hallow"),
+                "Cavern Cartographer advancement must track Tangled Hallow");
 
         helper.assertTrue(
                 CustomEntityTypes.SCORCHLING_ENTITY.get().create(helper.getLevel()) != null,

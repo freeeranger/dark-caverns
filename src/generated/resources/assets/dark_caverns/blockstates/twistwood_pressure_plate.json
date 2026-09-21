@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "dark_caverns:block/twistwood_pressure_plate"
+    },
+    "powered=true": {
+      "model": "dark_caverns:block/twistwood_pressure_plate_down"
+    }
+  }
+}

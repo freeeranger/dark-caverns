@@ -21,21 +21,31 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.WallHangingSignBlock;
+import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.WaterlilyBlock;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
@@ -283,6 +293,49 @@ public final class CustomBlocks {
                     () -> new TwistwoodLogBlock(twistwood(2.0F, 8.0F), STRIPPED_TWISTWOOD_WOOD));
     public static final DeferredBlock<Block> TWISTWOOD_PLANKS =
             register("twistwood_planks", () -> new Block(twistwood(2.0F, 8.0F)));
+    public static final DeferredBlock<StairBlock> TWISTWOOD_STAIRS =
+            stairs("twistwood_stairs", TWISTWOOD_PLANKS);
+    public static final DeferredBlock<SlabBlock> TWISTWOOD_SLAB =
+            slab("twistwood_slab", TWISTWOOD_PLANKS);
+    public static final DeferredBlock<FenceBlock> TWISTWOOD_FENCE =
+            register(
+                    "twistwood_fence",
+                    () ->
+                            new FenceBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(TWISTWOOD_PLANKS.get())
+                                            .forceSolidOn()));
+    public static final BlockSetType TWISTWOOD_BLOCK_SET_TYPE =
+            BlockSetType.register(new BlockSetType("dark_caverns:twistwood"));
+    public static final WoodType TWISTWOOD_WOOD_TYPE =
+            WoodType.register(new WoodType("dark_caverns:twistwood", TWISTWOOD_BLOCK_SET_TYPE));
+
+    public static final DeferredBlock<FenceGateBlock> TWISTWOOD_FENCE_GATE =
+            register(
+                    "twistwood_fence_gate",
+                    () ->
+                            new FenceGateBlock(
+                                    TWISTWOOD_WOOD_TYPE,
+                                    BlockBehaviour.Properties.ofFullCopy(TWISTWOOD_PLANKS.get())
+                                            .forceSolidOn()));
+    public static final DeferredBlock<PressurePlateBlock> TWISTWOOD_PRESSURE_PLATE =
+            register(
+                    "twistwood_pressure_plate",
+                    () ->
+                            new PressurePlateBlock(
+                                    TWISTWOOD_BLOCK_SET_TYPE,
+                                    BlockBehaviour.Properties.ofFullCopy(TWISTWOOD_PLANKS.get())
+                                            .forceSolidOn()
+                                            .noCollission()));
+    public static final DeferredBlock<ButtonBlock> TWISTWOOD_BUTTON =
+            register(
+                    "twistwood_button",
+                    () ->
+                            new ButtonBlock(
+                                    TWISTWOOD_BLOCK_SET_TYPE,
+                                    30,
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+                                            .mapColor(MapColor.WOOD)
+                                            .sound(SoundType.WOOD)));
     public static final DeferredBlock<LeavesBlock> TWISTWOOD_LEAVES =
             register(
                     "twistwood_leaves",
@@ -292,7 +345,7 @@ public final class CustomBlocks {
                     "twistwood_door",
                     () ->
                             new DoorBlock(
-                                    BlockSetType.OAK,
+                                    TWISTWOOD_BLOCK_SET_TYPE,
                                     BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_DOOR)
                                             .mapColor(MapColor.WOOD)
                                             .sound(SoundType.WOOD)
@@ -302,7 +355,7 @@ public final class CustomBlocks {
                     "twistwood_trapdoor",
                     () ->
                             new TrapDoorBlock(
-                                    BlockSetType.OAK,
+                                    TWISTWOOD_BLOCK_SET_TYPE,
                                     BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_TRAPDOOR)
                                             .mapColor(MapColor.WOOD)
                                             .sound(SoundType.WOOD)
@@ -318,6 +371,62 @@ public final class CustomBlocks {
                                             Optional.of(featureKey("twistwood_tree")),
                                             Optional.empty()),
                                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)));
+    public static final DeferredBlock<StandingSignBlock> TWISTWOOD_SIGN =
+            registerWithoutItem(
+                    "twistwood_sign",
+                    () ->
+                            new StandingSignBlock(
+                                    TWISTWOOD_WOOD_TYPE,
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SIGN)
+                                            .mapColor(MapColor.WOOD)
+                                            .sound(SoundType.WOOD)
+                                            .strength(1.0F, 8.0F)
+                                            .noCollission()));
+    public static final DeferredBlock<WallSignBlock> TWISTWOOD_WALL_SIGN =
+            registerWithoutItem(
+                    "twistwood_wall_sign",
+                    () ->
+                            new WallSignBlock(
+                                    TWISTWOOD_WOOD_TYPE,
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_SIGN)
+                                            .mapColor(MapColor.WOOD)
+                                            .sound(SoundType.WOOD)
+                                            .strength(1.0F, 8.0F)
+                                            .noCollission()
+                                            .dropsLike(TWISTWOOD_SIGN.get())));
+    public static final DeferredBlock<CeilingHangingSignBlock> TWISTWOOD_HANGING_SIGN =
+            registerWithoutItem(
+                    "twistwood_hanging_sign",
+                    () ->
+                            new CeilingHangingSignBlock(
+                                    TWISTWOOD_WOOD_TYPE,
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN)
+                                            .mapColor(MapColor.WOOD)
+                                            .sound(SoundType.HANGING_SIGN)
+                                            .strength(1.0F, 8.0F)
+                                            .noCollission()));
+    public static final DeferredBlock<WallHangingSignBlock> TWISTWOOD_WALL_HANGING_SIGN =
+            registerWithoutItem(
+                    "twistwood_wall_hanging_sign",
+                    () ->
+                            new WallHangingSignBlock(
+                                    TWISTWOOD_WOOD_TYPE,
+                                    BlockBehaviour.Properties.ofFullCopy(
+                                                    Blocks.OAK_WALL_HANGING_SIGN)
+                                            .mapColor(MapColor.WOOD)
+                                            .sound(SoundType.HANGING_SIGN)
+                                            .strength(1.0F, 8.0F)
+                                            .noCollission()
+                                            .dropsLike(TWISTWOOD_HANGING_SIGN.get())));
+    public static final DeferredBlock<FlowerPotBlock> POTTED_TWISTWOOD_SAPLING =
+            registerWithoutItem(
+                    "potted_twistwood_sapling",
+                    () ->
+                            new FlowerPotBlock(
+                                    () -> (FlowerPotBlock) Blocks.FLOWER_POT,
+                                    TWISTWOOD_SAPLING,
+                                    BlockBehaviour.Properties.ofFullCopy(
+                                            Blocks.POTTED_OAK_SAPLING)));
 
     private CustomBlocks() {}
 

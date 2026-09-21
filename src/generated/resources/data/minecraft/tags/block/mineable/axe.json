@@ -8,7 +8,17 @@
     "dark_caverns:stripped_twistwood_log",
     "dark_caverns:stripped_twistwood_wood",
     "dark_caverns:twistwood_planks",
+    "dark_caverns:twistwood_stairs",
+    "dark_caverns:twistwood_slab",
+    "dark_caverns:twistwood_fence",
+    "dark_caverns:twistwood_fence_gate",
     "dark_caverns:twistwood_door",
-    "dark_caverns:twistwood_trapdoor"
+    "dark_caverns:twistwood_trapdoor",
+    "dark_caverns:twistwood_pressure_plate",
+    "dark_caverns:twistwood_button",
+    "dark_caverns:twistwood_sign",
+    "dark_caverns:twistwood_wall_sign",
+    "dark_caverns:twistwood_hanging_sign",
+    "dark_caverns:twistwood_wall_hanging_sign"
   ]
 }

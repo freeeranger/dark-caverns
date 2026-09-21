@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "dark_caverns:twistwood_sign"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_twistwood_planks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "dark_caverns:twistwood_planks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_twistwood_planks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dark_caverns:twistwood_sign"
+    ]
+  }
+}

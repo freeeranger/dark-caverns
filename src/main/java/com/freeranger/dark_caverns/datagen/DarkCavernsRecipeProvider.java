@@ -99,6 +99,84 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                 input(CustomBlocks.TWISTWOOD_PLANKS.get()),
                 "###",
                 "###");
+        shaped(
+                flatAdvancements,
+                "twistwood_stairs",
+                CustomBlocks.TWISTWOOD_STAIRS.get(),
+                4,
+                input(CustomBlocks.TWISTWOOD_PLANKS.get()),
+                "#  ",
+                "## ",
+                "###");
+        shaped(
+                flatAdvancements,
+                "twistwood_slab",
+                CustomBlocks.TWISTWOOD_SLAB.get(),
+                6,
+                input(CustomBlocks.TWISTWOOD_PLANKS.get()),
+                "###");
+        ShapedRecipeBuilder.shaped(CATEGORY, CustomBlocks.TWISTWOOD_FENCE.get(), 3)
+                .define('#', CustomBlocks.TWISTWOOD_PLANKS.get())
+                .define('/', Items.STICK)
+                .pattern("#/#")
+                .pattern("#/#")
+                .unlockedBy("has_twistwood_planks", has(CustomBlocks.TWISTWOOD_PLANKS.get()))
+                .save(flatAdvancements, id("twistwood_fence"));
+        ShapedRecipeBuilder.shaped(CATEGORY, CustomBlocks.TWISTWOOD_FENCE_GATE.get(), 1)
+                .define('#', CustomBlocks.TWISTWOOD_PLANKS.get())
+                .define('/', Items.STICK)
+                .pattern("/#/")
+                .pattern("/#/")
+                .unlockedBy("has_twistwood_planks", has(CustomBlocks.TWISTWOOD_PLANKS.get()))
+                .save(flatAdvancements, id("twistwood_fence_gate"));
+        shaped(
+                flatAdvancements,
+                "twistwood_pressure_plate",
+                CustomBlocks.TWISTWOOD_PRESSURE_PLATE.get(),
+                1,
+                input(CustomBlocks.TWISTWOOD_PLANKS.get()),
+                "##");
+        ShapelessRecipeBuilder.shapeless(CATEGORY, CustomBlocks.TWISTWOOD_BUTTON.get(), 1)
+                .requires(CustomBlocks.TWISTWOOD_PLANKS.get())
+                .unlockedBy("has_twistwood_planks", has(CustomBlocks.TWISTWOOD_PLANKS.get()))
+                .save(flatAdvancements, id("twistwood_button"));
+        ShapedRecipeBuilder.shaped(CATEGORY, CustomItems.TWISTWOOD_SIGN.get(), 3)
+                .group("sign")
+                .define('#', CustomBlocks.TWISTWOOD_PLANKS.get())
+                .define('/', Items.STICK)
+                .pattern("###")
+                .pattern("###")
+                .pattern(" / ")
+                .unlockedBy("has_twistwood_planks", has(CustomBlocks.TWISTWOOD_PLANKS.get()))
+                .save(flatAdvancements, id("twistwood_sign"));
+        ShapedRecipeBuilder.shaped(CATEGORY, CustomItems.TWISTWOOD_HANGING_SIGN.get(), 6)
+                .group("hanging_sign")
+                .define(
+                        '#',
+                        Ingredient.of(
+                                CustomBlocks.STRIPPED_TWISTWOOD_LOG.get(),
+                                CustomBlocks.STRIPPED_TWISTWOOD_WOOD.get()))
+                .define('X', Items.CHAIN)
+                .pattern("X X")
+                .pattern("###")
+                .pattern("###")
+                .unlockedBy(
+                        "has_stripped_twistwood_log",
+                        has(CustomBlocks.STRIPPED_TWISTWOOD_LOG.get()))
+                .save(flatAdvancements, id("twistwood_hanging_sign"));
+        ShapedRecipeBuilder.shaped(CATEGORY, CustomItems.TWISTWOOD_BOAT.get(), 1)
+                .group("boat")
+                .define('#', CustomBlocks.TWISTWOOD_PLANKS.get())
+                .pattern("# #")
+                .pattern("###")
+                .unlockedBy("has_twistwood_planks", has(CustomBlocks.TWISTWOOD_PLANKS.get()))
+                .save(flatAdvancements, id("twistwood_boat"));
+        ShapelessRecipeBuilder.shapeless(CATEGORY, CustomItems.TWISTWOOD_CHEST_BOAT.get(), 1)
+                .group("chest_boat")
+                .requires(Items.CHEST)
+                .requires(CustomItems.TWISTWOOD_BOAT.get())
+                .unlockedBy("has_twistwood_boat", has(CustomItems.TWISTWOOD_BOAT.get()))
+                .save(flatAdvancements, id("twistwood_chest_boat"));
     }
 
     private void buildChiseledRecipes(RecipeOutput output) {

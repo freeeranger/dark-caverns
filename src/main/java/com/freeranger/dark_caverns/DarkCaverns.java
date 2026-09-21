@@ -21,11 +21,16 @@ import com.freeranger.dark_caverns.registry.CustomStructureTypes;
 import com.freeranger.dark_caverns.registry.CustomWorldgen;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import org.slf4j.Logger;
 
 @Mod(DarkCaverns.MOD_ID)
@@ -60,6 +65,28 @@ public final class DarkCaverns {
 
         modContainer.registerConfig(
                 ModConfig.Type.SERVER, ServerConfig.SPEC, MOD_ID + "-server.toml");
+        modBus.addListener(DarkCaverns::onBlockEntityTypeAddBlocks);
+        modBus.addListener(DarkCaverns::commonSetup);
         LOGGER.info("Initializing Dark Caverns for NeoForge 1.21.1");
+    }
+
+    private static void onBlockEntityTypeAddBlocks(BlockEntityTypeAddBlocksEvent event) {
+        event.modify(
+                BlockEntityType.SIGN,
+                CustomBlocks.TWISTWOOD_SIGN.get(),
+                CustomBlocks.TWISTWOOD_WALL_SIGN.get());
+        event.modify(
+                BlockEntityType.HANGING_SIGN,
+                CustomBlocks.TWISTWOOD_HANGING_SIGN.get(),
+                CustomBlocks.TWISTWOOD_WALL_HANGING_SIGN.get());
+    }
+
+    private static void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(
+                () ->
+                        ((FlowerPotBlock) Blocks.FLOWER_POT)
+                                .addPlant(
+                                        CustomBlocks.TWISTWOOD_SAPLING.getId(),
+                                        CustomBlocks.POTTED_TWISTWOOD_SAPLING));
     }
 }
