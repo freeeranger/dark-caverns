@@ -2,11 +2,7 @@ package com.freeranger.dark_caverns.client;
 
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomEntityTypes;
-import com.freeranger.dark_caverns.registry.CustomItems;
 import com.freeranger.dark_caverns.registry.CustomParticles;
-import net.minecraft.client.model.BoatModel;
-import net.minecraft.client.model.ChestBoatModel;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -23,7 +19,6 @@ public final class ClientModEvents {
     public static void register(IEventBus modBus) {
         modBus.addListener(ClientModEvents::registerParticleProviders);
         modBus.addListener(ClientModEvents::registerEntityRenderers);
-        modBus.addListener(ClientModEvents::registerLayerDefinitions);
         modBus.addListener(ClientModEvents::clientSetup);
     }
 
@@ -62,16 +57,6 @@ public final class ClientModEvents {
         return context ->
                 new DarkCavernsGeoRenderer<>(
                         context, new EntityGeoModel<>(entityName), shadowRadius);
-    }
-
-    private static void registerLayerDefinitions(
-            EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(
-                ModelLayers.createBoatModelName(CustomItems.TWISTWOOD_BOAT_TYPE.getValue()),
-                BoatModel::createBodyModel);
-        event.registerLayerDefinition(
-                ModelLayers.createChestBoatModelName(CustomItems.TWISTWOOD_BOAT_TYPE.getValue()),
-                ChestBoatModel::createBodyModel);
     }
 
     private static void clientSetup(FMLClientSetupEvent event) {

@@ -110,8 +110,8 @@ public final class PortSmokeTests {
         verifyRegistryCount(helper, Registries.BIOME, 4, "biome definitions");
         verifyRegistryCount(helper, Registries.BLOCK_ENTITY_TYPE, 0, "block entity type");
         verifyRegistryCount(helper, Registries.CONFIGURED_CARVER, 1, "configured carver");
-        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 34, "configured features");
-        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 33, "placed features");
+        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 36, "configured features");
+        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 35, "placed features");
         verifyRegistryCount(helper, Registries.NOISE, 14, "noise definitions");
         verifyRegistryCount(helper, Registries.DENSITY_FUNCTION, 12, "terrain density functions");
         verifyRegistryCount(helper, Registries.NOISE_SETTINGS, 1, "noise settings");
