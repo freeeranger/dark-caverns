@@ -57,6 +57,7 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
                     "ores",
                     "ores/coal",
                     "ores/iron",
+                    "ores/copper",
                     "ores/gold",
                     "ores/diamond",
                     "ores/redstone",

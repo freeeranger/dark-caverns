@@ -102,6 +102,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
         String[] oreNames = {
             "coal",
             "iron",
+            "copper",
             "gold",
             "diamond",
             "redstone",
@@ -116,6 +117,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
         }
         tag(common("ores/coal")).add(CustomBlocks.CARFSTONE_COAL_ORE.get());
         tag(common("ores/iron")).add(CustomBlocks.CARFSTONE_IRON_ORE.get());
+        tag(common("ores/copper")).add(CustomBlocks.CARFSTONE_COPPER_ORE.get());
         tag(common("ores/gold")).add(CustomBlocks.CARFSTONE_GOLD_ORE.get());
         tag(common("ores/diamond")).add(CustomBlocks.CARFSTONE_DIAMOND_ORE.get());
         tag(common("ores/redstone")).add(CustomBlocks.CARFSTONE_REDSTONE_ORE.get());
@@ -171,6 +173,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.PLATINUM_BLOCK.get(),
                         CustomBlocks.CARFSTONE_COAL_ORE.get(),
                         CustomBlocks.CARFSTONE_IRON_ORE.get(),
+                        CustomBlocks.CARFSTONE_COPPER_ORE.get(),
                         CustomBlocks.CARFSTONE_GOLD_ORE.get(),
                         CustomBlocks.CARFSTONE_DIAMOND_ORE.get(),
                         CustomBlocks.CARFSTONE_REDSTONE_ORE.get(),
@@ -185,7 +188,10 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.GLIMMERSHROOM.get(),
                         CustomBlocks.GLIMMERSHROOM_BLOCK.get());
 
-        tag(BlockTags.NEEDS_STONE_TOOL).add(CustomBlocks.CARFSTONE_IRON_ORE.get());
+        tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(
+                        CustomBlocks.CARFSTONE_IRON_ORE.get(),
+                        CustomBlocks.CARFSTONE_COPPER_ORE.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(
                         CustomBlocks.LUMINITE_BLOCK.get(),
@@ -276,6 +282,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.LUMINITE_ORE.get(),
                         CustomBlocks.CARFSTONE_COAL_ORE.get(),
                         CustomBlocks.CARFSTONE_IRON_ORE.get(),
+                        CustomBlocks.CARFSTONE_COPPER_ORE.get(),
                         CustomBlocks.CARFSTONE_GOLD_ORE.get(),
                         CustomBlocks.CARFSTONE_DIAMOND_ORE.get(),
                         CustomBlocks.CARFSTONE_REDSTONE_ORE.get(),
@@ -298,6 +305,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.PLATINUM_ORE.get(),
                         CustomBlocks.CARFSTONE_COAL_ORE.get(),
                         CustomBlocks.CARFSTONE_IRON_ORE.get(),
+                        CustomBlocks.CARFSTONE_COPPER_ORE.get(),
                         CustomBlocks.CARFSTONE_GOLD_ORE.get(),
                         CustomBlocks.CARFSTONE_DIAMOND_ORE.get(),
                         CustomBlocks.CARFSTONE_REDSTONE_ORE.get(),

@@ -67,6 +67,7 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
         add(CustomBlocks.TWISTWOOD_DOOR.get(), this::createDoorTable);
         add(CustomBlocks.CARFSTONE_COAL_ORE.get(), block -> createOreDrop(block, Items.COAL));
         add(CustomBlocks.CARFSTONE_IRON_ORE.get(), block -> createOreDrop(block, Items.RAW_IRON));
+        add(CustomBlocks.CARFSTONE_COPPER_ORE.get(), this::createCopperOreDrops);
         add(CustomBlocks.CARFSTONE_GOLD_ORE.get(), block -> createOreDrop(block, Items.RAW_GOLD));
         add(CustomBlocks.CARFSTONE_DIAMOND_ORE.get(), block -> createOreDrop(block, Items.DIAMOND));
         add(CustomBlocks.CARFSTONE_LAPIS_ORE.get(), this::createLapisOreDrops);
@@ -157,6 +158,7 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
                 || block == CustomBlocks.TWISTWOOD_DOOR.get()
                 || block == CustomBlocks.CARFSTONE_COAL_ORE.get()
                 || block == CustomBlocks.CARFSTONE_IRON_ORE.get()
+                || block == CustomBlocks.CARFSTONE_COPPER_ORE.get()
                 || block == CustomBlocks.CARFSTONE_GOLD_ORE.get()
                 || block == CustomBlocks.CARFSTONE_DIAMOND_ORE.get()
                 || block == CustomBlocks.CARFSTONE_LAPIS_ORE.get()

@@ -159,10 +159,11 @@ public final class CavernRouteTests {
                         old.isAir()
                                 || old.is(CustomBlocks.CARFSTONE.get())
                                 || old.is(CustomBlocks.MOLTEN_CARFSTONE.get())
+                                || old.is(CustomBlocks.ASHY_MOLTEN_CARFSTONE.get())
                                 || old.is(CustomBlocks.GLIMMERGRASS_BLOCK.get())
                                 || old.is(CustomBlocks.OVERGROWN_CARFSTONE.get())
                                 || old.is(Blocks.MUD),
-                        "Route overwrote protected decoration, ore, or fluid");
+                        "Route overwrote protected decoration, ore, or fluid: " + old);
                 volume.set(entry.getKey(), entry.getValue());
             }
             var after = TerrainTopology.measure(volume.snapshot());

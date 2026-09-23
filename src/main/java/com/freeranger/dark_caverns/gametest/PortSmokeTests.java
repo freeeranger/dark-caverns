@@ -95,10 +95,10 @@ public final class PortSmokeTests {
     @GameTest(template = "sacred_torch")
     public static void registriesLoad(GameTestHelper helper) {
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.BLOCK) == 78, "Expected all 78 block IDs");
+                countModEntries(BuiltInRegistries.BLOCK) == 79, "Expected all 79 block IDs");
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.ITEM) == 130,
-                "Expected 72 block items plus 58 standalone item IDs");
+                countModEntries(BuiltInRegistries.ITEM) == 131,
+                "Expected 73 block items plus 58 standalone item IDs");
         helper.assertTrue(
                 countModEntries(BuiltInRegistries.SOUND_EVENT) == 28, "Expected all 28 sound IDs");
         helper.assertTrue(
@@ -110,8 +110,8 @@ public final class PortSmokeTests {
         verifyRegistryCount(helper, Registries.BIOME, 4, "biome definitions");
         verifyRegistryCount(helper, Registries.BLOCK_ENTITY_TYPE, 0, "block entity type");
         verifyRegistryCount(helper, Registries.CONFIGURED_CARVER, 1, "configured carver");
-        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 36, "configured features");
-        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 35, "placed features");
+        verifyRegistryCount(helper, Registries.CONFIGURED_FEATURE, 37, "configured features");
+        verifyRegistryCount(helper, Registries.PLACED_FEATURE, 36, "placed features");
         verifyRegistryCount(helper, Registries.NOISE, 14, "noise definitions");
         verifyRegistryCount(helper, Registries.DENSITY_FUNCTION, 12, "terrain density functions");
         verifyRegistryCount(helper, Registries.NOISE_SETTINGS, 1, "noise settings");
@@ -150,8 +150,8 @@ public final class PortSmokeTests {
                                         advancement.id().getNamespace().equals(DarkCaverns.MOD_ID))
                         .count();
         helper.assertTrue(
-                darkCavernsAdvancements == 184,
-                "Expected 20 progression advancements and 164 recipe unlock advancements");
+                darkCavernsAdvancements == 186,
+                "Expected 20 progression advancements and 166 recipe unlock advancements");
         helper.assertTrue(
                 helper.getLevel()
                                 .getServer()
@@ -559,6 +559,12 @@ public final class PortSmokeTests {
                         .defaultBlockState()
                         .is(BlockTags.NEEDS_STONE_TOOL),
                 "Carfstone iron ore should require a stone-tier tool");
+        helper.assertTrue(
+                CustomBlocks.CARFSTONE_COPPER_ORE
+                        .get()
+                        .defaultBlockState()
+                        .is(BlockTags.NEEDS_STONE_TOOL),
+                "Carfstone copper ore should require a stone-tier tool");
         helper.assertTrue(
                 CustomBlocks.LUMINITE_ORE.get().defaultBlockState().is(BlockTags.NEEDS_IRON_TOOL),
                 "Luminite ore should require an iron-tier tool");

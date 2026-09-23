@@ -75,6 +75,7 @@ public final class CustomCreativeTabs {
                     CustomBlocks.GATEWAY_TO_THE_OVERWORLD,
                     CustomBlocks.CARFSTONE_COAL_ORE,
                     CustomBlocks.CARFSTONE_IRON_ORE,
+                    CustomBlocks.CARFSTONE_COPPER_ORE,
                     CustomBlocks.CARFSTONE_GOLD_ORE,
                     CustomBlocks.CARFSTONE_REDSTONE_ORE,
                     CustomBlocks.CARFSTONE_LAPIS_ORE,

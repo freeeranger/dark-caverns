@@ -57,6 +57,7 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                         CustomBlocks.PLATINUM_BLOCK.get(),
                         CustomBlocks.CARFSTONE_COAL_ORE.get(),
                         CustomBlocks.CARFSTONE_IRON_ORE.get(),
+                        CustomBlocks.CARFSTONE_COPPER_ORE.get(),
                         CustomBlocks.CARFSTONE_GOLD_ORE.get(),
                         CustomBlocks.CARFSTONE_DIAMOND_ORE.get(),
                         CustomBlocks.CARFSTONE_REDSTONE_ORE.get(),

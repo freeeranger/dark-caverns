@@ -411,6 +411,12 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                 0.1F);
         cookPair(
                 output,
+                "copper",
+                input(CustomBlocks.CARFSTONE_COPPER_ORE.get()),
+                Items.COPPER_INGOT,
+                0.1F);
+        cookPair(
+                output,
                 "gold",
                 input(CustomBlocks.CARFSTONE_GOLD_ORE.get()),
                 Items.GOLD_INGOT,

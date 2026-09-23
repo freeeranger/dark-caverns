@@ -179,6 +179,8 @@ public final class CustomBlocks {
                     () -> new DropExperienceBlock(UniformInt.of(0, 2), stone(4.5F)));
     public static final DeferredBlock<Block> CARFSTONE_IRON_ORE =
             register("carfstone_iron_ore", () -> new Block(stone(5.0F)));
+    public static final DeferredBlock<Block> CARFSTONE_COPPER_ORE =
+            register("carfstone_copper_ore", () -> new Block(stone(4.5F)));
     public static final DeferredBlock<Block> CARFSTONE_GOLD_ORE =
             register("carfstone_gold_ore", () -> new Block(stone(6.0F)));
     public static final DeferredBlock<Block> CARFSTONE_DIAMOND_ORE =
