@@ -1,0 +1,15 @@
+{
+  "type": "dark_caverns:molten_fissure",
+  "config": {
+    "region_size": 96,
+    "min_length": 96,
+    "max_length": 160,
+    "vertical_spacing": 12,
+    "floor_search_range": 6,
+    "chance_per_band": 0.14,
+    "bend_strength": 0.16,
+    "branch_chance": 0.22,
+    "bulge_chance": 0.06,
+    "magma_chance": 0.14
+  }
+}

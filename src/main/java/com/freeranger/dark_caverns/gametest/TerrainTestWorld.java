@@ -79,6 +79,10 @@ final class TerrainTestWorld {
                                 case "getLevel" ->
                                         java.util.Objects.requireNonNull(
                                                 server, "No template server backing");
+                                case "dimensionType" ->
+                                        java.util.Objects.requireNonNull(
+                                                        server, "No template server backing")
+                                                .dimensionType();
                                 case "registryAccess" ->
                                         java.util.Objects.requireNonNull(server).registryAccess();
                                 case "blockUpdated" -> null;

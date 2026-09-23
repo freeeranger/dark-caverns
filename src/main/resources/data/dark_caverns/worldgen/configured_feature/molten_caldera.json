@@ -1,4 +1,11 @@
 {
   "type": "dark_caverns:molten_caldera",
-  "config": {}
+  "config": {
+    "small_min_radius": 3,
+    "small_max_radius": 5,
+    "large_min_radius": 6,
+    "large_max_radius": 9,
+    "large_chance": 0.08,
+    "rim_magma_chance": 0.22
+  }
 }

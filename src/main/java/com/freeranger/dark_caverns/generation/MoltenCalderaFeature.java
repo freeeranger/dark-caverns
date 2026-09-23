@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Fluids;
 
 /**
@@ -21,16 +20,19 @@ import net.minecraft.world.level.material.Fluids;
  * cooled ashy crust, and stepping stone crossings so navigation is preserved. Never spills over
  * cliffs or cascades into open air.
  */
-public final class MoltenCalderaFeature extends Feature<NoneFeatureConfiguration> {
+public final class MoltenCalderaFeature extends Feature<MoltenPondConfiguration> {
+    private static final int LAVA_TICK_DELAY = 30;
+
     public MoltenCalderaFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+        super(MoltenPondConfiguration.CODEC);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    public boolean place(FeaturePlaceContext<MoltenPondConfiguration> context) {
         var origin = context.origin();
         var level = context.level();
         var random = context.random();
+        var config = context.config();
 
         // Generate on mid to high elevated shelves well above the Y < 11 floor lava band
         if (origin.getY() < 24
@@ -40,12 +42,13 @@ public final class MoltenCalderaFeature extends Feature<NoneFeatureConfiguration
             return false;
         }
 
-        boolean large = random.nextFloat() < 0.85F;
-        int rx = large ? 8 + random.nextInt(5) : 5 + random.nextInt(3);
-        int rz = large ? 7 + random.nextInt(5) : 5 + random.nextInt(3);
-        int minRadius = large ? 6 : 4;
-        int minArea = large ? 45 : 22;
-        int minSpan = large ? 7 : 4;
+        boolean large = random.nextFloat() < config.largeChance();
+        int minRadius = large ? config.largeMinRadius() : config.smallMinRadius();
+        int maxRadius = large ? config.largeMaxRadius() : config.smallMaxRadius();
+        int rx = minRadius + random.nextInt(maxRadius - minRadius + 1);
+        int rz = minRadius + random.nextInt(maxRadius - minRadius + 1);
+        int minArea = Math.max(12, (int) (rx * rz * 0.65));
+        int minSpan = Math.max(3, Math.min(rx, rz));
         double phase = random.nextDouble() * Math.PI * 2;
 
         for (int shrink = 0; shrink <= (large ? 2 : 1); shrink++) {
@@ -57,6 +60,7 @@ public final class MoltenCalderaFeature extends Feature<NoneFeatureConfiguration
                     phase,
                     minArea,
                     minSpan,
+                    config.rimMagmaChance(),
                     random)) {
                 return true;
             }
@@ -72,6 +76,7 @@ public final class MoltenCalderaFeature extends Feature<NoneFeatureConfiguration
             double phase,
             int minArea,
             int minSpan,
+            float rimMagmaChance,
             RandomSource random) {
         Set<BlockPos> surfaceLava = new LinkedHashSet<>();
         Set<BlockPos> candidates = new LinkedHashSet<>();
@@ -122,8 +127,8 @@ public final class MoltenCalderaFeature extends Feature<NoneFeatureConfiguration
         Set<BlockPos> rim = new LinkedHashSet<>();
         Set<BlockPos> steppingStones = new LinkedHashSet<>();
 
-        // Select a crossing line for stepping stones across larger calderas
-        boolean hasCrossing = surfaceLava.size() >= 30;
+        // Only genuinely large ponds receive an occasional crossing.
+        boolean hasCrossing = surfaceLava.size() >= 90;
         int crossingAxis = random.nextBoolean() ? 0 : 1; // 0 = X axis, 1 = Z axis
 
         for (BlockPos surface : surfaceLava) {
@@ -147,13 +152,15 @@ public final class MoltenCalderaFeature extends Feature<NoneFeatureConfiguration
                 // Under the stepping stone, place solid magma/carfstone
                 bed.add(surface.below());
             } else {
-                for (int y = 0; y < depth; y++) {
+                // Recess the lava below the original floor so this reads as a pond cut into rock.
+                air.add(surface);
+                for (int y = 1; y <= depth; y++) {
                     lava.add(surface.below(y));
                 }
-                bed.add(surface.below(depth));
+                bed.add(surface.below(depth + 1));
             }
 
-            for (int y = 1; y <= 3; y++) {
+            for (int y = 1; y <= 2; y++) {
                 air.add(surface.above(y));
             }
 
@@ -184,7 +191,8 @@ public final class MoltenCalderaFeature extends Feature<NoneFeatureConfiguration
 
         for (BlockPos pos : air) {
             BlockState state = level.getBlockState(pos);
-            if (!level.ensureCanWrite(pos) || !state.isAir()) {
+            boolean opening = surfaceLava.contains(pos) && !steppingStones.contains(pos);
+            if (!level.ensureCanWrite(pos) || (opening ? !natural(state) : !state.isAir())) {
                 return false;
             }
         }
@@ -208,7 +216,7 @@ public final class MoltenCalderaFeature extends Feature<NoneFeatureConfiguration
             if (level.ensureCanWrite(pos)
                     && natural(level.getBlockState(pos))
                     && level.getBlockState(pos.above()).isAir()) {
-                if (random.nextFloat() < 0.35F) {
+                if (random.nextFloat() < rimMagmaChance) {
                     level.setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), 2);
                 }
             }
@@ -225,18 +233,9 @@ public final class MoltenCalderaFeature extends Feature<NoneFeatureConfiguration
 
         // Lava fluid
         lava.forEach(pos -> level.setBlock(pos, Blocks.LAVA.defaultBlockState(), 2));
-        int tickDelay = lavaTickDelay(level);
-        lava.forEach(pos -> level.scheduleTick(pos, Fluids.LAVA, tickDelay));
+        lava.forEach(pos -> level.scheduleTick(pos, Fluids.LAVA, LAVA_TICK_DELAY));
 
         return true;
-    }
-
-    private static int lavaTickDelay(WorldGenLevel level) {
-        try {
-            return Fluids.LAVA.getTickDelay(level);
-        } catch (Throwable ignored) {
-            return 30;
-        }
     }
 
     private static boolean safeExposedFloor(WorldGenLevel level, BlockPos surface) {
