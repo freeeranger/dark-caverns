@@ -20,6 +20,7 @@ public final class ShroomieTrades {
             trade(CustomBlocks.GLIMMERGRASS, 8, CustomItems.LUMINITE_DUST, 1, 12, 1),
             trade(CustomBlocks.GLIMMERSHROOM_BLOCK, 4, CustomItems.LUMINITE_DUST, 3, 8, 1),
             trade(CustomBlocks.LUMINITE_LANTERN, 1, CustomItems.LUMINITE_DUST, 3, 8, 1),
+            trade(CustomItems.LUMINITE_CHALK, 1, CustomItems.LUMINITE_DUST, 2, 8, 1),
             trade(CustomItems.THROWABLE_LUMINITE_TORCH, 4, () -> Items.IRON_INGOT, 1, 12, 1),
             trade(CustomBlocks.SMOOTH_CARFSTONE, 16, () -> Items.IRON_INGOT, 1, 16, 1),
             trade(CustomBlocks.CARFSTONE_BRICKS, 16, () -> Items.IRON_INGOT, 1, 16, 1),

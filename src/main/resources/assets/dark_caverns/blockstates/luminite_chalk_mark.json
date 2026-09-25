@@ -1,0 +1,103 @@
+{
+  "variants": {
+    "facing=south,rotation=0": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0"
+    },
+    "facing=south,rotation=1": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_1"
+    },
+    "facing=south,rotation=2": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_2"
+    },
+    "facing=south,rotation=3": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_3"
+    },
+    "facing=north,rotation=0": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "y": 180
+    },
+    "facing=north,rotation=1": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_1",
+      "y": 180
+    },
+    "facing=north,rotation=2": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_2",
+      "y": 180
+    },
+    "facing=north,rotation=3": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_3",
+      "y": 180
+    },
+    "facing=west,rotation=0": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "y": 90
+    },
+    "facing=west,rotation=1": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_1",
+      "y": 90
+    },
+    "facing=west,rotation=2": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_2",
+      "y": 90
+    },
+    "facing=west,rotation=3": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_3",
+      "y": 90
+    },
+    "facing=east,rotation=0": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "y": 270
+    },
+    "facing=east,rotation=1": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_1",
+      "y": 270
+    },
+    "facing=east,rotation=2": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_2",
+      "y": 270
+    },
+    "facing=east,rotation=3": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_3",
+      "y": 270
+    },
+    "facing=up,rotation=0": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "x": 90
+    },
+    "facing=up,rotation=1": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "x": 90,
+      "y": 90
+    },
+    "facing=up,rotation=2": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,rotation=3": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "x": 90,
+      "y": 270
+    },
+    "facing=down,rotation=0": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "x": 270,
+      "y": 180
+    },
+    "facing=down,rotation=1": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "x": 270,
+      "y": 270
+    },
+    "facing=down,rotation=2": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "x": 270,
+      "y": 0
+    },
+    "facing=down,rotation=3": {
+      "model": "dark_caverns:block/luminite_chalk_arrow_0",
+      "x": 270,
+      "y": 90
+    }
+  }
+}

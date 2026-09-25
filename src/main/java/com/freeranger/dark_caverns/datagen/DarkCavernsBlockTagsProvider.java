@@ -218,7 +218,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
             CustomBlocks.TALL_UNDERSPROUTS.get(),
             CustomBlocks.MIGHTY_UNDERSPROUTS.get()
         };
-        tag(BlockTags.REPLACEABLE).add(caveFoliage);
+        tag(BlockTags.REPLACEABLE).add(caveFoliage).add(CustomBlocks.LUMINITE_CHALK_MARK.get());
         tag(BlockTags.REPLACEABLE_BY_TREES).add(caveFoliage);
         tag(BlockTags.SWORD_EFFICIENT).add(caveFoliage);
 

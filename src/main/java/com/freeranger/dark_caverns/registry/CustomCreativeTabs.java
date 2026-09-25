@@ -139,6 +139,7 @@ public final class CustomCreativeTabs {
                     CustomItems.LUMINITE_TORCH,
                     CustomBlocks.LUMINITE_LANTERN,
                     CustomItems.THROWABLE_LUMINITE_TORCH,
+                    CustomItems.LUMINITE_CHALK,
                     CustomItems.SHROOMBOMB,
                     CustomItems.CORRUPTED_PEARL,
                     CustomSpawnEggs.SCORCHLING_SPAWN_EGG,

@@ -6,6 +6,7 @@ import com.freeranger.dark_caverns.blocks.CustomPlantBlock;
 import com.freeranger.dark_caverns.blocks.GatewayToTheCavernsBlock;
 import com.freeranger.dark_caverns.blocks.GatewayToTheOverworldBlock;
 import com.freeranger.dark_caverns.blocks.GlimmershroomBlock;
+import com.freeranger.dark_caverns.blocks.LuminiteChalkMarkBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
 import com.freeranger.dark_caverns.blocks.MightyUndersproutsBlock;
@@ -48,6 +49,7 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -222,6 +224,21 @@ public final class CustomBlocks {
             register(
                     "luminite_lantern",
                     () -> new LanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.LANTERN)));
+    public static final DeferredBlock<LuminiteChalkMarkBlock> LUMINITE_CHALK_MARK =
+            registerWithoutItem(
+                    "luminite_chalk_mark",
+                    () ->
+                            new LuminiteChalkMarkBlock(
+                                    BlockBehaviour.Properties.of()
+                                            .noCollission()
+                                            .instabreak()
+                                            .noLootTable()
+                                            .replaceable()
+                                            .sound(SoundType.CALCITE)
+                                            .lightLevel(state -> 5)
+                                            .hasPostProcess((state, level, pos) -> true)
+                                            .emissiveRendering((state, level, pos) -> true)
+                                            .pushReaction(PushReaction.DESTROY)));
     public static final DeferredBlock<CustomPlantBlock> GLIMMERGRASS =
             register(
                     "glimmergrass",

@@ -394,6 +394,10 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                 .pattern(" # ")
                 .unlockedBy("has_ingredient", has(CustomItems.LUMINITE_TORCH.get()))
                 .save(output, id("throwable_luminite_torch"));
+        ShapelessRecipeBuilder.shapeless(CATEGORY, CustomItems.LUMINITE_CHALK.get())
+                .requires(Ingredient.of(itemTag("dusts/luminite")), 2)
+                .unlockedBy("has_ingredient", has(itemTag("dusts/luminite")))
+                .save(output, id("luminite_chalk"));
         ShapelessRecipeBuilder.shapeless(CATEGORY, CustomItems.SHROOMBOMB.get(), 2)
                 .requires(Ingredient.of(itemTag("mushrooms")), 2)
                 .requires(Ingredient.of(itemTag("gunpowder")), 3)

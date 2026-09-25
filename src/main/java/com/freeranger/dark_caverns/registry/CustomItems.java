@@ -5,6 +5,7 @@ import com.freeranger.dark_caverns.entities.CorruptedPearlEntity;
 import com.freeranger.dark_caverns.entities.ShroombombEntity;
 import com.freeranger.dark_caverns.entities.ThrowableLuminiteTorchEntity;
 import com.freeranger.dark_caverns.items.KeyToTheCavernsItem;
+import com.freeranger.dark_caverns.items.LuminiteChalkItem;
 import com.freeranger.dark_caverns.items.ThrowableItem;
 import java.util.function.Supplier;
 import net.minecraft.core.Direction;
@@ -63,6 +64,10 @@ public final class CustomItems {
     public static final DeferredItem<Item> SHROOMSTONE_PIECE = item("shroomstone_piece");
     public static final DeferredItem<Item> SCORCHSTEEL_INGOT = item("scorchsteel_ingot");
     public static final DeferredItem<Item> PLATINUM_INGOT = item("platinum_ingot");
+    public static final DeferredItem<LuminiteChalkItem> LUMINITE_CHALK =
+            ITEMS.register(
+                    "luminite_chalk",
+                    () -> new LuminiteChalkItem(new Item.Properties().durability(64)));
 
     public static final DeferredItem<ThrowableItem> THROWABLE_LUMINITE_TORCH =
             ITEMS.register(

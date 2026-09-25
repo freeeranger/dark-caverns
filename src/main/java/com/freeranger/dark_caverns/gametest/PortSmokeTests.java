@@ -95,10 +95,10 @@ public final class PortSmokeTests {
     @GameTest(template = "sacred_torch")
     public static void registriesLoad(GameTestHelper helper) {
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.BLOCK) == 79, "Expected all 79 block IDs");
+                countModEntries(BuiltInRegistries.BLOCK) == 80, "Expected all 80 block IDs");
         helper.assertTrue(
-                countModEntries(BuiltInRegistries.ITEM) == 131,
-                "Expected 73 block items plus 58 standalone item IDs");
+                countModEntries(BuiltInRegistries.ITEM) == 132,
+                "Expected 73 block items plus 59 standalone item IDs");
         helper.assertTrue(
                 countModEntries(BuiltInRegistries.SOUND_EVENT) == 28, "Expected all 28 sound IDs");
         helper.assertTrue(
@@ -150,8 +150,15 @@ public final class PortSmokeTests {
                                         advancement.id().getNamespace().equals(DarkCaverns.MOD_ID))
                         .count();
         helper.assertTrue(
-                darkCavernsAdvancements == 186,
-                "Expected 20 progression advancements and 166 recipe unlock advancements");
+                darkCavernsAdvancements == 187,
+                "Expected 20 progression advancements and 167 recipe unlock advancements");
+        helper.assertTrue(
+                helper.getLevel()
+                                .getServer()
+                                .getAdvancements()
+                                .get(DarkCaverns.id("recipes/luminite_chalk"))
+                        != null,
+                "Luminite chalk recipe unlock advancement did not load");
         helper.assertTrue(
                 helper.getLevel()
                                 .getServer()
