@@ -122,7 +122,10 @@ public final class CavernRouteTests {
         helper.succeed();
     }
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 1200)
+    @GameTest(
+            templateNamespace = DarkCaverns.MOD_ID + "_slow",
+            template = "sacred_torch",
+            timeoutTicks = 1200)
     public static void routesImproveDecoratedWalkingConnectivity(GameTestHelper helper)
             throws IOException {
         long[] seeds = {0, 8675309, -7046029254386353131L, 7361};

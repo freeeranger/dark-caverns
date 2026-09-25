@@ -97,7 +97,10 @@ public final class BiomeTransitionTests {
         helper.succeed();
     }
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 2400)
+    @GameTest(
+            templateNamespace = DarkCaverns.MOD_ID + "_slow",
+            template = "sacred_torch",
+            timeoutTicks = 2400)
     public static void realBiomeBoundariesBlendWithoutChangingTerrain(GameTestHelper helper)
             throws IOException {
         NoiseBasedChunkGenerator configuredGenerator;

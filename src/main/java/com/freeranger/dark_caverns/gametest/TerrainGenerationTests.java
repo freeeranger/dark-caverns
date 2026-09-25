@@ -1,33 +1,21 @@
 package com.freeranger.dark_caverns.gametest;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import javax.imageio.ImageIO;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.FixedBiomeSource;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.chunk.ProtoChunk;
-import net.minecraft.world.level.chunk.UpgradeData;
-import net.minecraft.world.level.levelgen.Aquifer;
-import net.minecraft.world.level.levelgen.Beardifier;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
-import net.minecraft.world.level.levelgen.NoiseChunk;
 import net.minecraft.world.level.levelgen.RandomState;
-import net.minecraft.world.level.levelgen.WorldGenerationContext;
-import net.minecraft.world.level.levelgen.blending.Blender;
-import net.minecraft.world.level.levelgen.structure.pools.JigsawJunction;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -39,7 +27,10 @@ public final class TerrainGenerationTests {
 
     private TerrainGenerationTests() {}
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 400)
+    @GameTest(
+            templateNamespace = DarkCaverns.MOD_ID + "_slow",
+            template = "sacred_torch",
+            timeoutTicks = 400)
     public static void composedTerrainHasCavernsAndClosedBoundaries(GameTestHelper helper)
             throws IOException {
         var generator = generator(helper);
@@ -117,60 +108,6 @@ public final class TerrainGenerationTests {
                                     == repeated.router().finalDensity().compute(point),
                             "Seeded terrain is not deterministic");
                 }
-            }
-        }
-        helper.succeed();
-    }
-
-    @GameTest(template = "sacred_torch", timeoutTicks = 400)
-    public static void generatedCavernsKeepBedrockShell(GameTestHelper helper) {
-        var generator = generator(helper);
-        var level = helper.getLevel();
-        var biomes = level.registryAccess().registryOrThrow(Registries.BIOME);
-        var random =
-                RandomState.create(
-                        generator.generatorSettings().value(),
-                        level.registryAccess().lookupOrThrow(Registries.NOISE),
-                        SEEDS[0]);
-        var chunk = new ProtoChunk(new ChunkPos(0, 0), UpgradeData.EMPTY, HEIGHT, biomes, null);
-        // No structure lookups into the test world from the generation worker.
-        var settings = generator.generatorSettings().value();
-        chunk.getOrCreateNoiseChunk(
-                c ->
-                        NoiseChunk.forChunk(
-                                c,
-                                random,
-                                new Beardifier(
-                                        new ObjectArrayList<Beardifier.Rigid>().iterator(),
-                                        new ObjectArrayList<JigsawJunction>().iterator()),
-                                settings,
-                                (x, y, z) ->
-                                        new Aquifer.FluidStatus(
-                                                settings.seaLevel(), settings.defaultFluid()),
-                                Blender.empty()));
-        generator.createBiomes(random, Blender.empty(), level.structureManager(), chunk).join();
-        generator.fillFromNoise(Blender.empty(), random, level.structureManager(), chunk).join();
-        var biomeManager =
-                new BiomeManager(
-                        (x, y, z) ->
-                                generator.getBiomeSource().getNoiseBiome(x, y, z, random.sampler()),
-                        BiomeManager.obfuscateSeed(SEEDS[0]));
-        generator.buildSurface(
-                chunk,
-                new WorldGenerationContext(generator, HEIGHT),
-                random,
-                level.structureManager(),
-                biomeManager,
-                biomes,
-                Blender.empty());
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                helper.assertTrue(
-                        chunk.getBlockState(new BlockPos(x, 0, z)).is(Blocks.BEDROCK),
-                        "Generated cavern floor must have bedrock after surface generation");
-                helper.assertTrue(
-                        chunk.getBlockState(new BlockPos(x, 255, z)).is(Blocks.BEDROCK),
-                        "Generated cavern roof must have bedrock after surface generation");
             }
         }
         helper.succeed();

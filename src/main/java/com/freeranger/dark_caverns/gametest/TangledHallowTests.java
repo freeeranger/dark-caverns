@@ -4,9 +4,6 @@ import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomFeatures;
 import com.freeranger.dark_caverns.registry.CustomItems;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +14,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
-import javax.imageio.ImageIO;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -226,8 +222,7 @@ public final class TangledHallowTests {
     }
 
     @GameTest(template = "sacred_torch")
-    public static void twistwoodTreesScaleAttachAndProtectTheirSurroundings(GameTestHelper helper)
-            throws IOException {
+    public static void twistwoodTreesScaleAttachAndProtectTheirSurroundings(GameTestHelper helper) {
         Room low = new Room(helper, 8, pos -> true);
         Room tall = new Room(helper, 32, pos -> true);
         helper.assertTrue(place(low) && place(tall), "Trees failed in clear supported rooms");
@@ -396,11 +391,13 @@ public final class TangledHallowTests {
                         .getDefaultInstance()
                         .is(ItemTags.CHEST_BOATS),
                 "Twistwood chest boat item missing chest_boats tag");
-        writeGallery(low, tall);
         helper.succeed();
     }
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 1200)
+    @GameTest(
+            templateNamespace = DarkCaverns.MOD_ID + "_slow",
+            template = "sacred_torch",
+            timeoutTicks = 1200)
     public static void hallowDecoratesRealCavernsWithoutBlockingRoutes(GameTestHelper helper)
             throws IOException {
         var volume = new TerrainTestVolume(helper, 8675309, "tangled_hallow");
@@ -750,66 +747,6 @@ public final class TangledHallowTests {
                         support, "Leaf distance does not correspond to an actual support path");
             }
         }
-    }
-
-    private static void writeGallery(Room low, Room tall) throws IOException {
-        var image = new BufferedImage(960, 440, BufferedImage.TYPE_INT_RGB);
-        var g = image.createGraphics();
-        g.setColor(new Color(0x101723));
-        g.fillRect(0, 0, 960, 440);
-        g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
-        for (int index = 0; index < 3; index++) {
-            Room room = index == 0 ? low : tall;
-            int offset = index * 320;
-            g.setColor(new Color(0xe5edf5));
-            g.drawString(
-                    index == 0
-                            ? "Low cavern"
-                            : index == 1 ? "Twisting vault tree" : "Exposed branch structure",
-                    offset + 12,
-                    25);
-            g.setColor(new Color(0x414e30));
-            g.fillPolygon(
-                    new int[] {offset + 160, offset + 280, offset + 160, offset + 40},
-                    new int[] {286, 346, 406, 346},
-                    4);
-            boolean woodOnly = index == 2;
-            var blocks =
-                    room.edits.entrySet().stream()
-                            .filter(
-                                    e ->
-                                            !woodOnly
-                                                    || e.getValue()
-                                                            .is(CustomBlocks.TWISTWOOD_LOG.get()))
-                            .sorted(
-                                    java.util.Comparator.comparingInt(
-                                            e ->
-                                                    (e.getKey().getX() + e.getKey().getZ()) * 3
-                                                            + (e.getKey().getY() - 40) * 2))
-                            .toList();
-            for (var entry : blocks) {
-                BlockPos pos = entry.getKey();
-                int x = offset + 160 + (pos.getX() - pos.getZ()) * 8;
-                int y = 330 + (pos.getX() + pos.getZ()) * 4 - (pos.getY() - 40) * 12;
-                Color color =
-                        new Color(
-                                entry.getValue().is(CustomBlocks.TWISTWOOD_LOG.get())
-                                        ? 0xada18a
-                                        : 0x8d9d4c);
-                g.setColor(color.brighter());
-                g.fillPolygon(new int[] {x, x + 8, x, x - 8}, new int[] {y - 4, y, y + 4, y}, 4);
-                g.setColor(color.darker());
-                g.fillPolygon(
-                        new int[] {x - 8, x, x, x - 8}, new int[] {y, y + 4, y + 16, y + 12}, 4);
-                g.setColor(color);
-                g.fillPolygon(
-                        new int[] {x, x + 8, x + 8, x}, new int[] {y + 4, y, y + 12, y + 16}, 4);
-            }
-        }
-        g.dispose();
-        Path dir = Path.of("../build/reports/terrain");
-        Files.createDirectories(dir);
-        ImageIO.write(image, "png", dir.resolve("twistwood-trees.png").toFile());
     }
 
     private static final class Room {

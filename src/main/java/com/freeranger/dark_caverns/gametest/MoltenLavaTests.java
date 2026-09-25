@@ -142,7 +142,10 @@ public final class MoltenLavaTests {
         helper.succeed();
     }
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 1200)
+    @GameTest(
+            templateNamespace = DarkCaverns.MOD_ID + "_slow",
+            template = "sacred_torch",
+            timeoutTicks = 1200)
     public static void pondsAndFissuresPlaceOnRealMoltenTerrain(GameTestHelper helper) {
         var volume = new TerrainTestVolume(helper, 8675309L, "molten_depths");
         volume.carve();

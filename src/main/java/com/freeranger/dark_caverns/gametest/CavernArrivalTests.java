@@ -437,7 +437,10 @@ public final class CavernArrivalTests {
         helper.succeed();
     }
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 1200)
+    @GameTest(
+            templateNamespace = DarkCaverns.MOD_ID + "_slow",
+            template = "sacred_torch",
+            timeoutTicks = 1200)
     public static void arrivalsFindGroundAcrossGeneratedBiomes(GameTestHelper helper) {
         String[] biomes = {
             "molten_depths", "rocky_caverns", "glimmershroom_forest", "tangled_hallow"

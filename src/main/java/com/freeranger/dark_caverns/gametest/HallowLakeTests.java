@@ -3,19 +3,13 @@ package com.freeranger.dark_caverns.gametest;
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomFeatures;
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.lang.reflect.Proxy;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.imageio.ImageIO;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -41,8 +35,7 @@ public final class HallowLakeTests {
     private HallowLakeTests() {}
 
     @GameTest(template = "sacred_torch")
-    public static void lakesAreSealedDeterministicAndProtectTerrain(GameTestHelper helper)
-            throws IOException {
+    public static void lakesAreSealedDeterministicAndProtectTerrain(GameTestHelper helper) {
         var first = new HashMap<BlockPos, BlockState>();
         var repeated = new HashMap<BlockPos, BlockState>();
         helper.assertTrue(
@@ -102,7 +95,6 @@ public final class HallowLakeTests {
         helper.assertFalse(
                 place(room(helper, new HashMap<>(), false, true), ORIGIN),
                 "Lake crossed into a non-Hallow biome");
-        writePreview(first);
         helper.succeed();
     }
 
@@ -237,39 +229,5 @@ public final class HallowLakeTests {
                                 RandomSource.create(7),
                                 pos,
                                 NoneFeatureConfiguration.INSTANCE));
-    }
-
-    private static void writePreview(Map<BlockPos, BlockState> edits) throws IOException {
-        var image = new BufferedImage(480, 270, BufferedImage.TYPE_INT_RGB);
-        var g = image.createGraphics();
-        g.setColor(new Color(0x101723));
-        g.fillRect(0, 0, 480, 270);
-        g.setColor(new Color(0xe5edf5));
-        g.drawString("Hallow lake: plan view", 16, 20);
-        g.drawString("Center cross-section", 250, 20);
-        for (int x = -10; x <= 10; x++)
-            for (int z = -10; z <= 10; z++) {
-                boolean water = read(edits, new BlockPos(x, 38, z)).is(Blocks.WATER);
-                g.setColor(new Color(water ? 0x367e88 : 0x819744));
-                g.fillRect(16 + (x + 10) * 10, 36 + (z + 10) * 10, 9, 9);
-            }
-        for (int x = -10; x <= 10; x++)
-            for (int y = 32; y <= 44; y++) {
-                BlockState state = read(edits, new BlockPos(x, y, 0));
-                g.setColor(
-                        new Color(
-                                state.isAir()
-                                        ? 0x101723
-                                        : state.is(Blocks.WATER)
-                                                ? 0x367e88
-                                                : state.is(CustomBlocks.OVERGROWN_CARFSTONE.get())
-                                                        ? 0x819744
-                                                        : 0x85899b));
-                g.fillRect(250 + (x + 10) * 10, 70 + (44 - y) * 10, 9, 9);
-            }
-        g.dispose();
-        Path dir = Path.of("../build/reports/terrain");
-        Files.createDirectories(dir);
-        ImageIO.write(image, "png", dir.resolve("hallow-lake.png").toFile());
     }
 }

@@ -59,6 +59,17 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
+        slowGameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', "${project.mod_id}_slow"
+        }
+
+        fullGameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces',
+                    "${project.mod_id},${project.mod_id}_slow"
+        }
+
         data {
             data()
             programArguments.addAll '--mod', project.mod_id, '--all',
@@ -69,6 +80,17 @@ neoForge {
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             logLevel = org.slf4j.event.Level.DEBUG
+        }
+
+        // Keep routine GameTest output readable while retaining verbose logs for dev runs.
+        gameTestServer {
+            logLevel = org.slf4j.event.Level.INFO
+        }
+        slowGameTestServer {
+            logLevel = org.slf4j.event.Level.INFO
+        }
+        fullGameTestServer {
+            logLevel = org.slf4j.event.Level.INFO
         }
     }
 
@@ -110,6 +132,14 @@ def generateModMetadata = tasks.register('generateModMetadata', ProcessResources
 
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
+
+tasks.named('processResources', ProcessResources).configure {
+    // Slow tests use a separate namespace so NeoForge can exclude them from the default run.
+    // Reuse the tiny existing test template without storing a second binary NBT in source control.
+    from('src/main/resources/data/dark_caverns/structure/sacred_torch.nbt') {
+        into 'data/dark_caverns_slow/structure'
+    }
+}
 
 publishing {
     publications {

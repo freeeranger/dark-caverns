@@ -30,10 +30,23 @@ Building Dark Caverns requires Java 21. The Gradle wrapper downloads the other b
 ./gradlew build
 ```
 
-Run the in-game test suite with:
+Run the fast in-game regression suite with:
 
 ```shell
 ./gradlew runGameTestServer
+```
+
+Large generated-terrain acceptance tests are kept out of the normal edit/test loop. Run them
+before releases and after substantial world-generation changes:
+
+```shell
+./gradlew runSlowGameTestServer
+```
+
+To run both tiers in one server invocation:
+
+```shell
+./gradlew runFullGameTestServer
 ```
 
 Check or apply the repository formatting rules with:

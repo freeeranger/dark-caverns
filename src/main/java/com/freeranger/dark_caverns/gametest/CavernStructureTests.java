@@ -64,7 +64,10 @@ public final class CavernStructureTests {
         helper.succeed();
     }
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 600)
+    @GameTest(
+            templateNamespace = DarkCaverns.MOD_ID + "_slow",
+            template = "sacred_torch",
+            timeoutTicks = 600)
     public static void registeredCavernStructuresFitGeneratedTerrain(GameTestHelper helper) {
         String[] names = {"sacred_torch", "territory_marker", "shroomie_house"};
         String[] biomeNames = {"molten_depths", "molten_depths", "glimmershroom_forest"};

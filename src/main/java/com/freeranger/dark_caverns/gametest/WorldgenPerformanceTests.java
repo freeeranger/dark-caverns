@@ -52,8 +52,6 @@ public final class WorldgenPerformanceTests {
         var generator =
                 new NoiseBasedChunkGenerator(
                         new FixedBiomeSource(biome(helper, "glimmershroom_forest")), settings);
-        long vanillaTime = 0, batchedTime = 0;
-        int compared = 0;
         for (long seed : new long[] {0, 8675309, -7046029254386353131L}) {
             var random =
                     RandomState.create(
@@ -62,27 +60,20 @@ public final class WorldgenPerformanceTests {
             for (int origin : new int[] {-19, -5, 13}) {
                 var bounds = new BoundingBox(origin, 0, origin - 3, origin + 10, 255, origin + 7);
                 var reference = new ArrayList<NoiseColumn>();
-                long start = System.nanoTime();
                 for (int x = bounds.minX(); x <= bounds.maxX(); x++) {
                     for (int z = bounds.minZ(); z <= bounds.maxZ(); z++) {
                         reference.add(
                                 generator.getBaseColumn(x, z, TerrainTestVolume.HEIGHT, random));
                     }
                 }
-                vanillaTime += System.nanoTime() - start;
-                start = System.nanoTime();
                 var batched =
                         CavernNoiseColumns.footprint(
                                 generator, TerrainTestVolume.HEIGHT, random, bounds);
-                // Force realization so the timing doesn't just measure lazy-list construction.
-                for (int i = 0; i < batched.size(); i++) batched.get(i);
-                batchedTime += System.nanoTime() - start;
                 for (int i = 0; i < reference.size(); i++) {
                     for (int y = 0; y < 256; y++) {
                         helper.assertTrue(
                                 reference.get(i).getBlock(y) == batched.get(i).getBlock(y),
                                 "Batched base column changed terrain at column " + i + " y=" + y);
-                        compared++;
                     }
                 }
                 var oldRandom = RandomSource.create(seed);
@@ -120,12 +111,6 @@ public final class WorldgenPerformanceTests {
                 }
             }
         }
-        DarkCaverns.LOGGER.info(
-                "Structure-column benchmark: {} block comparisons, vanilla={}ms batched={}ms ({}x)",
-                compared,
-                vanillaTime / 1_000_000,
-                batchedTime / 1_000_000,
-                vanillaTime / (double) batchedTime);
         helper.succeed();
     }
 
@@ -221,7 +206,6 @@ public final class WorldgenPerformanceTests {
                         },
                         7,
                         pos -> null);
-        int uncached = 0;
         for (int pass = 0; pass < 3; pass++) {
             for (int x = -16; x < 0; x++) {
                 for (int z = -16; z < 0; z++) {
@@ -233,12 +217,10 @@ public final class WorldgenPerformanceTests {
                                     .weights(x, z);
                     var actual = TransitionPlacementCache.weights(world, x, z);
                     helper.assertTrue(expected.equals(actual), "Cache changed blend weights");
-                    uncached += (x % 8 == 0 ? 3 : 4) * (z % 8 == 0 ? 3 : 4);
                 }
             }
         }
         helper.assertTrue(lookups.get() <= 25, "Placement tile did not reuse its biome lattice");
-        int sampled = lookups.get();
         var other =
                 TerrainTestWorld.create(
                         pos -> Blocks.AIR.defaultBlockState(),
@@ -255,10 +237,6 @@ public final class WorldgenPerformanceTests {
         helper.assertTrue(
                 TransitionPlacementCache.weights(world, 32, 32).forest() == 0,
                 "Cache leaked across tile boundary");
-        DarkCaverns.LOGGER.info(
-                "Transition lookup benchmark: uncached={} cached={} for 3 passes over 256 columns",
-                uncached,
-                sampled);
         helper.succeed();
     }
 

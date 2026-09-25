@@ -174,7 +174,10 @@ public final class CavernLandmarkTests {
         helper.succeed();
     }
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 1200)
+    @GameTest(
+            templateNamespace = DarkCaverns.MOD_ID + "_slow",
+            template = "sacred_torch",
+            timeoutTicks = 1200)
     public static void registeredLandmarksAreEncounterableWithoutBlockingRoutes(
             GameTestHelper helper) {
         var registries = helper.getLevel().registryAccess();

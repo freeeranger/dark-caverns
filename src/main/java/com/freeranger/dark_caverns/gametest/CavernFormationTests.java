@@ -4,16 +4,9 @@ import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.generation.CavernFormationConfiguration;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomFeatures;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import javax.imageio.ImageIO;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -33,11 +26,9 @@ public final class CavernFormationTests {
     private CavernFormationTests() {}
 
     @GameTest(template = "sacred_torch")
-    public static void formationsAttachScaleAndKeepClearance(GameTestHelper helper)
-            throws IOException {
+    public static void formationsAttachScaleAndKeepClearance(GameTestHelper helper) {
         BlockState material = CustomBlocks.CARFSTONE.get().defaultBlockState();
         String[] names = {"floor", "ceiling", "opposing", "column"};
-        BufferedImage image = new BufferedImage(33 * 4, 100, BufferedImage.TYPE_INT_RGB);
         for (int mode = 0; mode < 4; mode++) {
             Room room = new Room(80, material);
             var config = config(material, mode);
@@ -91,12 +82,6 @@ public final class CavernFormationTests {
                         floorHeight == 80,
                         "A column must connect both boundaries without an air seam");
             room.assertAttached(helper);
-            for (int x = -16; x <= 16; x++) {
-                for (int y = 20; y < 120; y++) {
-                    var block = room.get(new BlockPos(x, y, 0));
-                    image.setRGB(mode * 33 + x + 16, 119 - y, block.isAir() ? 0x111827 : 0xa8a29e);
-                }
-            }
         }
         Room low = new Room(12, material);
         helper.assertTrue(place(helper, low, config(material, 0)), "Low cave cluster failed");
@@ -111,23 +96,6 @@ public final class CavernFormationTests {
         place(helper, repeated, config(material, 0));
         helper.assertTrue(
                 low.edits.equals(repeated.edits), "Formation shape must be deterministic");
-        Path directory = Path.of("../build/reports/terrain");
-        Files.createDirectories(directory);
-        BufferedImage preview =
-                new BufferedImage(
-                        image.getWidth() * 3,
-                        image.getHeight() * 3 + 24,
-                        BufferedImage.TYPE_INT_RGB);
-        var graphics = preview.createGraphics();
-        graphics.setColor(new Color(0x111827));
-        graphics.fillRect(0, 0, preview.getWidth(), preview.getHeight());
-        graphics.drawImage(image, 0, 24, image.getWidth() * 3, image.getHeight() * 3, null);
-        graphics.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-        graphics.setColor(new Color(0xe2e8f0));
-        String[] labels = {"Stalagmite", "Stalactite", "Opposing", "Column"};
-        for (int i = 0; i < labels.length; i++) graphics.drawString(labels[i], i * 99 + 10, 17);
-        graphics.dispose();
-        ImageIO.write(preview, "png", directory.resolve("formations.png").toFile());
         helper.succeed();
     }
 
