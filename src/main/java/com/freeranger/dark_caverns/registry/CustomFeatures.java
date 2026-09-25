@@ -6,6 +6,7 @@ import com.freeranger.dark_caverns.generation.CavernLandmarkConfiguration;
 import com.freeranger.dark_caverns.generation.CavernLandmarkFeature;
 import com.freeranger.dark_caverns.generation.CavernRouteFeature;
 import com.freeranger.dark_caverns.generation.CrackedBedrockFeature;
+import com.freeranger.dark_caverns.generation.GiantTwistwoodTreeFeature;
 import com.freeranger.dark_caverns.generation.HallowClutterFeature;
 import com.freeranger.dark_caverns.generation.HallowLakeFeature;
 import com.freeranger.dark_caverns.generation.MoltenCalderaFeature;
@@ -41,6 +42,9 @@ public final class CustomFeatures {
 
     public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>>
             TWISTWOOD_TREE = FEATURES.register("twistwood_tree", TwistwoodTreeFeature::new);
+    public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>>
+            GIANT_TWISTWOOD_TREE =
+                    FEATURES.register("giant_twistwood_tree", GiantTwistwoodTreeFeature::new);
 
     private CustomFeatures() {}
 

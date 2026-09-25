@@ -394,6 +394,60 @@ public final class TangledHallowTests {
         helper.succeed();
     }
 
+    @GameTest(template = "sacred_torch")
+    public static void giantTwistwoodTreesAreGroundedConnectedAndAtomic(GameTestHelper helper) {
+        Room giant = new Room(helper, 80, pos -> true);
+        helper.assertTrue(placeGiant(giant), "Giant Twistwood failed in a clear tall cavern");
+        long logs =
+                giant.edits.values().stream()
+                        .filter(state -> state.is(CustomBlocks.TWISTWOOD_LOG.get()))
+                        .count();
+        long leaves =
+                giant.edits.values().stream()
+                        .filter(state -> state.is(CustomBlocks.TWISTWOOD_LEAVES.get()))
+                        .count();
+        int minX = giant.edits.keySet().stream().mapToInt(BlockPos::getX).min().orElse(0);
+        int maxX = giant.edits.keySet().stream().mapToInt(BlockPos::getX).max().orElse(0);
+        int minZ = giant.edits.keySet().stream().mapToInt(BlockPos::getZ).min().orElse(0);
+        int maxZ = giant.edits.keySet().stream().mapToInt(BlockPos::getZ).max().orElse(0);
+        helper.assertTrue(logs > 750 && leaves > 1200, "Giant Twistwood lacks landmark mass");
+        helper.assertTrue(height(giant) >= 48, "Giant Twistwood is not at least twice as tall");
+        helper.assertTrue(
+                maxX - minX >= 24 && maxZ - minZ >= 24,
+                "Giant Twistwood crown is not broad enough");
+        helper.assertTrue(
+                Direction.Plane.HORIZONTAL.stream()
+                        .allMatch(
+                                direction ->
+                                        giant.read(ORIGIN.relative(direction))
+                                                .is(CustomBlocks.TWISTWOOD_LOG.get())),
+                "Giant Twistwood is missing its stable root anchor");
+        verifyAttached(helper, giant);
+
+        Room repeated = new Room(helper, 80, pos -> true);
+        helper.assertTrue(placeGiant(repeated), "Repeated giant Twistwood placement failed");
+        helper.assertTrue(
+                repeated.edits.equals(giant.edits), "Giant Twistwood shape is not deterministic");
+
+        Room low = new Room(helper, 48, pos -> true);
+        helper.assertFalse(placeGiant(low), "Giant Twistwood accepted a cramped cavern");
+        helper.assertTrue(low.edits.isEmpty(), "Rejected giant Twistwood left partial writes");
+
+        Room blocked = new Room(helper, 80, pos -> true);
+        blocked.edits.put(ORIGIN, Blocks.CHEST.defaultBlockState());
+        var before = Map.copyOf(blocked.edits);
+        helper.assertFalse(placeGiant(blocked), "Giant Twistwood replaced a protected block");
+        helper.assertTrue(blocked.edits.equals(before), "Failed giant tree left partial writes");
+
+        Room unsupported = new Room(helper, 80, pos -> true);
+        unsupported.edits.put(ORIGIN.below(), Blocks.AIR.defaultBlockState());
+        helper.assertFalse(placeGiant(unsupported), "Giant Twistwood accepted unsupported ground");
+        helper.assertTrue(
+                unsupported.edits.size() == 1,
+                "Unsupported giant Twistwood wrote blocks before validation");
+        helper.succeed();
+    }
+
     @GameTest(
             templateNamespace = DarkCaverns.MOD_ID + "_slow",
             template = "sacred_torch",
@@ -455,7 +509,22 @@ public final class TangledHallowTests {
         helper.assertTrue(
                 oldStats.largestWalk >= terrainStats.largestWalk * .75,
                 "Surface lakes severed too much of the forest floor");
-        volume.feature("twistwood_tree", GenerationStep.Decoration.VEGETAL_DECORATION, 0);
+        volume.feature("giant_twistwood_tree", GenerationStep.Decoration.VEGETAL_DECORATION, 0);
+        long giantLogs =
+                volume.featureWrites.values().stream()
+                        .filter(state -> state.is(CustomBlocks.TWISTWOOD_LOG.get()))
+                        .count();
+        long giantLeaves =
+                volume.featureWrites.values().stream()
+                        .filter(state -> state.is(CustomBlocks.TWISTWOOD_LEAVES.get()))
+                        .count();
+        helper.assertTrue(
+                giantLogs > 750 && giantLogs < 6000 && giantLeaves > 1200,
+                "Giant Twistwoods are missing or too common: logs="
+                        + giantLogs
+                        + ", leaves="
+                        + giantLeaves);
+        volume.feature("twistwood_tree", GenerationStep.Decoration.VEGETAL_DECORATION, 1);
         byte[] afterTrees = volume.snapshot();
         var stats = TerrainTopology.measure(afterTrees);
         long logs =
@@ -608,10 +677,13 @@ public final class TangledHallowTests {
                 terrainStats.largestWalk,
                 oldStats.largestWalk);
         DarkCaverns.LOGGER.info(
-                "Tangled Hallow: logs={}, leaves={}, plants={}, mud={}, clutterLogs={} ({}"
+                "Tangled Hallow: giantLogs={}, giantLeaves={}, logs={}, leaves={}, plants={},"
+                        + " mud={}, clutterLogs={} ({}"
                         + " horizontal, {} vertical), clutterLeaves={},"
                         + " clutterLost={}/{}, lostFloors={}/{},"
                         + " added={}, largestWalk={}->{}->{}, routeHeight={}",
+                giantLogs,
+                giantLeaves,
                 logs,
                 leaves,
                 plants,
@@ -647,6 +719,10 @@ public final class TangledHallowTests {
                         + shape.largest()
                         + "\nleaves="
                         + leaves
+                        + "\ngiant_logs="
+                        + giantLogs
+                        + "\ngiant_leaves="
+                        + giantLeaves
                         + "\nplants="
                         + plants
                         + "\nclutter_logs="
@@ -695,6 +771,19 @@ public final class TangledHallowTests {
 
     private static boolean place(Room room) {
         return CustomFeatures.TWISTWOOD_TREE
+                .get()
+                .place(
+                        new FeaturePlaceContext<>(
+                                Optional.empty(),
+                                room.world,
+                                null,
+                                RandomSource.create(7),
+                                ORIGIN,
+                                NoneFeatureConfiguration.INSTANCE));
+    }
+
+    private static boolean placeGiant(Room room) {
+        return CustomFeatures.GIANT_TWISTWOOD_TREE
                 .get()
                 .place(
                         new FeaturePlaceContext<>(
