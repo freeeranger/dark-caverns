@@ -23,6 +23,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 /** A rare cavern landmark with a thick trunk, grounded roots and a ceiling-aware crown. */
 public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfiguration> {
     private static final ResourceLocation TANGLED_HALLOW = DarkCaverns.id("tangled_hallow");
+    private static final double TAU = Math.PI * 2;
+    private static final double GOLDEN_ANGLE = 2.399963229728653;
     private static final int MIN_CLEARANCE = 54;
     private static final int MAX_CLEARANCE = 80;
 
@@ -45,7 +47,7 @@ public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfigur
         if (height < 48) return false;
 
         TreePlan plan = plan(level, origin, context.random(), height);
-        if (plan.roots() < 4) return false;
+        if (plan.roots() < 4 || plan.branches() < 5) return false;
         plan.leaves().keySet().removeAll(plan.logs().keySet());
         for (BlockPos pos : plan.logs().keySet()) if (!writable(level, pos)) return false;
         // Cavern roofs are naturally uneven. Let foliage conform to nearby rock instead of
@@ -59,16 +61,15 @@ public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfigur
         plan.logs().forEach((pos, state) -> level.setBlock(pos, state, 2));
         plan.leaves()
                 .forEach(
-                        (pos, distance) -> {
-                            level.setBlock(
-                                    pos,
-                                    CustomBlocks.TWISTWOOD_LEAVES
-                                            .get()
-                                            .defaultBlockState()
-                                            .setValue(LeavesBlock.DISTANCE, distance)
-                                            .setValue(LeavesBlock.PERSISTENT, false),
-                                    2);
-                        });
+                        (pos, distance) ->
+                                level.setBlock(
+                                        pos,
+                                        CustomBlocks.TWISTWOOD_LEAVES
+                                                .get()
+                                                .defaultBlockState()
+                                                .setValue(LeavesBlock.DISTANCE, distance)
+                                                .setValue(LeavesBlock.PERSISTENT, false),
+                                        2));
         return true;
     }
 
@@ -77,65 +78,114 @@ public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfigur
         var logs = new LinkedHashMap<BlockPos, BlockState>();
         var leaves = new LinkedHashMap<BlockPos, Integer>();
         var spine = new ArrayList<BlockPos>();
-        double phase = random.nextDouble() * Math.PI * 2;
-        double lean = random.nextBoolean() ? 1 : -1;
+        double phase = random.nextDouble() * TAU;
+        int handedness = random.nextBoolean() ? 1 : -1;
+        int trunkHeight = (int) Math.round(height * .60);
+        double leanAngle = phase + handedness * .55;
         BlockPos previous = origin;
+        BlockPos[] previousLobes = new BlockPos[2];
 
-        for (int y = 0; y <= height; y++) {
-            double t = y / (double) height;
-            int centerX = (int) Math.round(Math.sin(phase + t * 2.6) * t * 4.0);
-            int centerZ = (int) Math.round(Math.cos(phase + lean * t * 2.4) * t * 4.0);
+        for (int y = 0; y <= trunkHeight; y++) {
+            double t = y / (double) trunkHeight;
+            double lean = 5.2 * t * t;
+            double bow = Math.sin(t * Math.PI) * 1.8;
+            int centerX =
+                    (int)
+                            Math.round(
+                                    Math.cos(leanAngle) * lean
+                                            + Math.cos(leanAngle + Math.PI / 2) * bow);
+            int centerZ =
+                    (int)
+                            Math.round(
+                                    Math.sin(leanAngle) * lean
+                                            + Math.sin(leanAngle + Math.PI / 2) * bow);
             BlockPos center = origin.offset(centerX, y, centerZ);
-            connect(logs, previous, center);
-            int radius =
-                    y <= 5
-                            ? 4
-                            : y < height * .20
-                                    ? 3
-                                    : y < height * .58 ? 2 : y < height * .82 ? 1 : 0;
-            trunkLayer(level, logs, center, origin.getY(), radius);
+            connectVertical(logs, previous, center);
+            double coreRadius = 1.85 - t * .35 + Math.sin(phase + t * TAU * 1.7) * .12;
+            trunkDisc(level, logs, center, origin.getY(), coreRadius);
+
+            // Broad overlapping lobes rotate with the grain. Their blocks stay vertical so the
+            // twist reads in the silhouette without bright end-grain pegs on the trunk surface.
+            double twist = phase + handedness * t * TAU * .92;
+            double lobeReach = 1.7 - t * .35;
+            double lobeRadius = 1.55 - t * .25;
+            for (int lobe = 0; lobe < previousLobes.length; lobe++) {
+                double angle = twist + lobe * Math.PI;
+                BlockPos lobeCenter =
+                        center.offset(
+                                (int) Math.round(Math.cos(angle) * lobeReach),
+                                0,
+                                (int) Math.round(Math.sin(angle) * lobeReach));
+                if (previousLobes[lobe] != null)
+                    connectVertical(logs, previousLobes[lobe], lobeCenter);
+                trunkDisc(level, logs, lobeCenter, origin.getY(), lobeRadius);
+                previousLobes[lobe] = lobeCenter;
+            }
             spine.add(center);
             previous = center;
         }
 
-        int rooted = roots(level, logs, origin, random);
-        int branches = 12;
-        for (int branch = 0; branch < branches; branch++) {
-            int forkY = Math.min(height - 5, (int) (height * (.35 + branch * .045)));
+        int rooted = roots(level, logs, origin, random, phase, handedness);
+        int completedBranches = 0;
+
+        // A few deliberately different lower limbs avoid the evenly spaced candelabra silhouette.
+        // Their broad bases overlap the trunk so each junction reads as a division of its mass.
+        for (int branch = 0; branch < 4; branch++) {
+            int forkY = (int) Math.round(height * (.27 + branch * .09)) + random.nextInt(5) - 2;
             BlockPos fork = spine.get(forkY);
-            BlockPos tip = fork;
-            double angle = phase + branch * 2.399963229728653 + (random.nextDouble() - .5) * .35;
-            double curve = (random.nextDouble() - .5) * .45;
-            int length = 9 + random.nextInt(6);
-            int rise = 4 + random.nextInt(5);
-            for (int step = 1; step <= length; step++) {
-                double progress = step / (double) length;
-                double reach = step * .95;
-                BlockPos next =
-                        fork.offset(
-                                (int) Math.round(Math.cos(angle + curve * progress) * reach),
-                                (int) Math.round(rise * progress),
-                                (int) Math.round(Math.sin(angle + curve * progress) * reach));
-                connect(logs, tip, next);
-                tip = next;
-            }
-            crown(leaves, tip, branch % 3 == 0 ? 5 : 4);
+            double angle = phase + branch * GOLDEN_ANGLE + (random.nextDouble() - .5) * .55;
+            BranchPlan limb =
+                    branchedLimb(
+                            fork,
+                            angle,
+                            18 + random.nextInt(7),
+                            2 + random.nextInt(8),
+                            branch == 0 ? -3 : -1.5 + random.nextDouble() * 3,
+                            2.45,
+                            branch * 31,
+                            random);
+            if (limb.logs().keySet().stream().anyMatch(pos -> !writable(level, pos))) continue;
+            logs.putAll(limb.logs());
+            leaves.putAll(limb.leaves());
+            completedBranches++;
         }
-        crown(leaves, spine.getLast().above(), 5);
-        return new TreePlan(origin, logs, leaves, rooted);
+
+        // The trunk ends by dividing into three unequal leaders instead of continuing as a pole
+        // through the canopy. Their terminal forks overlap into one broad, irregular crown.
+        for (int leader = 0; leader < 3; leader++) {
+            int forkY = trunkHeight - leader * 2;
+            BlockPos fork = spine.get(forkY);
+            double angle =
+                    phase + handedness * .8 + leader * TAU / 3 + (random.nextDouble() - .5) * .35;
+            BranchPlan limb =
+                    branchedLimb(
+                            fork,
+                            angle,
+                            9 + random.nextInt(5) + leader,
+                            Math.max(9, height - 5 - forkY - random.nextInt(4)),
+                            1.5 + random.nextDouble() * 2,
+                            2.35,
+                            200 + leader * 37,
+                            random);
+            if (limb.logs().keySet().stream().anyMatch(pos -> !writable(level, pos))) continue;
+            logs.putAll(limb.logs());
+            leaves.putAll(limb.leaves());
+            completedBranches++;
+        }
+        return new TreePlan(origin, logs, leaves, rooted, completedBranches);
     }
 
-    private static void trunkLayer(
+    private static void trunkDisc(
             WorldGenLevel level,
             Map<BlockPos, BlockState> logs,
             BlockPos center,
             int floorY,
-            int radius) {
-        for (int x = -radius; x <= radius; x++) {
-            for (int z = -radius; z <= radius; z++) {
-                if (x * x + z * z > radius * radius + 1) continue;
+            double radius) {
+        int extent = (int) Math.ceil(radius);
+        for (int x = -extent; x <= extent; x++) {
+            for (int z = -extent; z <= extent; z++) {
+                if (x * x + z * z > radius * radius + .35) continue;
                 BlockPos pos = center.offset(x, 0, z);
-                // Let the broad lowest layer conform to the cavern floor instead of floating.
                 if (pos.getY() == floorY && !ground(level.getBlockState(pos.below()))) continue;
                 log(logs, pos, Direction.Axis.Y);
             }
@@ -146,15 +196,23 @@ public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfigur
             WorldGenLevel level,
             Map<BlockPos, BlockState> logs,
             BlockPos origin,
-            RandomSource random) {
+            RandomSource random,
+            double phase,
+            int handedness) {
         int complete = 0;
-        int[][] directions = {{1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}};
-        for (int[] direction : directions) {
+        for (int root = 0; root < 7; root++) {
             BlockPos tip = origin;
             int reached = 0;
-            int length = 9 + random.nextInt(7);
+            int length = 11 + random.nextInt(8);
+            double angle = phase + root * TAU / 7 + (random.nextDouble() - .5) * .3;
+            double curve = handedness * (.12 + random.nextDouble() * .2);
             for (int step = 1; step <= length; step++) {
-                BlockPos target = origin.offset(direction[0] * step, 0, direction[1] * step);
+                double progress = step / (double) length;
+                BlockPos target =
+                        origin.offset(
+                                (int) Math.round(Math.cos(angle + curve * progress) * step),
+                                0,
+                                (int) Math.round(Math.sin(angle + curve * progress) * step));
                 List<BlockPos> segment = path(tip, target);
                 if (segment.stream()
                         .anyMatch(
@@ -166,7 +224,10 @@ public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfigur
                     Direction.Axis axis =
                             pos.getX() != last.getX() ? Direction.Axis.X : Direction.Axis.Z;
                     log(logs, pos, axis);
-                    if (step <= 4) log(logs, pos.above(), axis);
+                    int buttressHeight =
+                            (int) Math.round(6 * Math.pow(Math.max(0, 1 - progress), 1.35));
+                    for (int y = 1; y <= buttressHeight; y++)
+                        log(logs, pos.above(y), Direction.Axis.Y);
                     last = pos;
                 }
                 tip = target;
@@ -175,6 +236,150 @@ public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfigur
             if (reached >= 3) complete++;
         }
         return complete;
+    }
+
+    private static BranchPlan branchedLimb(
+            BlockPos fork,
+            double angle,
+            int length,
+            int rise,
+            double sag,
+            double baseRadius,
+            int salt,
+            RandomSource random) {
+        var logs = new LinkedHashMap<BlockPos, BlockState>();
+        var leaves = new LinkedHashMap<BlockPos, Integer>();
+        double bend = (random.nextDouble() - .5) * .7;
+        List<BlockPos> primary = limb(logs, fork, angle, length, rise, bend, sag, baseRadius);
+        foliageSpray(leaves, primary, salt + 41, .64);
+
+        for (int forkIndex = 0; forkIndex < 2; forkIndex++) {
+            BlockPos secondaryFork = primary.get((int) (primary.size() * (.52 + forkIndex * .17)));
+            double side = forkIndex == 0 ? -1 : 1;
+            double forkAngle = angle + side * (.52 + random.nextDouble() * .28) + bend * .35;
+            List<BlockPos> secondary =
+                    limb(
+                            logs,
+                            secondaryFork,
+                            forkAngle,
+                            8 + random.nextInt(5),
+                            2 + random.nextInt(6),
+                            (random.nextDouble() - .5) * .45,
+                            -1 + random.nextDouble() * 2,
+                            1.35);
+            foliageSpray(leaves, secondary, salt + forkIndex * 11 + 47, .52);
+            foliageTuft(leaves, secondary.getLast().above(), salt + forkIndex * 11);
+
+            if (forkIndex == 0) {
+                BlockPos twigFork = secondary.get((int) (secondary.size() * .58));
+                double twigAngle = forkAngle - side * (.7 + random.nextDouble() * .25);
+                List<BlockPos> twig =
+                        limb(
+                                logs,
+                                twigFork,
+                                twigAngle,
+                                4 + random.nextInt(3),
+                                random.nextInt(4),
+                                0,
+                                0,
+                                .8);
+                foliageTuft(leaves, twig.getLast().above(), salt + 23);
+            }
+        }
+        foliageTuft(leaves, primary.getLast().above(), salt + 29);
+        return new BranchPlan(logs, leaves);
+    }
+
+    private static void foliageSpray(
+            Map<BlockPos, Integer> leaves, List<BlockPos> branch, int salt, double startFraction) {
+        int start = (int) (branch.size() * startFraction);
+        for (int index = start; index < branch.size() - 1; index += 3) {
+            BlockPos pos = branch.get(index);
+            int dx = Math.floorMod(salt + index * 3, 3) - 1;
+            int dy = Math.floorMod(salt + index * 5, 3) - 1;
+            int dz = Math.floorMod(salt + index * 7, 3) - 1;
+            foliageBlob(leaves, pos.offset(dx, dy, dz), 2, 2, 2, salt + index);
+        }
+    }
+
+    private static List<BlockPos> limb(
+            Map<BlockPos, BlockState> logs,
+            BlockPos fork,
+            double angle,
+            int length,
+            int rise,
+            double bend,
+            double sag,
+            double baseRadius) {
+        var points = new ArrayList<BlockPos>();
+        BlockPos previous = fork;
+        for (int step = 1; step <= length; step++) {
+            double progress = step / (double) length;
+            double reach = length * (progress * .55 + progress * progress * .45);
+            double limbAngle = angle + bend * progress * progress;
+            int y = (int) Math.round(rise * progress + sag * Math.sin(Math.PI * progress));
+            BlockPos next =
+                    fork.offset(
+                            (int) Math.round(Math.cos(limbAngle) * reach),
+                            y,
+                            (int) Math.round(Math.sin(limbAngle) * reach));
+            Direction.Axis axis = horizontalAxis(limbAngle);
+            connectLimb(logs, previous, next, axis);
+            double radius = .55 + (baseRadius - .55) * Math.pow(1 - progress, .7);
+            branchSection(logs, next, axis, radius);
+            points.add(next);
+            previous = next;
+        }
+        return points;
+    }
+
+    private static void branchSection(
+            Map<BlockPos, BlockState> logs, BlockPos center, Direction.Axis axis, double radius) {
+        int extent = (int) Math.ceil(radius);
+        for (int vertical = -extent; vertical <= extent; vertical++) {
+            for (int perpendicular = -extent; perpendicular <= extent; perpendicular++) {
+                if (vertical * vertical + perpendicular * perpendicular > radius * radius + .2)
+                    continue;
+                int x = axis == Direction.Axis.X ? 0 : perpendicular;
+                int z = axis == Direction.Axis.X ? perpendicular : 0;
+                log(logs, center.offset(x, vertical, z), axis);
+            }
+        }
+    }
+
+    private static Direction.Axis horizontalAxis(double angle) {
+        return Math.abs(Math.cos(angle)) >= Math.abs(Math.sin(angle))
+                ? Direction.Axis.X
+                : Direction.Axis.Z;
+    }
+
+    private static void connectLimb(
+            Map<BlockPos, BlockState> logs, BlockPos from, BlockPos to, Direction.Axis axis) {
+        while (!from.equals(to)) {
+            int dx = Integer.signum(to.getX() - from.getX());
+            int dy = Integer.signum(to.getY() - from.getY());
+            int dz = Integer.signum(to.getZ() - from.getZ());
+            int rx = Math.abs(to.getX() - from.getX());
+            int ry = Math.abs(to.getY() - from.getY());
+            int rz = Math.abs(to.getZ() - from.getZ());
+            if (ry >= rx && ry >= rz && dy != 0) from = from.offset(0, dy, 0);
+            else if (rx >= rz && dx != 0) from = from.offset(dx, 0, 0);
+            else from = from.offset(0, 0, dz);
+            log(logs, from, axis);
+        }
+    }
+
+    private static void connectVertical(
+            Map<BlockPos, BlockState> logs, BlockPos from, BlockPos to) {
+        while (!from.equals(to)) {
+            int dx = Integer.signum(to.getX() - from.getX());
+            int dy = Integer.signum(to.getY() - from.getY());
+            int dz = Integer.signum(to.getZ() - from.getZ());
+            if (dy != 0) from = from.offset(0, dy, 0);
+            else if (dx != 0) from = from.offset(dx, 0, 0);
+            else from = from.offset(0, 0, dz);
+            log(logs, from, Direction.Axis.Y);
+        }
     }
 
     private static List<BlockPos> path(BlockPos from, BlockPos to) {
@@ -190,21 +395,6 @@ public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfigur
         return result;
     }
 
-    private static void connect(Map<BlockPos, BlockState> logs, BlockPos from, BlockPos to) {
-        while (from.getY() != to.getY()) {
-            from = from.offset(0, Integer.signum(to.getY() - from.getY()), 0);
-            log(logs, from, Direction.Axis.Y);
-        }
-        while (from.getX() != to.getX()) {
-            from = from.offset(Integer.signum(to.getX() - from.getX()), 0, 0);
-            log(logs, from, Direction.Axis.X);
-        }
-        while (from.getZ() != to.getZ()) {
-            from = from.offset(0, 0, Integer.signum(to.getZ() - from.getZ()));
-            log(logs, from, Direction.Axis.Z);
-        }
-    }
-
     private static void log(Map<BlockPos, BlockState> logs, BlockPos pos, Direction.Axis axis) {
         logs.putIfAbsent(
                 pos,
@@ -214,15 +404,46 @@ public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfigur
                         .setValue(RotatedPillarBlock.AXIS, axis));
     }
 
-    private static void crown(Map<BlockPos, Integer> leaves, BlockPos center, int radius) {
-        for (int x = -radius; x <= radius; x++) {
-            for (int z = -radius; z <= radius; z++) {
-                for (int y = -radius + 1; y < radius; y++) {
-                    if (x * x + z * z + y * y * 2 <= radius * radius + 2)
-                        leaves.put(center.offset(x, y, z), 7);
+    private static void foliageTuft(Map<BlockPos, Integer> leaves, BlockPos center, int salt) {
+        int direction = Math.floorMod(salt * 5 + 3, 8);
+        int[] dx = {1, 1, 0, -1, -1, -1, 0, 1};
+        int[] dz = {0, 1, 1, 1, 0, -1, -1, -1};
+        foliageBlob(leaves, center, 3, 3, 3, salt);
+        foliageBlob(
+                leaves, center.offset(dx[direction] * 2, 1, dz[direction] * 2), 3, 2, 3, salt + 1);
+        int cross = (direction + 2 + Math.floorMod(salt, 3)) % 8;
+        foliageBlob(leaves, center.offset(dx[cross] * 2, -1, dz[cross] * 2), 2, 2, 2, salt + 2);
+    }
+
+    private static void foliageBlob(
+            Map<BlockPos, Integer> leaves,
+            BlockPos center,
+            int radiusX,
+            int radiusY,
+            int radiusZ,
+            int salt) {
+        for (int x = -radiusX; x <= radiusX; x++) {
+            for (int z = -radiusZ; z <= radiusZ; z++) {
+                for (int y = -radiusY; y <= radiusY; y++) {
+                    double distance =
+                            x * x / (double) (radiusX * radiusX)
+                                    + y * y / (double) (radiusY * radiusY)
+                                    + z * z / (double) (radiusZ * radiusZ);
+                    BlockPos pos = center.offset(x, y, z);
+                    if (distance <= .68 + edgeNoise(pos, salt) * .46) leaves.put(pos, 7);
                 }
             }
         }
+    }
+
+    private static double edgeNoise(BlockPos pos, int salt) {
+        long value = pos.asLong() ^ (long) salt * 0x9e3779b97f4a7c15L;
+        value ^= value >>> 30;
+        value *= 0xbf58476d1ce4e5b9L;
+        value ^= value >>> 27;
+        value *= 0x94d049bb133111ebL;
+        value ^= value >>> 31;
+        return (value & 1023) / 1023.0;
     }
 
     private static void supportLeaves(
@@ -274,5 +495,8 @@ public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfigur
             BlockPos anchor,
             Map<BlockPos, BlockState> logs,
             Map<BlockPos, Integer> leaves,
-            int roots) {}
+            int roots,
+            int branches) {}
+
+    private record BranchPlan(Map<BlockPos, BlockState> logs, Map<BlockPos, Integer> leaves) {}
 }

@@ -415,6 +415,55 @@ public final class TangledHallowTests {
         helper.assertTrue(
                 maxX - minX >= 24 && maxZ - minZ >= 24,
                 "Giant Twistwood crown is not broad enough");
+        int changingTrunkLayers = 0;
+        Set<Long> previousLayer = null;
+        for (int y = ORIGIN.getY() + 2; y <= ORIGIN.getY() + 12; y++) {
+            Set<Long> layer = new HashSet<>();
+            for (var entry : giant.edits.entrySet()) {
+                BlockPos pos = entry.getKey();
+                if (pos.getY() == y
+                        && Math.abs(pos.getX() - ORIGIN.getX()) <= 7
+                        && Math.abs(pos.getZ() - ORIGIN.getZ()) <= 7
+                        && entry.getValue().is(CustomBlocks.TWISTWOOD_LOG.get()))
+                    layer.add(BlockPos.asLong(pos.getX(), 0, pos.getZ()));
+            }
+            if (previousLayer != null && !layer.equals(previousLayer)) changingTrunkLayers++;
+            previousLayer = layer;
+        }
+        helper.assertTrue(
+                changingTrunkLayers >= 6,
+                "Giant Twistwood trunk does not expose a changing spiral silhouette");
+        helper.assertTrue(
+                giant.edits.entrySet().stream()
+                        .filter(
+                                entry ->
+                                        entry.getKey().getY() >= ORIGIN.getY() + 2
+                                                && entry.getKey().getY() <= ORIGIN.getY() + 12
+                                                && Math.abs(entry.getKey().getX() - ORIGIN.getX())
+                                                        <= 7
+                                                && Math.abs(entry.getKey().getZ() - ORIGIN.getZ())
+                                                        <= 7
+                                                && entry.getValue()
+                                                        .is(CustomBlocks.TWISTWOOD_LOG.get()))
+                        .allMatch(
+                                entry ->
+                                        entry.getValue().getValue(RotatedPillarBlock.AXIS)
+                                                == Direction.Axis.Y),
+                "Giant Twistwood exposes horizontal end grain as pegs on its lower trunk");
+        long horizontalCrownLogs =
+                giant.edits.entrySet().stream()
+                        .filter(
+                                entry ->
+                                        entry.getKey().getY() >= ORIGIN.getY() + 12
+                                                && entry.getValue()
+                                                        .is(CustomBlocks.TWISTWOOD_LOG.get())
+                                                && entry.getValue()
+                                                                .getValue(RotatedPillarBlock.AXIS)
+                                                        != Direction.Axis.Y)
+                        .count();
+        helper.assertTrue(
+                horizontalCrownLogs > 100,
+                "Giant Twistwood lacks substantial horizontal primary limbs");
         helper.assertTrue(
                 Direction.Plane.HORIZONTAL.stream()
                         .allMatch(
