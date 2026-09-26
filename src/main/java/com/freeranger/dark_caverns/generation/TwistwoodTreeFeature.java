@@ -175,6 +175,7 @@ public final class TwistwoodTreeFeature extends Feature<NoneFeatureConfiguration
                         || state.is(CustomBlocks.UNDERSPROUTS.get())
                         || state.is(CustomBlocks.TALL_UNDERSPROUTS.get())
                         || state.is(CustomBlocks.MIGHTY_UNDERSPROUTS.get())
+                        || state.is(CustomBlocks.SUBTERRANEAN_BLOSSOM.get())
                         || state.is(CustomBlocks.TWISTWOOD_SAPLING.get()));
     }
 }

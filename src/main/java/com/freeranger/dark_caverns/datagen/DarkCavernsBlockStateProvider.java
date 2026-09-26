@@ -178,8 +178,10 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                 twistwoodPlanksTexture);
         crossBlock(CustomBlocks.UNDERSPROUTS.get());
         doublePlantBlock(CustomBlocks.TALL_UNDERSPROUTS.get());
-        mightyUndersproutsBlock(CustomBlocks.MIGHTY_UNDERSPROUTS.get());
-        mightyUndersproutsItem();
+        bigPlantBlock(CustomBlocks.MIGHTY_UNDERSPROUTS.get());
+        bigPlantItem("mighty_undersprouts", 4.5F, 11.5F, 2.0F, 8.0F);
+        bigPlantBlock(CustomBlocks.SUBTERRANEAN_BLOSSOM.get());
+        bigPlantItem("subterranean_blossom", 3.9F, 12.1F, 1.0F, 8.0F);
         crossBlock(CustomBlocks.TWISTWOOD_SAPLING.get());
         ModelFile pottedTwistwoodSapling =
                 models().withExistingParent(
@@ -206,13 +208,14 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                 .texture("layer0", modLoc("item/twistwood_door"));
     }
 
-    private void mightyUndersproutsBlock(Block block) {
+    private void bigPlantBlock(Block block) {
+        String textureName = name(block);
         var builder =
-                models().getBuilder(name(block))
+                models().getBuilder(textureName)
                         .ao(false)
                         .renderType(CUTOUT)
-                        .texture("particle", modLoc("block/mighty_undersprouts"))
-                        .texture("texture", modLoc("block/mighty_undersprouts"));
+                        .texture("particle", modLoc("block/" + textureName))
+                        .texture("texture", modLoc("block/" + textureName));
 
         builder.element()
                 .from(-16.0F, 0.0F, 8.0F)
@@ -281,16 +284,16 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
         simpleBlock(block, builder);
     }
 
-    private void mightyUndersproutsItem() {
+    private void bigPlantItem(String name, float yMin, float yMax, float vMin, float vMax) {
         var model =
                 itemModels()
-                        .getBuilder("mighty_undersprouts")
-                        .texture("plant", modLoc("block/mighty_undersprouts"))
+                        .getBuilder(name)
+                        .texture("plant", modLoc("block/" + name))
                         .ao(false)
                         .guiLight(GuiLight.FRONT);
-        var plane = model.element().from(1.0F, 4.5F, 8.0F).to(15.0F, 11.5F, 8.0F).shade(false);
-        plane.face(Direction.NORTH).uvs(0.0F, 2.0F, 12.0F, 8.0F).texture("#plant");
-        plane.face(Direction.SOUTH).uvs(0.0F, 2.0F, 12.0F, 8.0F).texture("#plant");
+        var plane = model.element().from(1.0F, yMin, 8.0F).to(15.0F, yMax, 8.0F).shade(false);
+        plane.face(Direction.NORTH).uvs(0.0F, vMin, 12.0F, vMax).texture("#plant");
+        plane.face(Direction.SOUTH).uvs(0.0F, vMin, 12.0F, vMax).texture("#plant");
 
         var transforms = model.transforms();
         transforms

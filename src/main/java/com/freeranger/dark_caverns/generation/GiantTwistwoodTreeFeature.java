@@ -487,7 +487,8 @@ public final class GiantTwistwoodTreeFeature extends Feature<NoneFeatureConfigur
                 && (state.isAir()
                         || state.is(CustomBlocks.UNDERSPROUTS.get())
                         || state.is(CustomBlocks.TALL_UNDERSPROUTS.get())
-                        || state.is(CustomBlocks.MIGHTY_UNDERSPROUTS.get()));
+                        || state.is(CustomBlocks.MIGHTY_UNDERSPROUTS.get())
+                        || state.is(CustomBlocks.SUBTERRANEAN_BLOSSOM.get()));
     }
 
     /** The stable anchor is intentionally retained for a future root-room/template pass. */

@@ -11,6 +11,7 @@ import com.freeranger.dark_caverns.blocks.LuminiteTorchBlock;
 import com.freeranger.dark_caverns.blocks.LuminiteWallTorchBlock;
 import com.freeranger.dark_caverns.blocks.MightyUndersproutsBlock;
 import com.freeranger.dark_caverns.blocks.ScorchedBerryBushBlock;
+import com.freeranger.dark_caverns.blocks.SubterraneanBlossomBlock;
 import com.freeranger.dark_caverns.blocks.TallUndersproutsBlock;
 import com.freeranger.dark_caverns.blocks.TwistwoodLogBlock;
 import com.freeranger.dark_caverns.blocks.TwistwoodSaplingBlock;
@@ -291,6 +292,15 @@ public final class CustomBlocks {
                     "mighty_undersprouts",
                     () ->
                             new MightyUndersproutsBlock(
+                                    BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS)
+                                            .offsetType(BlockBehaviour.OffsetType.NONE)
+                                            .noOcclusion(),
+                                    OVERGROWN_CARFSTONE));
+    public static final DeferredBlock<SubterraneanBlossomBlock> SUBTERRANEAN_BLOSSOM =
+            register(
+                    "subterranean_blossom",
+                    () ->
+                            new SubterraneanBlossomBlock(
                                     BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS)
                                             .offsetType(BlockBehaviour.OffsetType.NONE)
                                             .noOcclusion(),

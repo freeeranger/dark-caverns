@@ -21,6 +21,9 @@
     "dark_caverns:scorched_berries": {
       "chance": 0.3
     },
+    "dark_caverns:subterranean_blossom": {
+      "chance": 0.65
+    },
     "dark_caverns:tall_undersprouts": {
       "chance": 0.5
     },

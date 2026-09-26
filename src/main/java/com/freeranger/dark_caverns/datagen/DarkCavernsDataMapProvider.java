@@ -20,6 +20,7 @@ final class DarkCavernsDataMapProvider extends DataMapProvider {
                 .add(DarkCaverns.id("undersprouts"), new Compostable(0.30F), false)
                 .add(DarkCaverns.id("tall_undersprouts"), new Compostable(0.50F), false)
                 .add(DarkCaverns.id("mighty_undersprouts"), new Compostable(0.65F), false)
+                .add(DarkCaverns.id("subterranean_blossom"), new Compostable(0.65F), false)
                 .add(DarkCaverns.id("water_sproutlets"), new Compostable(0.65F), false)
                 .add(DarkCaverns.id("twistwood_sapling"), new Compostable(0.30F), false)
                 .add(DarkCaverns.id("twistwood_leaves"), new Compostable(0.30F), false)

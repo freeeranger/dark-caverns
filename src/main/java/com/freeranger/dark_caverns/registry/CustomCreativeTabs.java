@@ -50,6 +50,7 @@ public final class CustomCreativeTabs {
                     CustomBlocks.UNDERSPROUTS,
                     CustomBlocks.TALL_UNDERSPROUTS,
                     CustomBlocks.MIGHTY_UNDERSPROUTS,
+                    CustomBlocks.SUBTERRANEAN_BLOSSOM,
                     CustomBlocks.WATER_SPROUTLETS,
                     CustomBlocks.TWISTWOOD_LOG,
                     CustomBlocks.TWISTWOOD_WOOD,
