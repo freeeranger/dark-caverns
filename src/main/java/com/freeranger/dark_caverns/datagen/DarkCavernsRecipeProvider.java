@@ -547,15 +547,32 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                         Items.NETHERITE_BOOTS);
         Ingredient cavernCatalyst = Ingredient.of(itemTag("dusts/luminite"));
         smithingSet(output, cavernCatalyst, diamondGear, itemTag("ingots/platinum"), platinumGear);
-        smithingSet(output, cavernCatalyst, platinumGear, itemTag("gems/hellstone"), hellstoneGear);
         smithingSet(
-                output, cavernCatalyst, platinumGear, itemTag("gems/shroomstone"), shroomstoneGear);
+                output,
+                Ingredient.of(CustomItems.HELLSTONE_UPGRADE_SMITHING_TEMPLATE.get()),
+                platinumGear,
+                itemTag("gems/hellstone"),
+                hellstoneGear);
+        smithingSet(
+                output,
+                Ingredient.of(CustomItems.SHROOMSTONE_UPGRADE_SMITHING_TEMPLATE.get()),
+                platinumGear,
+                itemTag("gems/shroomstone"),
+                shroomstoneGear);
         smithingSet(
                 output,
                 SMITHING_TEMPLATE,
                 platinumGear,
                 itemTag("ingots/netherite"),
                 netheriteGear);
+        copySmithingTemplate(
+                output,
+                CustomItems.HELLSTONE_UPGRADE_SMITHING_TEMPLATE.get(),
+                CustomBlocks.MOLTEN_CARFSTONE.get());
+        copySmithingTemplate(
+                output,
+                CustomItems.SHROOMSTONE_UPGRADE_SMITHING_TEMPLATE.get(),
+                CustomBlocks.CARFSTONE.get());
     }
 
     private void smithingSet(

@@ -130,6 +130,8 @@ public final class CustomCreativeTabs {
                     CustomEquipment.SHROOMSTONE_CHESTPLATE,
                     CustomEquipment.SHROOMSTONE_LEGGINGS,
                     CustomEquipment.SHROOMSTONE_BOOTS,
+                    CustomItems.HELLSTONE_UPGRADE_SMITHING_TEMPLATE,
+                    CustomItems.SHROOMSTONE_UPGRADE_SMITHING_TEMPLATE,
                     CustomItems.KEY_TO_THE_CAVERNS,
                     CustomItems.LUMINITE_TORCH,
                     CustomBlocks.LUMINITE_LANTERN,

@@ -11,6 +11,6 @@
     "id": "dark_caverns:shroomstone_axe"
   },
   "template": {
-    "tag": "c:dusts/luminite"
+    "item": "dark_caverns:shroomstone_upgrade_smithing_template"
   }
 }
