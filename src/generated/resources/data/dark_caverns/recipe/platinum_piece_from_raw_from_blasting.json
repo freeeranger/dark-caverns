@@ -1,10 +1,10 @@
 {
-  "type": "minecraft:smelting",
+  "type": "minecraft:blasting",
   "category": "misc",
-  "cookingtime": 200,
-  "experience": 0.1,
+  "cookingtime": 100,
+  "experience": 0.7,
   "ingredient": {
-    "tag": "c:ores/platinum"
+    "tag": "c:raw_materials/platinum"
   },
   "result": {
     "count": 1,

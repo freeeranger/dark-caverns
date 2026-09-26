@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:ingots/platinum"
+      "tag": "c:storage_blocks/raw_platinum"
     }
   ],
   "result": {
     "count": 9,
-    "id": "dark_caverns:platinum_piece"
+    "id": "dark_caverns:raw_platinum"
   }
 }

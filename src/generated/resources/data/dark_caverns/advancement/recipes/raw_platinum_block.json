@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:ores/platinum"
+            "items": "#c:raw_materials/platinum"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dark_caverns:platinum_piece_from_smelting"
+        "recipe": "dark_caverns:raw_platinum_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "dark_caverns:platinum_piece_from_smelting"
+      "dark_caverns:raw_platinum_block"
     ]
   }
 }

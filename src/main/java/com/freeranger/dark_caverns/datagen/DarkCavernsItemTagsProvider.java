@@ -67,6 +67,7 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
                     "ores/hellstone",
                     "storage_blocks",
                     "storage_blocks/platinum",
+                    "storage_blocks/raw_platinum",
                     "storage_blocks/luminite",
                     "storage_blocks/hellstone",
                     "storage_blocks/shroomstone"
@@ -90,11 +91,11 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
         tag(common("gems/hellstone")).add(CustomItems.HELLSTONE.get());
         tag(common("gems/shroomstone")).add(CustomItems.SHROOMSTONE.get());
 
+        tag(common("raw_materials")).addTag(common("raw_materials/platinum"));
+        tag(common("raw_materials/platinum")).add(CustomItems.RAW_PLATINUM.get());
+
         tag(common("ingots")).addTag(common("ingots/platinum"));
         tag(common("ingots/platinum")).add(CustomItems.PLATINUM_INGOT.get());
-
-        tag(common("nuggets")).addTag(common("nuggets/platinum"));
-        tag(common("nuggets/platinum")).add(CustomItems.PLATINUM_PIECE.get());
 
         tag(ItemTags.BEACON_PAYMENT_ITEMS)
                 .add(

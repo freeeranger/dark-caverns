@@ -292,6 +292,18 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
     private void buildMaterialRecipes(RecipeOutput output) {
         threeByThree(
                 output,
+                "raw_platinum_block",
+                CustomBlocks.RAW_PLATINUM_BLOCK.get(),
+                itemTag("raw_materials/platinum"));
+        unpack(
+                output,
+                "raw_platinum_from_block",
+                CustomItems.RAW_PLATINUM.get(),
+                9,
+                itemTag("storage_blocks/raw_platinum"));
+
+        threeByThree(
+                output,
                 "platinum_block",
                 CustomBlocks.PLATINUM_BLOCK.get(),
                 itemTag("ingots/platinum"));
@@ -301,12 +313,6 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                 CustomItems.PLATINUM_INGOT.get(),
                 9,
                 itemTag("storage_blocks/platinum"));
-        unpack(
-                output,
-                "platinum_piece_from_ingot",
-                CustomItems.PLATINUM_PIECE.get(),
-                9,
-                itemTag("ingots/platinum"));
 
         threeByThree(
                 output,
@@ -346,7 +352,7 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
 
         ShapelessRecipeBuilder.shapeless(CATEGORY, CustomItems.PLATINUM_INGOT.get())
                 .requires(Ingredient.of(itemTag("ingots/iron")), 4)
-                .requires(Ingredient.of(itemTag("nuggets/platinum")), 4)
+                .requires(CustomItems.PLATINUM_PIECE.get(), 4)
                 .unlockedBy("has_ingredient", has(itemTag("ingots/iron")))
                 .save(output, id("platinum_ingot"));
         ShapelessRecipeBuilder.shapeless(CATEGORY, CustomItems.HELLSTONE.get())
@@ -440,10 +446,16 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                 0.1F);
         cookPair(
                 output,
-                "platinum_piece",
+                "platinum_piece_from_raw",
+                input(itemTag("raw_materials/platinum")),
+                CustomItems.PLATINUM_PIECE.get(),
+                0.7F);
+        cookPair(
+                output,
+                "platinum_piece_from_ore",
                 input(itemTag("ores/platinum")),
                 CustomItems.PLATINUM_PIECE.get(),
-                0.1F);
+                0.7F);
         cookPair(
                 output,
                 "luminite_dust_from_ore",

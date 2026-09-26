@@ -79,7 +79,7 @@ final class DarkCavernsBlockLoot extends BlockLootSubProvider {
         add(CustomBlocks.LUMINITE_ORE.get(), this::createLuminiteOreDrops);
         add(
                 CustomBlocks.PLATINUM_ORE.get(),
-                block -> createOreDrop(block, CustomItems.PLATINUM_PIECE.get()));
+                block -> createOreDrop(block, CustomItems.RAW_PLATINUM.get()));
         add(
                 CustomBlocks.GLIMMERGRASS_BLOCK.get(),
                 block -> createSingleItemTableWithSilkTouch(block, CustomBlocks.CARFSTONE.get()));

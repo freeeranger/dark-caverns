@@ -127,10 +127,12 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
         tag(common("ores/hellstone")).add(CustomBlocks.HELLSTONE_ORE.get());
 
         var storageRoot = tag(common("storage_blocks"));
-        for (String material : new String[] {"platinum", "luminite", "hellstone", "shroomstone"}) {
+        for (String material :
+                new String[] {"platinum", "raw_platinum", "luminite", "hellstone", "shroomstone"}) {
             storageRoot.addTag(common("storage_blocks/" + material));
         }
         tag(common("storage_blocks/platinum")).add(CustomBlocks.PLATINUM_BLOCK.get());
+        tag(common("storage_blocks/raw_platinum")).add(CustomBlocks.RAW_PLATINUM_BLOCK.get());
         tag(common("storage_blocks/luminite")).add(CustomBlocks.LUMINITE_BLOCK.get());
         tag(common("storage_blocks/hellstone")).add(CustomBlocks.HELLSTONE_BLOCK.get());
         tag(common("storage_blocks/shroomstone")).add(CustomBlocks.SHROOMSTONE_BLOCK.get());
@@ -170,6 +172,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
                         CustomBlocks.LUMINITE_BLOCK.get(),
                         CustomBlocks.LUMINITE_ORE.get(),
                         CustomBlocks.PLATINUM_ORE.get(),
+                        CustomBlocks.RAW_PLATINUM_BLOCK.get(),
                         CustomBlocks.PLATINUM_BLOCK.get(),
                         CustomBlocks.CARFSTONE_COAL_ORE.get(),
                         CustomBlocks.CARFSTONE_IRON_ORE.get(),
@@ -203,6 +206,7 @@ final class DarkCavernsBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(
                         CustomBlocks.PLATINUM_ORE.get(),
+                        CustomBlocks.RAW_PLATINUM_BLOCK.get(),
                         CustomBlocks.PLATINUM_BLOCK.get(),
                         CustomBlocks.HELLSTONE_ORE.get(),
                         CustomBlocks.HELLSTONE_BLOCK.get(),

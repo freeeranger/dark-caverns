@@ -64,6 +64,7 @@ public final class CustomItems {
     public static final DeferredItem<Item> LUMINITE_DUST = item("luminite_dust");
     public static final DeferredItem<Item> HELLSTONE = fireResistantItem("hellstone");
     public static final DeferredItem<Item> HELLSTONE_ROCK = fireResistantItem("hellstone_rock");
+    public static final DeferredItem<Item> RAW_PLATINUM = item("raw_platinum");
     public static final DeferredItem<Item> PLATINUM_PIECE = item("platinum_piece");
     public static final DeferredItem<Item> SHROOMSTONE = item("shroomstone");
     public static final DeferredItem<Item> SHROOMSTONE_PIECE = item("shroomstone_piece");

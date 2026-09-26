@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/platinum"
+            "items": "#c:ores/platinum"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "dark_caverns:platinum_piece_from_ingot"
+        "recipe": "dark_caverns:platinum_piece_from_ore_from_blasting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "dark_caverns:platinum_piece_from_ingot"
+      "dark_caverns:platinum_piece_from_ore_from_blasting"
     ]
   }
 }

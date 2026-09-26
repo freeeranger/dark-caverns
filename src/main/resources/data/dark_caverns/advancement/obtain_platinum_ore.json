@@ -2,7 +2,7 @@
   "parent": "dark_caverns:enter_dark_caverns",
   "display": {
     "icon": {
-      "id": "dark_caverns:platinum_piece"
+      "id": "dark_caverns:raw_platinum"
     },
     "title": {
       "translate": "advancements.dark_caverns.obtain_platinum_ore.title"
@@ -16,7 +16,17 @@
     "hidden": false
   },
   "criteria": {
-    "platinum_ore": {
+    "raw_platinum": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "dark_caverns:raw_platinum"
+          }
+        ]
+      }
+    },
+    "platinum_piece": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -29,7 +39,8 @@
   },
   "requirements": [
     [
-      "platinum_ore"
+      "raw_platinum",
+      "platinum_piece"
     ]
   ]
 }
