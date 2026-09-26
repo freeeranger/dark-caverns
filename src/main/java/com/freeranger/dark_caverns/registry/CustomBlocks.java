@@ -168,9 +168,7 @@ public final class CustomBlocks {
     public static final DeferredBlock<Block> LUMINITE_ORE =
             register(
                     "carfstone_luminite_ore",
-                    () ->
-                            new DropExperienceBlock(
-                                    UniformInt.of(1, 4), stone(5.0F).lightLevel(state -> 9)));
+                    () -> new DropExperienceBlock(UniformInt.of(1, 4), stone(5.0F)));
     public static final DeferredBlock<Block> PLATINUM_ORE =
             register("carfstone_platinum_ore", () -> new Block(stone(7.0F)));
     public static final DeferredBlock<Block> PLATINUM_BLOCK =
@@ -235,8 +233,6 @@ public final class CustomBlocks {
                                             .noLootTable()
                                             .replaceable()
                                             .sound(SoundType.CALCITE)
-                                            .hasPostProcess((state, level, pos) -> true)
-                                            .emissiveRendering((state, level, pos) -> true)
                                             .pushReaction(PushReaction.DESTROY)));
     public static final DeferredBlock<CustomPlantBlock> GLIMMERGRASS =
             register(

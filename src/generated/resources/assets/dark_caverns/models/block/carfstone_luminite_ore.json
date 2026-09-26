@@ -1,6 +1,91 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#base"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#base"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#base"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#base"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#base"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#base"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#emissive"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#emissive"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#emissive"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#emissive"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#emissive"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#emissive"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "neoforge_data": {
+        "block_light": 15,
+        "sky_light": 15
+      },
+      "shade": false,
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout",
   "textures": {
-    "all": "dark_caverns:block/carfstone_luminite_ore"
+    "base": "dark_caverns:block/carfstone_luminite_ore",
+    "emissive": "dark_caverns:block/carfstone_luminite_ore_emissive",
+    "particle": "dark_caverns:block/carfstone_luminite_ore"
   }
 }
