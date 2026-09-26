@@ -2,15 +2,18 @@ package com.freeranger.dark_caverns.entities;
 
 import com.freeranger.dark_caverns.config.ServerConfig;
 import com.freeranger.dark_caverns.registry.CustomBlockTags;
+import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.freeranger.dark_caverns.registry.CustomItems;
 import com.freeranger.dark_caverns.registry.CustomSoundEvents;
 import com.freeranger.dark_caverns.registry.CustomSpawnEggs;
 import com.freeranger.dark_caverns.registry.ShroomieTrades;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -19,19 +22,28 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.LookAtTradingPlayerGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.TradeWithPlayerGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
@@ -68,11 +80,25 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
 
     @Override
     protected void registerGoals() {
+        goalSelector.addGoal(0, new FloatGoal(this));
+        goalSelector.addGoal(1, new PanicGoal(this, 1.5));
         goalSelector.addGoal(1, new TradeWithPlayerGoal(this));
         goalSelector.addGoal(1, new LookAtTradingPlayerGoal(this));
-        goalSelector.addGoal(1, new RandomLookAroundGoal(this));
-        goalSelector.addGoal(1, new PanicGoal(this, 1.5));
-        goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0));
+        goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Zombie.class, 12.0F, 1.1, 1.4));
+        goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Monster.class, 8.0F, 1.0, 1.3));
+        goalSelector.addGoal(
+                4,
+                new TemptGoal(
+                        this,
+                        1.1,
+                        Ingredient.of(
+                                CustomBlocks.GLIMMERSHROOM.get(),
+                                Items.RED_MUSHROOM,
+                                Items.BROWN_MUSHROOM),
+                        false));
+        goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0));
+        goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
     @Override
@@ -118,6 +144,14 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
     }
 
     @Override
+    public void notifyTradeUpdated(ItemStack stack) {
+        super.notifyTradeUpdated(stack);
+        if (!level().isClientSide && stack.isEmpty()) {
+            level().broadcastEntityEvent(this, (byte) 13);
+        }
+    }
+
+    @Override
     public void playCelebrateSound() {
         playSound(CustomSoundEvents.SHROOMIE_TRADE_YES.get(), getSoundVolume(), getVoicePitch());
     }
@@ -125,6 +159,24 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (isAlive()) {
+            boolean isMushroom =
+                    stack.is(CustomBlocks.GLIMMERSHROOM.get().asItem())
+                            || stack.is(Items.RED_MUSHROOM)
+                            || stack.is(Items.BROWN_MUSHROOM);
+            if (isMushroom && getHealth() < getMaxHealth()) {
+                heal(4.0F);
+                playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
+                if (!level().isClientSide) {
+                    level().broadcastEntityEvent(this, (byte) 12);
+                }
+                return InteractionResult.sidedSuccess(level().isClientSide);
+            }
+        }
+
         if (!stack.is(CustomSpawnEggs.SHROOMIE_SPAWN_EGG.get())
                 && isAlive()
                 && !isTrading()
@@ -151,6 +203,28 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
                             new ExperienceOrb(
                                     level(), getX(), getY() + 0.5, getZ(), 3 + random.nextInt(4)));
         }
+        level().broadcastEntityEvent(this, (byte) 14);
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 14) {
+            addParticlesAroundSelf(ParticleTypes.HAPPY_VILLAGER);
+        } else if (id == 13) {
+            addParticlesAroundSelf(ParticleTypes.ANGRY_VILLAGER);
+        } else if (id == 12) {
+            addParticlesAroundSelf(ParticleTypes.HEART);
+        } else {
+            super.handleEntityEvent(id);
+        }
+    }
+
+    @Override
+    public void setLastHurtByMob(@Nullable LivingEntity livingBase) {
+        if (livingBase instanceof Player && isAlive() && !level().isClientSide) {
+            level().broadcastEntityEvent(this, (byte) 13);
+        }
+        super.setLastHurtByMob(livingBase);
     }
 
     @Override
@@ -181,6 +255,9 @@ public final class ShroomieEntity extends AbstractVillager implements GeoEntity 
             offer.resetUses();
         }
         nextRestockGameTime = level().getGameTime() + RESTOCK_INTERVAL;
+        if (!level().isClientSide) {
+            level().broadcastEntityEvent(this, (byte) 14);
+        }
     }
 
     private boolean needsRestock() {

@@ -2,9 +2,14 @@ package com.freeranger.dark_caverns.client;
 
 import com.freeranger.dark_caverns.DarkCaverns;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import software.bernie.geckolib.animatable.GeoAnimatable;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.model.data.EntityModelData;
 
 /** Resolves the conventional model, texture, and animation paths for one entity type. */
 @SuppressWarnings("deprecation") // GeckoLib 4.9.2 requires these deprecated abstract overrides.
@@ -32,5 +37,19 @@ public final class EntityGeoModel<T extends Entity & GeoAnimatable> extends GeoM
     @Override
     public ResourceLocation getAnimationResource(T entity) {
         return animation;
+    }
+
+    @Override
+    public void setCustomAnimations(
+            T animatable, long instanceId, AnimationState<T> animationState) {
+        super.setCustomAnimations(animatable, instanceId, animationState);
+        GeoBone head = getAnimationProcessor().getBone("head");
+        if (head != null) {
+            EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+            if (entityData != null) {
+                head.setRotX(entityData.headPitch() * Mth.DEG_TO_RAD);
+                head.setRotY(entityData.netHeadYaw() * Mth.DEG_TO_RAD);
+            }
+        }
     }
 }
