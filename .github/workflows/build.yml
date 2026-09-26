@@ -36,6 +36,6 @@ jobs:
       - name: Run fast GameTests
         run: ./gradlew runGameTestServer
 
-      - name: Run slow worldgen GameTests
+      - name: Run slow integration GameTests
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/1.21.1-neoforge')
         run: ./gradlew runSlowGameTestServer

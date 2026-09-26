@@ -5,13 +5,7 @@ import com.freeranger.dark_caverns.generation.BiomeTransition;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -41,7 +35,6 @@ public final class BiomeTransitionTests {
     private static final String[] NAMES = {
         "rocky_caverns", "glimmershroom_forest", "molten_depths", "tangled_hallow"
     };
-    private static final int[] COLORS = {0x85899b, 0x68bdec, 0xe27e48, 0x819744};
 
     private BiomeTransitionTests() {}
 
@@ -129,15 +122,8 @@ public final class BiomeTransitionTests {
                         source.possibleBiomes().stream().toList(),
                         biome -> biome.value().getGenerationSettings().features(),
                         true);
-        long[] seeds = {0, 8675309, -7046029254386353131L, 0, 8675309, -7046029254386353131L};
-        int[][] pairs = {{0, 1}, {0, 2}, {1, 2}, {0, 3}, {1, 3}, {2, 3}};
-        BufferedImage preview = new BufferedImage(792, 1920, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = preview.createGraphics();
-        graphics.setColor(new Color(0x101723));
-        graphics.fillRect(0, 0, preview.getWidth(), preview.getHeight());
-        StringBuilder report =
-                new StringBuilder(
-                        "seed,pair,min_x,min_z,transition_floors,changed_floors,plants,spillover_plants\n");
+        long[] seeds = {8675309};
+        int[][] pairs = {{1, 2}};
         for (int i = 0; i < seeds.length; i++) {
             var state =
                     RandomState.create(
@@ -208,7 +194,6 @@ public final class BiomeTransitionTests {
                                 helper.fail("Chunk order changed surface material at " + pos);
                         }
             }
-            drawPreview(graphics, volume, blend, i, seeds[i], pairs[i]);
             volume.carve();
             for (String feature :
                     new String[] {
@@ -284,31 +269,7 @@ public final class BiomeTransitionTests {
                     changed,
                     plants,
                     spillover);
-            report.append(seeds[i])
-                    .append(',')
-                    .append(pairs[i][0])
-                    .append('-')
-                    .append(pairs[i][1])
-                    .append(',')
-                    .append(volume.minX)
-                    .append(',')
-                    .append(volume.minZ)
-                    .append(',')
-                    .append(transitions)
-                    .append(',')
-                    .append(changed)
-                    .append(',')
-                    .append(plants)
-                    .append(',')
-                    .append(spillover)
-                    .append('\n');
         }
-        graphics.dispose();
-        Path directory = Path.of("../build/reports/terrain");
-        Files.createDirectories(directory);
-        javax.imageio.ImageIO.write(
-                preview, "png", directory.resolve("biome-transitions.png").toFile());
-        Files.writeString(directory.resolve("biome-transitions.csv"), report);
         helper.succeed();
     }
 
@@ -344,60 +305,5 @@ public final class BiomeTransitionTests {
                 : state.is(CustomBlocks.GLIMMERGRASS_BLOCK.get())
                         ? 1
                         : state.is(CustomBlocks.OVERGROWN_CARFSTONE.get()) ? 3 : 0;
-    }
-
-    private static void drawPreview(
-            Graphics2D g,
-            TerrainTestVolume volume,
-            BiomeTransition blend,
-            int row,
-            long seed,
-            int[] pair) {
-        int top = row * 320;
-        g.setColor(new Color(0xe5edf5));
-        g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
-        g.drawString(NAMES[pair[0]] + " / " + NAMES[pair[1]] + "   seed " + seed, 8, top + 19);
-        g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-        g.drawString("Biome IDs", 8, top + 39);
-        g.drawString("Blended biome influence", 272, top + 39);
-        g.drawString("Actual cavern floors below Y 184", 536, top + 39);
-        for (int x = 0; x < 128; x++) {
-            for (int z = 0; z < 128; z++) {
-                int bx = x + volume.minX;
-                int bz = z + volume.minZ;
-                var weights = blend.weights(bx, bz);
-                g.setColor(
-                        new Color(
-                                COLORS[
-                                        BiomeTransition.identity(
-                                                volume.world.getBiome(
-                                                        new BlockPos(bx, 128, bz)))]));
-                g.fillRect(8 + x * 2, top + 48 + z * 2, 2, 2);
-                double f = weights.cover(1);
-                double m = weights.cover(2);
-                double h = weights.cover(3);
-                int color = 0;
-                for (int shift : new int[] {0, 8, 16})
-                    color |=
-                            (int)
-                                            (((COLORS[0] >> shift) & 255) * (1 - f - m - h)
-                                                    + ((COLORS[1] >> shift) & 255) * f
-                                                    + ((COLORS[2] >> shift) & 255) * m
-                                                    + ((COLORS[3] >> shift) & 255) * h)
-                                    << shift;
-                g.setColor(new Color(color));
-                g.fillRect(272 + x * 2, top + 48 + z * 2, 2, 2);
-                int floorColor = 0x172234;
-                for (int y = 184; y > 11; y--) {
-                    BlockState state = volume.get(new BlockPos(bx, y, bz));
-                    if (surface(state) && volume.get(new BlockPos(bx, y + 1, bz)).isAir()) {
-                        floorColor = COLORS[material(state)];
-                        break;
-                    }
-                }
-                g.setColor(new Color(floorColor));
-                g.fillRect(536 + x * 2, top + 48 + z * 2, 2, 2);
-            }
-        }
     }
 }

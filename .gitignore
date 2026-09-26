@@ -28,3 +28,6 @@ src/generated/resources/.cache/
 
 # Files from Forge MDK
 forge*changelog.txt
+
+# Local deployment scripts
+deploy-to-prism.sh

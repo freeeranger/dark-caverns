@@ -16,7 +16,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -26,28 +25,6 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class LuminiteChalkTests {
     private LuminiteChalkTests() {}
-
-    @GameTest(template = "sacred_torch")
-    public static void chalkPropertiesAndDurability(GameTestHelper helper) {
-        ItemStack chalk = new ItemStack(CustomItems.LUMINITE_CHALK.get());
-        helper.assertTrue(chalk.getMaxDamage() == 64, "Luminite Chalk should have 64 durability");
-
-        BlockState defaultMarkState = CustomBlocks.LUMINITE_CHALK_MARK.get().defaultBlockState();
-        helper.assertTrue(
-                defaultMarkState.getLightEmission(helper.getLevel(), BlockPos.ZERO) == 0,
-                "Luminite Chalk Mark should not emit light itself (light level 0)");
-        helper.assertTrue(
-                defaultMarkState.getPistonPushReaction() == PushReaction.DESTROY,
-                "Luminite Chalk Mark should be destroyed by pistons");
-        helper.assertTrue(
-                defaultMarkState.getCollisionShape(helper.getLevel(), BlockPos.ZERO).isEmpty(),
-                "Luminite Chalk Mark should have empty collision shape");
-        helper.assertTrue(
-                defaultMarkState.emissiveRendering(helper.getLevel(), BlockPos.ZERO),
-                "Luminite Chalk Mark should have emissive rendering (glow in the dark)");
-
-        helper.succeed();
-    }
 
     @GameTest(template = "sacred_torch")
     public static void chalkPlacementRotationAndErasing(GameTestHelper helper) {

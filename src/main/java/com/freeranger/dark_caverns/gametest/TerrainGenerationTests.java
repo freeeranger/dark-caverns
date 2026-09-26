@@ -1,11 +1,6 @@
 package com.freeranger.dark_caverns.gametest;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import javax.imageio.ImageIO;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -31,8 +26,7 @@ public final class TerrainGenerationTests {
             templateNamespace = DarkCaverns.MOD_ID + "_slow",
             template = "sacred_torch",
             timeoutTicks = 400)
-    public static void composedTerrainHasCavernsAndClosedBoundaries(GameTestHelper helper)
-            throws IOException {
+    public static void composedTerrainHasCavernsAndClosedBoundaries(GameTestHelper helper) {
         var generator = generator(helper);
         var registries = helper.getLevel().registryAccess();
         var settings =
@@ -57,7 +51,6 @@ public final class TerrainGenerationTests {
             RandomState random =
                     RandomState.create(settings, registries.lookupOrThrow(Registries.NOISE), seed);
             Sample sample = sample(helper, generator, random);
-            writeSlice(generator, random, seed);
             double airFraction = sample.air / (1024.0 * 256.0);
             DarkCaverns.LOGGER.info(
                     "Terrain seed {}: air={}, lowerAir={}, middleAir={}, upperAir={},"
@@ -177,23 +170,6 @@ public final class TerrainGenerationTests {
             }
         }
         return sample;
-    }
-
-    private static void writeSlice(
-            NoiseBasedChunkGenerator generator, RandomState random, long seed) throws IOException {
-        // Reproducible X/Y sections at Z=0. Noise and fluids only, before surfaces or decoration.
-        BufferedImage image = new BufferedImage(1024, 256, BufferedImage.TYPE_INT_RGB);
-        for (int x = -512; x < 512; x++) {
-            var column = generator.getBaseColumn(x, 0, HEIGHT, random);
-            for (int y = 0; y < 256; y++) {
-                var block = column.getBlock(y);
-                int color = block.isAir() ? 0x111827 : block.is(Blocks.LAVA) ? 0xf97316 : 0xa8a29e;
-                image.setRGB(x + 512, 255 - y, color);
-            }
-        }
-        Path directory = Path.of("../build/reports/terrain");
-        Files.createDirectories(directory);
-        ImageIO.write(image, "png", directory.resolve("seed-" + seed + ".png").toFile());
     }
 
     private static final class Sample {

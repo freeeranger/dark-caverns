@@ -154,6 +154,12 @@ tasks.withType(JavaCompile).configureEach {
     options.compilerArgs.addAll '-Xlint:deprecation', '-Xlint:unchecked', '-Xlint:cast'
 }
 
+tasks.register('quickCheck') {
+    group = 'verification'
+    description = 'Compile and check formatting without starting Minecraft.'
+    dependsOn tasks.named('compileJava'), tasks.named('spotlessCheck')
+}
+
 spotless {
     java {
         googleJavaFormat('1.36.0').aosp().reflowLongStrings()

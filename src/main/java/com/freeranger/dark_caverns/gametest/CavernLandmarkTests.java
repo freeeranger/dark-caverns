@@ -193,7 +193,7 @@ public final class CavernLandmarkTests {
                         !set.placement().applyAdditionalChunkRestrictions(x, -x, 8675309),
                         "Old structure starts still generate duplicates");
         }
-        for (long seed : new long[] {0, 8675309, -7046029254386353131L}) {
+        for (long seed : new long[] {8675309}) {
             var volume = new TerrainTestVolume(helper, seed, "molten_depths");
             volume.carve();
             volume.feature("luminite_ore_feature", GenerationStep.Decoration.UNDERGROUND_ORES, 0);

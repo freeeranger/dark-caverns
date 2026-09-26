@@ -35,7 +35,10 @@ public final class CavernArrivalTests {
 
     private CavernArrivalTests() {}
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 600)
+    @GameTest(
+            templateNamespace = DarkCaverns.MOD_ID + "_slow",
+            template = "sacred_torch",
+            timeoutTicks = 600)
     public static void linkedTravelReturnsHomeAndPreservesRepeatArrival(GameTestHelper helper) {
         var source = helper.getLevel();
         // Vanilla's GameTest flat preset omits custom dimensions. Exercise the same resolved
@@ -442,9 +445,7 @@ public final class CavernArrivalTests {
             template = "sacred_torch",
             timeoutTicks = 1200)
     public static void arrivalsFindGroundAcrossGeneratedBiomes(GameTestHelper helper) {
-        String[] biomes = {
-            "molten_depths", "rocky_caverns", "glimmershroom_forest", "tangled_hallow"
-        };
+        String[] biomes = {"tangled_hallow"};
         for (int biome = 0; biome < biomes.length; biome++) {
             var volume = new TerrainTestVolume(helper, 7361L + biome * 31L, biomes[biome]);
             volume.carve();

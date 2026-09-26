@@ -18,7 +18,10 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 public final class GatewayLoadingTests {
     private GatewayLoadingTests() {}
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 400)
+    @GameTest(
+            templateNamespace = DarkCaverns.MOD_ID + "_slow",
+            template = "sacred_torch",
+            timeoutTicks = 400)
     public static void gatewayLoadingReturnsBeforeChunksAndCompletesOnce(GameTestHelper helper) {
         var level = helper.getLevel();
         var traveler = helper.spawn(EntityType.PIG, new BlockPos(1, 10, 1));
