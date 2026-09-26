@@ -34,13 +34,7 @@ public final class ItemTooltips {
 
     private static String tooltipFor(String path) {
         return switch (path) {
-            case "key_to_the_caverns" -> "key_to_the_caverns";
-            case "luminite_dust" -> "luminite_dust";
-            case "platinum_piece" -> "platinum_piece";
-            case "scorched_berries" -> "scorched_berries";
-            case "throwable_luminite_torch" -> "throwable_luminite_torch";
             case "luminite_chalk" -> "luminite_chalk";
-            case "shroombomb" -> "shroombomb";
             case "corrupted_pearl" -> "corrupted_pearl";
             case "luminite_helmet" -> "luminite_helmet";
             default -> {
