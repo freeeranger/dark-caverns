@@ -565,7 +565,7 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
 
     private void registerEmissiveOre(Block ore, String emissiveTexture) {
         ModelFile model =
-                models().getBuilder(name(ore))
+                models().withExistingParent(name(ore), mcLoc("block/block"))
                         .renderType(CUTOUT)
                         .texture("particle", blockTexture(ore))
                         .texture("base", blockTexture(ore))
