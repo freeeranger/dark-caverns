@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.RedStoneOreBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -190,7 +191,15 @@ public final class CustomBlocks {
     public static final DeferredBlock<Block> CARFSTONE_REDSTONE_ORE =
             register(
                     "carfstone_redstone_ore",
-                    () -> new DropExperienceBlock(UniformInt.of(1, 5), stone(6.0F)));
+                    () ->
+                            new RedStoneOreBlock(
+                                    stone(6.0F)
+                                            .randomTicks()
+                                            .lightLevel(
+                                                    state ->
+                                                            state.getValue(RedStoneOreBlock.LIT)
+                                                                    ? 9
+                                                                    : 0)));
     public static final DeferredBlock<Block> CARFSTONE_LAPIS_ORE =
             register(
                     "carfstone_lapis_ore",

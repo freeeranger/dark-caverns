@@ -61,12 +61,12 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
                         CustomBlocks.CARFSTONE_DIAMOND_ORE.get(),
                         CustomBlocks.CARFSTONE_REDSTONE_ORE.get(),
                         CustomBlocks.CARFSTONE_LAPIS_ORE.get(),
-                        CustomBlocks.HELLSTONE_ORE.get(),
                         CustomBlocks.HELLSTONE_BLOCK.get(),
                         CustomBlocks.SHROOMSTONE_BLOCK.get())
                 .forEach(this::simpleCubeWithItem);
 
-        registerLuminiteOre();
+        registerEmissiveOre(CustomBlocks.LUMINITE_ORE.get(), "carfstone_luminite_ore_emissive");
+        registerEmissiveOre(CustomBlocks.HELLSTONE_ORE.get(), "hellstone_ore_emissive");
 
         Block ashyGround = CustomBlocks.ASHY_MOLTEN_CARFSTONE.get();
         simpleBlockWithItem(
@@ -563,14 +563,13 @@ final class DarkCavernsBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(block, model);
     }
 
-    private void registerLuminiteOre() {
-        Block ore = CustomBlocks.LUMINITE_ORE.get();
+    private void registerEmissiveOre(Block ore, String emissiveTexture) {
         ModelFile model =
                 models().getBuilder(name(ore))
                         .renderType(CUTOUT)
                         .texture("particle", blockTexture(ore))
                         .texture("base", blockTexture(ore))
-                        .texture("emissive", modLoc("block/carfstone_luminite_ore_emissive"))
+                        .texture("emissive", modLoc("block/" + emissiveTexture))
                         .element()
                         .cube("#base")
                         .end()
