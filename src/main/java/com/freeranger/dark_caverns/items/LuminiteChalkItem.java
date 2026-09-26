@@ -4,8 +4,6 @@ import com.freeranger.dark_caverns.blocks.LuminiteChalkMarkBlock;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -17,11 +15,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 public final class LuminiteChalkItem extends Item {
-    private static final DustParticleOptions LUMINITE_DUST_PARTICLES =
-            new DustParticleOptions(new Vector3f(0.0F, 0.98F, 0.77F), 1.0F);
 
     public LuminiteChalkItem(Properties properties) {
         super(properties);
@@ -66,7 +61,6 @@ public final class LuminiteChalkItem extends Item {
             level.setBlock(targetPos, newState, Block.UPDATE_ALL);
             level.playSound(
                     null, targetPos, SoundEvents.CALCITE_PLACE, SoundSource.BLOCKS, 0.9F, 1.3F);
-            spawnParticles((ServerLevel) level, targetPos, clickedFace);
 
             if (player != null && !player.getAbilities().instabuild) {
                 context.getItemInHand()
@@ -83,8 +77,6 @@ public final class LuminiteChalkItem extends Item {
             if (!level.isClientSide()) {
                 level.removeBlock(pos, false);
                 level.playSound(null, pos, SoundEvents.SAND_BREAK, SoundSource.BLOCKS, 0.8F, 1.4F);
-                spawnParticles(
-                        (ServerLevel) level, pos, state.getValue(LuminiteChalkMarkBlock.FACING));
             }
             return InteractionResult.sidedSuccess(level.isClientSide());
         }
@@ -97,7 +89,6 @@ public final class LuminiteChalkItem extends Item {
                     state.setValue(LuminiteChalkMarkBlock.ROTATION, nextRot),
                     Block.UPDATE_ALL);
             level.playSound(null, pos, SoundEvents.CALCITE_HIT, SoundSource.BLOCKS, 0.8F, 1.5F);
-            spawnParticles((ServerLevel) level, pos, state.getValue(LuminiteChalkMarkBlock.FACING));
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
     }
@@ -146,12 +137,5 @@ public final class LuminiteChalkItem extends Item {
         } else {
             return horizOffset > 0 ? 1 : 3;
         }
-    }
-
-    private static void spawnParticles(ServerLevel level, BlockPos pos, Direction facing) {
-        double px = pos.getX() + 0.5 + facing.getStepX() * 0.45;
-        double py = pos.getY() + 0.5 + facing.getStepY() * 0.45;
-        double pz = pos.getZ() + 0.5 + facing.getStepZ() * 0.45;
-        level.sendParticles(LUMINITE_DUST_PARTICLES, px, py, pz, 5, 0.15, 0.15, 0.15, 0.02);
     }
 }

@@ -97,58 +97,6 @@ public final class BiomeTransitionTests {
         helper.succeed();
     }
 
-    @GameTest(template = "sacred_torch", timeoutTicks = 400)
-    public static void reportConfiguredBiomeCoverage(GameTestHelper helper) throws IOException {
-        NoiseBasedChunkGenerator generator;
-        try (var reader =
-                helper.getLevel()
-                        .getServer()
-                        .getResourceManager()
-                        .getResourceOrThrow(DarkCaverns.id("dimension/dark_caverns.json"))
-                        .openAsReader()) {
-            generator =
-                    (NoiseBasedChunkGenerator)
-                            ChunkGenerator.CODEC
-                                    .parse(
-                                            RegistryOps.create(
-                                                    JsonOps.INSTANCE,
-                                                    helper.getLevel().registryAccess()),
-                                            JsonParser.parseReader(reader)
-                                                    .getAsJsonObject()
-                                                    .get("generator"))
-                                    .getOrThrow();
-        }
-        long[] totals = new long[4];
-        long[] seeds = {0, 8675309, -7046029254386353131L, 0x5deece66dL};
-        for (long seed : seeds) {
-            var state =
-                    RandomState.create(
-                            generator.generatorSettings().value(),
-                            helper.getLevel().registryAccess().lookupOrThrow(Registries.NOISE),
-                            seed);
-            for (int x = -8192; x < 8192; x += 32) {
-                for (int z = -8192; z < 8192; z += 32) {
-                    int biome =
-                            BiomeTransition.identity(
-                                    generator
-                                            .getBiomeSource()
-                                            .getNoiseBiome(x >> 2, 32, z >> 2, state.sampler()));
-                    totals[biome]++;
-                }
-            }
-        }
-        long total = Arrays.stream(totals).sum();
-        DarkCaverns.LOGGER.info(
-                "Biome coverage sample over {} points: rocky={}%, forest={}%, molten={}%,"
-                        + " hallow={}%",
-                total,
-                totals[0] * 100.0 / total,
-                totals[1] * 100.0 / total,
-                totals[2] * 100.0 / total,
-                totals[3] * 100.0 / total);
-        helper.succeed();
-    }
-
     @GameTest(
             templateNamespace = DarkCaverns.MOD_ID + "_slow",
             template = "sacred_torch",

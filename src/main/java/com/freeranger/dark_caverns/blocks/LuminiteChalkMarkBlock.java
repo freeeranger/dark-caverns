@@ -7,7 +7,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -98,29 +97,6 @@ public final class LuminiteChalkMarkBlock extends Block {
             return Blocks.AIR.defaultBlockState();
         }
         return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
-    }
-
-    @Override
-    public void animateTick(
-            BlockState state, Level level, BlockPos pos, net.minecraft.util.RandomSource random) {
-        if (random.nextInt(8) == 0) {
-            Direction facing = state.getValue(FACING);
-            double x =
-                    pos.getX() + 0.5 + facing.getStepX() * 0.46 + (random.nextDouble() - 0.5) * 0.5;
-            double y =
-                    pos.getY() + 0.5 + facing.getStepY() * 0.46 + (random.nextDouble() - 0.5) * 0.5;
-            double z =
-                    pos.getZ() + 0.5 + facing.getStepZ() * 0.46 + (random.nextDouble() - 0.5) * 0.5;
-            level.addParticle(
-                    new net.minecraft.core.particles.DustParticleOptions(
-                            new org.joml.Vector3f(0.0F, 0.98F, 0.77F), 0.7F),
-                    x,
-                    y,
-                    z,
-                    0.0,
-                    0.0,
-                    0.0);
-        }
     }
 
     @Override

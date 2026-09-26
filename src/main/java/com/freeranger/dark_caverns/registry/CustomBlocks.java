@@ -235,7 +235,6 @@ public final class CustomBlocks {
                                             .noLootTable()
                                             .replaceable()
                                             .sound(SoundType.CALCITE)
-                                            .lightLevel(state -> 5)
                                             .hasPostProcess((state, level, pos) -> true)
                                             .emissiveRendering((state, level, pos) -> true)
                                             .pushReaction(PushReaction.DESTROY)));

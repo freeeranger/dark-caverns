@@ -34,8 +34,8 @@ public final class LuminiteChalkTests {
 
         BlockState defaultMarkState = CustomBlocks.LUMINITE_CHALK_MARK.get().defaultBlockState();
         helper.assertTrue(
-                defaultMarkState.getLightEmission(helper.getLevel(), BlockPos.ZERO) == 5,
-                "Luminite Chalk Mark should emit light level 5");
+                defaultMarkState.getLightEmission(helper.getLevel(), BlockPos.ZERO) == 0,
+                "Luminite Chalk Mark should not emit light itself (light level 0)");
         helper.assertTrue(
                 defaultMarkState.getPistonPushReaction() == PushReaction.DESTROY,
                 "Luminite Chalk Mark should be destroyed by pistons");
