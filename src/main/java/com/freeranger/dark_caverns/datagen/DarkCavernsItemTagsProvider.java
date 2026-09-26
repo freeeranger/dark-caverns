@@ -90,11 +90,8 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
         tag(common("gems/hellstone")).add(CustomItems.HELLSTONE.get());
         tag(common("gems/shroomstone")).add(CustomItems.SHROOMSTONE.get());
 
-        tag(common("ingots"))
-                .addTag(common("ingots/platinum"))
-                .addTag(common("ingots/scorchsteel"));
+        tag(common("ingots")).addTag(common("ingots/platinum"));
         tag(common("ingots/platinum")).add(CustomItems.PLATINUM_INGOT.get());
-        tag(common("ingots/scorchsteel")).add(CustomItems.SCORCHSTEEL_INGOT.get());
 
         tag(common("nuggets")).addTag(common("nuggets/platinum"));
         tag(common("nuggets/platinum")).add(CustomItems.PLATINUM_PIECE.get());
@@ -103,7 +100,6 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
                 .add(
                         CustomItems.PLATINUM_INGOT.get(),
                         CustomItems.HELLSTONE.get(),
-                        CustomItems.SCORCHSTEEL_INGOT.get(),
                         CustomItems.SHROOMSTONE.get());
     }
 
@@ -169,7 +165,6 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
                 root + "/helmets",
                 CustomEquipment.PLATINUM_HELMET.get(),
                 CustomEquipment.HELLSTONE_HELMET.get(),
-                CustomEquipment.SCORCHSTEEL_HELMET.get(),
                 CustomEquipment.SHROOMSTONE_HELMET.get(),
                 CustomEquipment.LUMINITE_HELMET.get());
         equipment(
@@ -177,21 +172,18 @@ final class DarkCavernsItemTagsProvider extends ItemTagsProvider {
                 root + "/chestplates",
                 CustomEquipment.PLATINUM_CHESTPLATE.get(),
                 CustomEquipment.HELLSTONE_CHESTPLATE.get(),
-                CustomEquipment.SCORCHSTEEL_CHESTPLATE.get(),
                 CustomEquipment.SHROOMSTONE_CHESTPLATE.get());
         equipment(
                 ItemTags.LEG_ARMOR,
                 root + "/leggings",
                 CustomEquipment.PLATINUM_LEGGINGS.get(),
                 CustomEquipment.HELLSTONE_LEGGINGS.get(),
-                CustomEquipment.SCORCHSTEEL_LEGGINGS.get(),
                 CustomEquipment.SHROOMSTONE_LEGGINGS.get());
         equipment(
                 ItemTags.FOOT_ARMOR,
                 root + "/boots",
                 CustomEquipment.PLATINUM_BOOTS.get(),
                 CustomEquipment.HELLSTONE_BOOTS.get(),
-                CustomEquipment.SCORCHSTEEL_BOOTS.get(),
                 CustomEquipment.SHROOMSTONE_BOOTS.get());
     }
 

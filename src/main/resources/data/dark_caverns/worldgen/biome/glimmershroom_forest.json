@@ -73,12 +73,6 @@
         "maxCount": 1,
         "minCount": 1,
         "weight": 50
-      },
-      {
-        "type": "dark_caverns:shroomling",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 45
       }
     ],
     "misc": [],

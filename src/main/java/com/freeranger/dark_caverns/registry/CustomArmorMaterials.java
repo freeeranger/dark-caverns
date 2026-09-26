@@ -67,18 +67,6 @@ public final class CustomArmorMaterials {
                     3.0F,
                     0.1F,
                     () -> Ingredient.of(CustomItems.SHROOMSTONE.get()));
-    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> SCORCHSTEEL =
-            register(
-                    "scorchsteel",
-                    3,
-                    8,
-                    6,
-                    3,
-                    15,
-                    SoundEvents.ARMOR_EQUIP_NETHERITE,
-                    3.0F,
-                    0.1F,
-                    () -> Ingredient.of(CustomItems.SCORCHSTEEL_INGOT.get()));
 
     private CustomArmorMaterials() {}
 

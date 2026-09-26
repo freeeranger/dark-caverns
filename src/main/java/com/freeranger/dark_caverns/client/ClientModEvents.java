@@ -35,21 +35,7 @@ public final class ClientModEvents {
                 CustomEntityTypes.CORRUPTED_PEARL.get(), ThrownItemRenderer::new);
 
         event.registerEntityRenderer(
-                CustomEntityTypes.SCORCHLING_ENTITY.get(), geoRenderer("scorchling", 0.4F));
-        event.registerEntityRenderer(
-                CustomEntityTypes.SCORCHHOUND_ENTITY.get(), geoRenderer("scorchhound", 1.0F));
-        event.registerEntityRenderer(
-                CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(), geoRenderer("luminite_golem", 0.7F));
-        event.registerEntityRenderer(
-                CustomEntityTypes.MOLTENER_ENTITY.get(), geoRenderer("moltener", 0.4F));
-        event.registerEntityRenderer(
-                CustomEntityTypes.CAMOROCK_ENTITY.get(), geoRenderer("camorock", 0.4F));
-        event.registerEntityRenderer(
-                CustomEntityTypes.LUMINITE_FOX_ENTITY.get(), geoRenderer("luminite_fox", 0.5F));
-        event.registerEntityRenderer(
                 CustomEntityTypes.SHROOMIE_ENTITY.get(), geoRenderer("shroomie", 0.3F));
-        event.registerEntityRenderer(
-                CustomEntityTypes.SHROOMLING_ENTITY.get(), geoRenderer("shroomling", 0.6F));
     }
 
     private static <T extends Entity & GeoAnimatable> EntityRendererProvider<T> geoRenderer(

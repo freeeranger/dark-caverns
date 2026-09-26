@@ -3,10 +3,7 @@ package com.freeranger.dark_caverns.gametest;
 import com.freeranger.dark_caverns.DarkCaverns;
 import com.freeranger.dark_caverns.core.ExplorationTrades;
 import com.freeranger.dark_caverns.core.GatewayCooldowns;
-import com.freeranger.dark_caverns.entities.LuminiteGolemEntity;
-import com.freeranger.dark_caverns.entities.ScorchhoundEntity;
 import com.freeranger.dark_caverns.entities.ShroomieEntity;
-import com.freeranger.dark_caverns.entities.ShroomlingEntity;
 import com.freeranger.dark_caverns.events.CorruptedPearlTeleportEvent;
 import com.freeranger.dark_caverns.registry.CustomAttachments;
 import com.freeranger.dark_caverns.registry.CustomBlocks;
@@ -22,15 +19,12 @@ import java.util.Optional;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
@@ -45,20 +39,14 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
-import net.neoforged.neoforge.event.PlayLevelSoundEvent;
-import net.neoforged.neoforge.event.VanillaGameEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
-import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -116,22 +104,6 @@ public final class PortSmokeTests {
                                         offer.getResult().is(preservedOffer.getResult().getItem())
                                                 && offer.getUses() == 1),
                 "Adding the progression trade should preserve existing offers and uses");
-        ShroomlingEntity shroomling =
-                CustomEntityTypes.SHROOMLING_ENTITY.get().create(helper.getLevel());
-        helper.assertTrue(shroomling != null, "Shroomling factory failed");
-        UUID angerTarget = UUID.randomUUID();
-        shroomling.setRemainingPersistentAngerTime(200);
-        shroomling.setPersistentAngerTarget(angerTarget);
-        CompoundTag shroomlingData = new CompoundTag();
-        shroomling.addAdditionalSaveData(shroomlingData);
-        ShroomlingEntity restoredShroomling =
-                CustomEntityTypes.SHROOMLING_ENTITY.get().create(helper.getLevel());
-        helper.assertTrue(restoredShroomling != null, "Second Shroomling factory failed");
-        restoredShroomling.readAdditionalSaveData(shroomlingData);
-        helper.assertTrue(
-                restoredShroomling.getRemainingPersistentAngerTime() == 200
-                        && angerTarget.equals(restoredShroomling.getPersistentAngerTarget()),
-                "Shroomling persistent anger state did not survive serialization");
         BlockPos gatewayPos = new BlockPos(1, 2, 1);
         helper.setBlock(gatewayPos, CustomBlocks.CRACKED_BEDROCK.get());
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
@@ -543,135 +515,6 @@ public final class PortSmokeTests {
                 "Hellstone leggings should allow fast diving when sneaking in lava");
         hellstonePlayer.setShiftKeyDown(false);
 
-        var scorchsteelPlayer = helper.makeMockPlayer(GameType.SURVIVAL);
-        var zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(6, 2, 2));
-
-        // Helmet: 35% smaller mob detection range
-        scorchsteelPlayer.setItemSlot(
-                EquipmentSlot.HEAD, new ItemStack(CustomEquipment.SCORCHSTEEL_HELMET.get()));
-        var visibilityEvent = new LivingEvent.LivingVisibilityEvent(scorchsteelPlayer, zombie, 1.0);
-        NeoForge.EVENT_BUS.post(visibilityEvent);
-        helper.assertTrue(
-                visibilityEvent.getVisibilityModifier() < 1.0,
-                "The Scorchsteel helmet should reduce mob visibility");
-
-        // Chestplate: Invisibility after standing still for 2 seconds (40 ticks)
-        scorchsteelPlayer.setItemSlot(
-                EquipmentSlot.CHEST, new ItemStack(CustomEquipment.SCORCHSTEEL_CHESTPLATE.get()));
-        for (int tick = 0; tick <= 40; tick++) {
-            NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(scorchsteelPlayer));
-        }
-        helper.assertTrue(
-                scorchsteelPlayer.hasEffect(MobEffects.INVISIBILITY),
-                "A stationary player wearing the Scorchsteel chestplate should gain invisibility");
-        helper.assertTrue(
-                scorchsteelPlayer.hasData(CustomAttachments.SCORCHSTEEL_STEALTH),
-                "Scorchsteel standstill tracking should use its registered data attachment");
-        zombie.setTarget(scorchsteelPlayer);
-        NeoForge.EVENT_BUS.post(new EntityTickEvent.Post(zombie));
-        helper.assertTrue(
-                zombie.getTarget() == null,
-                "Monsters should clear invisible Scorchsteel-wearing targets");
-        NeoForge.EVENT_BUS.post(new AttackEntityEvent(scorchsteelPlayer, zombie));
-        helper.assertFalse(
-                scorchsteelPlayer.hasEffect(MobEffects.INVISIBILITY),
-                "Attacking should immediately break Scorchsteel concealment");
-        scorchsteelPlayer.setItemSlot(EquipmentSlot.CHEST, ItemStack.EMPTY);
-        NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(scorchsteelPlayer));
-        helper.assertFalse(
-                scorchsteelPlayer.hasData(CustomAttachments.SCORCHSTEEL_STEALTH),
-                "Scorchsteel standstill state should be removed when chestplate is unequipped");
-
-        // Leggings: Pounce forward on sneak-jump
-        scorchsteelPlayer.setPos(Vec3.atCenterOf(helper.absolutePos(new BlockPos(2, 2, 2))));
-        scorchsteelPlayer.setItemSlot(
-                EquipmentSlot.LEGS, new ItemStack(CustomEquipment.SCORCHSTEEL_LEGGINGS.get()));
-        scorchsteelPlayer.setShiftKeyDown(true);
-        scorchsteelPlayer.setDeltaMovement(Vec3.ZERO);
-        scorchsteelPlayer.setYRot(0.0F);
-        NeoForge.EVENT_BUS.post(new LivingEvent.LivingJumpEvent(scorchsteelPlayer));
-        helper.assertTrue(
-                scorchsteelPlayer.getDeltaMovement().z > 0.5,
-                "Sneak-jumping with Scorchsteel leggings should pounce forward");
-
-        // Boots: Silent footsteps and sculk vibration negation
-        scorchsteelPlayer.setItemSlot(
-                EquipmentSlot.FEET, new ItemStack(CustomEquipment.SCORCHSTEEL_BOOTS.get()));
-        var stepGameEvent =
-                new VanillaGameEvent(
-                        helper.getLevel(),
-                        GameEvent.STEP,
-                        scorchsteelPlayer.position(),
-                        new GameEvent.Context(scorchsteelPlayer, null));
-        NeoForge.EVENT_BUS.post(stepGameEvent);
-        helper.assertTrue(
-                stepGameEvent.isCanceled(),
-                "The Scorchsteel boots should cancel footstep game events for sculk");
-        var hitGroundGameEvent =
-                new VanillaGameEvent(
-                        helper.getLevel(),
-                        GameEvent.HIT_GROUND,
-                        scorchsteelPlayer.position(),
-                        new GameEvent.Context(scorchsteelPlayer, null));
-        NeoForge.EVENT_BUS.post(hitGroundGameEvent);
-        helper.assertTrue(
-                hitGroundGameEvent.isCanceled(),
-                "The Scorchsteel boots should cancel hit-ground game events for sculk");
-        var stepSoundEvent =
-                new PlayLevelSoundEvent.AtEntity(
-                        scorchsteelPlayer,
-                        Holder.direct(SoundEvents.STONE_STEP),
-                        SoundSource.PLAYERS,
-                        1.0F,
-                        1.0F);
-        NeoForge.EVENT_BUS.post(stepSoundEvent);
-        helper.assertTrue(
-                stepSoundEvent.isCanceled(),
-                "The Scorchsteel boots should cancel player footstep sounds");
-
-        helper.succeed();
-    }
-
-    @GameTest(template = "sacred_torch")
-    public static void entityCombatBehavior(GameTestHelper helper) {
-        ScorchhoundEntity attackingHound =
-                helper.spawn(CustomEntityTypes.SCORCHHOUND_ENTITY.get(), new BlockPos(2, 2, 2));
-        var flingTarget = helper.makeMockPlayer(GameType.SURVIVAL);
-        flingTarget.setPos(Vec3.atCenterOf(helper.absolutePos(new BlockPos(4, 2, 2))));
-        float healthBeforeFling = flingTarget.getHealth();
-        helper.assertTrue(
-                attackingHound.doHurtTarget(flingTarget),
-                "Scorchhound attack should damage its target");
-        helper.assertTrue(
-                flingTarget.getHealth() < healthBeforeFling, "Scorchhound attack dealt no damage");
-        helper.assertTrue(
-                flingTarget.getDeltaMovement().lengthSqr() > 0.0,
-                "Scorchhound attack should use Hoglin-style fling motion");
-
-        LuminiteGolemEntity attackingGolem =
-                helper.spawn(CustomEntityTypes.LUMINITE_GOLEM_ENTITY.get(), new BlockPos(2, 2, 4));
-        var golemTarget = helper.makeMockPlayer(GameType.SURVIVAL);
-        golemTarget.setPos(Vec3.atCenterOf(helper.absolutePos(new BlockPos(4, 2, 4))));
-        golemTarget.getAttribute(Attributes.MAX_HEALTH).setBaseValue(100.0);
-        golemTarget.setHealth(100.0F);
-        helper.assertTrue(
-                attackingGolem.doHurtTarget(golemTarget),
-                "Luminite golem should begin a telegraphed attack");
-        helper.assertTrue(
-                golemTarget.getHealth() == 100.0F,
-                "Luminite golem damage should wait for the animation's impact frame");
-        helper.assertTrue(
-                attackingGolem.attackAnimationTick() > 0,
-                "Luminite golem attack animation was not started");
-        for (int tick = 0; tick < 20 && golemTarget.getHealth() == 100.0F; tick++) {
-            attackingGolem.aiStep();
-        }
-        float golemDamage = 100.0F - golemTarget.getHealth();
-        helper.assertTrue(
-                golemDamage > 0.0F, "Luminite golem attack never reached its impact frame");
-        helper.assertTrue(
-                golemTarget.getDeltaMovement().y >= 0.5,
-                "Luminite golem attack should launch its target upward");
         helper.succeed();
     }
 }

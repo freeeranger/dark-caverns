@@ -56,9 +56,6 @@ public final class CustomEquipment {
     private static final ArmorSet SHROOMSTONE_ARMOR =
             new ArmorSet(
                     CustomArmorMaterials.SHROOMSTONE, CAVERN_UPGRADE_DURABILITY_MULTIPLIER, false);
-    private static final ArmorSet SCORCHSTEEL_ARMOR =
-            new ArmorSet(
-                    CustomArmorMaterials.SCORCHSTEEL, CAVERN_UPGRADE_DURABILITY_MULTIPLIER, true);
 
     public static final DeferredItem<AbilitySwordItem> PLATINUM_SWORD =
             sword("platinum_sword", PLATINUM_TOOLS);
@@ -122,15 +119,6 @@ public final class CustomEquipment {
             armor("shroomstone_leggings", SHROOMSTONE_ARMOR, ArmorItem.Type.LEGGINGS);
     public static final DeferredItem<ArmorItem> SHROOMSTONE_BOOTS =
             armor("shroomstone_boots", SHROOMSTONE_ARMOR, ArmorItem.Type.BOOTS);
-
-    public static final DeferredItem<ArmorItem> SCORCHSTEEL_HELMET =
-            armor("scorchsteel_helmet", SCORCHSTEEL_ARMOR, ArmorItem.Type.HELMET);
-    public static final DeferredItem<ArmorItem> SCORCHSTEEL_CHESTPLATE =
-            armor("scorchsteel_chestplate", SCORCHSTEEL_ARMOR, ArmorItem.Type.CHESTPLATE);
-    public static final DeferredItem<ArmorItem> SCORCHSTEEL_LEGGINGS =
-            armor("scorchsteel_leggings", SCORCHSTEEL_ARMOR, ArmorItem.Type.LEGGINGS);
-    public static final DeferredItem<ArmorItem> SCORCHSTEEL_BOOTS =
-            armor("scorchsteel_boots", SCORCHSTEEL_ARMOR, ArmorItem.Type.BOOTS);
 
     private CustomEquipment() {}
 

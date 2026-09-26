@@ -359,12 +359,6 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                 .requires(CustomItems.SHROOMSTONE_PIECE.get(), 4)
                 .unlockedBy("has_ingredient", has(itemTag("gems/emerald")))
                 .save(output, id("shroomstone"));
-        ShapelessRecipeBuilder.shapeless(CATEGORY, CustomItems.SCORCHSTEEL_INGOT.get())
-                .requires(Ingredient.of(itemTag("ingots/iron")), 4)
-                .requires(CustomItems.SCORCHLING_TAIL.get(), 4)
-                .unlockedBy("has_ingredient", has(itemTag("ingots/iron")))
-                .save(output, id("scorchsteel"));
-
         ShapedRecipeBuilder.shaped(CATEGORY, CustomEquipment.LUMINITE_HELMET.get())
                 .define('#', itemTag("dusts/luminite"))
                 .pattern("###")
@@ -562,12 +556,6 @@ final class DarkCavernsRecipeProvider extends RecipeProvider {
                 platinumGear,
                 itemTag("ingots/netherite"),
                 netheriteGear);
-        smithingSet(
-                output,
-                cavernCatalyst,
-                platinumGear.subList(5, 9),
-                itemTag("ingots/scorchsteel"),
-                gear("scorchsteel").subList(5, 9));
     }
 
     private void smithingSet(

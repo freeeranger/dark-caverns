@@ -101,8 +101,6 @@ public final class CustomCreativeTabs {
                     CustomItems.HELLSTONE,
                     CustomItems.SHROOMSTONE_PIECE,
                     CustomItems.SHROOMSTONE,
-                    CustomItems.SCORCHLING_TAIL,
-                    CustomItems.SCORCHSTEEL_INGOT,
                     CustomEquipment.PLATINUM_SWORD,
                     CustomEquipment.PLATINUM_PICKAXE,
                     CustomEquipment.PLATINUM_AXE,
@@ -131,10 +129,6 @@ public final class CustomCreativeTabs {
                     CustomEquipment.SHROOMSTONE_CHESTPLATE,
                     CustomEquipment.SHROOMSTONE_LEGGINGS,
                     CustomEquipment.SHROOMSTONE_BOOTS,
-                    CustomEquipment.SCORCHSTEEL_HELMET,
-                    CustomEquipment.SCORCHSTEEL_CHESTPLATE,
-                    CustomEquipment.SCORCHSTEEL_LEGGINGS,
-                    CustomEquipment.SCORCHSTEEL_BOOTS,
                     CustomItems.KEY_TO_THE_CAVERNS,
                     CustomItems.LUMINITE_TORCH,
                     CustomBlocks.LUMINITE_LANTERN,
@@ -142,14 +136,7 @@ public final class CustomCreativeTabs {
                     CustomItems.LUMINITE_CHALK,
                     CustomItems.SHROOMBOMB,
                     CustomItems.CORRUPTED_PEARL,
-                    CustomSpawnEggs.SCORCHLING_SPAWN_EGG,
-                    CustomSpawnEggs.SCORCHHOUND_SPAWN_EGG,
-                    CustomSpawnEggs.MOLTENER_SPAWN_EGG,
-                    CustomSpawnEggs.CAMOROCK_SPAWN_EGG,
-                    CustomSpawnEggs.LUMINITE_GOLEM_SPAWN_EGG,
-                    CustomSpawnEggs.LUMINITE_FOX_SPAWN_EGG,
-                    CustomSpawnEggs.SHROOMIE_SPAWN_EGG,
-                    CustomSpawnEggs.SHROOMLING_SPAWN_EGG);
+                    CustomSpawnEggs.SHROOMIE_SPAWN_EGG);
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DARK_CAVERNS =
             CREATIVE_TABS.register(

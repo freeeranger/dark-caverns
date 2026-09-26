@@ -59,10 +59,6 @@ public final class ItemTooltips {
                     case "hellstone_chestplate" -> "hellstone_chestplate";
                     case "hellstone_leggings" -> "hellstone_leggings";
                     case "hellstone_boots" -> "hellstone_boots";
-                    case "scorchsteel_helmet" -> "scorchsteel_helmet";
-                    case "scorchsteel_chestplate" -> "scorchsteel_chestplate";
-                    case "scorchsteel_leggings" -> "scorchsteel_leggings";
-                    case "scorchsteel_boots" -> "scorchsteel_boots";
                     default -> null;
                 };
             }

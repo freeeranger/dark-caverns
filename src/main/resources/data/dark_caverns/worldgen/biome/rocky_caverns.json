@@ -67,29 +67,9 @@
   "spawners": {
     "ambient": [],
     "axolotls": [],
-    "creature": [
-      {
-        "type": "dark_caverns:camorock",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 45
-      },
-      {
-        "type": "dark_caverns:luminite_fox",
-        "maxCount": 3,
-        "minCount": 1,
-        "weight": 60
-      }
-    ],
+    "creature": [],
     "misc": [],
-    "monster": [
-      {
-        "type": "dark_caverns:luminite_golem",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 25
-      }
-    ],
+    "monster": [],
     "underground_water_creature": [],
     "water_ambient": [],
     "water_creature": []

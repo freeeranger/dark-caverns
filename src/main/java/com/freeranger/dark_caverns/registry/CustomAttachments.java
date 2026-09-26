@@ -1,7 +1,6 @@
 package com.freeranger.dark_caverns.registry;
 
 import com.freeranger.dark_caverns.DarkCaverns;
-import com.freeranger.dark_caverns.core.ScorchsteelStealthState;
 import com.mojang.serialization.Codec;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -18,12 +17,6 @@ public final class CustomAttachments {
                     ATTACHMENTS.register(
                             "gateway_cooldown_until",
                             () -> AttachmentType.builder(() -> 0L).serialize(Codec.LONG).build());
-
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<ScorchsteelStealthState>>
-            SCORCHSTEEL_STEALTH =
-                    ATTACHMENTS.register(
-                            "scorchsteel_stealth",
-                            () -> AttachmentType.builder(ScorchsteelStealthState::new).build());
 
     private CustomAttachments() {}
 

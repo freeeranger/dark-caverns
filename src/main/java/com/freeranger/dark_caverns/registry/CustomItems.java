@@ -52,7 +52,6 @@ public final class CustomItems {
             ITEMS.register(
                     "key_to_the_caverns",
                     () -> new KeyToTheCavernsItem(new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> SCORCHLING_TAIL = item("scorchling_tail");
     public static final DeferredItem<Item> SCORCHED_MEAT =
             item("scorched_meat", new Item.Properties().food(SCORCHED_MEAT_FOOD));
 
@@ -62,7 +61,6 @@ public final class CustomItems {
     public static final DeferredItem<Item> PLATINUM_PIECE = item("platinum_piece");
     public static final DeferredItem<Item> SHROOMSTONE = item("shroomstone");
     public static final DeferredItem<Item> SHROOMSTONE_PIECE = item("shroomstone_piece");
-    public static final DeferredItem<Item> SCORCHSTEEL_INGOT = item("scorchsteel_ingot");
     public static final DeferredItem<Item> PLATINUM_INGOT = item("platinum_ingot");
     public static final DeferredItem<LuminiteChalkItem> LUMINITE_CHALK =
             ITEMS.register(

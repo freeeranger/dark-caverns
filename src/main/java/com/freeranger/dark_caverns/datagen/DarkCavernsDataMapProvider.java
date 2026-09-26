@@ -6,7 +6,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable;
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 
 final class DarkCavernsDataMapProvider extends DataMapProvider {
@@ -30,7 +29,5 @@ final class DarkCavernsDataMapProvider extends DataMapProvider {
                 .add(DarkCaverns.id("charred_grass"), new Compostable(0.30F), false)
                 .add(DarkCaverns.id("ashy_charred_grass"), new Compostable(0.30F), false)
                 .add(DarkCaverns.id("scorched_berries"), new Compostable(0.30F), false);
-        builder(NeoForgeDataMaps.FURNACE_FUELS)
-                .add(DarkCaverns.id("scorchling_tail"), new FurnaceFuel(1600), false);
     }
 }

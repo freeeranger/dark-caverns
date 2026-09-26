@@ -81,29 +81,9 @@
   "spawners": {
     "ambient": [],
     "axolotls": [],
-    "creature": [
-      {
-        "type": "dark_caverns:moltener",
-        "maxCount": 3,
-        "minCount": 1,
-        "weight": 70
-      }
-    ],
+    "creature": [],
     "misc": [],
-    "monster": [
-      {
-        "type": "dark_caverns:scorchling",
-        "maxCount": 3,
-        "minCount": 1,
-        "weight": 90
-      },
-      {
-        "type": "dark_caverns:scorchhound",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 30
-      }
-    ],
+    "monster": [],
     "underground_water_creature": [],
     "water_ambient": [],
     "water_creature": []
