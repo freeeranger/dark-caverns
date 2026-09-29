@@ -14,9 +14,11 @@ import com.freeranger.dark_caverns.generation.MoltenFissureConfiguration;
 import com.freeranger.dark_caverns.generation.MoltenFissureFeature;
 import com.freeranger.dark_caverns.generation.MoltenPondConfiguration;
 import com.freeranger.dark_caverns.generation.SpikeFeature;
+import com.freeranger.dark_caverns.generation.TallGlimmershroomFeature;
 import com.freeranger.dark_caverns.generation.TwistwoodTreeFeature;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -45,6 +47,10 @@ public final class CustomFeatures {
     public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>>
             GIANT_TWISTWOOD_TREE =
                     FEATURES.register("giant_twistwood_tree", GiantTwistwoodTreeFeature::new);
+
+    public static final DeferredHolder<Feature<?>, Feature<HugeMushroomFeatureConfiguration>>
+            TALL_GLIMMERSHROOM =
+                    FEATURES.register("tall_glimmershroom", TallGlimmershroomFeature::new);
 
     private CustomFeatures() {}
 
