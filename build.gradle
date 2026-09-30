@@ -70,6 +70,11 @@ neoForge {
                     "${project.mod_id},${project.mod_id}_slow"
         }
 
+        routeProfileServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', "${project.mod_id}_profile"
+        }
+
         data {
             data()
             programArguments.addAll '--mod', project.mod_id, '--all',
@@ -90,6 +95,9 @@ neoForge {
             logLevel = org.slf4j.event.Level.INFO
         }
         fullGameTestServer {
+            logLevel = org.slf4j.event.Level.INFO
+        }
+        routeProfileServer {
             logLevel = org.slf4j.event.Level.INFO
         }
     }
@@ -138,6 +146,9 @@ tasks.named('processResources', ProcessResources).configure {
     // Reuse the tiny existing test template without storing a second binary NBT in source control.
     from('src/main/resources/data/dark_caverns/structure/sacred_torch.nbt') {
         into 'data/dark_caverns_slow/structure'
+    }
+    from('src/main/resources/data/dark_caverns/structure/sacred_torch.nbt') {
+        into 'data/dark_caverns_profile/structure'
     }
 }
 
