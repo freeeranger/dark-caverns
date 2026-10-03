@@ -16,7 +16,53 @@
     "hidden": false
   },
   "criteria": {
-    "find_territory_marker": {
+    "near_marker": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "dark_caverns:molten_depths",
+                "block": {
+                  "blocks": [
+                    "minecraft:redstone_wire",
+                    "minecraft:spruce_fence",
+                    "minecraft:player_head",
+                    "minecraft:player_wall_head"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "stepping_on_marker": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "stepping_on": {
+                "biomes": "dark_caverns:molten_depths",
+                "block": {
+                  "blocks": [
+                    "minecraft:redstone_wire",
+                    "minecraft:spruce_fence"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "structure": {
       "trigger": "minecraft:location",
       "conditions": {
         "player": [
@@ -35,7 +81,9 @@
   },
   "requirements": [
     [
-      "find_territory_marker"
+      "near_marker",
+      "stepping_on_marker",
+      "structure"
     ]
   ]
 }

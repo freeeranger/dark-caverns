@@ -16,7 +16,30 @@
     "hidden": false
   },
   "criteria": {
-    "find_sacred_torch": {
+    "standing_on_torch": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "stepping_on": {
+                "biomes": "dark_caverns:molten_depths",
+                "block": {
+                  "blocks": [
+                    "dark_caverns:molten_carfstone_brick_stairs",
+                    "dark_caverns:molten_carfstone_bricks",
+                    "dark_caverns:molten_carfstone_brick_wall"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "structure": {
       "trigger": "minecraft:location",
       "conditions": {
         "player": [
@@ -35,7 +58,8 @@
   },
   "requirements": [
     [
-      "find_sacred_torch"
+      "standing_on_torch",
+      "structure"
     ]
   ]
 }
